@@ -1,0 +1,22 @@
+# Reference sources (the original Python app and the C# tools). Kept locally
+# as porting references and test oracles, never committed.
+/Smart Citizen CPLusPLus/
+/unp4k/
+
+# Build trees
+/build/
+/out/
+
+# Local CMake / IDE state
+CMakeUserPresets.json
+*.user
+*.user.*
+.vs/
+.vscode/
+.idea/
+.qtcreator/
+compile_commands.json
+
+# Parity-test scratch output
+/tools/parity/.venv/
+/tools/parity/out/

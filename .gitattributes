@@ -1,0 +1,16 @@
+* text=auto eol=lf
+
+# Windows-only files keep CRLF.
+*.bat   text eol=crlf
+*.cmd   text eol=crlf
+*.iss   text eol=crlf
+*.rc    text eol=crlf
+
+# Byte-exact fixtures: never normalize line endings or encodings.
+tests/fixtures/** -text
+resources/patches/** -text
+
+*.png   binary
+*.ico   binary
+*.otf   binary
+*.ttf   binary

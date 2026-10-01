@@ -1,0 +1,3 @@
+// Generated into the build tree by CMake (see src/app/CMakeLists.txt).
+// 1 = CREATEPROCESS_MANIFEST_RESOURCE_ID, 24 = RT_MANIFEST
+1 24 "@SC_APP_MANIFEST@"
