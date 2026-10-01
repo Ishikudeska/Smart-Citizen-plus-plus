@@ -1,41 +1,26 @@
-# SCX (working title)
+# Smart Citizen++
 
-A Star Citizen localization editor and P4K explorer: a C++ / Qt Quick
-successor that combines Smart Citizen's string editor and enhancement
-generator with unp4k/unforge's archive and DataForge tooling in one app.
+A Complete re-write of star citizen in C++. 
 
-> The name is a placeholder. It lives in one place, `cmake/AppIdentity.cmake`.
+# Acknowledgements
 
-## Layout
 
-| Path | What |
-|---|---|
-| `src/engine/` | Qt-free format library: P4K archives, DataForge, CryXML, game-data export |
-| `src/core/` | Application logic (Qt Core): settings, INI merge/apply, enhancement generator, blueprints, i18n |
-| `src/app/` | Executable: C++ view-models and the QML frontend (`src/app/qml/`) |
-| `tests/` | Qt Test suites, run through CTest |
-| `tools/parity/` | Dev-only drivers that compare output against the original Python/.NET tools |
-| `packaging/` | Deployment and installer scripts |
 
-## Build
 
-Requires Qt 6.8+ with the MinGW kit (developed against Qt 6.12.0 /
-MinGW 13.1 at `C:\Qt`). Other paths: copy a preset into
-`CMakeUserPresets.json` and override `SC_QT_DIR` / `SC_MINGW_DIR`.
 
-```powershell
-cmake --preset mingw-debug
-cmake --build --preset mingw-debug
-ctest --preset mingw-debug
-```
+# Why?
 
-Qt Creator opens the folder directly (File → Open File or Project →
-`CMakeLists.txt`) and picks up the presets.
+ Well for a few reasons:
+ > 1. Python, while not terrible, is going to be slower at everything this application is trying to accomplish.
+ > 2. C++ (IMO) can be modified and added to with minimal work. Whereas the Python side takes quite some time for a new version. 
+ > 3. Cross-Platform Compatibility. This application was built using the STD:: library. Meaning it can easily be run on any flavor of linux you so choose!
 
-Third-party libraries (zstd, zlib, pugixml) are downloaded and built by CMake
-on first configure, pinned by SHA-256 in `cmake/Dependencies.cmake`.
+ # Linux and non-windows platforms:
 
-## License
+ Should work "out of box". The application uses Qt as it's backend for UI, so your milage will vary. 
+    If something doesn't work please let me know by creating an issue.
 
-Apache License 2.0. See `NOTICE` for attributions (Smart Citizen, unp4k) and
-third-party licenses.
+# Contribution details:
+
+ > 1. AI, in it's entirety, is banned. There will be NO AI use of any kind in this repo. No offense to ODW, but I think one of the reasons the python version is so bloated is due to an overuse of AI
+ > 2. Follow issue, and pull request formats AS POSTED.
