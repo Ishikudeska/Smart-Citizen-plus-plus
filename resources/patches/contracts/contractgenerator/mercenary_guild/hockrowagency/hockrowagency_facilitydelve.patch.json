@@ -1,0 +1,20 @@
+{
+  "target": "contracts/contractgenerator/mercenary_guild/hockrowagency/hockrowagency_facilitydelve.xml",
+  "description": "Fix P2M4_Repeat desc-key reference — CIG bug STARC-176797: contract points at P2M1_Repeat's desc loc-key instead of its own (observed in 4.7). Without this patch, P2M4_Repeat players see P2M1's Energy-Anomaly flavor text and our enhancement injects ASD2A blueprints; with this patch, P2M4_Repeat resolves to its own Power-Usage desc and picks up the correct ASD2D pool.",
+  "edits": [
+    {
+      "xpath": ".//Contract[@debugName='Hockrow_FacilityDelve_P2M4-Stanton4_Repeat']//ContractStringParam[@param='Description']",
+      "attribute": "value",
+      "expected": "@Hockrow_FacilityDelve_P2M1_Repeat_desc",
+      "set": "@Hockrow_FacilityDelve_P2M4_Repeat_desc"
+    }
+  ],
+  "locstring_workarounds": [
+    {
+      "description": "The XML edit above only corrects our local generator's view — the game still reads the bugged Description pointer from Data.p4k at runtime, so an in-game P2M4_Repeat contract still looks up P2M1_Repeat_desc. Append P2M4_Repeat_desc's enhanced content (its flavor text + its own blueprint pool) onto P2M1_Repeat_desc so the mis-routed lookup produces the right text. P2M1_Repeat players see the extra P2M4 block as a labeled appendix; once CIG fixes STARC-176797 this block can be removed.",
+      "target": "Hockrow_FacilityDelve_P2M1_Repeat_desc",
+      "append_from": "Hockrow_FacilityDelve_P2M4_Repeat_desc",
+      "separator": "\\n\\n<EM3>——— ALSO APPLIES TO: \"Updated Power Usage Data\" (CIG bug STARC-176797) ———</EM3>\\n\\n"
+    }
+  ]
+}

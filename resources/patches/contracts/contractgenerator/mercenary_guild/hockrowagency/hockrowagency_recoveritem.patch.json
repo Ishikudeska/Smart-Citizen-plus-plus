@@ -1,0 +1,18 @@
+{
+  "target": "contracts/contractgenerator/mercenary_guild/hockrowagency/hockrowagency_recoveritem.xml",
+  "description": "Fix Hockrow H-tier Description pointing at the Title loc-key — CIG bug (observed 4.7.18x): Hockrow_BlackBoxRecovery_{Stanton,Nyx}_Hard have Description=@blackbox_recover_title_H_001 where every other tier uses Description=@blackbox_recover_desc_H_001. Splits blackbox_recover_title_H_001 into two desc_key buckets (one with no BP pool) which causes the [BP?] tag to be suppressed by the _every_desc_has_some_bp safety check, even though the BitZeros H-tier does award a pool.",
+  "edits": [
+    {
+      "xpath": ".//CareerContract[@debugName='Hockrow_BlackBoxRecovery_Stanton_Hard']//ContractStringParam[@param='Description']",
+      "attribute": "value",
+      "expected": "@blackbox_recover_title_H_001",
+      "set": "@blackbox_recover_desc_H_001"
+    },
+    {
+      "xpath": ".//CareerContract[@debugName='Hockrow_BlackBoxRecovery_Nyx_Hard']//ContractStringParam[@param='Description']",
+      "attribute": "value",
+      "expected": "@blackbox_recover_title_H_001",
+      "set": "@blackbox_recover_desc_H_001"
+    }
+  ]
+}

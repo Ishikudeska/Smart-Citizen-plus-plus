@@ -2,8 +2,46 @@
 # Deliberately Qt-free so it can be tested and reused without an event loop.
 
 add_library(scengine STATIC
+    Error.h
+    Parallel.h
+    Try.h
     Version.h
     Version.cpp
+
+    io/RandomAccessFile.h
+    io/RandomAccessFile.cpp
+    io/FileSystem.h
+    io/FileSystem.cpp
+
+    crypto/Aes128.h
+    crypto/Aes128.cpp
+    crypto/Sha256.h
+    crypto/Sha256.cpp
+
+    p4k/Archive.h
+    p4k/Archive.cpp
+    p4k/Extractor.h
+    p4k/Extractor.cpp
+
+    cryxml/CryXml.h
+    cryxml/CryXml.cpp
+
+    zip/ZipWriter.h
+    zip/ZipWriter.cpp
+
+    xml/XmlTree.h
+    xml/XmlTree.cpp
+    xml/DotNetXmlWriter.h
+    xml/DotNetXmlWriter.cpp
+
+    forge/DotNetFormat.h
+    forge/DotNetFormat.cpp
+    forge/DataForge.h
+    forge/DataForge.cpp
+    forge/RecordBuilder.h
+    forge/RecordBuilder.cpp
+    forge/Exporter.h
+    forge/Exporter.cpp
 )
 
 target_include_directories(scengine PUBLIC ${PROJECT_SOURCE_DIR}/src)
