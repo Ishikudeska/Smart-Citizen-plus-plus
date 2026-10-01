@@ -1,88 +1,22 @@
-# IDE & Local
-.idea/
+# Reference sources (the original Python app and the C# tools). Kept locally
+# as porting references and test oracles, never committed.
+/Smart Citizen CPLusPLus/
+/unp4k/
+
+# Build trees
+/build/
+/out/
+
+# Local CMake / IDE state
+CMakeUserPresets.json
+*.user
+*.user.*
+.vs/
 .vscode/
-.claude/*
-!.claude/commands/
-*.swp
-*.swo
-*~
+.idea/
+.qtcreator/
+compile_commands.json
 
-# Python
-__pycache__/
-*.py[cod]
-*$py.class
-*.so
-.Python
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-*.egg-info/
-.installed.cfg
-*.egg
-MANIFEST
-.venv/
-venv/
-ENV/
-*.pyc
-.pytest_cache/
-
-# PyCharm
-*.iml
-.DS_Store
-
-# Output
-output/
-installer_output/
-*.bak
-*.tmp
-
-# OS
-.DS_Store
-Thumbs.db
-
-# PyInstaller
-*.spec
-build/
-dist/
-*.manifest
-
-# Allow current spec and build scripts (needed for builds from any computer)
-!SmartCitizen.spec
-!scripts/build/
-
-# Runtime Data Files (auto-generated/downloaded)
-data/global.ini
-data/global.ini.bak
-data/base_version.txt
-data/contracts_version.txt
-
-# Stats JSON source cache (downloaded by generate_stats_ini.py, ~109 MB)
-**/stats_cache/
-
-# Local DataForge extraction scratch (Game2.dcb + unforge output, ~300 MB)
-/Data/
-
-# Local scratch dir for ad-hoc experiments / diff dumps
-/temp/
-
-# Build-time flag module — written by build_exe.py --portable, deleted
-# after the build finishes. Should never be committed; if it is, it'd
-# silently flip the default-build behavior.
-src/utils/_build_info.py
-
-# Portable-mode runtime data (when running locally with IS_PORTABLE flipped)
-/portable_data/
-
-# release notes
-*-RELEASE_NOTES.md
-
-/scratch/
+# Parity-test scratch output
+/tools/parity/.venv/
+/tools/parity/out/

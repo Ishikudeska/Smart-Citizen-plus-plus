@@ -1,38 +1,40 @@
+SCX (working title)
+Copyright 2026 the SCX contributors
+
+Licensed under the Apache License, Version 2.0 (see LICENSE).
+
+================================================================================
+Derived works
+================================================================================
+
 Smart Citizen
-Copyright 2026 Osiris DevWorks, LLC
-
-This product is licensed under the Apache License, Version 2.0
-(the "License"); you may not use this product except in compliance
-with the License. You may obtain a copy of the License at:
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-================================================================================
-Bundled third-party software
-================================================================================
+-------------
+Portions of this product are ported from Smart Citizen
+(https://github.com/Osiris-DevWorks/smart-citizen),
+Copyright 2026 Osiris DevWorks, LLC, licensed under the Apache License,
+Version 2.0. This includes the localization merge pipeline, the enhancement
+generator, the tag builder, blueprint tracking, UI translations
+(resources/languages) and DataForge data patches (resources/patches).
 
 unp4k / unforge
 ---------------
-This product bundles the unp4k and unforge command-line tools (under
-assets/unp4k/) from https://github.com/dolkensp/unp4k by Peter Dolkens
-and contributors. Used to unpack Star Citizen's Data.p4k archive and
-convert DataForge entity files to XML.
+The P4K archive reader, DataForge reader and CryXML reader are ported from
+unp4k (https://github.com/dolkensp/unp4k), Copyright (c) 2016 Peter Dolkens,
+licensed under the MIT License:
 
-unp4k is licensed under the MIT License:
-
-    Permission is hereby granted, free of charge, to any person obtaining
-    a copy of this software and associated documentation files (the
+    Permission is hereby granted, free of charge, to any person obtaining a
+    copy of this software and associated documentation files (the
     "Software"), to deal in the Software without restriction, including
     without limitation the rights to use, copy, modify, merge, publish,
     distribute, sublicense, and/or sell copies of the Software, and to
-    permit persons to whom the Software is furnished to do so, subject
-    to the following conditions:
+    permit persons to whom the Software is furnished to do so, subject to
+    the following conditions:
 
-    The above copyright notice and this permission notice shall be
-    included in all copies or substantial portions of the Software.
+    The above copyright notice and this permission notice shall be included
+    in all copies or substantial portions of the Software.
 
-    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-    EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+    OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
     MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
     IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
     CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
@@ -40,14 +42,23 @@ unp4k is licensed under the MIT License:
     SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ================================================================================
+Third-party libraries
+================================================================================
+
+Qt 6        The Qt Company Ltd. and contributors. Used under the GNU Lesser
+            General Public License v3; linked dynamically.
+zstd        Meta Platforms, Inc. and affiliates. BSD 3-Clause License.
+zlib        Jean-loup Gailly and Mark Adler. zlib License.
+pugixml     Arseny Kapoulkine. MIT License.
+
+================================================================================
 Trademarks and game data
 ================================================================================
 
 Star Citizen and all associated game data, including Data.p4k, are the
-property of Cloud Imperium Rights LLC and Cloud Imperium Rights Ltd.
-Smart Citizen reads game files from your own licensed Star Citizen
-installation and does not redistribute any RSI or CIG content.
+property of Cloud Imperium Rights LLC and Cloud Imperium Rights Ltd. This
+application reads game files from your own licensed Star Citizen installation
+and does not redistribute any RSI or CIG content.
 
-Smart Citizen is a community fan project and is not affiliated with,
-endorsed by, or sponsored by Cloud Imperium Games or Roberts Space
-Industries.
+This is an unofficial community fan project. It is not affiliated with,
+endorsed by, or sponsored by Cloud Imperium Games or Roberts Space Industries.

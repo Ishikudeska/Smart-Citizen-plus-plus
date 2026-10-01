@@ -1,0 +1,13 @@
+#pragma once
+
+// Generated from cmake/AppIdentity.cmake. Do not edit.
+
+namespace core::identity {
+
+inline constexpr const char *kAppName = "@APP_NAME@";
+inline constexpr const char *kOrgName = "@APP_ORG@";
+inline constexpr const char *kVersion = "@APP_VERSION@";
+inline constexpr const char *kUserModelId = "@APP_USER_MODEL_ID@";
+inline constexpr bool kPortable = @APP_PORTABLE_BOOL@;
+
+} // namespace core::identity
