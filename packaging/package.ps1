@@ -54,6 +54,35 @@ $env:PATH = "C:\Qt\Tools\mingw1310_64\bin;C:\Qt\6.12.0\mingw_64\bin;C:\Qt\Tools\
 
 New-Item -ItemType Directory -Force $dist | Out-Null
 
+# Fails if the folder would not run on a clean machine: every DLL that an exe,
+# DLL or plugin in it imports must sit beside the exe or ship with Windows.
+# Plugins are loaded at run time, so the ones the app cannot start or use
+# HTTPS without are checked by name.
+function Test-Deployment([string]$folder) {
+    $objdump = Get-Command objdump -ErrorAction SilentlyContinue
+    if (-not $objdump) { throw "objdump not found (expected in C:\Qt\Tools\mingw1310_64\bin)" }
+    $system = Join-Path $env:SystemRoot "System32"
+    $missing = @()
+    foreach ($plugin in @("plugins\platforms\qwindows.dll", "plugins\tls\qschannelbackend.dll")) {
+        if (-not (Test-Path (Join-Path $folder $plugin))) { $missing += "$plugin (plugin)" }
+    }
+    $binaries = Get-ChildItem $folder -Recurse -File -Include *.exe, *.dll
+    $imports = @{}
+    foreach ($binary in $binaries) {
+        foreach ($line in (& $objdump.Source -p $binary.FullName)) {
+            if ($line -match 'DLL Name:\s*(\S+)') { $imports[$Matches[1].ToLowerInvariant()] = $binary.Name }
+        }
+    }
+    foreach ($dll in $imports.Keys) {
+        if ($dll -like "api-ms-win-*" -or $dll -like "ext-ms-*") { continue }
+        if (Test-Path (Join-Path $folder $dll)) { continue }
+        if (Test-Path (Join-Path $system $dll)) { continue }
+        $missing += "$dll (imported by $($imports[$dll]))"
+    }
+    if ($missing) { throw "$folder is missing:`n  $($missing -join "`n  ")" }
+    Write-Host "Deployment check passed: $($binaries.Count) binaries, all imports resolved"
+}
+
 function Build-Variant([string]$preset, [string]$folder) {
     $out = Join-Path $dist $folder
     if (Test-Path $out) { Remove-Item -Recurse -Force $out }
@@ -68,6 +97,7 @@ function Build-Variant([string]$preset, [string]$folder) {
         Pop-Location
     }
     if (-not (Test-Path (Join-Path $out "$name.exe"))) { throw "$name.exe missing from $out" }
+    Test-Deployment $out | Out-Host
     return $out
 }
 

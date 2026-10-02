@@ -13,7 +13,7 @@ jobs:
   build-and-test:
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       # Installs into C:\Qt so the paths in CMakePresets.json match.
       - name: Install Qt 6.12 + MinGW 13.1 + Ninja
