@@ -92,6 +92,8 @@ qt_generate_deploy_qml_app_script(
     OUTPUT_SCRIPT SC_DEPLOY_SCRIPT
     NO_TRANSLATIONS
     NO_UNSUPPORTED_PLATFORM_ERROR
+    # The QML debugger plugins are only useful attached to Qt Creator.
+    DEPLOY_TOOL_OPTIONS --skip-plugin-types qmltooling
 )
 # The Qt DLLs go beside the exe, not in bin/ (Qt's default).
 install(CODE [[set(QT_DEPLOY_BIN_DIR ".")]])
