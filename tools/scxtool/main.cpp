@@ -6,6 +6,7 @@
 #include "engine/forge/DataForge.h"
 #include "engine/forge/Exporter.h"
 #include "engine/forge/RecordBuilder.h"
+#include "engine/gamedata/GameData.h"
 #include "engine/io/FileSystem.h"
 #include "engine/io/RandomAccessFile.h"
 #include "engine/p4k/Archive.h"
@@ -598,6 +599,49 @@ int cmdForgeCompare(int argc, char **argv)
     return mismatches.empty() && noRecord.empty() && notWritten.empty() && missing.empty() ? 0 : 1;
 }
 
+// sc.gamedata's CLI: game_data.json from the archive's (or a) Game2.dcb.
+int cmdGameData(int argc, char **argv)
+{
+    gamedata::Options options;
+    std::string output = "game_data.json";
+    for (int i = 3; i + 1 < argc; i += 2) {
+        const std::string_view flag = argv[i];
+        if (flag == "--base-ini")
+            options.baseIniPath = argv[i + 1];
+        else if (flag == "--output")
+            output = argv[i + 1];
+        else if (flag == "--overlay")
+            options.overlayPath = argv[i + 1];
+        else if (flag == "--channel")
+            options.channel = argv[i + 1];
+        else if (flag == "--generated-at")
+            options.generatedAt = argv[i + 1];
+        else
+            return usage();
+    }
+    const auto df = loadForge(argv[2]);
+    if (!df)
+        return 1;
+    const auto start = Clock::now();
+    const auto json = gamedata::buildGameDataJson(*df, options, [](const std::string &line) {
+        std::fprintf(stderr, "%s\n", line.c_str());
+    });
+    if (!json) {
+        std::fprintf(stderr, "error: %s\n", json.error().message.c_str());
+        return 1;
+    }
+    std::FILE *f = _wfopen(toPath(output.c_str()).c_str(), L"wb");
+    if (!f) {
+        std::fprintf(stderr, "error: cannot write %s\n", output.c_str());
+        return 1;
+    }
+    std::fwrite(json->data(), 1, json->size(), f);
+    std::fclose(f);
+    std::fprintf(stderr, "Wrote %s (%.1f KiB) in %.2fs\n", output.c_str(), json->size() / 1024.0,
+                 secondsSince(start));
+    return 0;
+}
+
 } // namespace
 
 int main(int argc, char **argv)
@@ -623,5 +667,7 @@ int main(int argc, char **argv)
         return cmdForge(argc, argv);
     if (cmd == "forge-compare" && argc >= 4)
         return cmdForgeCompare(argc, argv);
+    if (cmd == "gamedata")
+        return cmdGameData(argc, argv);
     return usage();
 }

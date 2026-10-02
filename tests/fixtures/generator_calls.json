@@ -1,0 +1,8916 @@
+{
+"append_enhancements": [
+{
+"args": {
+"existing_value": "test shield\nItem Type: ShieldGenerator",
+"enhancements_block": "HP: 500",
+"separator": "\\n\\n--- STATS ---\\n",
+"prepend": false
+},
+"result": "test shield\nItem Type: ShieldGenerator\\n\\n--- STATS ---\\nHP: 500"
+},
+{
+"args": {
+"existing_value": "A basic shield generator.",
+"enhancements_block": "HP: 500",
+"separator": "\\n\\n--- STATS ---\\n",
+"prepend": false
+},
+"result": "A basic shield generator.\\n\\n--- STATS ---\\nHP: 500"
+},
+{
+"args": {
+"existing_value": "shield1\nItem Type: ShieldGenerator",
+"enhancements_block": "stats",
+"separator": "\\n\\n--- STATS ---\\n",
+"prepend": false
+},
+"result": "shield1\nItem Type: ShieldGenerator\\n\\n--- STATS ---\\nstats"
+},
+{
+"args": {
+"existing_value": "Existing shield.",
+"enhancements_block": "stats",
+"separator": "\\n\\n--- STATS ---\\n",
+"prepend": false
+},
+"result": "Existing shield.\\n\\n--- STATS ---\\nstats"
+},
+{
+"args": {
+"existing_value": "AEGS Test Ship\nClass: vehicle_career_Fighter | Role: vehicle_role_LightFighter | Crew: 1 | Length: 27.0m",
+"enhancements_block": "Crew: 1  |  Length: 27.0m",
+"separator": "\\n\\n--- STATS ---\\n",
+"prepend": false
+},
+"result": "AEGS Test Ship\nClass: vehicle_career_Fighter | Role: vehicle_role_LightFighter | Crew: 1 | Length: 27.0m\\n\\n--- STATS ---\\nCrew: 1  |  Length: 27.0m"
+},
+{
+"args": {
+"existing_value": "A fast light fighter.",
+"enhancements_block": "Crew: 1  |  Length: 27.0m",
+"separator": "\\n\\n--- STATS ---\\n",
+"prepend": false
+},
+"result": "A fast light fighter.\\n\\n--- STATS ---\\nCrew: 1  |  Length: 27.0m"
+},
+{
+"args": {
+"existing_value": null,
+"enhancements_block": "HP: 500",
+"separator": "\\n\\n--- STATS ---\\n",
+"prepend": false
+},
+"result": "\\n\\n--- STATS ---\\nHP: 500"
+},
+{
+"args": {
+"existing_value": "",
+"enhancements_block": "HP: 500",
+"separator": "\\n\\n--- STATS ---\\n",
+"prepend": false
+},
+"result": "\\n\\n--- STATS ---\\nHP: 500"
+},
+{
+"args": {
+"existing_value": "Base text.",
+"enhancements_block": "HP: 500",
+"separator": "\\n\\n--- STATS ---\\n",
+"prepend": false
+},
+"result": "Base text.\\n\\n--- STATS ---\\nHP: 500"
+},
+{
+"args": {
+"existing_value": "Manufacturer: CureLife\\nItem Type: Medical Consumable\\n\\nStock lore for item_Desccrlf_consumable_adrenaline_01.",
+"enhancements_block": "Reduces concussion symptoms, normalizes weapon handling and movement speed.",
+"separator": "\\n\\n--- EFFECT ---\\n",
+"prepend": false
+},
+"result": "Manufacturer: CureLife\\nItem Type: Medical Consumable\\n\\nStock lore for item_Desccrlf_consumable_adrenaline_01.\\n\\n--- EFFECT ---\\nReduces concussion symptoms, normalizes weapon handling and movement speed."
+},
+{
+"args": {
+"existing_value": "Manufacturer: CureLife\\nItem Type: Medical Consumable\\n\\nStock lore for item_Desccrlf_consumable_steroids_01.",
+"enhancements_block": "Reduces vision and hearing symptoms, normalizes stamina.",
+"separator": "\\n\\n--- EFFECT ---\\n",
+"prepend": false
+},
+"result": "Manufacturer: CureLife\\nItem Type: Medical Consumable\\n\\nStock lore for item_Desccrlf_consumable_steroids_01.\\n\\n--- EFFECT ---\\nReduces vision and hearing symptoms, normalizes stamina."
+},
+{
+"args": {
+"existing_value": "Manufacturer: CureLife\\nItem Type: Medical Consumable\\n\\nStock lore for item_Desccrlf_consumable_radiation_01.",
+"enhancements_block": "Reduces injuries from radiation.",
+"separator": "\\n\\n--- EFFECT ---\\n",
+"prepend": false
+},
+"result": "Manufacturer: CureLife\\nItem Type: Medical Consumable\\n\\nStock lore for item_Desccrlf_consumable_radiation_01.\\n\\n--- EFFECT ---\\nReduces injuries from radiation."
+},
+{
+"args": {
+"existing_value": "Manufacturer: CureLife\\nItem Type: Medical Consumable\\n\\nStock lore for item_Desccrlf_consumable_overdoseRevival_01.",
+"enhancements_block": "Revives an overdosed person (if not incapacitated), doubles decay rate of Blood Drug Level.",
+"separator": "\\n\\n--- EFFECT ---\\n",
+"prepend": false
+},
+"result": "Manufacturer: CureLife\\nItem Type: Medical Consumable\\n\\nStock lore for item_Desccrlf_consumable_overdoseRevival_01.\\n\\n--- EFFECT ---\\nRevives an overdosed person (if not incapacitated), doubles decay rate of Blood Drug Level."
+},
+{
+"args": {
+"existing_value": "Manufacturer: CureLife\\nItem Type: Medical Consumable\\n\\nStock lore for item_Desccrlf_consumable_healing_01.",
+"enhancements_block": "Restores health and stops bleeding. When used on another person recovers from incapacitated state.",
+"separator": "\\n\\n--- EFFECT ---\\n",
+"prepend": false
+},
+"result": "Manufacturer: CureLife\\nItem Type: Medical Consumable\\n\\nStock lore for item_Desccrlf_consumable_healing_01.\\n\\n--- EFFECT ---\\nRestores health and stops bleeding. When used on another person recovers from incapacitated state."
+},
+{
+"args": {
+"existing_value": "Manufacturer: CureLife\\nItem Type: Medical Consumable\\n\\nStock lore for item_Desccrlf_consumable_painkiller_01.",
+"enhancements_block": "Reduces pain symptoms, normalizes movement ability.",
+"separator": "\\n\\n--- EFFECT ---\\n",
+"prepend": false
+},
+"result": "Manufacturer: CureLife\\nItem Type: Medical Consumable\\n\\nStock lore for item_Desccrlf_consumable_painkiller_01.\\n\\n--- EFFECT ---\\nReduces pain symptoms, normalizes movement ability."
+},
+{
+"args": {
+"existing_value": "Manufacturer: CureLife\\nItem Type: Medical Consumable\\n\\nStock lore for item_Desccrlf_consumable_oxygen_01.",
+"enhancements_block": "Recharges Oxygen reserves of a suit.",
+"separator": "\\n\\n--- EFFECT ---\\n",
+"prepend": false
+},
+"result": "Manufacturer: CureLife\\nItem Type: Medical Consumable\\n\\nStock lore for item_Desccrlf_consumable_oxygen_01.\\n\\n--- EFFECT ---\\nRecharges Oxygen reserves of a suit."
+},
+{
+"args": {
+"existing_value": "Stock MedPen lore.",
+"enhancements_block": "Restores health and stops bleeding. When used on another person recovers from incapacitated state.",
+"separator": "\\n\\n--- EFFECT ---\\n",
+"prepend": false
+},
+"result": "Stock MedPen lore.\\n\\n--- EFFECT ---\\nRestores health and stops bleeding. When used on another person recovers from incapacitated state."
+},
+{
+"args": {
+"existing_value": "Stock OxyPen lore.",
+"enhancements_block": "Recharges Oxygen reserves of a suit.",
+"separator": "\\n\\n--- EFFECT ---\\n",
+"prepend": true
+},
+"result": "Recharges Oxygen reserves of a suit.\\n\\n------\\n\\nStock OxyPen lore."
+},
+{
+"args": {
+"existing_value": "lore",
+"enhancements_block": "Reduces concussion symptoms, normalizes weapon handling and movement speed.",
+"separator": "\\n\\n--- EFFECT ---\\n",
+"prepend": false
+},
+"result": "lore\\n\\n--- EFFECT ---\\nReduces concussion symptoms, normalizes weapon handling and movement speed."
+},
+{
+"args": {
+"existing_value": "lore",
+"enhancements_block": "Reduces vision and hearing symptoms, normalizes stamina.",
+"separator": "\\n\\n--- EFFECT ---\\n",
+"prepend": false
+},
+"result": "lore\\n\\n--- EFFECT ---\\nReduces vision and hearing symptoms, normalizes stamina."
+},
+{
+"args": {
+"existing_value": "lore",
+"enhancements_block": "Reduces injuries from radiation.",
+"separator": "\\n\\n--- EFFECT ---\\n",
+"prepend": false
+},
+"result": "lore\\n\\n--- EFFECT ---\\nReduces injuries from radiation."
+},
+{
+"args": {
+"existing_value": "lore",
+"enhancements_block": "Revives an overdosed person (if not incapacitated), doubles decay rate of Blood Drug Level.",
+"separator": "\\n\\n--- EFFECT ---\\n",
+"prepend": false
+},
+"result": "lore\\n\\n--- EFFECT ---\\nRevives an overdosed person (if not incapacitated), doubles decay rate of Blood Drug Level."
+},
+{
+"args": {
+"existing_value": "lore",
+"enhancements_block": "Restores health and stops bleeding. When used on another person recovers from incapacitated state.",
+"separator": "\\n\\n--- EFFECT ---\\n",
+"prepend": false
+},
+"result": "lore\\n\\n--- EFFECT ---\\nRestores health and stops bleeding. When used on another person recovers from incapacitated state."
+},
+{
+"args": {
+"existing_value": "lore",
+"enhancements_block": "Reduces pain symptoms, normalizes movement ability.",
+"separator": "\\n\\n--- EFFECT ---\\n",
+"prepend": false
+},
+"result": "lore\\n\\n--- EFFECT ---\\nReduces pain symptoms, normalizes movement ability."
+},
+{
+"args": {
+"existing_value": "lore",
+"enhancements_block": "Recharges Oxygen reserves of a suit.",
+"separator": "\\n\\n--- EFFECT ---\\n",
+"prepend": false
+},
+"result": "lore\\n\\n--- EFFECT ---\\nRecharges Oxygen reserves of a suit."
+},
+{
+"args": {
+"existing_value": "Prose blurb",
+"enhancements_block": "Crew: 1",
+"separator": "\\n\\n--- STATS ---\\n",
+"prepend": false
+},
+"result": "Prose blurb\\n\\n--- STATS ---\\nCrew: 1"
+},
+{
+"args": {
+"existing_value": "Prose blurb",
+"enhancements_block": "Crew: 1",
+"separator": "\\n\\n--- STATS ---\\n",
+"prepend": true
+},
+"result": "Crew: 1\\n\\n------\\n\\nProse blurb"
+},
+{
+"args": {
+"existing_value": "Prose blurb",
+"enhancements_block": "",
+"separator": "\\n\\n--- STATS ---\\n",
+"prepend": true
+},
+"result": "Prose blurb"
+}
+],
+"classify_spawn_group": [
+{
+"args": {
+"name": "Hostiles",
+"kind": "ship"
+},
+"result": [
+"hostile",
+"Hostiles"
+]
+},
+{
+"args": {
+"name": "Target",
+"kind": "ship"
+},
+"result": [
+"hostile",
+"Targets"
+]
+},
+{
+"args": {
+"name": "Targets",
+"kind": "ship"
+},
+"result": [
+"hostile",
+"Targets"
+]
+},
+{
+"args": {
+"name": "Reinforcement",
+"kind": "ship"
+},
+"result": [
+"hostile",
+"Reinforcements"
+]
+},
+{
+"args": {
+"name": "Reinforcements",
+"kind": "ship"
+},
+"result": [
+"hostile",
+"Reinforcements"
+]
+},
+{
+"args": {
+"name": "Reinforcments",
+"kind": "ship"
+},
+"result": [
+"hostile",
+"Reinforcements"
+]
+},
+{
+"args": {
+"name": "Enemy Ships",
+"kind": "ship"
+},
+"result": [
+"hostile",
+"Hostiles"
+]
+},
+{
+"args": {
+"name": "Hostile Ships",
+"kind": "ship"
+},
+"result": [
+"hostile",
+"Hostiles"
+]
+},
+{
+"args": {
+"name": "Pirates",
+"kind": "ship"
+},
+"result": [
+"hostile",
+"Pirates"
+]
+},
+{
+"args": {
+"name": "Bandits",
+"kind": "ship"
+},
+"result": [
+"hostile",
+"Bandits"
+]
+},
+{
+"args": {
+"name": "Prospectors",
+"kind": "ship"
+},
+"result": [
+"hostile",
+"Prospectors"
+]
+},
+{
+"args": {
+"name": "InterdictionShips_BP",
+"kind": "ship"
+},
+"result": [
+"hostile",
+"Interdiction Ships"
+]
+},
+{
+"args": {
+"name": "AcePilotShip",
+"kind": "ship"
+},
+"result": [
+"hostile",
+"Ace Pilots"
+]
+},
+{
+"args": {
+"name": "Heist Ship",
+"kind": "ship"
+},
+"result": [
+"hostile",
+"Heist Target"
+]
+},
+{
+"args": {
+"name": "Xeno Threat Vultures",
+"kind": "ship"
+},
+"result": [
+"hostile",
+"Xeno Threat"
+]
+},
+{
+"args": {
+"name": "Polaris",
+"kind": "ship"
+},
+"result": [
+"hostile",
+"Polaris"
+]
+},
+{
+"args": {
+"name": "Mauler",
+"kind": "ship"
+},
+"result": [
+"hostile",
+"Maulers"
+]
+},
+{
+"args": {
+"name": "Security Ships",
+"kind": "ship"
+},
+"result": [
+"hostile",
+"Security Forces"
+]
+},
+{
+"args": {
+"name": "Wave1",
+"kind": "ship"
+},
+"result": [
+"hostile",
+"Hostile Wave"
+]
+},
+{
+"args": {
+"name": "Wave 1",
+"kind": "ship"
+},
+"result": [
+"hostile",
+"Hostile Wave"
+]
+},
+{
+"args": {
+"name": "First Wave",
+"kind": "ship"
+},
+"result": [
+"hostile",
+"Hostile Wave"
+]
+},
+{
+"args": {
+"name": "Second Wave",
+"kind": "ship"
+},
+"result": [
+"hostile",
+"Hostile Wave"
+]
+},
+{
+"args": {
+"name": "Starter Wave",
+"kind": "ship"
+},
+"result": [
+"hostile",
+"Hostile Wave"
+]
+},
+{
+"args": {
+"name": "InitialEnemies",
+"kind": "ship"
+},
+"result": [
+"hostile",
+"Hostile Wave"
+]
+},
+{
+"args": {
+"name": "ShipToDefend",
+"kind": "ship"
+},
+"result": [
+"friendly",
+"Ships to Defend"
+]
+},
+{
+"args": {
+"name": "1st ShipToDefend",
+"kind": "ship"
+},
+"result": [
+"friendly",
+"Ships to Defend"
+]
+},
+{
+"args": {
+"name": "EscortShip",
+"kind": "ship"
+},
+"result": [
+"friendly",
+"Escort Wings"
+]
+},
+{
+"args": {
+"name": "SalvageableShip",
+"kind": "ship"
+},
+"result": [
+"friendly",
+"Salvageable Ships"
+]
+},
+{
+"args": {
+"name": "RecipientShip",
+"kind": "ship"
+},
+"result": [
+"friendly",
+"Recipient"
+]
+},
+{
+"args": {
+"name": "FriendlyShip",
+"kind": "ship"
+},
+"result": [
+"friendly",
+"Friendlies"
+]
+},
+{
+"args": {
+"name": "Allies",
+"kind": "ship"
+},
+"result": [
+"hostile",
+"Hostile Allies"
+]
+},
+{
+"args": {
+"name": "Defenders",
+"kind": "ship"
+},
+"result": [
+"hostile",
+"Defenders"
+]
+},
+{
+"args": {
+"name": "Defenders",
+"kind": "npc"
+},
+"result": [
+"hostile",
+"Defenders"
+]
+},
+{
+"args": {
+"name": "DefendLocationWrapperEnemyShips",
+"kind": "ship"
+},
+"result": [
+"hostile",
+"Hostiles"
+]
+},
+{
+"args": {
+"name": "Boss",
+"kind": "npc"
+},
+"result": [
+"hostile",
+"Boss"
+]
+},
+{
+"args": {
+"name": "Backup",
+"kind": "npc"
+},
+"result": [
+"hostile",
+"Backup"
+]
+},
+{
+"args": {
+"name": "Sniper x 2",
+"kind": "npc"
+},
+"result": [
+"hostile",
+"Snipers"
+]
+},
+{
+"args": {
+"name": "CQC x 3",
+"kind": "npc"
+},
+"result": [
+"hostile",
+"CQC"
+]
+},
+{
+"args": {
+"name": "Soldier x 3",
+"kind": "npc"
+},
+"result": [
+"hostile",
+"Soldiers"
+]
+},
+{
+"args": {
+"name": "Techie x10",
+"kind": "npc"
+},
+"result": [
+"hostile",
+"Technicians"
+]
+},
+{
+"args": {
+"name": "Techi x 2",
+"kind": "npc"
+},
+"result": [
+"hostile",
+"Technicians"
+]
+},
+{
+"args": {
+"name": "Tech x 2",
+"kind": "npc"
+},
+"result": [
+"hostile",
+"Technicians"
+]
+},
+{
+"args": {
+"name": "Captain x 1",
+"kind": "npc"
+},
+"result": [
+"hostile",
+"Captain"
+]
+},
+{
+"args": {
+"name": "Exterior Guards",
+"kind": "npc"
+},
+"result": [
+"hostile",
+"Guards"
+]
+},
+{
+"args": {
+"name": "Sentry",
+"kind": "npc"
+},
+"result": [
+"hostile",
+"Sentries"
+]
+},
+{
+"args": {
+"name": "Grunts",
+"kind": "npc"
+},
+"result": [
+"hostile",
+"Grunts"
+]
+},
+{
+"args": {
+"name": "Attackers",
+"kind": "npc"
+},
+"result": [
+"hostile",
+"Attackers"
+]
+},
+{
+"args": {
+"name": "Juggernaut x 1",
+"kind": "npc"
+},
+"result": [
+"hostile",
+"Juggernauts"
+]
+},
+{
+"args": {
+"name": "Ninetails_Heavy",
+"kind": "npc"
+},
+"result": [
+"hostile",
+"Nine Tails"
+]
+},
+{
+"args": {
+"name": "Kopions x 6 -Target",
+"kind": "npc"
+},
+"result": [
+"hostile",
+"Kopions"
+]
+},
+{
+"args": {
+"name": "PrivateSecurity_Armed_Light",
+"kind": "npc"
+},
+"result": [
+"hostile",
+"Private Security"
+]
+},
+{
+"args": {
+"name": "PrivSec - Sentry - 4",
+"kind": "npc"
+},
+"result": [
+"hostile",
+"Private Security"
+]
+},
+{
+"args": {
+"name": "Civilians",
+"kind": "npc"
+},
+"result": [
+"friendly",
+"Civilians"
+]
+},
+{
+"args": {
+"name": "Civilian",
+"kind": "npc"
+},
+"result": [
+"friendly",
+"Civilians"
+]
+},
+{
+"args": {
+"name": "Civillian",
+"kind": "npc"
+},
+"result": [
+"friendly",
+"Civilians"
+]
+},
+{
+"args": {
+"name": "Civs",
+"kind": "npc"
+},
+"result": [
+"friendly",
+"Civilians"
+]
+},
+{
+"args": {
+"name": "Civ",
+"kind": "npc"
+},
+"result": [
+"friendly",
+"Civilians"
+]
+},
+{
+"args": {
+"name": "Civ x 4",
+"kind": "npc"
+},
+"result": [
+"friendly",
+"Civilians"
+]
+},
+{
+"args": {
+"name": "Probe Civillian",
+"kind": "ship"
+},
+"result": [
+"friendly",
+"Civilians"
+]
+},
+{
+"args": {
+"name": "Probe 1",
+"kind": "ship"
+},
+"result": [
+"objective",
+"Probe"
+]
+},
+{
+"args": {
+"name": "Probe 2",
+"kind": "ship"
+},
+"result": [
+"objective",
+"Probe"
+]
+},
+{
+"args": {
+"name": "Probe 3",
+"kind": "ship"
+},
+"result": [
+"objective",
+"Probe"
+]
+},
+{
+"args": {
+"name": "Probe 1 ",
+"kind": "ship"
+},
+"result": [
+"objective",
+"Probe"
+]
+},
+{
+"args": {
+"name": "CompletelyMadeUpName",
+"kind": "ship"
+},
+"result": [
+"unknown",
+"Unknown"
+]
+},
+{
+"args": {
+"name": "Some Random Future Group",
+"kind": "ship"
+},
+"result": [
+"unknown",
+"Unknown"
+]
+},
+{
+"args": {
+"name": "Mystery Squad Z",
+"kind": "npc"
+},
+"result": [
+"unknown",
+"Unknown"
+]
+},
+{
+"args": {
+"name": "",
+"kind": "ship"
+},
+"result": [
+"unknown",
+"Unknown"
+]
+},
+{
+"args": {
+"name": "Civs x 4",
+"kind": "npc"
+},
+"result": [
+"friendly",
+"Civilians"
+]
+},
+{
+"args": {
+"name": "QuantumWidgetSquadron",
+"kind": "ship"
+},
+"result": [
+"unknown",
+"Unknown"
+]
+},
+{
+"args": {
+"name": "Civilians",
+"kind": "ship"
+},
+"result": [
+"friendly",
+"Civilians"
+]
+},
+{
+"args": {
+"name": "x 5",
+"kind": "npc"
+},
+"result": [
+"unknown",
+"Unknown"
+]
+},
+{
+"args": {
+"name": "Kopions",
+"kind": "ship"
+},
+"result": [
+"hostile",
+"Kopions"
+]
+},
+{
+"args": {
+"name": "AcePilot",
+"kind": "ship"
+},
+"result": [
+"hostile",
+"Ace Pilots"
+]
+},
+{
+"args": {
+"name": "Ace Pilot",
+"kind": "ship"
+},
+"result": [
+"hostile",
+"Ace Pilots"
+]
+}
+],
+"_extract_spawn_counts": [
+{
+"args": {
+"element": {
+"$el": "<root>\n\n<ContractGeneratorHandler_List debugName=\"Adagio_Stanton_HandMining\">\n    <Contract debugName=\"Adagio_Stanton_HandMining_T1\">\n        <Title>\n            <ContractStringParam param=\"Title\" value=\"@adagio_mining_title\"/>\n            <ContractStringParam param=\"Description\" value=\"@adagio_mining_desc\"/>\n        </Title>\n        <BlueprintRewards blueprintPool=\"pool-fps-uuid\" chance=\"1.0\"/>\n        <BlueprintRewards blueprintPool=\"pool-comp-uuid\" chance=\"1.0\"/>\n    </Contract>\n</ContractGeneratorHandler_List>\n\n</root>",
+"path": "/root/ContractGeneratorHandler_List"
+},
+"exclude_within": [
+"CareerContract",
+"Contract"
+]
+},
+"result": {
+"$dict": [
+[
+"hostile",
+{
+"$dict": []
+}
+],
+[
+"friendly",
+{
+"$dict": []
+}
+],
+[
+"objective",
+{
+"$dict": []
+}
+],
+[
+"unknown",
+{
+"$dict": []
+}
+]
+]
+}
+},
+{
+"args": {
+"element": {
+"$el": "<root>\n\n<ContractGeneratorHandler_List debugName=\"Adagio_Stanton_HandMining\">\n    <Contract debugName=\"Adagio_Stanton_HandMining_T1\">\n        <Title>\n            <ContractStringParam param=\"Title\" value=\"@adagio_mining_title\"/>\n            <ContractStringParam param=\"Description\" value=\"@adagio_mining_desc\"/>\n        </Title>\n        <BlueprintRewards blueprintPool=\"pool-fps-uuid\" chance=\"1.0\"/>\n        <BlueprintRewards blueprintPool=\"pool-comp-uuid\" chance=\"1.0\"/>\n    </Contract>\n</ContractGeneratorHandler_List>\n\n</root>",
+"path": "/root/ContractGeneratorHandler_List/Contract"
+},
+"exclude_within": null
+},
+"result": {
+"$dict": [
+[
+"hostile",
+{
+"$dict": []
+}
+],
+[
+"friendly",
+{
+"$dict": []
+}
+],
+[
+"objective",
+{
+"$dict": []
+}
+],
+[
+"unknown",
+{
+"$dict": []
+}
+]
+]
+}
+},
+{
+"args": {
+"element": {
+"$el": "<root>\n\n<ContractGeneratorHandler_List debugName=\"DupeTest_Stanton\">\n    <Contract debugName=\"DupeTest_Stanton_T1\">\n        <Title>\n            <ContractStringParam param=\"Title\" value=\"@dupe_title\"/>\n            <ContractStringParam param=\"Description\" value=\"@dupe_desc\"/>\n        </Title>\n        <BlueprintRewards blueprintPool=\"pool-a\" chance=\"1.0\"/>\n        <BlueprintRewards blueprintPool=\"pool-b\" chance=\"1.0\"/>\n    </Contract>\n</ContractGeneratorHandler_List>\n\n</root>",
+"path": "/root/ContractGeneratorHandler_List"
+},
+"exclude_within": [
+"CareerContract",
+"Contract"
+]
+},
+"result": {
+"$dict": [
+[
+"hostile",
+{
+"$dict": []
+}
+],
+[
+"friendly",
+{
+"$dict": []
+}
+],
+[
+"objective",
+{
+"$dict": []
+}
+],
+[
+"unknown",
+{
+"$dict": []
+}
+]
+]
+}
+},
+{
+"args": {
+"element": {
+"$el": "<root>\n\n<ContractGeneratorHandler_List debugName=\"DupeTest_Stanton\">\n    <Contract debugName=\"DupeTest_Stanton_T1\">\n        <Title>\n            <ContractStringParam param=\"Title\" value=\"@dupe_title\"/>\n            <ContractStringParam param=\"Description\" value=\"@dupe_desc\"/>\n        </Title>\n        <BlueprintRewards blueprintPool=\"pool-a\" chance=\"1.0\"/>\n        <BlueprintRewards blueprintPool=\"pool-b\" chance=\"1.0\"/>\n    </Contract>\n</ContractGeneratorHandler_List>\n\n</root>",
+"path": "/root/ContractGeneratorHandler_List/Contract"
+},
+"exclude_within": null
+},
+"result": {
+"$dict": [
+[
+"hostile",
+{
+"$dict": []
+}
+],
+[
+"friendly",
+{
+"$dict": []
+}
+],
+[
+"objective",
+{
+"$dict": []
+}
+],
+[
+"unknown",
+{
+"$dict": []
+}
+]
+]
+}
+},
+{
+"args": {
+"element": {
+"$el": "<root>\n\n<ContractGeneratorHandler_List debugName=\"SingleTest_Stanton\">\n    <Contract debugName=\"SingleTest_Stanton_T1\">\n        <Title>\n            <ContractStringParam param=\"Title\" value=\"@single_title\"/>\n            <ContractStringParam param=\"Description\" value=\"@single_desc\"/>\n        </Title>\n        <BlueprintRewards blueprintPool=\"pool-only\" chance=\"0.5\"/>\n    </Contract>\n</ContractGeneratorHandler_List>\n\n</root>",
+"path": "/root/ContractGeneratorHandler_List"
+},
+"exclude_within": [
+"CareerContract",
+"Contract"
+]
+},
+"result": {
+"$dict": [
+[
+"hostile",
+{
+"$dict": []
+}
+],
+[
+"friendly",
+{
+"$dict": []
+}
+],
+[
+"objective",
+{
+"$dict": []
+}
+],
+[
+"unknown",
+{
+"$dict": []
+}
+]
+]
+}
+},
+{
+"args": {
+"element": {
+"$el": "<root>\n\n<ContractGeneratorHandler_List debugName=\"SingleTest_Stanton\">\n    <Contract debugName=\"SingleTest_Stanton_T1\">\n        <Title>\n            <ContractStringParam param=\"Title\" value=\"@single_title\"/>\n            <ContractStringParam param=\"Description\" value=\"@single_desc\"/>\n        </Title>\n        <BlueprintRewards blueprintPool=\"pool-only\" chance=\"0.5\"/>\n    </Contract>\n</ContractGeneratorHandler_List>\n\n</root>",
+"path": "/root/ContractGeneratorHandler_List/Contract"
+},
+"exclude_within": null
+},
+"result": {
+"$dict": [
+[
+"hostile",
+{
+"$dict": []
+}
+],
+[
+"friendly",
+{
+"$dict": []
+}
+],
+[
+"objective",
+{
+"$dict": []
+}
+],
+[
+"unknown",
+{
+"$dict": []
+}
+]
+]
+}
+},
+{
+"args": {
+"element": {
+"$el": "<root>\n\n<ContractGeneratorHandler_List debugName=\"YormandiEye_Stanton\">\n    <Contract debugName=\"YormandiEye_Stanton_VariantA\">\n        <Title>\n            <ContractStringParam param=\"Title\" value=\"@yormandi_eye_title\"/>\n            <ContractStringParam param=\"Description\" value=\"@yormandi_eye_desc\"/>\n        </Title>\n        <BlueprintRewards blueprintPool=\"pool-palatino-p8ar\" chance=\"1.0\"/>\n    </Contract>\n    <Contract debugName=\"YormandiEye_Stanton_VariantB\">\n        <Title>\n            <ContractStringParam param=\"Title\" value=\"@yormandi_eye_title\"/>\n            <ContractStringParam param=\"Description\" value=\"@yormandi_eye_desc\"/>\n        </Title>\n        <BlueprintRewards blueprintPool=\"pool-prism\" chance=\"1.0\"/>\n    </Contract>\n</ContractGeneratorHandler_List>\n\n</root>",
+"path": "/root/ContractGeneratorHandler_List"
+},
+"exclude_within": [
+"CareerContract",
+"Contract"
+]
+},
+"result": {
+"$dict": [
+[
+"hostile",
+{
+"$dict": []
+}
+],
+[
+"friendly",
+{
+"$dict": []
+}
+],
+[
+"objective",
+{
+"$dict": []
+}
+],
+[
+"unknown",
+{
+"$dict": []
+}
+]
+]
+}
+},
+{
+"args": {
+"element": {
+"$el": "<root>\n\n<ContractGeneratorHandler_List debugName=\"YormandiEye_Stanton\">\n    <Contract debugName=\"YormandiEye_Stanton_VariantA\">\n        <Title>\n            <ContractStringParam param=\"Title\" value=\"@yormandi_eye_title\"/>\n            <ContractStringParam param=\"Description\" value=\"@yormandi_eye_desc\"/>\n        </Title>\n        <BlueprintRewards blueprintPool=\"pool-palatino-p8ar\" chance=\"1.0\"/>\n    </Contract>\n    <Contract debugName=\"YormandiEye_Stanton_VariantB\">\n        <Title>\n            <ContractStringParam param=\"Title\" value=\"@yormandi_eye_title\"/>\n            <ContractStringParam param=\"Description\" value=\"@yormandi_eye_desc\"/>\n        </Title>\n        <BlueprintRewards blueprintPool=\"pool-prism\" chance=\"1.0\"/>\n    </Contract>\n</ContractGeneratorHandler_List>\n\n</root>",
+"path": "/root/ContractGeneratorHandler_List/Contract[1]"
+},
+"exclude_within": null
+},
+"result": {
+"$dict": [
+[
+"hostile",
+{
+"$dict": []
+}
+],
+[
+"friendly",
+{
+"$dict": []
+}
+],
+[
+"objective",
+{
+"$dict": []
+}
+],
+[
+"unknown",
+{
+"$dict": []
+}
+]
+]
+}
+},
+{
+"args": {
+"element": {
+"$el": "<root>\n\n<ContractGeneratorHandler_List debugName=\"YormandiEye_Stanton\">\n    <Contract debugName=\"YormandiEye_Stanton_VariantA\">\n        <Title>\n            <ContractStringParam param=\"Title\" value=\"@yormandi_eye_title\"/>\n            <ContractStringParam param=\"Description\" value=\"@yormandi_eye_desc\"/>\n        </Title>\n        <BlueprintRewards blueprintPool=\"pool-palatino-p8ar\" chance=\"1.0\"/>\n    </Contract>\n    <Contract debugName=\"YormandiEye_Stanton_VariantB\">\n        <Title>\n            <ContractStringParam param=\"Title\" value=\"@yormandi_eye_title\"/>\n            <ContractStringParam param=\"Description\" value=\"@yormandi_eye_desc\"/>\n        </Title>\n        <BlueprintRewards blueprintPool=\"pool-prism\" chance=\"1.0\"/>\n    </Contract>\n</ContractGeneratorHandler_List>\n\n</root>",
+"path": "/root/ContractGeneratorHandler_List/Contract[2]"
+},
+"exclude_within": null
+},
+"result": {
+"$dict": [
+[
+"hostile",
+{
+"$dict": []
+}
+],
+[
+"friendly",
+{
+"$dict": []
+}
+],
+[
+"objective",
+{
+"$dict": []
+}
+],
+[
+"unknown",
+{
+"$dict": []
+}
+]
+]
+}
+},
+{
+"args": {
+"element": {
+"$el": "<root>\n\n<ContractGeneratorHandler_List debugName=\"SamePool_Stanton\">\n    <Contract debugName=\"SamePool_Stanton_VariantA\">\n        <Title>\n            <ContractStringParam param=\"Title\" value=\"@samepool_title\"/>\n            <ContractStringParam param=\"Description\" value=\"@samepool_desc\"/>\n        </Title>\n        <BlueprintRewards blueprintPool=\"pool-shared\" chance=\"1.0\"/>\n    </Contract>\n    <Contract debugName=\"SamePool_Stanton_VariantB\">\n        <Title>\n            <ContractStringParam param=\"Title\" value=\"@samepool_title\"/>\n            <ContractStringParam param=\"Description\" value=\"@samepool_desc\"/>\n        </Title>\n        <BlueprintRewards blueprintPool=\"pool-shared\" chance=\"1.0\"/>\n    </Contract>\n</ContractGeneratorHandler_List>\n\n</root>",
+"path": "/root/ContractGeneratorHandler_List"
+},
+"exclude_within": [
+"CareerContract",
+"Contract"
+]
+},
+"result": {
+"$dict": [
+[
+"hostile",
+{
+"$dict": []
+}
+],
+[
+"friendly",
+{
+"$dict": []
+}
+],
+[
+"objective",
+{
+"$dict": []
+}
+],
+[
+"unknown",
+{
+"$dict": []
+}
+]
+]
+}
+},
+{
+"args": {
+"element": {
+"$el": "<root>\n\n<ContractGeneratorHandler_List debugName=\"SamePool_Stanton\">\n    <Contract debugName=\"SamePool_Stanton_VariantA\">\n        <Title>\n            <ContractStringParam param=\"Title\" value=\"@samepool_title\"/>\n            <ContractStringParam param=\"Description\" value=\"@samepool_desc\"/>\n        </Title>\n        <BlueprintRewards blueprintPool=\"pool-shared\" chance=\"1.0\"/>\n    </Contract>\n    <Contract debugName=\"SamePool_Stanton_VariantB\">\n        <Title>\n            <ContractStringParam param=\"Title\" value=\"@samepool_title\"/>\n            <ContractStringParam param=\"Description\" value=\"@samepool_desc\"/>\n        </Title>\n        <BlueprintRewards blueprintPool=\"pool-shared\" chance=\"1.0\"/>\n    </Contract>\n</ContractGeneratorHandler_List>\n\n</root>",
+"path": "/root/ContractGeneratorHandler_List/Contract[1]"
+},
+"exclude_within": null
+},
+"result": {
+"$dict": [
+[
+"hostile",
+{
+"$dict": []
+}
+],
+[
+"friendly",
+{
+"$dict": []
+}
+],
+[
+"objective",
+{
+"$dict": []
+}
+],
+[
+"unknown",
+{
+"$dict": []
+}
+]
+]
+}
+},
+{
+"args": {
+"element": {
+"$el": "<root>\n\n<ContractGeneratorHandler_List debugName=\"SamePool_Stanton\">\n    <Contract debugName=\"SamePool_Stanton_VariantA\">\n        <Title>\n            <ContractStringParam param=\"Title\" value=\"@samepool_title\"/>\n            <ContractStringParam param=\"Description\" value=\"@samepool_desc\"/>\n        </Title>\n        <BlueprintRewards blueprintPool=\"pool-shared\" chance=\"1.0\"/>\n    </Contract>\n    <Contract debugName=\"SamePool_Stanton_VariantB\">\n        <Title>\n            <ContractStringParam param=\"Title\" value=\"@samepool_title\"/>\n            <ContractStringParam param=\"Description\" value=\"@samepool_desc\"/>\n        </Title>\n        <BlueprintRewards blueprintPool=\"pool-shared\" chance=\"1.0\"/>\n    </Contract>\n</ContractGeneratorHandler_List>\n\n</root>",
+"path": "/root/ContractGeneratorHandler_List/Contract[2]"
+},
+"exclude_within": null
+},
+"result": {
+"$dict": [
+[
+"hostile",
+{
+"$dict": []
+}
+],
+[
+"friendly",
+{
+"$dict": []
+}
+],
+[
+"objective",
+{
+"$dict": []
+}
+],
+[
+"unknown",
+{
+"$dict": []
+}
+]
+]
+}
+},
+{
+"args": {
+"element": {
+"$el": "<root>\n\n<ContractGeneratorHandler_List debugName=\"ShubinTest_Stanton\">\n    <Contract debugName=\"ShubinTest_Stanton_T1\">\n        <Title>\n            <ContractStringParam param=\"Title\" value=\"@shubin_title\"/>\n            <ContractStringParam param=\"Description\" value=\"@shubin_desc\"/>\n        </Title>\n        <BlueprintRewards blueprintPool=\"pool-rank0to1\" chance=\"1.0\"/>\n        <BlueprintRewards blueprintPool=\"pool-rank4\" chance=\"1.0\"/>\n    </Contract>\n</ContractGeneratorHandler_List>\n\n</root>",
+"path": "/root/ContractGeneratorHandler_List"
+},
+"exclude_within": [
+"CareerContract",
+"Contract"
+]
+},
+"result": {
+"$dict": [
+[
+"hostile",
+{
+"$dict": []
+}
+],
+[
+"friendly",
+{
+"$dict": []
+}
+],
+[
+"objective",
+{
+"$dict": []
+}
+],
+[
+"unknown",
+{
+"$dict": []
+}
+]
+]
+}
+},
+{
+"args": {
+"element": {
+"$el": "<root>\n\n<ContractGeneratorHandler_List debugName=\"ShubinTest_Stanton\">\n    <Contract debugName=\"ShubinTest_Stanton_T1\">\n        <Title>\n            <ContractStringParam param=\"Title\" value=\"@shubin_title\"/>\n            <ContractStringParam param=\"Description\" value=\"@shubin_desc\"/>\n        </Title>\n        <BlueprintRewards blueprintPool=\"pool-rank0to1\" chance=\"1.0\"/>\n        <BlueprintRewards blueprintPool=\"pool-rank4\" chance=\"1.0\"/>\n    </Contract>\n</ContractGeneratorHandler_List>\n\n</root>",
+"path": "/root/ContractGeneratorHandler_List/Contract"
+},
+"exclude_within": null
+},
+"result": {
+"$dict": [
+[
+"hostile",
+{
+"$dict": []
+}
+],
+[
+"friendly",
+{
+"$dict": []
+}
+],
+[
+"objective",
+{
+"$dict": []
+}
+],
+[
+"unknown",
+{
+"$dict": []
+}
+]
+]
+}
+},
+{
+"args": {
+"element": {
+"$el": "<root>\n\n<ContractGeneratorHandler_List debugName=\"NoLabelTest_Stanton\">\n    <Contract debugName=\"NoLabelTest_Stanton_T1\">\n        <Title>\n            <ContractStringParam param=\"Title\" value=\"@nolabel_title\"/>\n            <ContractStringParam param=\"Description\" value=\"@nolabel_desc\"/>\n        </Title>\n        <BlueprintRewards blueprintPool=\"pool-x\" chance=\"1.0\"/>\n    </Contract>\n</ContractGeneratorHandler_List>\n\n</root>",
+"path": "/root/ContractGeneratorHandler_List"
+},
+"exclude_within": [
+"CareerContract",
+"Contract"
+]
+},
+"result": {
+"$dict": [
+[
+"hostile",
+{
+"$dict": []
+}
+],
+[
+"friendly",
+{
+"$dict": []
+}
+],
+[
+"objective",
+{
+"$dict": []
+}
+],
+[
+"unknown",
+{
+"$dict": []
+}
+]
+]
+}
+},
+{
+"args": {
+"element": {
+"$el": "<root>\n\n<ContractGeneratorHandler_List debugName=\"NoLabelTest_Stanton\">\n    <Contract debugName=\"NoLabelTest_Stanton_T1\">\n        <Title>\n            <ContractStringParam param=\"Title\" value=\"@nolabel_title\"/>\n            <ContractStringParam param=\"Description\" value=\"@nolabel_desc\"/>\n        </Title>\n        <BlueprintRewards blueprintPool=\"pool-x\" chance=\"1.0\"/>\n    </Contract>\n</ContractGeneratorHandler_List>\n\n</root>",
+"path": "/root/ContractGeneratorHandler_List/Contract"
+},
+"exclude_within": null
+},
+"result": {
+"$dict": [
+[
+"hostile",
+{
+"$dict": []
+}
+],
+[
+"friendly",
+{
+"$dict": []
+}
+],
+[
+"objective",
+{
+"$dict": []
+}
+],
+[
+"unknown",
+{
+"$dict": []
+}
+]
+]
+}
+},
+{
+"args": {
+"element": {
+"$el": "<ContractGenerator>\n  <ContractGeneratorHandler_List debugName=\"Stanton_DefendShip\">\n    <Contract debugName=\"Stanton_StopAttack\" notForRelease=\"0\" minStanding=\"\">\n      <ContractStringParam param=\"Title\" value=\"@eckhart_defendship_MRT_title_001\"/>\n      <ContractStringParam param=\"Description\" value=\"@eckhart_defendship_MRT_title_001\"/>\n      <BlueprintRewards blueprintPool=\"11111111-1111-1111-1111-111111111111\" chance=\"1\"/>\n    </Contract>\n  </ContractGeneratorHandler_List>\n</ContractGenerator>",
+"path": "/ContractGenerator/ContractGeneratorHandler_List"
+},
+"exclude_within": [
+"CareerContract",
+"Contract"
+]
+},
+"result": {
+"$dict": [
+[
+"hostile",
+{
+"$dict": []
+}
+],
+[
+"friendly",
+{
+"$dict": []
+}
+],
+[
+"objective",
+{
+"$dict": []
+}
+],
+[
+"unknown",
+{
+"$dict": []
+}
+]
+]
+}
+},
+{
+"args": {
+"element": {
+"$el": "<ContractGenerator>\n  <ContractGeneratorHandler_List debugName=\"Stanton_DefendShip\">\n    <Contract debugName=\"Stanton_StopAttack\" notForRelease=\"0\" minStanding=\"\">\n      <ContractStringParam param=\"Title\" value=\"@eckhart_defendship_MRT_title_001\"/>\n      <ContractStringParam param=\"Description\" value=\"@eckhart_defendship_MRT_title_001\"/>\n      <BlueprintRewards blueprintPool=\"11111111-1111-1111-1111-111111111111\" chance=\"1\"/>\n    </Contract>\n  </ContractGeneratorHandler_List>\n</ContractGenerator>",
+"path": "/ContractGenerator/ContractGeneratorHandler_List/Contract"
+},
+"exclude_within": null
+},
+"result": {
+"$dict": [
+[
+"hostile",
+{
+"$dict": []
+}
+],
+[
+"friendly",
+{
+"$dict": []
+}
+],
+[
+"objective",
+{
+"$dict": []
+}
+],
+[
+"unknown",
+{
+"$dict": []
+}
+]
+]
+}
+},
+{
+"args": {
+"element": {
+"$el": "<MissionBrokerEntry><spawnDescriptions><SpawnDescription_ShipGroup Name=\"Hostiles\"><ships><SpawnDescription_Ship concurrentAmount=\"4\"/></ships></SpawnDescription_ShipGroup><SpawnDescription_ShipGroup Name=\"Turrets\"><ships><SpawnDescription_Ship concurrentAmount=\"3\"/></ships></SpawnDescription_ShipGroup></spawnDescriptions></MissionBrokerEntry>",
+"path": "/MissionBrokerEntry"
+},
+"exclude_within": null
+},
+"result": {
+"$dict": [
+[
+"hostile",
+{
+"$dict": [
+[
+"Hostiles",
+4
+]
+]
+}
+],
+[
+"friendly",
+{
+"$dict": []
+}
+],
+[
+"objective",
+{
+"$dict": []
+}
+],
+[
+"unknown",
+{
+"$dict": []
+}
+]
+]
+}
+},
+{
+"args": {
+"element": {
+"$el": "<ContractGenerator>\n  <ContractGeneratorHandler_Career debugName=\"Stanton_TestHandler\" notForRelease=\"0\">\n    <CareerContract debugName=\"Stanton_Released\" notForRelease=\"0\" minStanding=\"\">\n      <ContractStringParam param=\"Title\" value=\"@released_title_key\"/>\n      <ContractStringParam param=\"Description\" value=\"@released_desc_key\"/>\n    </CareerContract>\n    <CareerContract debugName=\"Stanton_NotReleased\" notForRelease=\"1\" minStanding=\"\">\n      <ContractStringParam param=\"Title\" value=\"@unreleased_title_key\"/>\n      <ContractStringParam param=\"Description\" value=\"@unreleased_desc_key\"/>\n    </CareerContract>\n  </ContractGeneratorHandler_Career>\n</ContractGenerator>",
+"path": "/ContractGenerator/ContractGeneratorHandler_Career"
+},
+"exclude_within": [
+"CareerContract",
+"Contract"
+]
+},
+"result": {
+"$dict": [
+[
+"hostile",
+{
+"$dict": []
+}
+],
+[
+"friendly",
+{
+"$dict": []
+}
+],
+[
+"objective",
+{
+"$dict": []
+}
+],
+[
+"unknown",
+{
+"$dict": []
+}
+]
+]
+}
+},
+{
+"args": {
+"element": {
+"$el": "<ContractGenerator>\n  <ContractGeneratorHandler_Career debugName=\"Stanton_TestHandler\" notForRelease=\"0\">\n    <CareerContract debugName=\"Stanton_Released\" notForRelease=\"0\" minStanding=\"\">\n      <ContractStringParam param=\"Title\" value=\"@released_title_key\"/>\n      <ContractStringParam param=\"Description\" value=\"@released_desc_key\"/>\n    </CareerContract>\n    <CareerContract debugName=\"Stanton_NotReleased\" notForRelease=\"1\" minStanding=\"\">\n      <ContractStringParam param=\"Title\" value=\"@unreleased_title_key\"/>\n      <ContractStringParam param=\"Description\" value=\"@unreleased_desc_key\"/>\n    </CareerContract>\n  </ContractGeneratorHandler_Career>\n</ContractGenerator>",
+"path": "/ContractGenerator/ContractGeneratorHandler_Career/CareerContract[1]"
+},
+"exclude_within": null
+},
+"result": {
+"$dict": [
+[
+"hostile",
+{
+"$dict": []
+}
+],
+[
+"friendly",
+{
+"$dict": []
+}
+],
+[
+"objective",
+{
+"$dict": []
+}
+],
+[
+"unknown",
+{
+"$dict": []
+}
+]
+]
+}
+},
+{
+"args": {
+"element": {
+"$el": "<MissionBrokerEntry/>",
+"path": "/MissionBrokerEntry"
+},
+"exclude_within": null
+},
+"result": {
+"$dict": [
+[
+"hostile",
+{
+"$dict": []
+}
+],
+[
+"friendly",
+{
+"$dict": []
+}
+],
+[
+"objective",
+{
+"$dict": []
+}
+],
+[
+"unknown",
+{
+"$dict": []
+}
+]
+]
+}
+},
+{
+"args": {
+"element": {
+"$el": "<MissionBrokerEntry><spawnDescriptions><SpawnDescription_ShipGroup Name=\"Pirates\"><ships><SpawnDescription_Ship concurrentAmount=\"4\"/></ships></SpawnDescription_ShipGroup><SpawnDescription_ShipGroup Name=\"Bandits\"><ships><SpawnDescription_Ship concurrentAmount=\"2\"/></ships></SpawnDescription_ShipGroup><SpawnDescription_ShipGroup Name=\"EscortShip\"><ships><SpawnDescription_Ship concurrentAmount=\"1\"/></ships></SpawnDescription_ShipGroup></spawnDescriptions></MissionBrokerEntry>",
+"path": "/MissionBrokerEntry"
+},
+"exclude_within": null
+},
+"result": {
+"$dict": [
+[
+"hostile",
+{
+"$dict": [
+[
+"Pirates",
+4
+],
+[
+"Bandits",
+2
+]
+]
+}
+],
+[
+"friendly",
+{
+"$dict": [
+[
+"Escort Wings",
+1
+]
+]
+}
+],
+[
+"objective",
+{
+"$dict": []
+}
+],
+[
+"unknown",
+{
+"$dict": []
+}
+]
+]
+}
+},
+{
+"args": {
+"element": {
+"$el": "<MissionBrokerEntry><spawnDescriptions><SpawnDescription_ShipGroup Name=\"SalvageableShip\"><ships><SpawnDescription_Ship concurrentAmount=\"1\"/></ships></SpawnDescription_ShipGroup></spawnDescriptions></MissionBrokerEntry>",
+"path": "/MissionBrokerEntry"
+},
+"exclude_within": null
+},
+"result": {
+"$dict": [
+[
+"hostile",
+{
+"$dict": []
+}
+],
+[
+"friendly",
+{
+"$dict": [
+[
+"Salvageable Ships",
+1
+]
+]
+}
+],
+[
+"objective",
+{
+"$dict": []
+}
+],
+[
+"unknown",
+{
+"$dict": []
+}
+]
+]
+}
+},
+{
+"args": {
+"element": {
+"$el": "<MissionBrokerEntry><spawnDescriptions><SpawnDescription_ShipGroup Name=\"Probe 1\"><ships><SpawnDescription_Ship concurrentAmount=\"1\"/></ships></SpawnDescription_ShipGroup><SpawnDescription_ShipGroup Name=\"Probe 2\"><ships><SpawnDescription_Ship concurrentAmount=\"1\"/></ships></SpawnDescription_ShipGroup><SpawnDescription_ShipGroup Name=\"Probe 3\"><ships><SpawnDescription_Ship concurrentAmount=\"1\"/></ships></SpawnDescription_ShipGroup></spawnDescriptions></MissionBrokerEntry>",
+"path": "/MissionBrokerEntry"
+},
+"exclude_within": null
+},
+"result": {
+"$dict": [
+[
+"hostile",
+{
+"$dict": []
+}
+],
+[
+"friendly",
+{
+"$dict": []
+}
+],
+[
+"objective",
+{
+"$dict": [
+[
+"Probe",
+3
+]
+]
+}
+],
+[
+"unknown",
+{
+"$dict": []
+}
+]
+]
+}
+},
+{
+"args": {
+"element": {
+"$el": "<MissionBrokerEntry><spawnDescriptions><SpawnDescription_NPC_Group Name=\"Soldier x 3\"/><SpawnDescription_NPC_Group Name=\"Civs x 4\"/></spawnDescriptions></MissionBrokerEntry>",
+"path": "/MissionBrokerEntry"
+},
+"exclude_within": null
+},
+"result": {
+"$dict": [
+[
+"hostile",
+{
+"$dict": [
+[
+"Soldiers",
+3
+]
+]
+}
+],
+[
+"friendly",
+{
+"$dict": [
+[
+"Civilians",
+4
+]
+]
+}
+],
+[
+"objective",
+{
+"$dict": []
+}
+],
+[
+"unknown",
+{
+"$dict": []
+}
+]
+]
+}
+},
+{
+"args": {
+"element": {
+"$el": "<MissionBrokerEntry><spawnDescriptions><SpawnDescription_ShipGroup Name=\"QuantumWidgetSquadron\"><ships><SpawnDescription_Ship concurrentAmount=\"3\"/></ships></SpawnDescription_ShipGroup></spawnDescriptions></MissionBrokerEntry>",
+"path": "/MissionBrokerEntry"
+},
+"exclude_within": null
+},
+"result": {
+"$dict": [
+[
+"hostile",
+{
+"$dict": []
+}
+],
+[
+"friendly",
+{
+"$dict": []
+}
+],
+[
+"objective",
+{
+"$dict": []
+}
+],
+[
+"unknown",
+{
+"$dict": [
+[
+"Unknown",
+3
+]
+]
+}
+]
+]
+}
+},
+{
+"args": {
+"element": {
+"$el": "<MissionBrokerEntry><spawnDescriptions><SpawnDescription_ShipGroup Name=\"Pirates\"><ships><SpawnDescription_Ship concurrentAmount=\"4\"/></ships></SpawnDescription_ShipGroup><SpawnDescription_ShipGroup Name=\"Turrets\"><ships><SpawnDescription_Ship concurrentAmount=\"3\"/></ships></SpawnDescription_ShipGroup></spawnDescriptions></MissionBrokerEntry>",
+"path": "/MissionBrokerEntry"
+},
+"exclude_within": null
+},
+"result": {
+"$dict": [
+[
+"hostile",
+{
+"$dict": [
+[
+"Pirates",
+4
+]
+]
+}
+],
+[
+"friendly",
+{
+"$dict": []
+}
+],
+[
+"objective",
+{
+"$dict": []
+}
+],
+[
+"unknown",
+{
+"$dict": []
+}
+]
+]
+}
+},
+{
+"args": {
+"element": {
+"$el": "<MissionBrokerEntry><MissionProperty missionVariableName=\"HostileShipSpawnDescriptions_BP\"><value><MissionPropertyValue_ShipSpawnDescriptions><spawnDescriptions><SpawnDescription_ShipGroup><ships><SpawnDescription_Ship concurrentAmount=\"3\"/></ships></SpawnDescription_ShipGroup></spawnDescriptions></MissionPropertyValue_ShipSpawnDescriptions></value></MissionProperty></MissionBrokerEntry>",
+"path": "/MissionBrokerEntry"
+},
+"exclude_within": null
+},
+"result": {
+"$dict": [
+[
+"hostile",
+{
+"$dict": [
+[
+"Hostiles",
+3
+]
+]
+}
+],
+[
+"friendly",
+{
+"$dict": []
+}
+],
+[
+"objective",
+{
+"$dict": []
+}
+],
+[
+"unknown",
+{
+"$dict": []
+}
+]
+]
+}
+},
+{
+"args": {
+"element": {
+"$el": "<MissionBrokerEntry><MissionProperty missionVariableName=\"TargetSpawnDescriptions_BP\"><value><MissionPropertyValue_ShipSpawnDescriptions><spawnDescriptions><SpawnDescription_ShipGroup><ships><SpawnDescription_Ship concurrentAmount=\"3\"/></ships></SpawnDescription_ShipGroup></spawnDescriptions></MissionPropertyValue_ShipSpawnDescriptions></value></MissionProperty></MissionBrokerEntry>",
+"path": "/MissionBrokerEntry"
+},
+"exclude_within": null
+},
+"result": {
+"$dict": [
+[
+"hostile",
+{
+"$dict": [
+[
+"Targets",
+3
+]
+]
+}
+],
+[
+"friendly",
+{
+"$dict": []
+}
+],
+[
+"objective",
+{
+"$dict": []
+}
+],
+[
+"unknown",
+{
+"$dict": []
+}
+]
+]
+}
+},
+{
+"args": {
+"element": {
+"$el": "<MissionBrokerEntry><MissionProperty missionVariableName=\"BossSpawnDescriptions_BP\"><value><MissionPropertyValue_ShipSpawnDescriptions><spawnDescriptions><SpawnDescription_ShipGroup><ships><SpawnDescription_Ship concurrentAmount=\"3\"/></ships></SpawnDescription_ShipGroup></spawnDescriptions></MissionPropertyValue_ShipSpawnDescriptions></value></MissionProperty></MissionBrokerEntry>",
+"path": "/MissionBrokerEntry"
+},
+"exclude_within": null
+},
+"result": {
+"$dict": [
+[
+"hostile",
+{
+"$dict": [
+[
+"Boss",
+3
+]
+]
+}
+],
+[
+"friendly",
+{
+"$dict": []
+}
+],
+[
+"objective",
+{
+"$dict": []
+}
+],
+[
+"unknown",
+{
+"$dict": []
+}
+]
+]
+}
+},
+{
+"args": {
+"element": {
+"$el": "<MissionBrokerEntry><MissionProperty missionVariableName=\"BP_SpawnDescriptions_Boss\"><value><MissionPropertyValue_ShipSpawnDescriptions><spawnDescriptions><SpawnDescription_ShipGroup><ships><SpawnDescription_Ship concurrentAmount=\"3\"/></ships></SpawnDescription_ShipGroup></spawnDescriptions></MissionPropertyValue_ShipSpawnDescriptions></value></MissionProperty></MissionBrokerEntry>",
+"path": "/MissionBrokerEntry"
+},
+"exclude_within": null
+},
+"result": {
+"$dict": [
+[
+"hostile",
+{
+"$dict": [
+[
+"Boss",
+3
+]
+]
+}
+],
+[
+"friendly",
+{
+"$dict": []
+}
+],
+[
+"objective",
+{
+"$dict": []
+}
+],
+[
+"unknown",
+{
+"$dict": []
+}
+]
+]
+}
+},
+{
+"args": {
+"element": {
+"$el": "<MissionBrokerEntry><MissionProperty missionVariableName=\"BP_SpawnDescriptions_EliminateSpecific_EliminateAll\"><value><MissionPropertyValue_ShipSpawnDescriptions><spawnDescriptions><SpawnDescription_ShipGroup><ships><SpawnDescription_Ship concurrentAmount=\"3\"/></ships></SpawnDescription_ShipGroup></spawnDescriptions></MissionPropertyValue_ShipSpawnDescriptions></value></MissionProperty></MissionBrokerEntry>",
+"path": "/MissionBrokerEntry"
+},
+"exclude_within": null
+},
+"result": {
+"$dict": [
+[
+"hostile",
+{
+"$dict": [
+[
+"Hostiles",
+3
+]
+]
+}
+],
+[
+"friendly",
+{
+"$dict": []
+}
+],
+[
+"objective",
+{
+"$dict": []
+}
+],
+[
+"unknown",
+{
+"$dict": []
+}
+]
+]
+}
+},
+{
+"args": {
+"element": {
+"$el": "<MissionBrokerEntry><MissionProperty missionVariableName=\"EliminateSpecific_BP_SpawnDescriptions\"><value><MissionPropertyValue_ShipSpawnDescriptions><spawnDescriptions><SpawnDescription_ShipGroup><ships><SpawnDescription_Ship concurrentAmount=\"3\"/></ships></SpawnDescription_ShipGroup></spawnDescriptions></MissionPropertyValue_ShipSpawnDescriptions></value></MissionProperty></MissionBrokerEntry>",
+"path": "/MissionBrokerEntry"
+},
+"exclude_within": null
+},
+"result": {
+"$dict": [
+[
+"hostile",
+{
+"$dict": [
+[
+"Hostiles",
+3
+]
+]
+}
+],
+[
+"friendly",
+{
+"$dict": []
+}
+],
+[
+"objective",
+{
+"$dict": []
+}
+],
+[
+"unknown",
+{
+"$dict": []
+}
+]
+]
+}
+},
+{
+"args": {
+"element": {
+"$el": "<MissionBrokerEntry><MissionProperty missionVariableName=\"AlliedSpawnDescriptions_BP\"><value><MissionPropertyValue_ShipSpawnDescriptions><spawnDescriptions><SpawnDescription_ShipGroup><ships><SpawnDescription_Ship concurrentAmount=\"3\"/></ships></SpawnDescription_ShipGroup></spawnDescriptions></MissionPropertyValue_ShipSpawnDescriptions></value></MissionProperty></MissionBrokerEntry>",
+"path": "/MissionBrokerEntry"
+},
+"exclude_within": null
+},
+"result": {
+"$dict": [
+[
+"hostile",
+{
+"$dict": []
+}
+],
+[
+"friendly",
+{
+"$dict": []
+}
+],
+[
+"objective",
+{
+"$dict": []
+}
+],
+[
+"unknown",
+{
+"$dict": [
+[
+"Unknown",
+3
+]
+]
+}
+]
+]
+}
+},
+{
+"args": {
+"element": {
+"$el": "<MissionBrokerEntry><MissionProperty missionVariableName=\"AttackedShipSpawnDescriptions_BP\"><value><MissionPropertyValue_ShipSpawnDescriptions><spawnDescriptions><SpawnDescription_ShipGroup><ships><SpawnDescription_Ship concurrentAmount=\"3\"/></ships></SpawnDescription_ShipGroup></spawnDescriptions></MissionPropertyValue_ShipSpawnDescriptions></value></MissionProperty></MissionBrokerEntry>",
+"path": "/MissionBrokerEntry"
+},
+"exclude_within": null
+},
+"result": {
+"$dict": [
+[
+"hostile",
+{
+"$dict": []
+}
+],
+[
+"friendly",
+{
+"$dict": []
+}
+],
+[
+"objective",
+{
+"$dict": []
+}
+],
+[
+"unknown",
+{
+"$dict": [
+[
+"Unknown",
+3
+]
+]
+}
+]
+]
+}
+},
+{
+"args": {
+"element": {
+"$el": "<MissionBrokerEntry><MissionProperty missionVariableName=\"ReinforcementsSpawnDescriptions_BP\"><value><MissionPropertyValue_ShipSpawnDescriptions><spawnDescriptions><SpawnDescription_ShipGroup><ships><SpawnDescription_Ship concurrentAmount=\"3\"/></ships></SpawnDescription_ShipGroup></spawnDescriptions></MissionPropertyValue_ShipSpawnDescriptions></value></MissionProperty></MissionBrokerEntry>",
+"path": "/MissionBrokerEntry"
+},
+"exclude_within": null
+},
+"result": {
+"$dict": [
+[
+"hostile",
+{
+"$dict": []
+}
+],
+[
+"friendly",
+{
+"$dict": []
+}
+],
+[
+"objective",
+{
+"$dict": []
+}
+],
+[
+"unknown",
+{
+"$dict": [
+[
+"Unknown",
+3
+]
+]
+}
+]
+]
+}
+},
+{
+"args": {
+"element": {
+"$el": "<MissionBrokerEntry><MissionProperty missionVariableName=\"BP_SpawnDescriptions\"><value><MissionPropertyValue_ShipSpawnDescriptions><spawnDescriptions><SpawnDescription_ShipGroup><ships><SpawnDescription_Ship concurrentAmount=\"3\"/></ships></SpawnDescription_ShipGroup></spawnDescriptions></MissionPropertyValue_ShipSpawnDescriptions></value></MissionProperty></MissionBrokerEntry>",
+"path": "/MissionBrokerEntry"
+},
+"exclude_within": null
+},
+"result": {
+"$dict": [
+[
+"hostile",
+{
+"$dict": []
+}
+],
+[
+"friendly",
+{
+"$dict": []
+}
+],
+[
+"objective",
+{
+"$dict": []
+}
+],
+[
+"unknown",
+{
+"$dict": [
+[
+"Unknown",
+3
+]
+]
+}
+]
+]
+}
+},
+{
+"args": {
+"element": {
+"$el": "<MissionBrokerEntry><MissionProperty missionVariableName=\"NPCSpawnDescriptions_BP\"><value><MissionPropertyValue_ShipSpawnDescriptions><spawnDescriptions><SpawnDescription_ShipGroup><ships><SpawnDescription_Ship concurrentAmount=\"3\"/></ships></SpawnDescription_ShipGroup></spawnDescriptions></MissionPropertyValue_ShipSpawnDescriptions></value></MissionProperty></MissionBrokerEntry>",
+"path": "/MissionBrokerEntry"
+},
+"exclude_within": null
+},
+"result": {
+"$dict": [
+[
+"hostile",
+{
+"$dict": []
+}
+],
+[
+"friendly",
+{
+"$dict": []
+}
+],
+[
+"objective",
+{
+"$dict": []
+}
+],
+[
+"unknown",
+{
+"$dict": [
+[
+"Unknown",
+3
+]
+]
+}
+]
+]
+}
+},
+{
+"args": {
+"element": {
+"$el": "<MissionBrokerEntry><MissionProperty missionVariableName=\"EntitySpawnDescriptions_BP\"><value><MissionPropertyValue_ShipSpawnDescriptions><spawnDescriptions><SpawnDescription_ShipGroup><ships><SpawnDescription_Ship concurrentAmount=\"3\"/></ships></SpawnDescription_ShipGroup></spawnDescriptions></MissionPropertyValue_ShipSpawnDescriptions></value></MissionProperty></MissionBrokerEntry>",
+"path": "/MissionBrokerEntry"
+},
+"exclude_within": null
+},
+"result": {
+"$dict": [
+[
+"hostile",
+{
+"$dict": []
+}
+],
+[
+"friendly",
+{
+"$dict": []
+}
+],
+[
+"objective",
+{
+"$dict": []
+}
+],
+[
+"unknown",
+{
+"$dict": [
+[
+"Unknown",
+3
+]
+]
+}
+]
+]
+}
+},
+{
+"args": {
+"element": {
+"$el": "<MissionBrokerEntry><MissionProperty missionVariableName=\"SpawnDescriptions_BP\"><value><MissionPropertyValue_ShipSpawnDescriptions><spawnDescriptions><SpawnDescription_ShipGroup><ships><SpawnDescription_Ship concurrentAmount=\"3\"/></ships></SpawnDescription_ShipGroup></spawnDescriptions></MissionPropertyValue_ShipSpawnDescriptions></value></MissionProperty></MissionBrokerEntry>",
+"path": "/MissionBrokerEntry"
+},
+"exclude_within": null
+},
+"result": {
+"$dict": [
+[
+"hostile",
+{
+"$dict": []
+}
+],
+[
+"friendly",
+{
+"$dict": []
+}
+],
+[
+"objective",
+{
+"$dict": []
+}
+],
+[
+"unknown",
+{
+"$dict": [
+[
+"Unknown",
+3
+]
+]
+}
+]
+]
+}
+},
+{
+"args": {
+"element": {
+"$el": "<MissionBrokerEntry><MissionProperty missionVariableName=\"TargetSpawnDescriptions_BP\"><value><MissionPropertyValue_ShipSpawnDescriptions><spawnDescriptions><SpawnDescription_ShipGroup Name=\"Civilians\"><ships><SpawnDescription_Ship concurrentAmount=\"2\"/></ships></SpawnDescription_ShipGroup></spawnDescriptions></MissionPropertyValue_ShipSpawnDescriptions></value></MissionProperty></MissionBrokerEntry>",
+"path": "/MissionBrokerEntry"
+},
+"exclude_within": null
+},
+"result": {
+"$dict": [
+[
+"hostile",
+{
+"$dict": []
+}
+],
+[
+"friendly",
+{
+"$dict": [
+[
+"Civilians",
+2
+]
+]
+}
+],
+[
+"objective",
+{
+"$dict": []
+}
+],
+[
+"unknown",
+{
+"$dict": []
+}
+]
+]
+}
+},
+{
+"args": {
+"element": {
+"$el": "<MissionBrokerEntry><MissionProperty missionVariableName=\"BossSpawnDescriptions_BP\"><value><MissionPropertyValue_ShipSpawnDescriptions><spawnDescriptions><SpawnDescription_NPC_Group Name=\"x 5\"/></spawnDescriptions></MissionPropertyValue_ShipSpawnDescriptions></value></MissionProperty></MissionBrokerEntry>",
+"path": "/MissionBrokerEntry"
+},
+"exclude_within": null
+},
+"result": {
+"$dict": [
+[
+"hostile",
+{
+"$dict": [
+[
+"Boss",
+5
+]
+]
+}
+],
+[
+"friendly",
+{
+"$dict": []
+}
+],
+[
+"objective",
+{
+"$dict": []
+}
+],
+[
+"unknown",
+{
+"$dict": []
+}
+]
+]
+}
+},
+{
+"args": {
+"element": {
+"$el": "<MissionBrokerEntry><ContractGeneratorHandler_Career><SpawnDescription_ShipGroup Name=\"Defenders\"><ships><SpawnDescription_Ship concurrentAmount=\"4\"/></ships></SpawnDescription_ShipGroup><CareerContract debugName=\"A\"><SpawnDescription_ShipGroup Name=\"Pirates\"><ships><SpawnDescription_Ship concurrentAmount=\"30\"/></ships></SpawnDescription_ShipGroup></CareerContract><CareerContract debugName=\"B\"><SpawnDescription_ShipGroup Name=\"Kopions\"><ships><SpawnDescription_Ship concurrentAmount=\"9\"/></ships></SpawnDescription_ShipGroup></CareerContract></ContractGeneratorHandler_Career></MissionBrokerEntry>",
+"path": "/MissionBrokerEntry/ContractGeneratorHandler_Career"
+},
+"exclude_within": "CareerContract"
+},
+"result": {
+"$dict": [
+[
+"hostile",
+{
+"$dict": [
+[
+"Defenders",
+4
+]
+]
+}
+],
+[
+"friendly",
+{
+"$dict": []
+}
+],
+[
+"objective",
+{
+"$dict": []
+}
+],
+[
+"unknown",
+{
+"$dict": []
+}
+]
+]
+}
+},
+{
+"args": {
+"element": {
+"$el": "<MissionBrokerEntry><ContractGeneratorHandler_Career><SpawnDescription_ShipGroup Name=\"Defenders\"><ships><SpawnDescription_Ship concurrentAmount=\"4\"/></ships></SpawnDescription_ShipGroup><CareerContract debugName=\"A\"><SpawnDescription_ShipGroup Name=\"Pirates\"><ships><SpawnDescription_Ship concurrentAmount=\"30\"/></ships></SpawnDescription_ShipGroup></CareerContract><CareerContract debugName=\"B\"><SpawnDescription_ShipGroup Name=\"Kopions\"><ships><SpawnDescription_Ship concurrentAmount=\"9\"/></ships></SpawnDescription_ShipGroup></CareerContract></ContractGeneratorHandler_Career></MissionBrokerEntry>",
+"path": "/MissionBrokerEntry/ContractGeneratorHandler_Career"
+},
+"exclude_within": null
+},
+"result": {
+"$dict": [
+[
+"hostile",
+{
+"$dict": [
+[
+"Defenders",
+4
+],
+[
+"Pirates",
+30
+],
+[
+"Kopions",
+9
+]
+]
+}
+],
+[
+"friendly",
+{
+"$dict": []
+}
+],
+[
+"objective",
+{
+"$dict": []
+}
+],
+[
+"unknown",
+{
+"$dict": []
+}
+]
+]
+}
+},
+{
+"args": {
+"element": {
+"$el": "<MissionBrokerEntry><ContractGeneratorHandler_Career><SpawnDescription_ShipGroup Name=\"Defenders\"><ships><SpawnDescription_Ship concurrentAmount=\"4\"/></ships></SpawnDescription_ShipGroup><CareerContract debugName=\"A\"><SpawnDescription_ShipGroup Name=\"Pirates\"><ships><SpawnDescription_Ship concurrentAmount=\"30\"/></ships></SpawnDescription_ShipGroup></CareerContract><CareerContract debugName=\"B\"><SpawnDescription_ShipGroup Name=\"Kopions\"><ships><SpawnDescription_Ship concurrentAmount=\"9\"/></ships></SpawnDescription_ShipGroup></CareerContract></ContractGeneratorHandler_Career></MissionBrokerEntry>",
+"path": "/MissionBrokerEntry/ContractGeneratorHandler_Career/CareerContract[1]"
+},
+"exclude_within": null
+},
+"result": {
+"$dict": [
+[
+"hostile",
+{
+"$dict": [
+[
+"Pirates",
+30
+]
+]
+}
+],
+[
+"friendly",
+{
+"$dict": []
+}
+],
+[
+"objective",
+{
+"$dict": []
+}
+],
+[
+"unknown",
+{
+"$dict": []
+}
+]
+]
+}
+},
+{
+"args": {
+"element": {
+"$el": "<MissionBrokerEntry><ContractGeneratorHandler_Career><CareerContract debugName=\"A\"><SpawnDescription_ShipGroup Name=\"Pirates\"><ships><SpawnDescription_Ship concurrentAmount=\"30\"/></ships></SpawnDescription_ShipGroup></CareerContract></ContractGeneratorHandler_Career></MissionBrokerEntry>",
+"path": "/MissionBrokerEntry/ContractGeneratorHandler_Career"
+},
+"exclude_within": "CareerContract"
+},
+"result": {
+"$dict": [
+[
+"hostile",
+{
+"$dict": []
+}
+],
+[
+"friendly",
+{
+"$dict": []
+}
+],
+[
+"objective",
+{
+"$dict": []
+}
+],
+[
+"unknown",
+{
+"$dict": []
+}
+]
+]
+}
+},
+{
+"args": {
+"element": {
+"$el": "<MissionBrokerEntry><ContractGeneratorHandler_Career><introContracts><Contract debugName=\"Intro\"><SpawnDescription_ShipGroup Name=\"Attackers\"><ships><SpawnDescription_Ship concurrentAmount=\"10\"/></ships></SpawnDescription_ShipGroup></Contract></introContracts><contracts><CareerContract debugName=\"DestroySatellite\"/></contracts></ContractGeneratorHandler_Career></MissionBrokerEntry>",
+"path": "/MissionBrokerEntry/ContractGeneratorHandler_Career"
+},
+"exclude_within": [
+"CareerContract",
+"Contract"
+]
+},
+"result": {
+"$dict": [
+[
+"hostile",
+{
+"$dict": []
+}
+],
+[
+"friendly",
+{
+"$dict": []
+}
+],
+[
+"objective",
+{
+"$dict": []
+}
+],
+[
+"unknown",
+{
+"$dict": []
+}
+]
+]
+}
+},
+{
+"args": {
+"element": {
+"$el": "<MissionBrokerEntry><ContractGeneratorHandler_Career><SpawnDescription_ShipGroup Name=\"Defenders\"><ships><SpawnDescription_Ship concurrentAmount=\"4\"/></ships></SpawnDescription_ShipGroup><introContracts><Contract debugName=\"Intro\"><SpawnDescription_ShipGroup Name=\"Attackers\"><ships><SpawnDescription_Ship concurrentAmount=\"10\"/></ships></SpawnDescription_ShipGroup></Contract></introContracts></ContractGeneratorHandler_Career></MissionBrokerEntry>",
+"path": "/MissionBrokerEntry/ContractGeneratorHandler_Career"
+},
+"exclude_within": [
+"CareerContract",
+"Contract"
+]
+},
+"result": {
+"$dict": [
+[
+"hostile",
+{
+"$dict": [
+[
+"Defenders",
+4
+]
+]
+}
+],
+[
+"friendly",
+{
+"$dict": []
+}
+],
+[
+"objective",
+{
+"$dict": []
+}
+],
+[
+"unknown",
+{
+"$dict": []
+}
+]
+]
+}
+},
+{
+"args": {
+"element": {
+"$el": "<MissionBrokerEntry description=\"@Shared_desc\"><spawnDescriptions><SpawnDescription_ShipGroup Name=\"SalvageableShip\"><ships><SpawnDescription_Ship concurrentAmount=\"1\"/></ships></SpawnDescription_ShipGroup><SpawnDescription_ShipGroup Name=\"Pirates\"><ships><SpawnDescription_Ship concurrentAmount=\"4\"/></ships></SpawnDescription_ShipGroup></spawnDescriptions></MissionBrokerEntry>",
+"path": "/MissionBrokerEntry"
+},
+"exclude_within": null
+},
+"result": {
+"$dict": [
+[
+"hostile",
+{
+"$dict": [
+[
+"Pirates",
+4
+]
+]
+}
+],
+[
+"friendly",
+{
+"$dict": [
+[
+"Salvageable Ships",
+1
+]
+]
+}
+],
+[
+"objective",
+{
+"$dict": []
+}
+],
+[
+"unknown",
+{
+"$dict": []
+}
+]
+]
+}
+}
+],
+"_format_spawn_lines": [
+{
+"args": {
+"breakdown": {
+"$dict": [
+[
+"hostile",
+{
+"$dict": []
+}
+],
+[
+"friendly",
+{
+"$dict": []
+}
+],
+[
+"objective",
+{
+"$dict": []
+}
+],
+[
+"unknown",
+{
+"$dict": []
+}
+]
+]
+}
+},
+"result": []
+},
+{
+"args": {
+"breakdown": {
+"$dict": [
+[
+"hostile",
+{
+"$dict": [
+[
+"Pirates",
+4
+],
+[
+"Bandits",
+2
+]
+]
+}
+],
+[
+"friendly",
+{
+"$dict": []
+}
+],
+[
+"objective",
+{
+"$dict": []
+}
+],
+[
+"unknown",
+{
+"$dict": []
+}
+]
+]
+}
+},
+"result": [
+"<EM4>Hostiles:</EM4> Bandits x2, Pirates x4"
+]
+},
+{
+"args": {
+"breakdown": {
+"$dict": [
+[
+"hostile",
+{
+"$dict": []
+}
+],
+[
+"friendly",
+{
+"$dict": []
+}
+],
+[
+"objective",
+{
+"$dict": []
+}
+],
+[
+"unknown",
+{
+"$dict": [
+[
+"Unknown",
+3
+]
+]
+}
+]
+]
+}
+},
+"result": []
+},
+{
+"args": {
+"breakdown": {
+"$dict": [
+[
+"hostile",
+{
+"$dict": [
+[
+"Pirates",
+4
+]
+]
+}
+],
+[
+"friendly",
+{
+"$dict": [
+[
+"Escort Wings",
+1
+]
+]
+}
+],
+[
+"objective",
+{
+"$dict": [
+[
+"Probe",
+3
+]
+]
+}
+],
+[
+"unknown",
+{
+"$dict": [
+[
+"Unknown",
+2
+]
+]
+}
+]
+]
+}
+},
+"result": [
+"<EM4>Hostiles:</EM4> Pirates x4",
+"<EM4>Friendlies:</EM4> Escort Wings x1",
+"<EM4>Objectives:</EM4> Probe x3"
+]
+},
+{
+"args": {
+"breakdown": {
+"$dict": [
+[
+"hostile",
+{
+"$dict": [
+[
+"Pirates",
+4
+]
+]
+}
+],
+[
+"friendly",
+{
+"$dict": [
+[
+"Salvageable Ships",
+1
+]
+]
+}
+],
+[
+"objective",
+{
+"$dict": []
+}
+],
+[
+"unknown",
+{
+"$dict": []
+}
+]
+]
+}
+},
+"result": [
+"<EM4>Hostiles:</EM4> Pirates x4",
+"<EM4>Friendlies:</EM4> Salvageable Ships x1"
+]
+},
+{
+"args": {
+"breakdown": {
+"$dict": [
+[
+"hostile",
+{
+"$dict": []
+}
+],
+[
+"friendly",
+{
+"$dict": [
+[
+"Salvageable Ships",
+1
+]
+]
+}
+],
+[
+"objective",
+{
+"$dict": []
+}
+],
+[
+"unknown",
+{
+"$dict": []
+}
+]
+]
+}
+},
+"result": [
+"<EM4>Friendlies:</EM4> Salvageable Ships x1"
+]
+}
+],
+"_extract_turret_info": [
+{
+"args": {
+"root": {
+"$el": "<MissionBrokerEntry><spawnDescriptions><SpawnDescription_ShipGroup Name=\"Hostiles\"><ships><SpawnDescription_Ship concurrentAmount=\"3\"/></ships></SpawnDescription_ShipGroup></spawnDescriptions></MissionBrokerEntry>",
+"path": "/MissionBrokerEntry"
+}
+},
+"result": null
+},
+{
+"args": {
+"root": {
+"$el": "<MissionBrokerEntry><spawnDescriptions><SpawnDescription_ShipGroup Name=\"Turrets\"><ships><SpawnDescription_Ship concurrentAmount=\"3\"/><SpawnDescription_Ship concurrentAmount=\"2\"/></ships></SpawnDescription_ShipGroup></spawnDescriptions></MissionBrokerEntry>",
+"path": "/MissionBrokerEntry"
+}
+},
+"result": "5 (hostile)"
+},
+{
+"args": {
+"root": {
+"$el": "<MissionBrokerEntry><spawnDescriptions><SpawnDescription_ShipGroup Name=\"PerimeterTurrets\"><ships><SpawnDescription_Ship concurrentAmount=\"4\"/></ships></SpawnDescription_ShipGroup></spawnDescriptions></MissionBrokerEntry>",
+"path": "/MissionBrokerEntry"
+}
+},
+"result": "4 (hostile)"
+},
+{
+"args": {
+"root": {
+"$el": "<MissionBrokerEntry><spawnDescriptions><SpawnDescription_ShipGroup Name=\"Turrets\"><ships><SpawnDescription_Ship concurrentAmount=\"0\"/></ships></SpawnDescription_ShipGroup></spawnDescriptions></MissionBrokerEntry>",
+"path": "/MissionBrokerEntry"
+}
+},
+"result": null
+},
+{
+"args": {
+"root": {
+"$el": "<MissionBrokerEntry><MissionProperty missionVariableName=\"OverrideTurretHosility_BP\"><value><MissionPropertyValue_Boolean value=\"1\"/></value></MissionProperty><spawnDescriptions><SpawnDescription_ShipGroup Name=\"Turrets\"><ships><SpawnDescription_Ship concurrentAmount=\"2\"/></ships></SpawnDescription_ShipGroup></spawnDescriptions></MissionBrokerEntry>",
+"path": "/MissionBrokerEntry"
+}
+},
+"result": "2 (hostile)"
+},
+{
+"args": {
+"root": {
+"$el": "<MissionBrokerEntry><MissionProperty missionVariableName=\"OverrideTurretHosility_BP\"><value><MissionPropertyValue_Boolean value=\"0\"/></value></MissionProperty><spawnDescriptions><SpawnDescription_ShipGroup Name=\"Turrets\"><ships><SpawnDescription_Ship concurrentAmount=\"3\"/></ships></SpawnDescription_ShipGroup></spawnDescriptions></MissionBrokerEntry>",
+"path": "/MissionBrokerEntry"
+}
+},
+"result": "3 (friendly)"
+},
+{
+"args": {
+"root": {
+"$el": "<MissionBrokerEntry><MissionProperty missionVariableName=\"OverrideTurretHosility_BP\"><value><MissionPropertyValue_Boolean value=\"1\"/></value></MissionProperty></MissionBrokerEntry>",
+"path": "/MissionBrokerEntry"
+}
+},
+"result": "present (hostile)"
+},
+{
+"args": {
+"root": {
+"$el": "<MissionBrokerEntry><spawnDescriptions><SpawnDescription_ShipGroup Name=\"Hostiles\"><ships><SpawnDescription_Ship concurrentAmount=\"4\"/></ships></SpawnDescription_ShipGroup><SpawnDescription_ShipGroup Name=\"Turrets\"><ships><SpawnDescription_Ship concurrentAmount=\"3\"/></ships></SpawnDescription_ShipGroup></spawnDescriptions></MissionBrokerEntry>",
+"path": "/MissionBrokerEntry"
+}
+},
+"result": "3 (hostile)"
+},
+{
+"args": {
+"root": {
+"$el": "<MissionBrokerEntry description=\"@Shared_desc\"><spawnDescriptions><SpawnDescription_ShipGroup Name=\"SalvageableShip\"><ships><SpawnDescription_Ship concurrentAmount=\"1\"/></ships></SpawnDescription_ShipGroup><SpawnDescription_ShipGroup Name=\"Pirates\"><ships><SpawnDescription_Ship concurrentAmount=\"4\"/></ships></SpawnDescription_ShipGroup></spawnDescriptions></MissionBrokerEntry>",
+"path": "/MissionBrokerEntry"
+}
+},
+"result": null
+}
+],
+"_classify_mission_engagement": [
+{
+"args": {
+"loc_key": "BountyHuntersGuild_FPS_Nyx_title_001"
+},
+"result": "FPS"
+},
+{
+"args": {
+"loc_key": "vaughn_assassination_FPS_UGF_legal_title_001"
+},
+"result": "FPS"
+},
+{
+"args": {
+"loc_key": "vaughn_assassination_FPS_UGF_legal_boss_desc_001"
+},
+"result": "FPS"
+},
+{
+"args": {
+"loc_key": "Bitzeroes_eliminateall_dc_title_001_FPS"
+},
+"result": "FPS"
+},
+{
+"args": {
+"loc_key": "PAF_OnFoot_Eliminate_title_001"
+},
+"result": "FPS"
+},
+{
+"args": {
+"loc_key": "Shubin_FPSMine_Stanton_title_001"
+},
+"result": "FPS"
+},
+{
+"args": {
+"loc_key": "BHG_UGF_Boss_desc"
+},
+"result": "FPS"
+},
+{
+"args": {
+"loc_key": "ugf_breach_title_001"
+},
+"result": "FPS"
+},
+{
+"args": {
+"loc_key": "BountyHuntersGuild_Bounty_Stanton_Easy_title_001"
+},
+"result": "Ship"
+},
+{
+"args": {
+"loc_key": "ECN_Bounty_Stanton_Easy_title_001"
+},
+"result": "Ship"
+},
+{
+"args": {
+"loc_key": "CFP_Delivery_OutpostToStation_title_001"
+},
+"result": "Ship"
+},
+{
+"args": {
+"loc_key": "CFP_Delivery_OutpostToTradepost_title_001"
+},
+"result": "Ship"
+},
+{
+"args": {
+"loc_key": "Headhunters_RegionA_Pyro_title_001"
+},
+"result": "Ship"
+},
+{
+"args": {
+"loc_key": "Bitzeroes_bombingrun_dc_title_001"
+},
+"result": "Ship"
+},
+{
+"args": {
+"loc_key": "destroyitem_dc_title_001"
+},
+"result": "Ship"
+},
+{
+"args": {
+"loc_key": "combatassist_pyro_title_001"
+},
+"result": "Ship"
+},
+{
+"args": {
+"loc_key": "Crus_PatrolMission_title"
+},
+"result": "Ship"
+},
+{
+"args": {
+"loc_key": "fffinale_chapter5_desc"
+},
+"result": "Ship"
+},
+{
+"args": {
+"loc_key": "GoblinG_ArcCorp_RecoverCargoFPS_L_Title"
+},
+"result": "FPS & Ship"
+},
+{
+"args": {
+"loc_key": "GoblinG_Crusader_RecoverCargoFPS_S_Title"
+},
+"result": "FPS & Ship"
+},
+{
+"args": {
+"loc_key": "BHG_FPS_Cargo_Recover_desc"
+},
+"result": "FPS & Ship"
+},
+{
+"args": {
+"loc_key": ""
+},
+"result": "Ship"
+},
+{
+"args": {
+"loc_key": null
+},
+"result": "Ship"
+},
+{
+"args": {
+"loc_key": "MISSION_FPS_TITLE"
+},
+"result": "FPS"
+},
+{
+"args": {
+"loc_key": "mission_fps_title"
+},
+"result": "FPS"
+},
+{
+"args": {
+"loc_key": "Mission_Fps_Title"
+},
+"result": "FPS"
+},
+{
+"args": {
+"loc_key": "CFP_Salvage_FPS_title_001"
+},
+"result": "FPS & Ship"
+},
+{
+"args": {
+"loc_key": "xfpsx_title"
+},
+"result": "Ship"
+},
+{
+"args": {
+"loc_key": "gpsfix_status_title"
+},
+"result": "Ship"
+},
+{
+"args": {
+"loc_key": "Some_desc"
+},
+"result": "Ship"
+},
+{
+"args": {
+"loc_key": "Shared_desc"
+},
+"result": "Ship"
+}
+],
+"_route_token_role": [
+{
+"args": {
+"var": "Location"
+},
+"result": "from"
+},
+{
+"args": {
+"var": "location"
+},
+"result": "from"
+},
+{
+"args": {
+"var": "Location1"
+},
+"result": "from"
+},
+{
+"args": {
+"var": "Pickup1"
+},
+"result": "from"
+},
+{
+"args": {
+"var": "pickup2"
+},
+"result": "from"
+},
+{
+"args": {
+"var": "Destination"
+},
+"result": "to"
+},
+{
+"args": {
+"var": "destination"
+},
+"result": "to"
+},
+{
+"args": {
+"var": "Destination2"
+},
+"result": "to"
+},
+{
+"args": {
+"var": "Dropoff1"
+},
+"result": "to"
+},
+{
+"args": {
+"var": "TargetName"
+},
+"result": null
+},
+{
+"args": {
+"var": "System"
+},
+"result": null
+},
+{
+"args": {
+"var": "Item"
+},
+"result": null
+},
+{
+"args": {
+"var": "Client"
+},
+"result": null
+},
+{
+"args": {
+"var": "MissionMaxSCUSize"
+},
+"result": null
+},
+{
+"args": {
+"var": "Location2"
+},
+"result": "from"
+},
+{
+"args": {
+"var": "Destination1"
+},
+"result": "to"
+},
+{
+"args": {
+"var": "Contractor"
+},
+"result": null
+},
+{
+"args": {
+"var": "SingleToMultiToken"
+},
+"result": null
+},
+{
+"args": {
+"var": "DropSpots"
+},
+"result": null
+},
+{
+"args": {
+"var": "ReputationRank"
+},
+"result": null
+},
+{
+"args": {
+"var": "CargoGradeToken"
+},
+"result": null
+}
+],
+"_is_route_title": [
+{
+"args": {
+"title_key": "Foxwell_HaulCargo_AToB_OLP_title_01"
+},
+"result": true
+},
+{
+"args": {
+"title_key": "Covalex_HaulCargo_SingleToMulti_title"
+},
+"result": true
+},
+{
+"args": {
+"title_key": "CFP_Delivery_Outpost_title_001"
+},
+"result": true
+},
+{
+"args": {
+"title_key": "Headhunters_Delivery_Outpost_Multi_title_001"
+},
+"result": true
+},
+{
+"args": {
+"title_key": "FTL_Courier_Stanton_Easy_Title_001"
+},
+"result": true
+},
+{
+"args": {
+"title_key": "CleanAir_Courier_title"
+},
+"result": true
+},
+{
+"args": {
+"title_key": "BountyHuntersGuild_Bounty_Stanton_Easy_title_001"
+},
+"result": false
+},
+{
+"args": {
+"title_key": "cfp_defend_cave_Generic_title_001"
+},
+"result": false
+},
+{
+"args": {
+"title_key": "vaughn_assassination_FPS_UGF_legal_title_001"
+},
+"result": false
+},
+{
+"args": {
+"title_key": "eckhart_defendship_MRT_title_001"
+},
+"result": false
+}
+],
+"_title_has_route_token": [
+{
+"args": {
+"title": "Inter-Outpost Delivery at ~mission(Destination)"
+},
+"result": true
+},
+{
+"args": {
+"title": "~mission(ReputationRank) Rank - ~mission(CargoGradeToken) Cargo Haul"
+},
+"result": false
+},
+{
+"args": {
+"title": "Retrieve Cargo Haul"
+},
+"result": false
+}
+],
+"_size_abbreviation_overrides": [
+{
+"args": {
+"loc": {
+"$dict": [
+[
+"HaulCargo_CargoGrade_ExtraSmall",
+"Extra Small"
+],
+[
+"HaulCargo_CargoGrade_Supply",
+"Medium"
+],
+[
+"HaulCargo_CargoScale_Large",
+"Large"
+],
+[
+"HaulCargo_CargoGrade_Odd",
+"Gargantuan"
+],
+[
+"Unrelated_Key",
+"Small"
+]
+]
+},
+"shortened_sizes": {
+"$set": [
+"Extra Large",
+"Extra Small",
+"Large",
+"Medium",
+"Small"
+]
+}
+},
+"result": {
+"$dict": [
+[
+"HaulCargo_CargoGrade_ExtraSmall",
+"XS"
+],
+[
+"HaulCargo_CargoGrade_Supply",
+"M"
+],
+[
+"HaulCargo_CargoScale_Large",
+"L"
+]
+]
+}
+},
+{
+"args": {
+"loc": {
+"$dict": [
+[
+"HaulCargo_CargoGrade_ExtraSmall",
+"Extra Small"
+],
+[
+"HaulCargo_CargoGrade_Supply",
+"Medium"
+],
+[
+"HaulCargo_CargoScale_Large",
+"Large"
+],
+[
+"HaulCargo_CargoGrade_Odd",
+"Gargantuan"
+],
+[
+"Unrelated_Key",
+"Small"
+]
+]
+},
+"shortened_sizes": {
+"$set": [
+"Medium"
+]
+}
+},
+"result": {
+"$dict": [
+[
+"HaulCargo_CargoGrade_Supply",
+"M"
+]
+]
+}
+},
+{
+"args": {
+"loc": {
+"$dict": [
+[
+"HaulCargo_CargoGrade_ExtraSmall",
+"Extra Small"
+],
+[
+"HaulCargo_CargoGrade_Supply",
+"Medium"
+],
+[
+"HaulCargo_CargoScale_Large",
+"Large"
+],
+[
+"HaulCargo_CargoGrade_Odd",
+"Gargantuan"
+],
+[
+"Unrelated_Key",
+"Small"
+]
+]
+},
+"shortened_sizes": {
+"$set": []
+}
+},
+"result": {
+"$dict": []
+}
+},
+{
+"args": {
+"loc": null,
+"shortened_sizes": {
+"$set": [
+"Extra Large",
+"Extra Small",
+"Large",
+"Medium",
+"Small"
+]
+}
+},
+"result": {
+"$dict": []
+}
+}
+],
+"_derive_route_fragment": [
+{
+"args": {
+"desc_bodies": [
+"stash at <EM4>~mission(Location|Address)</EM4>, deliver to ~mission(Destination|Address)"
+],
+"cfg": null,
+"loc": null,
+"expand_cache": null
+},
+"result": "~mission(Location|Address) > ~mission(Destination|Address)"
+},
+{
+"args": {
+"desc_bodies": [
+"grab from ~mission(Location1|Address) and ~mission(Location2|Address), bring to ~mission(Destination|Address)"
+],
+"cfg": null,
+"loc": null,
+"expand_cache": null
+},
+"result": "~mission(Location1|Address), ~mission(Location2|Address) > ~mission(Destination|Address)"
+},
+{
+"args": {
+"desc_bodies": [
+"collect at ~mission(Location|Address), deliver to ~mission(Destination1|Address) and ~mission(Destination2|Address)"
+],
+"cfg": null,
+"loc": null,
+"expand_cache": null
+},
+"result": "~mission(Location|Address) > ~mission(Destination1|Address), ~mission(Destination2|Address)"
+},
+{
+"args": {
+"desc_bodies": [
+"pick up ~mission(Pickup1|Address), drop at ~mission(Dropoff1|Address)"
+],
+"cfg": null,
+"loc": null,
+"expand_cache": null
+},
+"result": "~mission(Pickup1|Address) > ~mission(Dropoff1|Address)"
+},
+{
+"args": {
+"desc_bodies": [
+"objective located at ~mission(Location|Address)"
+],
+"cfg": null,
+"loc": null,
+"expand_cache": null
+},
+"result": "from ~mission(Location|Address)"
+},
+{
+"args": {
+"desc_bodies": [
+"eliminate ~mission(TargetName) in the ~mission(System) system"
+],
+"cfg": null,
+"loc": null,
+"expand_cache": null
+},
+"result": ""
+},
+{
+"args": {
+"desc_bodies": [
+"~mission(Location1|Address) ~mission(Location2|Address) -> ~mission(Destination1|Address) ~mission(Destination2|Address)"
+],
+"cfg": null,
+"loc": null,
+"expand_cache": null
+},
+"result": "~mission(Location1|Address), ~mission(Location2|Address) > ~mission(Destination1|Address), ~mission(Destination2|Address)"
+},
+{
+"args": {
+"desc_bodies": [
+"from ~mission(Location|Address) to ~mission(Destination|Address)",
+"from ~mission(Location1|Address) to ~mission(Destination|Address)"
+],
+"cfg": null,
+"loc": null,
+"expand_cache": null
+},
+"result": "to ~mission(Destination|Address)"
+},
+{
+"args": {
+"desc_bodies": [
+"~mission(Contractor|HaulCargo_AtoB) plain text, no endpoints",
+"from ~mission(Location|Address) to ~mission(Destination|Address)"
+],
+"cfg": null,
+"loc": null,
+"expand_cache": null
+},
+"result": "~mission(Location|Address) > ~mission(Destination|Address)"
+},
+{
+"args": {
+"desc_bodies": [],
+"cfg": null,
+"loc": null,
+"expand_cache": null
+},
+"result": ""
+},
+{
+"args": {
+"desc_bodies": [
+null,
+"",
+"no tokens here"
+],
+"cfg": null,
+"loc": null,
+"expand_cache": null
+},
+"result": ""
+},
+{
+"args": {
+"desc_bodies": [
+"cargo at <EM4>~mission(Location|Address)</EM4> DROP OFF LOCATIONS\\n~mission(SingleToMultiToken)\\nthanks"
+],
+"cfg": null,
+"loc": {
+"$dict": [
+[
+"HaulCargo_2_SingleToMultiToken",
+"- Freight elevator at ~mission(Destination|Address)\\n- Freight elevator at ~mission(Destination1|Address)"
+],
+[
+"HaulCargo_3_SingleToMultiToken",
+"- Freight elevator at ~mission(Destination|Address)\\n- Freight elevator at ~mission(Destination1|Address)\\n- Freight elevator at ~mission(Destination2|Address)"
+]
+]
+},
+"expand_cache": null
+},
+"result": "~mission(Location|Address) > ~mission(Destination|Address), ~mission(Destination1|Address)"
+},
+{
+"args": {
+"desc_bodies": [
+"at ~mission(Location|Address), see ~mission(DropSpots)"
+],
+"cfg": null,
+"loc": {
+"$dict": [
+[
+"HaulCargo_2_DropSpots",
+"~mission(Destination|Address)"
+]
+]
+},
+"expand_cache": null
+},
+"result": "from ~mission(Location|Address)"
+},
+{
+"args": {
+"desc_bodies": [
+"at ~mission(Location|Address) ~mission(SingleToMultiToken)"
+],
+"cfg": null,
+"loc": {
+"$dict": [
+[
+"HaulCargo_2_SingleToMultiToken",
+"- Freight elevator at ~mission(Destination|Address)\\n- Freight elevator at ~mission(Destination1|Address)"
+],
+[
+"HaulCargo_3_SingleToMultiToken",
+"- Freight elevator at ~mission(Destination|Address)\\n- Freight elevator at ~mission(Destination1|Address)\\n- Freight elevator at ~mission(Destination2|Address)"
+]
+]
+},
+"expand_cache": {
+"$dict": []
+}
+},
+"result": "~mission(Location|Address) > ~mission(Destination|Address), ~mission(Destination1|Address)"
+},
+{
+"args": {
+"desc_bodies": [
+"at ~mission(Location|Address) ~mission(SingleToMultiToken)"
+],
+"cfg": null,
+"loc": {
+"$dict": []
+},
+"expand_cache": {
+"$dict": [
+[
+"SingleToMultiToken",
+[
+{
+"$dict": []
+},
+{
+"$dict": [
+[
+"Destination",
+"~mission(Destination|Address)"
+],
+[
+"Destination1",
+"~mission(Destination1|Address)"
+]
+]
+}
+]
+]
+]
+}
+},
+"result": "~mission(Location|Address) > ~mission(Destination|Address), ~mission(Destination1|Address)"
+},
+{
+"args": {
+"desc_bodies": [
+"at ~mission(Location|Address) to ~mission(Destination|Address)"
+],
+"cfg": {
+"$cfg": {
+"elements": [
+{
+"kind": "route",
+"enabled": true,
+"style": ""
+}
+],
+"separator": "hyphen",
+"enclosing": "square",
+"placement": "append",
+"class_mapping": {},
+"usage_separator": "pipe",
+"route_arrow": "arrow",
+"title_separator": "dash",
+"location_detail": "address",
+"abbreviated_phrases": [],
+"rank_separator": "dash",
+"shortened_sizes": [],
+"standardize_hauling_names": false
+}
+},
+"loc": null,
+"expand_cache": null
+},
+"result": "~mission(Location|Address) -> ~mission(Destination|Address)"
+},
+{
+"args": {
+"desc_bodies": [
+"collect at ~mission(Location|Address), deliver to ~mission(Destination1|Address) and ~mission(Destination2|Address)"
+],
+"cfg": {
+"$cfg": {
+"elements": [
+{
+"kind": "route",
+"enabled": true,
+"style": ""
+}
+],
+"separator": "hyphen",
+"enclosing": "square",
+"placement": "append",
+"class_mapping": {},
+"usage_separator": "pipe",
+"route_arrow": "shape",
+"title_separator": "dash",
+"location_detail": "address",
+"abbreviated_phrases": [],
+"rank_separator": "dash",
+"shortened_sizes": [],
+"standardize_hauling_names": false
+}
+},
+"loc": null,
+"expand_cache": null
+},
+"result": "~mission(Location|Address) ->= ~mission(Destination1|Address), ~mission(Destination2|Address)"
+},
+{
+"args": {
+"desc_bodies": [
+"at ~mission(Location|Address) to ~mission(Destination|Address) and ~mission(Destination1|Address)"
+],
+"cfg": {
+"$cfg": {
+"elements": [
+{
+"kind": "route",
+"enabled": true,
+"style": ""
+}
+],
+"separator": "hyphen",
+"enclosing": "square",
+"placement": "append",
+"class_mapping": {},
+"usage_separator": "pipe",
+"route_arrow": "gt",
+"title_separator": "dash",
+"location_detail": "name",
+"abbreviated_phrases": [],
+"rank_separator": "dash",
+"shortened_sizes": [],
+"standardize_hauling_names": false
+}
+},
+"loc": null,
+"expand_cache": null
+},
+"result": "~mission(Location|name) > ~mission(Destination|name), ~mission(Destination1|name)"
+},
+{
+"args": {
+"desc_bodies": [
+"pick up ~mission(Pickup1|Address), drop at ~mission(Dropoff1|Address)"
+],
+"cfg": {
+"$cfg": {
+"elements": [
+{
+"kind": "route",
+"enabled": true,
+"style": ""
+}
+],
+"separator": "hyphen",
+"enclosing": "square",
+"placement": "append",
+"class_mapping": {},
+"usage_separator": "pipe",
+"route_arrow": "gt",
+"title_separator": "dash",
+"location_detail": "name",
+"abbreviated_phrases": [],
+"rank_separator": "dash",
+"shortened_sizes": [],
+"standardize_hauling_names": false
+}
+},
+"loc": null,
+"expand_cache": null
+},
+"result": "~mission(Pickup1|Address) > ~mission(Dropoff1|Address)"
+}
+],
+"_rep_reward_line": [
+{
+"args": {
+"field_name": "Neutral",
+"amount_str": "+500",
+"rep_xp_label": "Rep",
+"track": ""
+},
+"result": "<EM4>Neutral:</EM4> +500 Rep"
+},
+{
+"args": {
+"field_name": "",
+"amount_str": "+500",
+"rep_xp_label": "Rep",
+"track": ""
+},
+"result": "<EM4>Rep:</EM4> +500"
+},
+{
+"args": {
+"field_name": "Rep",
+"amount_str": "+500",
+"rep_xp_label": "Rep",
+"track": ""
+},
+"result": "<EM4>Rep:</EM4> +500"
+},
+{
+"args": {
+"field_name": "Failure Penalty",
+"amount_str": "-100",
+"rep_xp_label": "Rep",
+"track": ""
+},
+"result": "<EM4>Failure Penalty:</EM4> -100 Rep"
+},
+{
+"args": {
+"field_name": "",
+"amount_str": "+500–4,000",
+"rep_xp_label": "Rep",
+"track": ""
+},
+"result": "<EM4>Rep:</EM4> +500–4,000"
+},
+{
+"args": {
+"field_name": "Tier 1",
+"amount_str": "+500",
+"rep_xp_label": "Reputation",
+"track": ""
+},
+"result": "<EM4>Tier 1:</EM4> +500 Reputation"
+},
+{
+"args": {
+"field_name": "",
+"amount_str": "+500",
+"rep_xp_label": "Reputation",
+"track": ""
+},
+"result": "<EM4>Reputation:</EM4> +500"
+},
+{
+"args": {
+"field_name": "Applicant",
+"amount_str": "+500",
+"rep_xp_label": "Rep",
+"track": "Security"
+},
+"result": "<EM4>Applicant:</EM4> +500 Rep (Security)"
+},
+{
+"args": {
+"field_name": "Applicant",
+"amount_str": "+500",
+"rep_xp_label": "Rep",
+"track": ""
+},
+"result": "<EM4>Applicant:</EM4> +500 Rep"
+},
+{
+"args": {
+"field_name": "Contractor",
+"amount_str": "+200",
+"rep_xp_label": "Rep",
+"track": "Contractor"
+},
+"result": "<EM4>Contractor:</EM4> +200 Rep"
+},
+{
+"args": {
+"field_name": "",
+"amount_str": "+500",
+"rep_xp_label": "Rep",
+"track": "Security"
+},
+"result": "<EM4>Rep:</EM4> +500 (Security)"
+},
+{
+"args": {
+"field_name": "Failure Penalty",
+"amount_str": "-100",
+"rep_xp_label": "Rep",
+"track": "Security"
+},
+"result": "<EM4>Failure Penalty:</EM4> -100 Rep (Security)"
+}
+],
+"enhancements_mission": [
+{
+"args": {
+"root": {
+"$el": "<MissionBrokerEntry description=\"@Shared_desc\"><spawnDescriptions><SpawnDescription_ShipGroup Name=\"SalvageableShip\"><ships><SpawnDescription_Ship concurrentAmount=\"1\"/></ships></SpawnDescription_ShipGroup><SpawnDescription_ShipGroup Name=\"Pirates\"><ships><SpawnDescription_Ship concurrentAmount=\"4\"/></ships></SpawnDescription_ShipGroup></spawnDescriptions></MissionBrokerEntry>",
+"path": "/MissionBrokerEntry"
+},
+"reputation_lookup": null,
+"rep_xp_label": "Rep",
+"show_fields": {
+"$dict": [
+[
+"spawns",
+true
+]
+]
+},
+"spawn_ambiguous_keys": null
+},
+"result": "<EM4>Engagement Type:</EM4> Ship\\n<EM4>Mission Type:</EM4> Standard\\n<EM4>Hostiles:</EM4> Pirates x4\\n<EM4>Friendlies:</EM4> Salvageable Ships x1"
+},
+{
+"args": {
+"root": {
+"$el": "<MissionBrokerEntry description=\"@Shared_desc\"><spawnDescriptions><SpawnDescription_ShipGroup Name=\"SalvageableShip\"><ships><SpawnDescription_Ship concurrentAmount=\"1\"/></ships></SpawnDescription_ShipGroup><SpawnDescription_ShipGroup Name=\"Pirates\"><ships><SpawnDescription_Ship concurrentAmount=\"4\"/></ships></SpawnDescription_ShipGroup></spawnDescriptions></MissionBrokerEntry>",
+"path": "/MissionBrokerEntry"
+},
+"reputation_lookup": null,
+"rep_xp_label": "Rep",
+"show_fields": {
+"$dict": [
+[
+"spawns",
+false
+]
+]
+},
+"spawn_ambiguous_keys": null
+},
+"result": "<EM4>Engagement Type:</EM4> Ship\\n<EM4>Mission Type:</EM4> Standard"
+},
+{
+"args": {
+"root": {
+"$el": "<MissionBrokerEntry description=\"@Shared_desc\"><spawnDescriptions><SpawnDescription_ShipGroup Name=\"SalvageableShip\"><ships><SpawnDescription_Ship concurrentAmount=\"1\"/></ships></SpawnDescription_ShipGroup><SpawnDescription_ShipGroup Name=\"Pirates\"><ships><SpawnDescription_Ship concurrentAmount=\"4\"/></ships></SpawnDescription_ShipGroup></spawnDescriptions></MissionBrokerEntry>",
+"path": "/MissionBrokerEntry"
+},
+"reputation_lookup": null,
+"rep_xp_label": "Rep",
+"show_fields": null,
+"spawn_ambiguous_keys": {
+"$set": [
+"Shared_desc"
+]
+}
+},
+"result": "<EM4>Engagement Type:</EM4> Ship\\n<EM4>Mission Type:</EM4> Standard\\n<EM4>Friendlies:</EM4> Salvageable Ships x1"
+}
+],
+"_build_blueprint_body_parts": [
+{
+"args": {
+"unique_fps": {
+"$items": [
+[
+[
+"Item A",
+"Item B"
+],
+[
+[
+"Stanton",
+""
+]
+]
+]
+]
+},
+"allow_overrides": true
+},
+"result": [
+"- Item A\\n- Item B"
+]
+},
+{
+"args": {
+"unique_fps": {
+"$items": [
+[
+[
+"Item A"
+],
+[
+[
+"Stanton",
+"Rank 0–1"
+]
+]
+]
+]
+},
+"allow_overrides": true
+},
+"result": [
+"<EM4>[Stanton, Rank 0–1]</EM4>\\n- Item A"
+]
+},
+{
+"args": {
+"unique_fps": {
+"$items": [
+[
+[
+"Surveyor-Go"
+],
+[
+[
+"Stanton",
+"Rank 0–1"
+]
+]
+],
+[
+[
+"FullSpec"
+],
+[
+[
+"Stanton",
+"Rank 4"
+]
+]
+]
+]
+},
+"allow_overrides": true
+},
+"result": [
+"<EM4>[Stanton, Rank 0–1]</EM4>\\n- Surveyor-Go",
+"<EM4>[Stanton, Rank 4]</EM4>\\n- FullSpec"
+]
+},
+{
+"args": {
+"unique_fps": {
+"$items": [
+[
+[
+"P8-AR Rifle",
+"Palatino Arms"
+],
+[
+[
+"Rayari_ResourceGathering",
+""
+]
+]
+],
+[
+[
+"Prism \"Bonedust\" Laser Shotgun",
+"Siebe Helmet"
+],
+[
+[
+"Rayari_ResourceGathering",
+""
+]
+]
+]
+]
+},
+"allow_overrides": true
+},
+"result": [
+"<EM4>[Rayari_ResourceGathering, P8-AR Rifle Set]</EM4>\\n- P8-AR Rifle\\n- Palatino Arms",
+"<EM4>[Rayari_ResourceGathering, Prism \"Bonedust\" Laser Shotgun Set]</EM4>\\n- Prism \"Bonedust\" Laser Shotgun\\n- Siebe Helmet"
+]
+},
+{
+"args": {
+"unique_fps": {
+"$items": [
+[
+[
+"Item A"
+],
+[
+[
+"Stanton",
+""
+]
+]
+],
+[
+[
+"Item B"
+],
+[
+[
+"Pyro",
+""
+]
+]
+]
+]
+},
+"allow_overrides": true
+},
+"result": [
+"<EM4>[Pyro]</EM4>\\n- Item B",
+"<EM4>[Stanton]</EM4>\\n- Item A"
+]
+},
+{
+"args": {
+"unique_fps": {
+"$items": [
+[
+[
+"A"
+],
+[
+[
+"Stanton",
+""
+]
+]
+],
+[
+[
+"B"
+],
+[
+[
+"Stanton",
+""
+]
+]
+],
+[
+[
+"C"
+],
+[
+[
+"Stanton",
+""
+]
+]
+]
+]
+},
+"allow_overrides": true
+},
+"result": [
+"<EM4>[Stanton, A Set]</EM4>\\n- A",
+"<EM4>[Stanton, B Set]</EM4>\\n- B",
+"<EM4>[Stanton, C Set]</EM4>\\n- C"
+]
+},
+{
+"args": {
+"unique_fps": {
+"$items": [
+[
+[
+"Shared Item",
+"Unique A"
+],
+[
+[
+"Stanton",
+""
+]
+]
+],
+[
+[
+"Shared Item",
+"Unique B"
+],
+[
+[
+"Stanton",
+""
+]
+]
+]
+]
+},
+"allow_overrides": true
+},
+"result": [
+"<EM4>[Stanton, Shared Item Set (1)]</EM4>\\n- Shared Item\\n- Unique A",
+"<EM4>[Stanton, Shared Item Set (2)]</EM4>\\n- Shared Item\\n- Unique B"
+]
+},
+{
+"args": {
+"unique_fps": {
+"$items": [
+[
+[
+"P8-AR Rifle",
+"P8-AR Rifle Magazine (15 Cap)",
+"Palatino Arms",
+"Palatino Arms Moonfall",
+"Palatino Core",
+"Palatino Core Moonfall",
+"Palatino Helmet",
+"Palatino Helmet Moonfall",
+"Palatino Legs",
+"Palatino Legs Moonfall"
+],
+[
+[
+"Rayari_ResourceGathering",
+""
+]
+]
+],
+[
+[
+"Prism \"Bonedust\" Laser Shotgun",
+"Prism \"Deep Sea\" Laser Shotgun",
+"Prism \"Firesteel\" Laser Shotgun",
+"Prism Laser Shotgun",
+"Prism Laser Shotgun Battery (20 cap)",
+"Siebe Helmet",
+"Stirling Exploration Suit"
+],
+[
+[
+"Rayari_ResourceGathering",
+""
+]
+]
+]
+]
+},
+"allow_overrides": true
+},
+"result": [
+"<EM4>[Irradiated Valakkar Pearls]</EM4>\\n- Prism \"Bonedust\" Laser Shotgun\\n- Prism \"Deep Sea\" Laser Shotgun\\n- Prism \"Firesteel\" Laser Shotgun\\n- Prism Laser Shotgun\\n- Prism Laser Shotgun Battery (20 cap)\\n- Siebe Helmet\\n- Stirling Exploration Suit",
+"<EM4>[Yormandi Eyes]</EM4>\\n- P8-AR Rifle\\n- P8-AR Rifle Magazine (15 Cap)\\n- Palatino Arms\\n- Palatino Arms Moonfall\\n- Palatino Core\\n- Palatino Core Moonfall\\n- Palatino Helmet\\n- Palatino Helmet Moonfall\\n- Palatino Legs\\n- Palatino Legs Moonfall"
+]
+},
+{
+"args": {
+"unique_fps": {
+"$items": [
+[
+[
+"P8-AR Rifle",
+"P8-AR Rifle Magazine (15 Cap)",
+"Palatino Arms",
+"Palatino Arms Moonfall",
+"Palatino Core",
+"Palatino Core Moonfall",
+"Palatino Helmet",
+"Palatino Helmet Moonfall",
+"Palatino Legs",
+"Palatino Legs Moonfall"
+],
+[
+[
+"Rayari_ResourceGathering",
+""
+]
+]
+]
+]
+},
+"allow_overrides": false
+},
+"result": [
+"- P8-AR Rifle\\n- P8-AR Rifle Magazine (15 Cap)\\n- Palatino Arms\\n- Palatino Arms Moonfall\\n- Palatino Core\\n- Palatino Core Moonfall\\n- Palatino Helmet\\n- Palatino Helmet Moonfall\\n- Palatino Legs\\n- Palatino Legs Moonfall"
+]
+},
+{
+"args": {
+"unique_fps": {
+"$items": [
+[
+[
+"P8-AR Rifle",
+"P8-AR Rifle Magazine (15 Cap)",
+"Palatino Arms",
+"Palatino Arms Moonfall",
+"Palatino Core",
+"Palatino Core Moonfall",
+"Palatino Helmet",
+"Palatino Helmet Moonfall",
+"Palatino Legs",
+"Palatino Legs Moonfall"
+],
+[
+[
+"Rayari_ResourceGathering",
+""
+]
+]
+]
+]
+},
+"allow_overrides": true
+},
+"result": [
+"<EM4>[Yormandi Eyes]</EM4>\\n- P8-AR Rifle\\n- P8-AR Rifle Magazine (15 Cap)\\n- Palatino Arms\\n- Palatino Arms Moonfall\\n- Palatino Core\\n- Palatino Core Moonfall\\n- Palatino Helmet\\n- Palatino Helmet Moonfall\\n- Palatino Legs\\n- Palatino Legs Moonfall"
+]
+},
+{
+"args": {
+"unique_fps": {
+"$items": [
+[
+[
+"P8-AR Gewehr",
+"Palatino Arme",
+"Palatino Kern"
+],
+[
+[
+"Rayari",
+""
+]
+]
+]
+]
+},
+"allow_overrides": false
+},
+"result": [
+"- P8-AR Gewehr\\n- Palatino Arme\\n- Palatino Kern"
+]
+},
+{
+"args": {
+"unique_fps": {
+"$items": [
+[
+[
+"Prism \"Bonedust\" Laser Shotgun",
+"Prism \"Deep Sea\" Laser Shotgun",
+"Prism \"Firesteel\" Laser Shotgun",
+"Prism Laser Shotgun",
+"Prism Laser Shotgun Battery (20 cap)",
+"Siebe Helmet",
+"Stirling Exploration Suit"
+],
+[
+[
+"Rayari_ResourceGathering",
+""
+]
+]
+],
+[
+[
+"P8-AR Rifle",
+"P8-AR Rifle Magazine (15 Cap)",
+"Palatino Arms",
+"Palatino Arms Moonfall",
+"Palatino Core",
+"Palatino Core Moonfall",
+"Palatino Helmet",
+"Palatino Helmet Moonfall",
+"Palatino Legs",
+"Palatino Legs Moonfall"
+],
+[
+[
+"Rayari_ResourceGathering",
+""
+]
+]
+]
+]
+},
+"allow_overrides": true
+},
+"result": [
+"<EM4>[Irradiated Valakkar Pearls]</EM4>\\n- Prism \"Bonedust\" Laser Shotgun\\n- Prism \"Deep Sea\" Laser Shotgun\\n- Prism \"Firesteel\" Laser Shotgun\\n- Prism Laser Shotgun\\n- Prism Laser Shotgun Battery (20 cap)\\n- Siebe Helmet\\n- Stirling Exploration Suit",
+"<EM4>[Yormandi Eyes]</EM4>\\n- P8-AR Rifle\\n- P8-AR Rifle Magazine (15 Cap)\\n- Palatino Arms\\n- Palatino Arms Moonfall\\n- Palatino Core\\n- Palatino Core Moonfall\\n- Palatino Helmet\\n- Palatino Helmet Moonfall\\n- Palatino Legs\\n- Palatino Legs Moonfall"
+]
+},
+{
+"args": {
+"unique_fps": {
+"$items": [
+[
+[
+"Totally Unrelated Item"
+],
+[
+[
+"Stanton",
+""
+]
+]
+]
+]
+},
+"allow_overrides": true
+},
+"result": [
+"- Totally Unrelated Item"
+]
+},
+{
+"args": {
+"unique_fps": {
+"$items": [
+[
+[
+"P8-AR Rifle",
+"P8-AR Rifle Magazine (15 Cap)",
+"Palatino Arms",
+"Palatino Arms Moonfall",
+"Palatino Core",
+"Palatino Core Moonfall",
+"Palatino Helmet",
+"Palatino Helmet Moonfall",
+"Palatino Legs"
+],
+[
+[
+"Stanton",
+""
+]
+]
+]
+]
+},
+"allow_overrides": true
+},
+"result": [
+"- P8-AR Rifle\\n- P8-AR Rifle Magazine (15 Cap)\\n- Palatino Arms\\n- Palatino Arms Moonfall\\n- Palatino Core\\n- Palatino Core Moonfall\\n- Palatino Helmet\\n- Palatino Helmet Moonfall\\n- Palatino Legs"
+]
+},
+{
+"args": {
+"unique_fps": {
+"$items": [
+[
+[
+"P8-AR Rifle",
+"P8-AR Rifle Magazine (15 Cap)",
+"Palatino Arms",
+"Palatino Arms Moonfall",
+"Palatino Core",
+"Palatino Core Moonfall",
+"Palatino Helmet",
+"Palatino Helmet Moonfall",
+"Palatino Legs",
+"Palatino Legs Moonfall"
+],
+[
+[
+"Stanton",
+""
+]
+]
+]
+]
+},
+"allow_overrides": true
+},
+"result": [
+"<EM4>[Yormandi Eyes]</EM4>\\n- P8-AR Rifle\\n- P8-AR Rifle Magazine (15 Cap)\\n- Palatino Arms\\n- Palatino Arms Moonfall\\n- Palatino Core\\n- Palatino Core Moonfall\\n- Palatino Helmet\\n- Palatino Helmet Moonfall\\n- Palatino Legs\\n- Palatino Legs Moonfall"
+]
+},
+{
+"args": {
+"unique_fps": {
+"$items": [
+[
+[
+"Totally Unrelated Item",
+"Another Unrelated Item"
+],
+[
+[
+"Stanton",
+""
+]
+]
+]
+]
+},
+"allow_overrides": true
+},
+"result": [
+"- Totally Unrelated Item\\n- Another Unrelated Item"
+]
+}
+],
+"_name_from_blueprint_filename": [
+{
+"args": {
+"bp_xml": {
+"$path": "bp_craft_nozzle_fuelgiver_grin_nozzlefast.xml"
+}
+},
+"result": "Norfield"
+},
+{
+"args": {
+"bp_xml": {
+"$path": "bp_craft_nozzle_fuelgiver_grin_nozzlesecure.xml"
+}
+},
+"result": "Marlin"
+},
+{
+"args": {
+"bp_xml": {
+"$path": "bp_craft_nozzle_fuelgiver_grin_nozzleveryfast.xml"
+}
+},
+"result": "Lindstrom"
+},
+{
+"args": {
+"bp_xml": {
+"$path": "bp_craft_nozzle_fuelgiver_grin_nozzleverysecure.xml"
+}
+},
+"result": "Harkin"
+},
+{
+"args": {
+"bp_xml": {
+"$path": "bp_craft_nozzle_fuelgiver_misc_nozzlestandard.xml"
+}
+},
+"result": "RN-7s"
+},
+{
+"args": {
+"bp_xml": {
+"$path": "bp_craft_nozzle_fuelgiver_shin_nozzleexpensivefast.xml"
+}
+},
+"result": "Bendix"
+},
+{
+"args": {
+"bp_xml": {
+"$path": "bp_craft_nozzle_fuelgiver_shin_nozzleexpensivesecure.xml"
+}
+},
+"result": "Torrez"
+},
+{
+"args": {
+"bp_xml": {
+"$path": "bp_craft_nozzle_fuelgiver_shin_nozzlemostexpensive.xml"
+}
+},
+"result": "Ezra"
+},
+{
+"args": {
+"bp_xml": {
+"$path": "bp_craft_salvage_modifier_scraper_large.xml"
+}
+},
+"result": "Salvage Modifier Scraper Large"
+},
+{
+"args": {
+"bp_xml": {
+"$path": "bp_rewards_eckhartsecuritykillnpcboss.xml"
+}
+},
+"result": "Eckhartsecuritykillnpcboss"
+},
+{
+"args": {
+"bp_xml": {
+"$path": "C:/Users/mason/AppData/Local/Temp/pytest-of-mason/pytest-0/test_blueprint_pool_prepends_t0/blueprints/crafting/bp_craft_norfield.xml"
+}
+},
+"result": "Norfield"
+},
+{
+"args": {
+"bp_xml": {
+"$path": "C:/Users/mason/AppData/Local/Temp/pytest-of-mason/pytest-0/test_blueprint_pool_prepends_t0/blueprints/crafting/bp_craft_pickaxe.xml"
+}
+},
+"result": "Pickaxe"
+},
+{
+"args": {
+"bp_xml": {
+"$path": "C:/Users/mason/AppData/Local/Temp/pytest-of-mason/pytest-0/test_blueprint_pool_respects_a0/blueprints/crafting/bp_craft_norfield.xml"
+}
+},
+"result": "Norfield"
+},
+{
+"args": {
+"bp_xml": {
+"$path": "C:/Users/mason/AppData/Local/Temp/pytest-of-mason/pytest-0/test_blueprint_pool_strips_cig0/blueprints/crafting/bp_craft_helix.xml"
+}
+},
+"result": "Helix"
+},
+{
+"args": {
+"bp_xml": {
+"$path": "C:/Users/mason/AppData/Local/Temp/pytest-of-mason/pytest-0/test_blueprint_pool_strips_cig0/blueprints/crafting/bp_craft_norfield.xml"
+}
+},
+"result": "Norfield"
+},
+{
+"args": {
+"bp_xml": {
+"$path": "C:/Users/mason/AppData/Local/Temp/pytest-of-mason/pytest-0/test_blueprint_pool_omits_tag_0/blueprints/crafting/bp_craft_thing.xml"
+}
+},
+"result": "Thing"
+},
+{
+"args": {
+"bp_xml": {
+"$path": "C:/Users/mason/AppData/Local/Temp/pytest-of-mason/pytest-0/test_blueprint_pool_tags_tier30/blueprints/crafting/bp_craft_nozzle_fuelgiver_grin_nozzlefast.xml"
+}
+},
+"result": "Norfield"
+},
+{
+"args": {
+"bp_xml": {
+"$path": "C:/Users/mason/AppData/Local/Temp/pytest-of-mason/pytest-0/test_blueprint_pool_name_fallb0/blueprints/crafting/bp_craft_nozzle_fuelgiver_grin_nozzlefast.xml"
+}
+},
+"result": "Norfield"
+},
+{
+"args": {
+"bp_xml": {
+"$path": "C:/Users/mason/AppData/Local/Temp/pytest-of-mason/pytest-0/test_blueprint_pool_entity_tag0/blueprints/crafting/bp_craft_shield.xml"
+}
+},
+"result": "Shield"
+},
+{
+"args": {
+"bp_xml": {
+"$path": "C:/Users/mason/AppData/Local/Temp/pytest-of-mason/pytest-0/test_pool_lookup_exposes_filen0/blueprints/crafting/bp_craft_thing.xml"
+}
+},
+"result": "Thing"
+},
+{
+"args": {
+"bp_xml": {
+"$path": "C:/Users/mason/AppData/Local/Temp/pytest-of-mason/pytest-0/test_annotation_on_produces_ta0/blueprints/crafting/bp_craft_norfield.xml"
+}
+},
+"result": "Norfield"
+},
+{
+"args": {
+"bp_xml": {
+"$path": "C:/Users/mason/AppData/Local/Temp/pytest-of-mason/pytest-0/test_annotation_off_via_empty_0/blueprints/crafting/bp_craft_norfield.xml"
+}
+},
+"result": "Norfield"
+},
+{
+"args": {
+"bp_xml": {
+"$path": "C:/Users/mason/AppData/Local/Temp/pytest-of-mason/pytest-0/test_blueprint_pool_resolves0/records/crafting/blueprints/crafting/bp_craft_test.xml"
+}
+},
+"result": "Test"
+},
+{
+"args": {
+"bp_xml": {
+"$path": "C:/Users/mason/AppData/Local/Temp/pytest-of-mason/pytest-0/test_title_keeps_tags0/records/crafting/blueprints/crafting/bp_craft_test.xml"
+}
+},
+"result": "Test"
+},
+{
+"args": {
+"bp_xml": {
+"$path": "C:/Users/mason/AppData/Local/Temp/pytest-of-mason/pytest-0/test_title_not_clobbered_by_bo0/records/crafting/blueprints/crafting/bp_craft_test.xml"
+}
+},
+"result": "Test"
+}
+],
+"_rs_value_steps": [
+{
+"args": {
+"ore": "ice"
+},
+"result": [
+4300,
+8600,
+12900,
+17200,
+21500,
+25800
+]
+},
+{
+"args": {
+"ore": "savrillium"
+},
+"result": [
+3200,
+6400
+]
+},
+{
+"args": {
+"ore": "agricium"
+},
+"result": [
+3885
+]
+},
+{
+"args": {
+"ore": "unobtainium"
+},
+"result": []
+},
+{
+"args": {
+"ore": "bexalite"
+},
+"result": [
+3600,
+7200,
+10800,
+14400
+]
+},
+{
+"args": {
+"ore": "lindinium"
+},
+"result": [
+3400,
+6800,
+10200
+]
+}
+],
+"_format_rs_details_lines": [
+{
+"args": {
+"ores": [
+"ice"
+],
+"loc": {
+"$dict": [
+[
+"mineabletype_primary_ice",
+"Ice"
+]
+]
+}
+},
+"result": [
+"<EM4>Resource Signatures:</EM4>",
+"<EM4>Ice</EM4>: 4300 - 8600 - 12900 - 17200 - 21500 - 25800"
+]
+},
+{
+"args": {
+"ores": [
+"savrillium",
+"ice"
+],
+"loc": {
+"$dict": [
+[
+"mineabletype_primary_savrillium",
+"Savrillium"
+],
+[
+"mineabletype_primary_ice",
+"Ice"
+]
+]
+}
+},
+"result": [
+"<EM4>Resource Signatures:</EM4>",
+"<EM4>Savrillium</EM4>: 3200 - 6400",
+"<EM4>Ice</EM4>: 4300 - 8600 - 12900 - 17200 - 21500 - 25800"
+]
+},
+{
+"args": {
+"ores": [
+"ice"
+],
+"loc": {
+"$dict": []
+}
+},
+"result": [
+"<EM4>Resource Signatures:</EM4>",
+"<EM4>Ice</EM4>: 4300 - 8600 - 12900 - 17200 - 21500 - 25800"
+]
+},
+{
+"args": {
+"ores": [
+"ice",
+"unobtainium"
+],
+"loc": {
+"$dict": [
+[
+"mineabletype_primary_ice",
+"Ice"
+]
+]
+}
+},
+"result": [
+"<EM4>Resource Signatures:</EM4>",
+"<EM4>Ice</EM4>: 4300 - 8600 - 12900 - 17200 - 21500 - 25800"
+]
+},
+{
+"args": {
+"ores": [
+"unobtainium"
+],
+"loc": {
+"$dict": []
+}
+},
+"result": []
+},
+{
+"args": {
+"ores": [],
+"loc": {
+"$dict": []
+}
+},
+"result": []
+}
+],
+"_format_rs_tag": [
+{
+"args": {
+"ores": [
+"aluminium"
+]
+},
+"result": "[RS 4285]"
+},
+{
+"args": {
+"ores": [
+"bexalite",
+"ice",
+"torite"
+]
+},
+"result": "[RS 3600/4300/3900]"
+},
+{
+"args": {
+"ores": [
+"aluminium",
+"unobtainium"
+]
+},
+"result": "[RS 4285]"
+},
+{
+"args": {
+"ores": [
+"unobtainium"
+]
+},
+"result": ""
+},
+{
+"args": {
+"ores": []
+},
+"result": ""
+},
+{
+"args": {
+"ores": [
+"aluminium",
+"iron"
+]
+},
+"result": "[RS 4285/4270]"
+},
+{
+"args": {
+"ores": [
+"lindinium",
+"savrillium"
+]
+},
+"result": "[RS 3400/3200]"
+},
+{
+"args": {
+"ores": [
+"bexalite",
+"ice"
+]
+},
+"result": "[RS 3600/4300]"
+},
+{
+"args": {
+"ores": [
+"ice"
+]
+},
+"result": "[RS 4300]"
+}
+],
+"_build_mineable_rs_name_overrides": [
+{
+"args": {
+"loc": {
+"$dict": [
+[
+"mineabletype_primary_aluminium",
+"Aluminium"
+],
+[
+"mineabletype_primary_ice",
+"Ice"
+]
+]
+}
+},
+"result": {
+"$dict": [
+[
+"mineabletype_primary_aluminium",
+"Aluminium (RS 4285)"
+],
+[
+"mineabletype_primary_ice",
+"Ice (RS 4300)"
+]
+]
+}
+},
+{
+"args": {
+"loc": {
+"$dict": []
+}
+},
+"result": {
+"$dict": []
+}
+},
+{
+"args": {
+"loc": {
+"$dict": [
+[
+"mineabletype_primary_ice",
+"Ice"
+],
+[
+"some_other_key",
+"Unrelated"
+]
+]
+}
+},
+"result": {
+"$dict": [
+[
+"mineabletype_primary_ice",
+"Ice (RS 4300)"
+]
+]
+}
+},
+{
+"args": {
+"loc": {
+"$dict": [
+[
+"mineabletype_primary_agricium",
+"Agricium"
+],
+[
+"mineabletype_primary_aluminium",
+"Aluminium"
+],
+[
+"mineabletype_primary_aslarite",
+"Aslarite"
+],
+[
+"mineabletype_primary_beryl",
+"Beryl"
+],
+[
+"mineabletype_primary_bexalite",
+"Bexalite"
+],
+[
+"mineabletype_primary_borase",
+"Borase"
+],
+[
+"mineabletype_primary_copper",
+"Copper"
+],
+[
+"mineabletype_primary_corundum",
+"Corundum"
+],
+[
+"mineabletype_primary_gold",
+"Gold"
+],
+[
+"mineabletype_primary_hephaestanite",
+"Hephaestanite"
+],
+[
+"mineabletype_primary_ice",
+"Ice"
+],
+[
+"mineabletype_primary_iron",
+"Iron"
+],
+[
+"mineabletype_primary_laranite",
+"Laranite"
+],
+[
+"mineabletype_primary_lindinium",
+"Lindinium"
+],
+[
+"mineabletype_primary_ouratite",
+"Ouratite"
+],
+[
+"mineabletype_primary_quantainium",
+"Quantainium"
+],
+[
+"mineabletype_primary_quartz",
+"Quartz"
+],
+[
+"mineabletype_primary_riccite",
+"Riccite"
+],
+[
+"mineabletype_primary_savrillium",
+"Savrillium"
+],
+[
+"mineabletype_primary_silicon",
+"Silicon"
+],
+[
+"mineabletype_primary_stileron",
+"Stileron"
+],
+[
+"mineabletype_primary_taranite",
+"Taranite"
+],
+[
+"mineabletype_primary_tin",
+"Tin"
+],
+[
+"mineabletype_primary_titanium",
+"Titanium"
+],
+[
+"mineabletype_primary_torite",
+"Torite"
+],
+[
+"mineabletype_primary_tungsten",
+"Tungsten"
+]
+]
+}
+},
+"result": {
+"$dict": [
+[
+"mineabletype_primary_agricium",
+"Agricium (RS 3885)"
+],
+[
+"mineabletype_primary_aluminium",
+"Aluminium (RS 4285)"
+],
+[
+"mineabletype_primary_aslarite",
+"Aslarite (RS 3840)"
+],
+[
+"mineabletype_primary_beryl",
+"Beryl (RS 3540)"
+],
+[
+"mineabletype_primary_bexalite",
+"Bexalite (RS 3600)"
+],
+[
+"mineabletype_primary_borase",
+"Borase (RS 3570)"
+],
+[
+"mineabletype_primary_copper",
+"Copper (RS 4240)"
+],
+[
+"mineabletype_primary_corundum",
+"Corundum (RS 4225)"
+],
+[
+"mineabletype_primary_gold",
+"Gold (RS 3585)"
+],
+[
+"mineabletype_primary_hephaestanite",
+"Hephaestanite (RS 4180)"
+],
+[
+"mineabletype_primary_ice",
+"Ice (RS 4300)"
+],
+[
+"mineabletype_primary_iron",
+"Iron (RS 4270)"
+],
+[
+"mineabletype_primary_laranite",
+"Laranite (RS 3825)"
+],
+[
+"mineabletype_primary_lindinium",
+"Lindinium (RS 3400)"
+],
+[
+"mineabletype_primary_ouratite",
+"Ouratite (RS 3370)"
+],
+[
+"mineabletype_primary_quantainium",
+"Quantainium (RS 3170)"
+],
+[
+"mineabletype_primary_quartz",
+"Quartz (RS 4210)"
+],
+[
+"mineabletype_primary_riccite",
+"Riccite (RS 3385)"
+],
+[
+"mineabletype_primary_savrillium",
+"Savrillium (RS 3200)"
+],
+[
+"mineabletype_primary_silicon",
+"Silicon (RS 4255)"
+],
+[
+"mineabletype_primary_stileron",
+"Stileron (RS 3185)"
+],
+[
+"mineabletype_primary_taranite",
+"Taranite (RS 3555)"
+],
+[
+"mineabletype_primary_tin",
+"Tin (RS 4195)"
+],
+[
+"mineabletype_primary_titanium",
+"Titanium (RS 3855)"
+],
+[
+"mineabletype_primary_torite",
+"Torite (RS 3900)"
+],
+[
+"mineabletype_primary_tungsten",
+"Tungsten (RS 3870)"
+]
+]
+}
+},
+{
+"args": {
+"loc": {
+"$dict": [
+[
+"eckhart_defendship_MRT_title_001",
+"Stop Attack on High-Profile Client"
+]
+]
+}
+},
+"result": {
+"$dict": []
+}
+},
+{
+"args": {
+"loc": {
+"$dict": [
+[
+"mineabletype_primary_ice",
+"Ice"
+]
+]
+}
+},
+"result": {
+"$dict": [
+[
+"mineabletype_primary_ice",
+"Ice (RS 4300)"
+]
+]
+}
+}
+],
+"_battaglia_contract_mineable_ores": [
+{
+"args": {
+"contract": {
+"$el": "<CareerContract debugName=\"X\"><paramOverrides><stringParamOverrides><ContractStringParam param=\"Title\" value=\"@Battaglia_RPT_Scan_01_title\"/></stringParamOverrides><propertyOverrides><MissionProperty extendedTextToken=\"ResourceType\"><value><MissionPropertyValue_StringHash><options><MissionPropertyValueOption_StringHash textId=\"@mineabletype_primary_aluminium\" weighting=\"1\" DEBUG_forceChooseThisOption=\"0\"/></options></MissionPropertyValue_StringHash></value></MissionProperty></propertyOverrides></paramOverrides></CareerContract>",
+"path": "/CareerContract"
+}
+},
+"result": [
+"aluminium"
+]
+},
+{
+"args": {
+"contract": {
+"$el": "<CareerContract debugName=\"X\"><paramOverrides><stringParamOverrides><ContractStringParam param=\"Title\" value=\"@Battaglia_RPT_ScanMine_04_title\"/></stringParamOverrides><propertyOverrides><MissionProperty extendedTextToken=\"ResourceType\"><value><MissionPropertyValue_StringHash><options><MissionPropertyValueOption_StringHash textId=\"@mineabletype_primary_bexalite\" weighting=\"1\" DEBUG_forceChooseThisOption=\"0\"/></options></MissionPropertyValue_StringHash></value></MissionProperty><MissionProperty extendedTextToken=\"ResourceType2\"><value><MissionPropertyValue_StringHash><options><MissionPropertyValueOption_StringHash textId=\"@mineabletype_primary_ice\" weighting=\"1\" DEBUG_forceChooseThisOption=\"0\"/></options></MissionPropertyValue_StringHash></value></MissionProperty><MissionProperty extendedTextToken=\"ResourceType3\"><value><MissionPropertyValue_StringHash><options><MissionPropertyValueOption_StringHash textId=\"@mineabletype_primary_torite\" weighting=\"1\" DEBUG_forceChooseThisOption=\"0\"/></options></MissionPropertyValue_StringHash></value></MissionProperty></propertyOverrides></paramOverrides></CareerContract>",
+"path": "/CareerContract"
+}
+},
+"result": [
+"bexalite",
+"ice",
+"torite"
+]
+},
+{
+"args": {
+"contract": {
+"$el": "<CareerContract debugName=\"X\"><paramOverrides><stringParamOverrides><ContractStringParam param=\"Title\" value=\"@Battaglia_RPT_Scan_01_title\"/></stringParamOverrides><propertyOverrides><MissionProperty extendedTextToken=\"ResourceType\"><value><MissionPropertyValue_StringHash><options><MissionPropertyValueOption_StringHash textId=\"@mineabletype_primary_iron\" weighting=\"1\" DEBUG_forceChooseThisOption=\"0\"/></options></MissionPropertyValue_StringHash></value></MissionProperty><MissionProperty extendedTextToken=\"ResourceType2\"><value><MissionPropertyValue_StringHash><options><MissionPropertyValueOption_StringHash textId=\"@mineabletype_primary_iron\" weighting=\"1\" DEBUG_forceChooseThisOption=\"0\"/></options></MissionPropertyValue_StringHash></value></MissionProperty></propertyOverrides></paramOverrides></CareerContract>",
+"path": "/CareerContract"
+}
+},
+"result": [
+"iron"
+]
+},
+{
+"args": {
+"contract": {
+"$el": "<CareerContract debugName=\"X\"><paramOverrides><stringParamOverrides><ContractStringParam param=\"Title\" value=\"@Battaglia_RPT_Scan_01_title\"/></stringParamOverrides><propertyOverrides><MissionProperty extendedTextToken=\"ResourceType\"><value><MissionPropertyValue_StringHash><options><MissionPropertyValueOption_StringHash textId=\"@mineabletype_primary_aluminium\" weighting=\"1\" DEBUG_forceChooseThisOption=\"0\"/></options></MissionPropertyValue_StringHash></value></MissionProperty><MissionProperty extendedTextToken=\"MineableType\"><value><MissionPropertyValue_StringHash><options><MissionPropertyValueOption_StringHash textId=\"@mineabletype_type_shipasteroid\" weighting=\"1\" DEBUG_forceChooseThisOption=\"0\"/></options></MissionPropertyValue_StringHash></value></MissionProperty></propertyOverrides></paramOverrides></CareerContract>",
+"path": "/CareerContract"
+}
+},
+"result": [
+"aluminium"
+]
+},
+{
+"args": {
+"contract": {
+"$el": "<CareerContract debugName=\"X\"/>",
+"path": "/CareerContract"
+}
+},
+"result": []
+},
+{
+"args": {
+"contract": {
+"$el": "<ContractGeneratorHandler_Career><contracts><CareerContract debugName=\"X\"><paramOverrides><stringParamOverrides><ContractStringParam param=\"Title\" value=\"@Battaglia_RPT_Scan_04_title\"/></stringParamOverrides><propertyOverrides><MissionProperty extendedTextToken=\"ResourceType\"><value><MissionPropertyValue_StringHash><options><MissionPropertyValueOption_StringHash textId=\"@mineabletype_primary_bexalite\" weighting=\"1\" DEBUG_forceChooseThisOption=\"0\"/></options></MissionPropertyValue_StringHash></value></MissionProperty><MissionProperty extendedTextToken=\"ResourceType2\"><value><MissionPropertyValue_StringHash><options><MissionPropertyValueOption_StringHash textId=\"@mineabletype_primary_ice\" weighting=\"1\" DEBUG_forceChooseThisOption=\"0\"/></options></MissionPropertyValue_StringHash></value></MissionProperty><MissionProperty extendedTextToken=\"ResourceType3\"><value><MissionPropertyValue_StringHash><options><MissionPropertyValueOption_StringHash textId=\"@mineabletype_primary_torite\" weighting=\"1\" DEBUG_forceChooseThisOption=\"0\"/></options></MissionPropertyValue_StringHash></value></MissionProperty></propertyOverrides></paramOverrides></CareerContract><CareerContract debugName=\"X\"><paramOverrides><stringParamOverrides><ContractStringParam param=\"Title\" value=\"@Battaglia_RPT_ScanMine_01_title\"/></stringParamOverrides><propertyOverrides><MissionProperty extendedTextToken=\"ResourceType\"><value><MissionPropertyValue_StringHash><options><MissionPropertyValueOption_StringHash textId=\"@mineabletype_primary_aluminium\" weighting=\"1\" DEBUG_forceChooseThisOption=\"0\"/></options></MissionPropertyValue_StringHash></value></MissionProperty><MissionProperty extendedTextToken=\"ResourceType2\"><value><MissionPropertyValue_StringHash><options><MissionPropertyValueOption_StringHash textId=\"@mineabletype_primary_iron\" weighting=\"1\" DEBUG_forceChooseThisOption=\"0\"/></options></MissionPropertyValue_StringHash></value></MissionProperty></propertyOverrides></paramOverrides></CareerContract></contracts></ContractGeneratorHandler_Career>",
+"path": "/ContractGeneratorHandler_Career/contracts/CareerContract[1]"
+}
+},
+"result": [
+"bexalite",
+"ice",
+"torite"
+]
+},
+{
+"args": {
+"contract": {
+"$el": "<ContractGeneratorHandler_Career><contracts><CareerContract debugName=\"X\"><paramOverrides><stringParamOverrides><ContractStringParam param=\"Title\" value=\"@Battaglia_RPT_Scan_04_title\"/></stringParamOverrides><propertyOverrides><MissionProperty extendedTextToken=\"ResourceType\"><value><MissionPropertyValue_StringHash><options><MissionPropertyValueOption_StringHash textId=\"@mineabletype_primary_bexalite\" weighting=\"1\" DEBUG_forceChooseThisOption=\"0\"/></options></MissionPropertyValue_StringHash></value></MissionProperty><MissionProperty extendedTextToken=\"ResourceType2\"><value><MissionPropertyValue_StringHash><options><MissionPropertyValueOption_StringHash textId=\"@mineabletype_primary_ice\" weighting=\"1\" DEBUG_forceChooseThisOption=\"0\"/></options></MissionPropertyValue_StringHash></value></MissionProperty><MissionProperty extendedTextToken=\"ResourceType3\"><value><MissionPropertyValue_StringHash><options><MissionPropertyValueOption_StringHash textId=\"@mineabletype_primary_torite\" weighting=\"1\" DEBUG_forceChooseThisOption=\"0\"/></options></MissionPropertyValue_StringHash></value></MissionProperty></propertyOverrides></paramOverrides></CareerContract><CareerContract debugName=\"X\"><paramOverrides><stringParamOverrides><ContractStringParam param=\"Title\" value=\"@Battaglia_RPT_ScanMine_01_title\"/></stringParamOverrides><propertyOverrides><MissionProperty extendedTextToken=\"ResourceType\"><value><MissionPropertyValue_StringHash><options><MissionPropertyValueOption_StringHash textId=\"@mineabletype_primary_aluminium\" weighting=\"1\" DEBUG_forceChooseThisOption=\"0\"/></options></MissionPropertyValue_StringHash></value></MissionProperty><MissionProperty extendedTextToken=\"ResourceType2\"><value><MissionPropertyValue_StringHash><options><MissionPropertyValueOption_StringHash textId=\"@mineabletype_primary_iron\" weighting=\"1\" DEBUG_forceChooseThisOption=\"0\"/></options></MissionPropertyValue_StringHash></value></MissionProperty></propertyOverrides></paramOverrides></CareerContract></contracts></ContractGeneratorHandler_Career>",
+"path": "/ContractGeneratorHandler_Career/contracts/CareerContract[2]"
+}
+},
+"result": [
+"aluminium",
+"iron"
+]
+},
+{
+"args": {
+"contract": {
+"$el": "<ContractGeneratorHandler_Career><contracts><CareerContract debugName=\"X\"><paramOverrides><stringParamOverrides><ContractStringParam param=\"Title\" value=\"@Battaglia_RPT_Scan_04_title\"/><ContractStringParam param=\"Description\" value=\"@Battaglia_RPT_Scan_04_desc\"/></stringParamOverrides><propertyOverrides><MissionProperty extendedTextToken=\"ResourceType\"><value><MissionPropertyValue_StringHash><options><MissionPropertyValueOption_StringHash textId=\"@mineabletype_primary_bexalite\" weighting=\"1\" DEBUG_forceChooseThisOption=\"0\"/></options></MissionPropertyValue_StringHash></value></MissionProperty><MissionProperty extendedTextToken=\"ResourceType2\"><value><MissionPropertyValue_StringHash><options><MissionPropertyValueOption_StringHash textId=\"@mineabletype_primary_ice\" weighting=\"1\" DEBUG_forceChooseThisOption=\"0\"/></options></MissionPropertyValue_StringHash></value></MissionProperty><MissionProperty extendedTextToken=\"ResourceType3\"><value><MissionPropertyValue_StringHash><options><MissionPropertyValueOption_StringHash textId=\"@mineabletype_primary_torite\" weighting=\"1\" DEBUG_forceChooseThisOption=\"0\"/></options></MissionPropertyValue_StringHash></value></MissionProperty></propertyOverrides></paramOverrides></CareerContract></contracts></ContractGeneratorHandler_Career>",
+"path": "/ContractGeneratorHandler_Career/contracts/CareerContract"
+}
+},
+"result": [
+"bexalite",
+"ice",
+"torite"
+]
+},
+{
+"args": {
+"contract": {
+"$el": "<ContractGeneratorHandler_Career><contracts><CareerContract debugName=\"X\"><paramOverrides><stringParamOverrides><ContractStringParam param=\"Title\" value=\"@Battaglia_RPT_Scan_01_title\"/></stringParamOverrides><propertyOverrides><MissionProperty extendedTextToken=\"ResourceType\"><value><MissionPropertyValue_StringHash><options><MissionPropertyValueOption_StringHash textId=\"@mineabletype_primary_aluminium\" weighting=\"1\" DEBUG_forceChooseThisOption=\"0\"/></options></MissionPropertyValue_StringHash></value></MissionProperty></propertyOverrides></paramOverrides></CareerContract></contracts></ContractGeneratorHandler_Career>",
+"path": "/ContractGeneratorHandler_Career/contracts/CareerContract"
+}
+},
+"result": [
+"aluminium"
+]
+},
+{
+"args": {
+"contract": {
+"$el": "<ContractGeneratorHandler_Career><contracts><CareerContract debugName=\"X\"><paramOverrides><stringParamOverrides><ContractStringParam param=\"Title\" value=\"@Battaglia_RPT_Scan_06_title\"/><ContractStringParam param=\"Description\" value=\"@Battaglia_RPT_Scan_06_desc\"/></stringParamOverrides><propertyOverrides><MissionProperty extendedTextToken=\"ResourceType\"><value><MissionPropertyValue_StringHash><options><MissionPropertyValueOption_StringHash textId=\"@mineabletype_primary_lindinium\" weighting=\"1\" DEBUG_forceChooseThisOption=\"0\"/></options></MissionPropertyValue_StringHash></value></MissionProperty><MissionProperty extendedTextToken=\"ResourceType2\"><value><MissionPropertyValue_StringHash><options><MissionPropertyValueOption_StringHash textId=\"@mineabletype_primary_savrillium\" weighting=\"1\" DEBUG_forceChooseThisOption=\"0\"/></options></MissionPropertyValue_StringHash></value></MissionProperty></propertyOverrides></paramOverrides></CareerContract></contracts></ContractGeneratorHandler_Career>",
+"path": "/ContractGeneratorHandler_Career/contracts/CareerContract"
+}
+},
+"result": [
+"lindinium",
+"savrillium"
+]
+},
+{
+"args": {
+"contract": {
+"$el": "<ContractGeneratorHandler_Career><introContracts><Contract debugName=\"X\"><paramOverrides><stringParamOverrides><ContractStringParam param=\"Title\" value=\"@Battaglia_RPT_Scan_01_title\"/></stringParamOverrides><propertyOverrides><MissionProperty extendedTextToken=\"ResourceType\"><value><MissionPropertyValue_StringHash><options><MissionPropertyValueOption_StringHash textId=\"@mineabletype_primary_aluminium\" weighting=\"1\" DEBUG_forceChooseThisOption=\"0\"/></options></MissionPropertyValue_StringHash></value></MissionProperty></propertyOverrides></paramOverrides></Contract></introContracts></ContractGeneratorHandler_Career>",
+"path": "/ContractGeneratorHandler_Career/introContracts/Contract"
+}
+},
+"result": [
+"aluminium"
+]
+},
+{
+"args": {
+"contract": {
+"$el": "<ContractGeneratorHandler_Career><contracts><CareerContract debugName=\"X\"><paramOverrides><stringParamOverrides><ContractStringParam param=\"Title\" value=\"@Battaglia_RPT_Scan_06_title\"/></stringParamOverrides><propertyOverrides><MissionProperty extendedTextToken=\"ResourceType\"><value><MissionPropertyValue_StringHash><options><MissionPropertyValueOption_StringHash textId=\"@mineabletype_primary_lindinium\" weighting=\"1\" DEBUG_forceChooseThisOption=\"0\"/></options></MissionPropertyValue_StringHash></value></MissionProperty><MissionProperty extendedTextToken=\"ResourceType2\"><value><MissionPropertyValue_StringHash><options><MissionPropertyValueOption_StringHash textId=\"@mineabletype_primary_savrillium\" weighting=\"1\" DEBUG_forceChooseThisOption=\"0\"/></options></MissionPropertyValue_StringHash></value></MissionProperty></propertyOverrides></paramOverrides></CareerContract></contracts></ContractGeneratorHandler_Career>",
+"path": "/ContractGeneratorHandler_Career/contracts/CareerContract"
+}
+},
+"result": [
+"lindinium",
+"savrillium"
+]
+},
+{
+"args": {
+"contract": {
+"$el": "<ContractGeneratorHandler_Career><contracts><CareerContract debugName=\"X\" template=\"tpl-uuid-1\"><paramOverrides><stringParamOverrides><ContractStringParam param=\"Title\" value=\"@Battaglia_RPT_Scan_04_title\"/></stringParamOverrides><propertyOverrides><MissionProperty extendedTextToken=\"ResourceType\"><value><MissionPropertyValue_StringHash><options><MissionPropertyValueOption_StringHash textId=\"@mineabletype_primary_bexalite\" weighting=\"1\" DEBUG_forceChooseThisOption=\"0\"/></options></MissionPropertyValue_StringHash></value></MissionProperty><MissionProperty extendedTextToken=\"ResourceType2\"><value><MissionPropertyValue_StringHash><options><MissionPropertyValueOption_StringHash textId=\"@mineabletype_primary_ice\" weighting=\"1\" DEBUG_forceChooseThisOption=\"0\"/></options></MissionPropertyValue_StringHash></value></MissionProperty></propertyOverrides></paramOverrides></CareerContract></contracts></ContractGeneratorHandler_Career>",
+"path": "/ContractGeneratorHandler_Career/contracts/CareerContract"
+}
+},
+"result": [
+"bexalite",
+"ice"
+]
+},
+{
+"args": {
+"contract": {
+"$el": "<ContractGeneratorHandler_Career><contracts><CareerContract debugName=\"X\" template=\"tpl-uuid-1\"><paramOverrides><stringParamOverrides><ContractStringParam param=\"Title\" value=\"@Battaglia_RPT_Scan_04_title\"/><ContractStringParam param=\"Description\" value=\"@Battaglia_RPT_Scan_04_inline_desc\"/></stringParamOverrides><propertyOverrides><MissionProperty extendedTextToken=\"ResourceType\"><value><MissionPropertyValue_StringHash><options><MissionPropertyValueOption_StringHash textId=\"@mineabletype_primary_ice\" weighting=\"1\" DEBUG_forceChooseThisOption=\"0\"/></options></MissionPropertyValue_StringHash></value></MissionProperty></propertyOverrides></paramOverrides></CareerContract></contracts></ContractGeneratorHandler_Career>",
+"path": "/ContractGeneratorHandler_Career/contracts/CareerContract"
+}
+},
+"result": [
+"ice"
+]
+}
+],
+"_craft_usage_key": [
+{
+"args": {
+"category_path": "."
+},
+"result": null
+},
+{
+"args": {
+"category_path": "crafting/vehiclegear/powerplant"
+},
+"result": "Power Plant"
+},
+{
+"args": {
+"category_path": "crafting/vehiclegear/quantumdrive/size3"
+},
+"result": "Quantum Drive"
+},
+{
+"args": {
+"category_path": "crafting/vehiclegear/weapons/ballistic/cannon"
+},
+"result": "Ship Weapon (Ballistic)"
+},
+{
+"args": {
+"category_path": "crafting/vehiclegear/weapons/laser/repeater"
+},
+"result": "Ship Weapon (Energy)"
+},
+{
+"args": {
+"category_path": "crafting/vehiclegear/weapons/distortion/cannon"
+},
+"result": "Ship Weapon (Distortion)"
+},
+{
+"args": {
+"category_path": "crafting/vehiclegear/refuelling/nozzle"
+},
+"result": "Refuel Nozzle"
+},
+{
+"args": {
+"category_path": "crafting/fpsgear/weapons/rifle"
+},
+"result": "FPS Weapon"
+},
+{
+"args": {
+"category_path": "crafting/fpsgear/ammo/laser"
+},
+"result": "Ammo"
+},
+{
+"args": {
+"category_path": "crafting/fpsgear/armour/combat/heavy"
+},
+"result": "Armor"
+},
+{
+"args": {
+"category_path": "crafting/missionitems"
+},
+"result": "Mission Item"
+},
+{
+"args": {
+"category_path": "crafting/vehiclegear/weapons/$templates/ballistic"
+},
+"result": null
+}
+],
+"_build_craft_usage_legend": [
+{
+"args": {
+"cfg": {
+"$cfg": {
+"elements": [
+{
+"kind": "label",
+"enabled": false,
+"style": "short"
+},
+{
+"kind": "usage",
+"enabled": false,
+"style": "long"
+},
+{
+"kind": "collection",
+"enabled": false,
+"style": "long"
+}
+],
+"separator": "pipe",
+"enclosing": "square",
+"placement": "append",
+"class_mapping": {
+"Crafting": [
+"CF",
+"Craft",
+"Crafting"
+],
+"Collection": [
+"Col",
+"Collect",
+"Collection"
+],
+"Power Plant": [
+"P",
+"PP",
+"POWR"
+],
+"Cooler": [
+"C",
+"CL",
+"COOL"
+],
+"Shield": [
+"S",
+"SH",
+"SHLD"
+],
+"Radar": [
+"R",
+"RD",
+"RADR"
+],
+"Quantum Drive": [
+"Q",
+"QD",
+"QDRV"
+],
+"Mining Laser": [
+"M",
+"ML",
+"MINE"
+],
+"Tractor Beam": [
+"T",
+"TB",
+"TRAC"
+],
+"Salvage Module": [
+"SV",
+"SLV",
+"SALV"
+],
+"Refuel Nozzle": [
+"F",
+"RF",
+"FUEL"
+],
+"Ship Weapon (Ballistic)": [
+"B",
+"BW",
+"BGUN"
+],
+"Ship Weapon (Energy)": [
+"E",
+"EW",
+"EGUN"
+],
+"Ship Weapon (Distortion)": [
+"D",
+"DW",
+"DGUN"
+],
+"FPS Weapon": [
+"G",
+"FW",
+"FPSW"
+],
+"Ammo": [
+"A",
+"AM",
+"AMMO"
+],
+"Armor": [
+"AR",
+"ARM",
+"ARMR"
+],
+"Mission Item": [
+"MI",
+"MIT",
+"MITM"
+]
+},
+"usage_separator": "pipe",
+"route_arrow": "gt",
+"title_separator": "dash",
+"location_detail": "address",
+"abbreviated_phrases": [],
+"rank_separator": "dash",
+"shortened_sizes": [],
+"standardize_hauling_names": false
+}
+}
+},
+"result": ""
+},
+{
+"args": {
+"cfg": {
+"$cfg": {
+"elements": [
+{
+"kind": "label",
+"enabled": true,
+"style": "short"
+},
+{
+"kind": "usage",
+"enabled": true,
+"style": "long"
+},
+{
+"kind": "collection",
+"enabled": true,
+"style": "long"
+}
+],
+"separator": "pipe",
+"enclosing": "square",
+"placement": "append",
+"class_mapping": {
+"Crafting": [
+"CF",
+"Craft",
+"Crafting"
+],
+"Collection": [
+"Col",
+"Collect",
+"Collection"
+],
+"Power Plant": [
+"P",
+"PP",
+"POWR"
+],
+"Cooler": [
+"C",
+"CL",
+"COOL"
+],
+"Shield": [
+"S",
+"SH",
+"SHLD"
+],
+"Radar": [
+"R",
+"RD",
+"RADR"
+],
+"Quantum Drive": [
+"Q",
+"QD",
+"QDRV"
+],
+"Mining Laser": [
+"M",
+"ML",
+"MINE"
+],
+"Tractor Beam": [
+"T",
+"TB",
+"TRAC"
+],
+"Salvage Module": [
+"SV",
+"SLV",
+"SALV"
+],
+"Refuel Nozzle": [
+"F",
+"RF",
+"FUEL"
+],
+"Ship Weapon (Ballistic)": [
+"B",
+"BW",
+"BGUN"
+],
+"Ship Weapon (Energy)": [
+"E",
+"EW",
+"EGUN"
+],
+"Ship Weapon (Distortion)": [
+"D",
+"DW",
+"DGUN"
+],
+"FPS Weapon": [
+"G",
+"FW",
+"FPSW"
+],
+"Ammo": [
+"A",
+"AM",
+"AMMO"
+],
+"Armor": [
+"AR",
+"ARM",
+"ARMR"
+],
+"Mission Item": [
+"MI",
+"MIT",
+"MITM"
+]
+},
+"usage_separator": "pipe",
+"route_arrow": "gt",
+"title_separator": "dash",
+"location_detail": "address",
+"abbreviated_phrases": [],
+"rank_separator": "dash",
+"shortened_sizes": [],
+"standardize_hauling_names": false
+}
+}
+},
+"result": "<EM3>Crafting Tag Key</EM3>\\n\\n<EM4>Ship Components:</EM4>\\n- POWR = Power Plant\\n- COOL = Cooler\\n- SHLD = Shield\\n- RADR = Radar\\n- QDRV = Quantum Drive\\n- MINE = Mining Laser\\n- TRAC = Tractor Beam\\n- SALV = Salvage Module\\n- FUEL = Refuel Nozzle\\n- BGUN = Ship Weapon (Ballistic)\\n- EGUN = Ship Weapon (Energy)\\n- DGUN = Ship Weapon (Distortion)\\n\\n<EM4>FPS Gear:</EM4>\\n- FPSW = FPS Weapon\\n- AMMO = Ammo\\n- ARMR = Armor\\n\\n<EM4>Other:</EM4>\\n- MITM = Mission Item"
+},
+{
+"args": {
+"cfg": {
+"$cfg": {
+"elements": [
+{
+"kind": "label",
+"enabled": true,
+"style": "short"
+},
+{
+"kind": "usage",
+"enabled": true,
+"style": "short"
+},
+{
+"kind": "collection",
+"enabled": true,
+"style": "long"
+}
+],
+"separator": "pipe",
+"enclosing": "square",
+"placement": "append",
+"class_mapping": {
+"Crafting": [
+"CF",
+"Craft",
+"Crafting"
+],
+"Collection": [
+"Col",
+"Collect",
+"Collection"
+],
+"Power Plant": [
+"P",
+"PP",
+"POWR"
+],
+"Cooler": [
+"C",
+"CL",
+"COOL"
+],
+"Shield": [
+"S",
+"SH",
+"SHLD"
+],
+"Radar": [
+"R",
+"RD",
+"RADR"
+],
+"Quantum Drive": [
+"Q",
+"QD",
+"QDRV"
+],
+"Mining Laser": [
+"M",
+"ML",
+"MINE"
+],
+"Tractor Beam": [
+"T",
+"TB",
+"TRAC"
+],
+"Salvage Module": [
+"SV",
+"SLV",
+"SALV"
+],
+"Refuel Nozzle": [
+"F",
+"RF",
+"FUEL"
+],
+"Ship Weapon (Ballistic)": [
+"B",
+"BW",
+"BGUN"
+],
+"Ship Weapon (Energy)": [
+"E",
+"EW",
+"EGUN"
+],
+"Ship Weapon (Distortion)": [
+"D",
+"DW",
+"DGUN"
+],
+"FPS Weapon": [
+"G",
+"FW",
+"FPSW"
+],
+"Ammo": [
+"A",
+"AM",
+"AMMO"
+],
+"Armor": [
+"AR",
+"ARM",
+"ARMR"
+],
+"Mission Item": [
+"MI",
+"MIT",
+"MITM"
+]
+},
+"usage_separator": "pipe",
+"route_arrow": "gt",
+"title_separator": "dash",
+"location_detail": "address",
+"abbreviated_phrases": [],
+"rank_separator": "dash",
+"shortened_sizes": [],
+"standardize_hauling_names": false
+}
+}
+},
+"result": "<EM3>Crafting Tag Key</EM3>\\n\\n<EM4>Ship Components:</EM4>\\n- P = Power Plant\\n- C = Cooler\\n- S = Shield\\n- R = Radar\\n- Q = Quantum Drive\\n- M = Mining Laser\\n- T = Tractor Beam\\n- SV = Salvage Module\\n- F = Refuel Nozzle\\n- B = Ship Weapon (Ballistic)\\n- E = Ship Weapon (Energy)\\n- D = Ship Weapon (Distortion)\\n\\n<EM4>FPS Gear:</EM4>\\n- G = FPS Weapon\\n- A = Ammo\\n- AR = Armor\\n\\n<EM4>Other:</EM4>\\n- MI = Mission Item"
+},
+{
+"args": {
+"cfg": {
+"$cfg": {
+"elements": [
+{
+"kind": "label",
+"enabled": true,
+"style": "short"
+},
+{
+"kind": "usage",
+"enabled": true,
+"style": "med"
+},
+{
+"kind": "collection",
+"enabled": true,
+"style": "long"
+}
+],
+"separator": "pipe",
+"enclosing": "square",
+"placement": "append",
+"class_mapping": {
+"Crafting": [
+"CF",
+"Craft",
+"Crafting"
+],
+"Collection": [
+"Col",
+"Collect",
+"Collection"
+],
+"Power Plant": [
+"P",
+"PP",
+"POWR"
+],
+"Cooler": [
+"C",
+"CL",
+"COOL"
+],
+"Shield": [
+"S",
+"SH",
+"SHLD"
+],
+"Radar": [
+"R",
+"RD",
+"RADR"
+],
+"Quantum Drive": [
+"Q",
+"QD",
+"QDRV"
+],
+"Mining Laser": [
+"M",
+"ML",
+"MINE"
+],
+"Tractor Beam": [
+"T",
+"TB",
+"TRAC"
+],
+"Salvage Module": [
+"SV",
+"SLV",
+"SALV"
+],
+"Refuel Nozzle": [
+"F",
+"RF",
+"FUEL"
+],
+"Ship Weapon (Ballistic)": [
+"B",
+"BW",
+"BGUN"
+],
+"Ship Weapon (Energy)": [
+"E",
+"EW",
+"EGUN"
+],
+"Ship Weapon (Distortion)": [
+"D",
+"DW",
+"DGUN"
+],
+"FPS Weapon": [
+"G",
+"FW",
+"FPSW"
+],
+"Ammo": [
+"A",
+"AM",
+"AMMO"
+],
+"Armor": [
+"AR",
+"ARM",
+"ARMR"
+],
+"Mission Item": [
+"MI",
+"MIT",
+"MITM"
+]
+},
+"usage_separator": "pipe",
+"route_arrow": "gt",
+"title_separator": "dash",
+"location_detail": "address",
+"abbreviated_phrases": [],
+"rank_separator": "dash",
+"shortened_sizes": [],
+"standardize_hauling_names": false
+}
+}
+},
+"result": "<EM3>Crafting Tag Key</EM3>\\n\\n<EM4>Ship Components:</EM4>\\n- PP = Power Plant\\n- CL = Cooler\\n- SH = Shield\\n- RD = Radar\\n- QD = Quantum Drive\\n- ML = Mining Laser\\n- TB = Tractor Beam\\n- SLV = Salvage Module\\n- RF = Refuel Nozzle\\n- BW = Ship Weapon (Ballistic)\\n- EW = Ship Weapon (Energy)\\n- DW = Ship Weapon (Distortion)\\n\\n<EM4>FPS Gear:</EM4>\\n- FW = FPS Weapon\\n- AM = Ammo\\n- ARM = Armor\\n\\n<EM4>Other:</EM4>\\n- MIT = Mission Item"
+}
+],
+"_commodity_tag": [
+{
+"args": {
+"cfg": {
+"$cfg": {
+"elements": [
+{
+"kind": "label",
+"enabled": true,
+"style": "short"
+},
+{
+"kind": "usage",
+"enabled": true,
+"style": "long"
+},
+{
+"kind": "collection",
+"enabled": true,
+"style": "long"
+}
+],
+"separator": "pipe",
+"enclosing": "square",
+"placement": "append",
+"class_mapping": {
+"Crafting": [
+"CF",
+"Craft",
+"Crafting"
+],
+"Collection": [
+"Col",
+"Collect",
+"Collection"
+],
+"Power Plant": [
+"P",
+"PP",
+"POWR"
+],
+"Cooler": [
+"C",
+"CL",
+"COOL"
+],
+"Shield": [
+"S",
+"SH",
+"SHLD"
+],
+"Radar": [
+"R",
+"RD",
+"RADR"
+],
+"Quantum Drive": [
+"Q",
+"QD",
+"QDRV"
+],
+"Mining Laser": [
+"M",
+"ML",
+"MINE"
+],
+"Tractor Beam": [
+"T",
+"TB",
+"TRAC"
+],
+"Salvage Module": [
+"SV",
+"SLV",
+"SALV"
+],
+"Refuel Nozzle": [
+"F",
+"RF",
+"FUEL"
+],
+"Ship Weapon (Ballistic)": [
+"B",
+"BW",
+"BGUN"
+],
+"Ship Weapon (Energy)": [
+"E",
+"EW",
+"EGUN"
+],
+"Ship Weapon (Distortion)": [
+"D",
+"DW",
+"DGUN"
+],
+"FPS Weapon": [
+"G",
+"FW",
+"FPSW"
+],
+"Ammo": [
+"A",
+"AM",
+"AMMO"
+],
+"Armor": [
+"AR",
+"ARM",
+"ARMR"
+],
+"Mission Item": [
+"MI",
+"MIT",
+"MITM"
+]
+},
+"usage_separator": "pipe",
+"route_arrow": "gt",
+"title_separator": "dash",
+"location_detail": "address",
+"abbreviated_phrases": [],
+"rank_separator": "dash",
+"shortened_sizes": [],
+"standardize_hauling_names": false
+}
+},
+"crafting": true,
+"collection": false,
+"usage_keys": []
+},
+"result": "<EM4>[CF]</EM4>"
+},
+{
+"args": {
+"cfg": {
+"$cfg": {
+"elements": [
+{
+"kind": "label",
+"enabled": true,
+"style": "short"
+},
+{
+"kind": "usage",
+"enabled": true,
+"style": "long"
+},
+{
+"kind": "collection",
+"enabled": true,
+"style": "long"
+}
+],
+"separator": "pipe",
+"enclosing": "square",
+"placement": "append",
+"class_mapping": {
+"Crafting": [
+"CF",
+"Craft",
+"Crafting"
+],
+"Collection": [
+"Col",
+"Collect",
+"Collection"
+],
+"Power Plant": [
+"P",
+"PP",
+"POWR"
+],
+"Cooler": [
+"C",
+"CL",
+"COOL"
+],
+"Shield": [
+"S",
+"SH",
+"SHLD"
+],
+"Radar": [
+"R",
+"RD",
+"RADR"
+],
+"Quantum Drive": [
+"Q",
+"QD",
+"QDRV"
+],
+"Mining Laser": [
+"M",
+"ML",
+"MINE"
+],
+"Tractor Beam": [
+"T",
+"TB",
+"TRAC"
+],
+"Salvage Module": [
+"SV",
+"SLV",
+"SALV"
+],
+"Refuel Nozzle": [
+"F",
+"RF",
+"FUEL"
+],
+"Ship Weapon (Ballistic)": [
+"B",
+"BW",
+"BGUN"
+],
+"Ship Weapon (Energy)": [
+"E",
+"EW",
+"EGUN"
+],
+"Ship Weapon (Distortion)": [
+"D",
+"DW",
+"DGUN"
+],
+"FPS Weapon": [
+"G",
+"FW",
+"FPSW"
+],
+"Ammo": [
+"A",
+"AM",
+"AMMO"
+],
+"Armor": [
+"AR",
+"ARM",
+"ARMR"
+],
+"Mission Item": [
+"MI",
+"MIT",
+"MITM"
+]
+},
+"usage_separator": "pipe",
+"route_arrow": "gt",
+"title_separator": "dash",
+"location_detail": "address",
+"abbreviated_phrases": [],
+"rank_separator": "dash",
+"shortened_sizes": [],
+"standardize_hauling_names": false
+}
+},
+"crafting": true,
+"collection": false,
+"usage_keys": null
+},
+"result": "<EM4>[CF]</EM4>"
+},
+{
+"args": {
+"cfg": {
+"$cfg": {
+"elements": [
+{
+"kind": "label",
+"enabled": true,
+"style": "short"
+},
+{
+"kind": "usage",
+"enabled": true,
+"style": "long"
+},
+{
+"kind": "collection",
+"enabled": true,
+"style": "long"
+}
+],
+"separator": "pipe",
+"enclosing": "square",
+"placement": "append",
+"class_mapping": {
+"Crafting": [
+"CF",
+"Craft",
+"Crafting"
+],
+"Collection": [
+"Col",
+"Collect",
+"Collection"
+],
+"Power Plant": [
+"P",
+"PP",
+"POWR"
+],
+"Cooler": [
+"C",
+"CL",
+"COOL"
+],
+"Shield": [
+"S",
+"SH",
+"SHLD"
+],
+"Radar": [
+"R",
+"RD",
+"RADR"
+],
+"Quantum Drive": [
+"Q",
+"QD",
+"QDRV"
+],
+"Mining Laser": [
+"M",
+"ML",
+"MINE"
+],
+"Tractor Beam": [
+"T",
+"TB",
+"TRAC"
+],
+"Salvage Module": [
+"SV",
+"SLV",
+"SALV"
+],
+"Refuel Nozzle": [
+"F",
+"RF",
+"FUEL"
+],
+"Ship Weapon (Ballistic)": [
+"B",
+"BW",
+"BGUN"
+],
+"Ship Weapon (Energy)": [
+"E",
+"EW",
+"EGUN"
+],
+"Ship Weapon (Distortion)": [
+"D",
+"DW",
+"DGUN"
+],
+"FPS Weapon": [
+"G",
+"FW",
+"FPSW"
+],
+"Ammo": [
+"A",
+"AM",
+"AMMO"
+],
+"Armor": [
+"AR",
+"ARM",
+"ARMR"
+],
+"Mission Item": [
+"MI",
+"MIT",
+"MITM"
+]
+},
+"usage_separator": "pipe",
+"route_arrow": "gt",
+"title_separator": "dash",
+"location_detail": "address",
+"abbreviated_phrases": [],
+"rank_separator": "dash",
+"shortened_sizes": [],
+"standardize_hauling_names": false
+}
+},
+"crafting": false,
+"collection": true,
+"usage_keys": null
+},
+"result": "<EM4>[Collection]</EM4>"
+},
+{
+"args": {
+"cfg": {
+"$cfg": {
+"elements": [
+{
+"kind": "label",
+"enabled": true,
+"style": "short"
+},
+{
+"kind": "usage",
+"enabled": true,
+"style": "long"
+},
+{
+"kind": "collection",
+"enabled": true,
+"style": "long"
+}
+],
+"separator": "pipe",
+"enclosing": "square",
+"placement": "append",
+"class_mapping": {
+"Crafting": [
+"CF",
+"Craft",
+"Crafting"
+],
+"Collection": [
+"Col",
+"Collect",
+"Collection"
+],
+"Power Plant": [
+"P",
+"PP",
+"POWR"
+],
+"Cooler": [
+"C",
+"CL",
+"COOL"
+],
+"Shield": [
+"S",
+"SH",
+"SHLD"
+],
+"Radar": [
+"R",
+"RD",
+"RADR"
+],
+"Quantum Drive": [
+"Q",
+"QD",
+"QDRV"
+],
+"Mining Laser": [
+"M",
+"ML",
+"MINE"
+],
+"Tractor Beam": [
+"T",
+"TB",
+"TRAC"
+],
+"Salvage Module": [
+"SV",
+"SLV",
+"SALV"
+],
+"Refuel Nozzle": [
+"F",
+"RF",
+"FUEL"
+],
+"Ship Weapon (Ballistic)": [
+"B",
+"BW",
+"BGUN"
+],
+"Ship Weapon (Energy)": [
+"E",
+"EW",
+"EGUN"
+],
+"Ship Weapon (Distortion)": [
+"D",
+"DW",
+"DGUN"
+],
+"FPS Weapon": [
+"G",
+"FW",
+"FPSW"
+],
+"Ammo": [
+"A",
+"AM",
+"AMMO"
+],
+"Armor": [
+"AR",
+"ARM",
+"ARMR"
+],
+"Mission Item": [
+"MI",
+"MIT",
+"MITM"
+]
+},
+"usage_separator": "pipe",
+"route_arrow": "gt",
+"title_separator": "dash",
+"location_detail": "address",
+"abbreviated_phrases": [],
+"rank_separator": "dash",
+"shortened_sizes": [],
+"standardize_hauling_names": false
+}
+},
+"crafting": true,
+"collection": true,
+"usage_keys": null
+},
+"result": "<EM4>[CF|Collection]</EM4>"
+},
+{
+"args": {
+"cfg": {
+"$cfg": {
+"elements": [
+{
+"kind": "label",
+"enabled": true,
+"style": "short"
+},
+{
+"kind": "usage",
+"enabled": true,
+"style": "long"
+},
+{
+"kind": "collection",
+"enabled": true,
+"style": "long"
+}
+],
+"separator": "pipe",
+"enclosing": "square",
+"placement": "append",
+"class_mapping": {
+"Crafting": [
+"CF",
+"Craft",
+"Crafting"
+],
+"Collection": [
+"Col",
+"Collect",
+"Collection"
+],
+"Power Plant": [
+"P",
+"PP",
+"POWR"
+],
+"Cooler": [
+"C",
+"CL",
+"COOL"
+],
+"Shield": [
+"S",
+"SH",
+"SHLD"
+],
+"Radar": [
+"R",
+"RD",
+"RADR"
+],
+"Quantum Drive": [
+"Q",
+"QD",
+"QDRV"
+],
+"Mining Laser": [
+"M",
+"ML",
+"MINE"
+],
+"Tractor Beam": [
+"T",
+"TB",
+"TRAC"
+],
+"Salvage Module": [
+"SV",
+"SLV",
+"SALV"
+],
+"Refuel Nozzle": [
+"F",
+"RF",
+"FUEL"
+],
+"Ship Weapon (Ballistic)": [
+"B",
+"BW",
+"BGUN"
+],
+"Ship Weapon (Energy)": [
+"E",
+"EW",
+"EGUN"
+],
+"Ship Weapon (Distortion)": [
+"D",
+"DW",
+"DGUN"
+],
+"FPS Weapon": [
+"G",
+"FW",
+"FPSW"
+],
+"Ammo": [
+"A",
+"AM",
+"AMMO"
+],
+"Armor": [
+"AR",
+"ARM",
+"ARMR"
+],
+"Mission Item": [
+"MI",
+"MIT",
+"MITM"
+]
+},
+"usage_separator": "pipe",
+"route_arrow": "gt",
+"title_separator": "dash",
+"location_detail": "address",
+"abbreviated_phrases": [],
+"rank_separator": "dash",
+"shortened_sizes": [],
+"standardize_hauling_names": false
+}
+},
+"crafting": false,
+"collection": false,
+"usage_keys": null
+},
+"result": ""
+},
+{
+"args": {
+"cfg": {
+"$cfg": {
+"elements": [
+{
+"kind": "label",
+"enabled": true,
+"style": "short"
+},
+{
+"kind": "usage",
+"enabled": true,
+"style": "long"
+},
+{
+"kind": "collection",
+"enabled": true,
+"style": "long"
+}
+],
+"separator": "pipe",
+"enclosing": "square",
+"placement": "append",
+"class_mapping": {
+"Crafting": [
+"CF",
+"Craft",
+"Crafting"
+],
+"Collection": [
+"Col",
+"Collect",
+"Collection"
+],
+"Power Plant": [
+"P",
+"PP",
+"POWR"
+],
+"Cooler": [
+"C",
+"CL",
+"COOL"
+],
+"Shield": [
+"S",
+"SH",
+"SHLD"
+],
+"Radar": [
+"R",
+"RD",
+"RADR"
+],
+"Quantum Drive": [
+"Q",
+"QD",
+"QDRV"
+],
+"Mining Laser": [
+"M",
+"ML",
+"MINE"
+],
+"Tractor Beam": [
+"T",
+"TB",
+"TRAC"
+],
+"Salvage Module": [
+"SV",
+"SLV",
+"SALV"
+],
+"Refuel Nozzle": [
+"F",
+"RF",
+"FUEL"
+],
+"Ship Weapon (Ballistic)": [
+"B",
+"BW",
+"BGUN"
+],
+"Ship Weapon (Energy)": [
+"E",
+"EW",
+"EGUN"
+],
+"Ship Weapon (Distortion)": [
+"D",
+"DW",
+"DGUN"
+],
+"FPS Weapon": [
+"G",
+"FW",
+"FPSW"
+],
+"Ammo": [
+"A",
+"AM",
+"AMMO"
+],
+"Armor": [
+"AR",
+"ARM",
+"ARMR"
+],
+"Mission Item": [
+"MI",
+"MIT",
+"MITM"
+]
+},
+"usage_separator": "pipe",
+"route_arrow": "gt",
+"title_separator": "dash",
+"location_detail": "address",
+"abbreviated_phrases": [],
+"rank_separator": "dash",
+"shortened_sizes": [],
+"standardize_hauling_names": false
+}
+},
+"crafting": true,
+"collection": false,
+"usage_keys": [
+"Cooler",
+"Power Plant",
+"Quantum Drive",
+"Radar",
+"Shield",
+"Tractor Beam"
+]
+},
+"result": "<EM4>[CF|COOL|POWR|QDRV|RADR|+2]</EM4>"
+},
+{
+"args": {
+"cfg": {
+"$cfg": {
+"elements": [
+{
+"kind": "label",
+"enabled": true,
+"style": "short"
+},
+{
+"kind": "usage",
+"enabled": true,
+"style": "long"
+},
+{
+"kind": "collection",
+"enabled": true,
+"style": "long"
+}
+],
+"separator": "pipe",
+"enclosing": "square",
+"placement": "append",
+"class_mapping": {
+"Crafting": [
+"CF",
+"Craft",
+"Crafting"
+],
+"Collection": [
+"Col",
+"Collect",
+"Collection"
+],
+"Power Plant": [
+"P",
+"PP",
+"POWR"
+],
+"Cooler": [
+"C",
+"CL",
+"COOL"
+],
+"Shield": [
+"S",
+"SH",
+"SHLD"
+],
+"Radar": [
+"R",
+"RD",
+"RADR"
+],
+"Quantum Drive": [
+"Q",
+"QD",
+"QDRV"
+],
+"Mining Laser": [
+"M",
+"ML",
+"MINE"
+],
+"Tractor Beam": [
+"T",
+"TB",
+"TRAC"
+],
+"Salvage Module": [
+"SV",
+"SLV",
+"SALV"
+],
+"Refuel Nozzle": [
+"F",
+"RF",
+"FUEL"
+],
+"Ship Weapon (Ballistic)": [
+"B",
+"BW",
+"BGUN"
+],
+"Ship Weapon (Energy)": [
+"E",
+"EW",
+"EGUN"
+],
+"Ship Weapon (Distortion)": [
+"D",
+"DW",
+"DGUN"
+],
+"FPS Weapon": [
+"G",
+"FW",
+"FPSW"
+],
+"Ammo": [
+"A",
+"AM",
+"AMMO"
+],
+"Armor": [
+"AR",
+"ARM",
+"ARMR"
+],
+"Mission Item": [
+"MI",
+"MIT",
+"MITM"
+]
+},
+"usage_separator": "pipe",
+"route_arrow": "gt",
+"title_separator": "dash",
+"location_detail": "address",
+"abbreviated_phrases": [],
+"rank_separator": "dash",
+"shortened_sizes": [],
+"standardize_hauling_names": false
+}
+},
+"crafting": true,
+"collection": false,
+"usage_keys": [
+"Cooler",
+"Power Plant",
+"Quantum Drive",
+"Radar"
+]
+},
+"result": "<EM4>[CF|COOL|POWR|QDRV|RADR]</EM4>"
+}
+],
+"_missile_name_tag": [
+{
+"args": {
+"desc_value": "Manufacturer: Firestorm Kinetics\\nSize: 3\\n",
+"root": {
+"$el": "<EntityClassDefinition>  <SAttachableComponentParams>    <AttachDef Type=\"Bomb\" Size=\"3\"/>  </SAttachableComponentParams>  <SCItemBombParams/></EntityClassDefinition>",
+"path": "/EntityClassDefinition"
+},
+"config": null
+},
+"result": "[B-S3]"
+},
+{
+"args": {
+"desc_value": "Size: 5\\n",
+"root": {
+"$el": "<EntityClassDefinition>  <Components>    <SAttachableComponentParams>      <AttachDef Size=\"5\"/>    </SAttachableComponentParams>    <SCItemBombParams/>  </Components></EntityClassDefinition>",
+"path": "/EntityClassDefinition"
+},
+"config": null
+},
+"result": "[B-S5]"
+},
+{
+"args": {
+"desc_value": "Size: 1\\nTracking Signal: Infrared\\n",
+"root": {
+"$el": "<EntityClassDefinition>  <SAttachableComponentParams>    <AttachDef Type=\"Missile\" Size=\"1\"/>  </SAttachableComponentParams>  <targetingParams trackingSignalType=\"Infrared\"/></EntityClassDefinition>",
+"path": "/EntityClassDefinition"
+},
+"config": null
+},
+"result": "[IR-S1]"
+},
+{
+"args": {
+"desc_value": "Size: 2\\n",
+"root": {
+"$el": "<EntityClassDefinition>  <SAttachableComponentParams>    <AttachDef Type=\"Missile\" Size=\"2\"/>  </SAttachableComponentParams></EntityClassDefinition>",
+"path": "/EntityClassDefinition"
+},
+"config": null
+},
+"result": "[S2]"
+}
+],
+"enhancements_mining_laser": [
+{
+"args": {
+"root": {
+"$el": "<EntityClassDefinition>\n  <Components>\n    <SHealthComponentParams Health=\"8000\"/>\n    <SDistortionParams Maximum=\"500000\"/>\n    <SCItemWeaponComponentParams>\n      <fireActions>\n        <SWeaponActionFireBeamParams fullDamageRange=\"60\" zeroDamageRange=\"180\" minEnergyDraw=\"0\" maxEnergyDraw=\"0\" heatPerSecond=\"0\" wearPerSecond=\"0\">\n          <mannequinTag tag=\"laser\"/>\n          <damagePerSecond>\n            <DamageInfo DamageEnergy=\"1890\"/>\n          </damagePerSecond>\n        </SWeaponActionFireBeamParams>\n        <SWeaponActionFireBeamParams fullDamageRange=\"60\" zeroDamageRange=\"180\" minEnergyDraw=\"0\" maxEnergyDraw=\"0\" heatPerSecond=\"0\" wearPerSecond=\"0\">\n          <mannequinTag tag=\"tractor\"/>\n          <damagePerSecond>\n            <DamageInfo DamageEnergy=\"1850\"/>\n          </damagePerSecond>\n        </SWeaponActionFireBeamParams>\n      </fireActions>\n    </SCItemWeaponComponentParams>\n    <SEntityComponentMiningLaserParams>\n      <miningLaserModifiers>\n        <laserInstability>\n          <FloatModifierMultiplicative value=\"-35\"/>\n        </laserInstability>\n        <optimalChargeWindowSizeModifier>\n          <FloatModifierMultiplicative value=\"40\"/>\n        </optimalChargeWindowSizeModifier>\n        <resistanceModifier>\n          <FloatModifierMultiplicative value=\"25\"/>\n        </resistanceModifier>\n      </miningLaserModifiers>\n      <filterParams>\n        <filterModifier>\n          <FloatModifierMultiplicative value=\"30\"/>\n        </filterModifier>\n      </filterParams>\n    </SEntityComponentMiningLaserParams>\n  </Components>\n</EntityClassDefinition>",
+"path": "/EntityClassDefinition"
+}
+},
+"result": "Fracture:  DPS: 1,890  |  Range: 60m–180m\\nExtraction:  DPS: 1,850  |  Range: 60m–180m\\nModifiers:  Instability: -35%  |  Optimal Charge Window: +40%  |  Resistance: +25%  |  Inert Filter: +30%\\nComponent HP: 8,000\\nMax Distortion: 500,000"
+},
+{
+"args": {
+"root": {
+"$el": "<E><Components><SCItemWeaponComponentParams><fireActions>\n            <SWeaponActionFireBeamParams fullDamageRange=\"10\" zeroDamageRange=\"20\">\n              <mannequinTag tag=\"unknown_tag\"/>\n              <damagePerSecond><DamageInfo DamageEnergy=\"42\"/></damagePerSecond>\n            </SWeaponActionFireBeamParams>\n        </fireActions></SCItemWeaponComponentParams></Components></E>",
+"path": "/E"
+}
+},
+"result": "Beam 1:  DPS: 42  |  Range: 10m–20m"
+},
+{
+"args": {
+"root": {
+"$el": "<E><Components><SCItemWeaponComponentParams><fireActions>\n            <SWeaponActionFireBeamParams fullDamageRange=\"0\" zeroDamageRange=\"0\" minEnergyDraw=\"0\" maxEnergyDraw=\"0\" heatPerSecond=\"0\" wearPerSecond=\"0\">\n              <mannequinTag tag=\"laser\"/>\n              <damagePerSecond><DamageInfo DamageEnergy=\"0\"/></damagePerSecond>\n            </SWeaponActionFireBeamParams>\n        </fireActions></SCItemWeaponComponentParams></Components></E>",
+"path": "/E"
+}
+},
+"result": ""
+},
+{
+"args": {
+"root": {
+"$el": "<E><Components>\n          <SEntityComponentMiningLaserParams>\n            <miningLaserModifiers>\n              <laserInstability><FloatModifierMultiplicative value=\"0\"/></laserInstability>\n            </miningLaserModifiers>\n          </SEntityComponentMiningLaserParams>\n        </Components></E>",
+"path": "/E"
+}
+},
+"result": ""
+},
+{
+"args": {
+"root": {
+"$el": "<E><Components><SEntityComponentMiningLaserParams><miningLaserModifiers>\n          <resistanceModifier><FloatModifierMultiplicative value=\"25\"/></resistanceModifier>\n        </miningLaserModifiers></SEntityComponentMiningLaserParams></Components></E>",
+"path": "/E"
+}
+},
+"result": "Modifiers:  Resistance: +25%"
+},
+{
+"args": {
+"root": {
+"$el": "<EntityClassDefinition><Components/></EntityClassDefinition>",
+"path": "/EntityClassDefinition"
+}
+},
+"result": ""
+},
+{
+"args": {
+"root": {
+"$el": "<E><Components>\n          <EMSignature nominalSignature=\"120\"/>\n          <IRSignature nominalSignature=\"80\"/>\n        </Components></E>",
+"path": "/E"
+}
+},
+"result": "Signatures:  EM: 120  |  IR: 80"
+},
+{
+"args": {
+"root": {
+"$el": "<E><Components>\n          <SHealthComponentParams Health=\"1000\"/>\n          <SEntityComponentMiningLaserParams/>\n        </Components></E>",
+"path": "/E"
+}
+},
+"result": "Component HP: 1,000"
+}
+],
+"enhancements_salvage_tool": [
+{
+"args": {
+"root": {
+"$el": "<EntityClassDefinition>\n  <Components>\n    <SHealthComponentParams Health=\"500\"/>\n    <SCItemWeaponComponentParams>\n      <fireActions>\n        <SWeaponActionFireSalvageRepairParams salvageRepairMode=\"Repair\" materialEfficiency=\"1\" maxHealthRepairRate=\"160\" maxDamageMapRepairRate=\"10\" healthToAmmoRatio=\"0.1\" rampUpTime=\"0.5\" rampDownTime=\"0.1\" minEnergyDraw=\"0\" maxEnergyDraw=\"0\" heatPerSecond=\"0\" wearPerSecond=\"0\"/>\n        <SWeaponActionFireSalvageRepairParams salvageRepairMode=\"Salvage\" materialEfficiency=\"0.7\" maxHealthRepairRate=\"670\" maxDamageMapRepairRate=\"10\" healthToAmmoRatio=\"5.8\" rampUpTime=\"4\" rampDownTime=\"2\" minEnergyDraw=\"0\" maxEnergyDraw=\"0\" heatPerSecond=\"0\" wearPerSecond=\"0\"/>\n      </fireActions>\n    </SCItemWeaponComponentParams>\n  </Components>\n</EntityClassDefinition>",
+"path": "/EntityClassDefinition"
+}
+},
+"result": "Repair:  HP Rate: 160/s  |  Damage-Map Rate: 10/s  |  HP/Ammo: 0.10  |  Ramp: 0.5s up, 0.1s down\\nSalvage:  HP Rate: 670/s  |  Damage-Map Rate: 10/s  |  Material Efficiency: 0.70  |  HP/Ammo: 5.80  |  Ramp: 4.0s up, 2.0s down\\nComponent HP: 500"
+},
+{
+"args": {
+"root": {
+"$el": "<E><Components><SCItemWeaponComponentParams><fireActions>\n          <SWeaponActionFireSalvageRepairParams salvageRepairMode=\"Repair\" rampUpTime=\"0.5\" rampDownTime=\"0.1\"/>\n        </fireActions></SCItemWeaponComponentParams></Components></E>",
+"path": "/E"
+}
+},
+"result": "Repair:  Ramp: 0.5s up, 0.1s down"
+},
+{
+"args": {
+"root": {
+"$el": "<E><Components><SCItemWeaponComponentParams><fireActions>\n          <SWeaponActionFireSalvageRepairParams salvageRepairMode=\"Repair\" materialEfficiency=\"1\" maxHealthRepairRate=\"100\"/>\n        </fireActions></SCItemWeaponComponentParams></Components></E>",
+"path": "/E"
+}
+},
+"result": "Repair:  HP Rate: 100/s"
+},
+{
+"args": {
+"root": {
+"$el": "<E><Components><SCItemWeaponComponentParams><fireActions>\n          <SWeaponActionFireSalvageRepairParams name=\"CustomMode\" maxHealthRepairRate=\"50\"/>\n        </fireActions></SCItemWeaponComponentParams></Components></E>",
+"path": "/E"
+}
+},
+"result": "CustomMode:  HP Rate: 50/s"
+},
+{
+"args": {
+"root": {
+"$el": "<E><Components>\n          <SWearAccumulatorParams MaxLifetimeHours=\"120\"/>\n        </Components></E>",
+"path": "/E"
+}
+},
+"result": "Max Lifetime: 120.0h"
+},
+{
+"args": {
+"root": {
+"$el": "<E><Components>\n          <SHealthComponentParams Health=\"100\"/>\n        </Components></E>",
+"path": "/E"
+}
+},
+"result": "Component HP: 100"
+},
+{
+"args": {
+"root": {
+"$el": "<E><Components><SCItemWeaponComponentParams><fireActions>\n          <SWeaponActionFireSalvageRepairParams salvageRepairMode=\"Salvage\" maxHealthRepairRate=\"100\"/>\n        </fireActions></SCItemWeaponComponentParams></Components></E>",
+"path": "/E"
+}
+},
+"result": "Salvage:  HP Rate: 100/s"
+}
+],
+"enhancements_weapon": [
+{
+"args": {
+"root": {
+"$el": "<E><Components><SHealthComponentParams Health=\"1000\"/></Components></E>",
+"path": "/E"
+},
+"ammo_lookup": {
+"$dict": []
+},
+"loc": {
+"$dict": []
+},
+"magazine_lookup": null
+},
+"result": "Component HP: 1,000"
+},
+{
+"args": {
+"root": {
+"$el": "<E><Components/></E>",
+"path": "/E"
+},
+"ammo_lookup": {
+"$dict": []
+},
+"loc": {
+"$dict": []
+},
+"magazine_lookup": {
+"$dict": []
+}
+},
+"result": ""
+}
+],
+"bare_type_name_tag_lookup": [
+{
+"args": {
+"loc": {
+"$dict": [
+[
+"item_fuelnozzle_MISC_Standard_Name",
+"RN-7s"
+],
+[
+"item_fuelnozzle_MISC_Standard_Desc",
+"Manufacturer: MISC\\nItem Type: Fuel Nozzle\\nHydrogen Flow Speed: 1.65 SCU/s\\n"
+],
+[
+"Nozzle_FuelGiver_GRIN_NozzleSecure_Name",
+"Marlin"
+],
+[
+"Nozzle_FuelGiver_GRIN_NozzleSecure_Desc",
+"Manufacturer: Greycat Industrial\\nItem Type: Fuel Nozzle\\nHydrogen Flow Speed: 1.05 SCU/s\\n"
+]
+]
+},
+"comp_cfg": {
+"$cfg": {
+"elements": [
+{
+"kind": "class",
+"enabled": true,
+"style": "med"
+},
+{
+"kind": "size",
+"enabled": true,
+"style": "sn"
+},
+{
+"kind": "grade",
+"enabled": true,
+"style": "letter"
+},
+{
+"kind": "type",
+"enabled": true,
+"style": "short"
+}
+],
+"separator": "hyphen",
+"enclosing": "square",
+"placement": "prepend",
+"class_mapping": {
+"Competition": [
+"R",
+"CMP",
+"Competition"
+],
+"Military": [
+"M",
+"MIL",
+"Military"
+],
+"Civilian": [
+"C",
+"CIV",
+"Civilian"
+],
+"Industrial": [
+"I",
+"IND",
+"Industrial"
+],
+"Stealth": [
+"S",
+"STH",
+"Stealth"
+],
+"Shield Generator": [
+"SH",
+"SHLD",
+"Shield"
+],
+"Cooler": [
+"CL",
+"COOL",
+"Cooler"
+],
+"Power Plant": [
+"PW",
+"POWR",
+"Power"
+],
+"Quantum Drive": [
+"QD",
+"QDRV",
+"Quantum"
+],
+"Radar": [
+"RD",
+"RADR",
+"Radar"
+],
+"Fuel Nozzle": [
+"FN",
+"FNoz",
+"Fuel Nozzle"
+],
+"Mining Laser": [
+"ML",
+"MineL",
+"Mining Laser"
+]
+},
+"usage_separator": "pipe",
+"route_arrow": "gt",
+"title_separator": "dash",
+"location_detail": "address",
+"abbreviated_phrases": [],
+"rank_separator": "dash",
+"shortened_sizes": [],
+"standardize_hauling_names": false
+}
+}
+},
+"result": {
+"$dict": [
+[
+"RN-7s",
+"[FN]"
+],
+[
+"Marlin",
+"[FN]"
+]
+]
+}
+},
+{
+"args": {
+"loc": {
+"$dict": [
+[
+"item_NameSHLD_Aspirum",
+"Aspirum"
+],
+[
+"item_DescSHLD_Aspirum",
+"Item Type: Shield Generator\nSize: 1\n"
+]
+]
+},
+"comp_cfg": {
+"$cfg": {
+"elements": [
+{
+"kind": "class",
+"enabled": true,
+"style": "med"
+},
+{
+"kind": "size",
+"enabled": true,
+"style": "sn"
+},
+{
+"kind": "grade",
+"enabled": true,
+"style": "letter"
+},
+{
+"kind": "type",
+"enabled": true,
+"style": "short"
+}
+],
+"separator": "hyphen",
+"enclosing": "square",
+"placement": "prepend",
+"class_mapping": {
+"Competition": [
+"R",
+"CMP",
+"Competition"
+],
+"Military": [
+"M",
+"MIL",
+"Military"
+],
+"Civilian": [
+"C",
+"CIV",
+"Civilian"
+],
+"Industrial": [
+"I",
+"IND",
+"Industrial"
+],
+"Stealth": [
+"S",
+"STH",
+"Stealth"
+],
+"Shield Generator": [
+"SH",
+"SHLD",
+"Shield"
+],
+"Cooler": [
+"CL",
+"COOL",
+"Cooler"
+],
+"Power Plant": [
+"PW",
+"POWR",
+"Power"
+],
+"Quantum Drive": [
+"QD",
+"QDRV",
+"Quantum"
+],
+"Radar": [
+"RD",
+"RADR",
+"Radar"
+],
+"Fuel Nozzle": [
+"FN",
+"FNoz",
+"Fuel Nozzle"
+],
+"Mining Laser": [
+"ML",
+"MineL",
+"Mining Laser"
+]
+},
+"usage_separator": "pipe",
+"route_arrow": "gt",
+"title_separator": "dash",
+"location_detail": "address",
+"abbreviated_phrases": [],
+"rank_separator": "dash",
+"shortened_sizes": [],
+"standardize_hauling_names": false
+}
+}
+},
+"result": {
+"$dict": []
+}
+},
+{
+"args": {
+"loc": {
+"$dict": [
+[
+"item_fuelnozzle_MISC_Standard_Name",
+"RN-7s"
+],
+[
+"item_fuelnozzle_MISC_Standard_Desc",
+"Manufacturer: MISC\\nItem Type: Fuel Nozzle\\nHydrogen Flow Speed: 1.65 SCU/s\\n"
+]
+]
+},
+"comp_cfg": {
+"$cfg": {
+"elements": [
+{
+"kind": "class",
+"enabled": true,
+"style": "med"
+},
+{
+"kind": "size",
+"enabled": true,
+"style": "sn"
+},
+{
+"kind": "grade",
+"enabled": true,
+"style": "letter"
+},
+{
+"kind": "type",
+"enabled": false,
+"style": "short"
+}
+],
+"separator": "hyphen",
+"enclosing": "square",
+"placement": "prepend",
+"class_mapping": {
+"Competition": [
+"R",
+"CMP",
+"Competition"
+],
+"Military": [
+"M",
+"MIL",
+"Military"
+],
+"Civilian": [
+"C",
+"CIV",
+"Civilian"
+],
+"Industrial": [
+"I",
+"IND",
+"Industrial"
+],
+"Stealth": [
+"S",
+"STH",
+"Stealth"
+],
+"Shield Generator": [
+"SH",
+"SHLD",
+"Shield"
+],
+"Cooler": [
+"CL",
+"COOL",
+"Cooler"
+],
+"Power Plant": [
+"PW",
+"POWR",
+"Power"
+],
+"Quantum Drive": [
+"QD",
+"QDRV",
+"Quantum"
+],
+"Radar": [
+"RD",
+"RADR",
+"Radar"
+],
+"Fuel Nozzle": [
+"FN",
+"FNoz",
+"Fuel Nozzle"
+],
+"Mining Laser": [
+"ML",
+"MineL",
+"Mining Laser"
+]
+},
+"usage_separator": "pipe",
+"route_arrow": "gt",
+"title_separator": "dash",
+"location_detail": "address",
+"abbreviated_phrases": [],
+"rank_separator": "dash",
+"shortened_sizes": [],
+"standardize_hauling_names": false
+}
+}
+},
+"result": {
+"$dict": []
+}
+},
+{
+"args": {
+"loc": {
+"$dict": [
+[
+"a_Name",
+"A"
+]
+]
+},
+"comp_cfg": null
+},
+"result": {
+"$dict": []
+}
+},
+{
+"args": {
+"loc": {
+"$dict": [
+[
+"eckhart_defendship_MRT_title_001",
+"Stop Attack on High-Profile Client"
+]
+]
+},
+"comp_cfg": {
+"$cfg": {
+"elements": [
+{
+"kind": "class",
+"enabled": true,
+"style": "med"
+},
+{
+"kind": "size",
+"enabled": true,
+"style": "sn"
+},
+{
+"kind": "grade",
+"enabled": true,
+"style": "letter"
+},
+{
+"kind": "type",
+"enabled": false,
+"style": "short"
+}
+],
+"separator": "hyphen",
+"enclosing": "square",
+"placement": "prepend",
+"class_mapping": {
+"Competition": [
+"R",
+"CMP",
+"Competition"
+],
+"Military": [
+"M",
+"MIL",
+"Military"
+],
+"Civilian": [
+"C",
+"CIV",
+"Civilian"
+],
+"Industrial": [
+"I",
+"IND",
+"Industrial"
+],
+"Stealth": [
+"S",
+"STH",
+"Stealth"
+],
+"Shield Generator": [
+"SH",
+"SHLD",
+"Shield"
+],
+"Cooler": [
+"CL",
+"COOL",
+"Cooler"
+],
+"Power Plant": [
+"PW",
+"POWR",
+"Power"
+],
+"Quantum Drive": [
+"QD",
+"QDRV",
+"Quantum"
+],
+"Radar": [
+"RD",
+"RADR",
+"Radar"
+],
+"Fuel Nozzle": [
+"FN",
+"FNoz",
+"Fuel Nozzle"
+],
+"Mining Laser": [
+"ML",
+"MineL",
+"Mining Laser"
+]
+},
+"usage_separator": "pipe",
+"route_arrow": "gt",
+"title_separator": "dash",
+"location_detail": "address",
+"abbreviated_phrases": [],
+"rank_separator": "dash",
+"shortened_sizes": [],
+"standardize_hauling_names": false
+}
+}
+},
+"result": {
+"$dict": []
+}
+}
+],
+"_synthesize_description": [
+{
+"args": {
+"root": {
+"$el": "<EntityClassDefinition>\n          <Components>\n            <Localization Name=\"@item_NameSHLD_TestShield\" Description=\"@item_DescSHLD_TestShield\"/>\n          </Components>\n        </EntityClassDefinition>",
+"path": "/EntityClassDefinition"
+},
+"xml_file": {
+"$path": "C:/Users/mason/AppData/Local/Temp/pytest-of-mason/pytest-0/test_from_loc_name_key0/test_shield.xml"
+},
+"key": "item_DescSHLD_TestShield"
+},
+"result": "item_NameSHLD_TestShield"
+},
+{
+"args": {
+"root": {
+"$el": "<EntityClassDefinition>\n          <Components>\n            <Localization Description=\"@item_DescSHLD_TestShield\"/>\n          </Components>\n        </EntityClassDefinition>",
+"path": "/EntityClassDefinition"
+},
+"xml_file": {
+"$path": "C:/Users/mason/AppData/Local/Temp/pytest-of-mason/pytest-0/test_from_file_stem0/AEGS_Test_Shield.xml"
+},
+"key": "item_DescSHLD_TestShield"
+},
+"result": "AEGS Test Shield"
+},
+{
+"args": {
+"root": {
+"$el": "<EntityClassDefinition/>",
+"path": "/EntityClassDefinition"
+},
+"xml_file": {
+"$path": "C:/Users/mason/AppData/Local/Temp/pytest-of-mason/pytest-0/test_from_key_fallback0/unnamed_entity.xml"
+},
+"key": "item_DescSHLD_TestShield"
+},
+"result": "unnamed entity"
+},
+{
+"args": {
+"root": {
+"$el": "<EntityClassDefinition>\n          <Components>\n            <VehicleComponentParams crewSize=\"2\" vehicleCareer=\"@vehicle_career_Fighter\" vehicleRole=\"@vehicle_role_HeavyFighter\">\n              <maxBoundingBoxSize y=\"32.5\"/>\n            </VehicleComponentParams>\n            <Localization Description=\"@vehicle_DescAEGS_TestShip\"/>\n          </Components>\n        </EntityClassDefinition>",
+"path": "/EntityClassDefinition"
+},
+"xml_file": {
+"$path": "C:/Users/mason/AppData/Local/Temp/pytest-of-mason/pytest-0/test_vehicle_params_extracted0/AEGS_Test_Ship.xml"
+},
+"key": "vehicle_DescAEGS_TestShip"
+},
+"result": "AEGS Test Ship\nClass: vehicle_career_Fighter | Role: vehicle_role_HeavyFighter | Crew: 2 | Length: 32.5m"
+},
+{
+"args": {
+"root": {
+"$el": "<EntityClassDefinition>\n          <Components>\n            <targetingParams trackingSignalType=\"Infrared\"/>\n            <Localization Description=\"@item_DescMISS_TestMissile\"/>\n          </Components>\n        </EntityClassDefinition>",
+"path": "/EntityClassDefinition"
+},
+"xml_file": {
+"$path": "C:/Users/mason/AppData/Local/Temp/pytest-of-mason/pytest-0/test_missile_tracking_extracte0/test_missile.xml"
+},
+"key": "item_DescMISS_TestMissile"
+},
+"result": "test missile\nTracking: Infrared"
+},
+{
+"args": {
+"root": {
+"$el": "<EntityClassDefinition>\n          <Components>\n            <ItemComponentParams itemType=\"ShieldGenerator\"/>\n            <Localization Description=\"@item_DescSHLD_TestComp\"/>\n          </Components>\n        </EntityClassDefinition>",
+"path": "/EntityClassDefinition"
+},
+"xml_file": {
+"$path": "C:/Users/mason/AppData/Local/Temp/pytest-of-mason/pytest-0/test_item_type_extracted0/test_comp.xml"
+},
+"key": "item_DescSHLD_TestComp"
+},
+"result": "test comp\nItem Type: ShieldGenerator"
+},
+{
+"args": {
+"root": {
+"$el": "<EntityClassDefinition>\n          <Components>\n            <SHealthComponentParams Health=\"500\"/>\n            <ItemComponentParams itemType=\"ShieldGenerator\"/>\n            <Localization Description=\"@item_DescSHLD_Missing\"/>\n          </Components>\n        </EntityClassDefinition>",
+"path": "/EntityClassDefinition"
+},
+"xml_file": {
+"$path": "C:/Users/mason/AppData/Local/Temp/pytest-of-mason/pytest-0/test_discovers_item_not_in_loc0/test_shield.xml"
+},
+"key": "item_DescSHLD_Missing"
+},
+"result": "test shield\nItem Type: ShieldGenerator"
+},
+{
+"args": {
+"root": {
+"$el": "<EntityClassDefinition>\n          <Components>\n            <SHealthComponentParams Health=\"500\"/>\n            <ItemComponentParams itemType=\"ShieldGenerator\"/>\n            <Localization Description=\"@item_DescSHLD_Empty\"/>\n          </Components>\n        </EntityClassDefinition>",
+"path": "/EntityClassDefinition"
+},
+"xml_file": {
+"$path": "C:/Users/mason/AppData/Local/Temp/pytest-of-mason/pytest-0/test_discovered_item_with_empt0/test_empty.xml"
+},
+"key": "item_DescSHLD_Empty"
+},
+"result": "test empty\nItem Type: ShieldGenerator"
+},
+{
+"args": {
+"root": {
+"$el": "<EntityClassDefinition>\n          <Components>\n            <SHealthComponentParams Health=\"500\"/>\n            <ItemComponentParams itemType=\"ShieldGenerator\"/>\n            <Localization Description=\"@item_DescSHLD_A\"/>\n          </Components>\n        </EntityClassDefinition>",
+"path": "/EntityClassDefinition"
+},
+"xml_file": {
+"$path": "C:/Users/mason/AppData/Local/Temp/pytest-of-mason/pytest-0/test_discovered_counter_increm0/shield1.xml"
+},
+"key": "item_DescSHLD_A"
+},
+"result": "shield1\nItem Type: ShieldGenerator"
+},
+{
+"args": {
+"root": {
+"$el": "<EntityClassDefinition.Spaceships.AEGS_TestShip>\n          <Components>\n            <VehicleComponentParams crewSize=\"1\" vehicleDescription=\"@vehicle_DescAEGS_TestShip\" vehicleCareer=\"@vehicle_career_Fighter\" vehicleRole=\"@vehicle_role_LightFighter\">\n              <maxBoundingBoxSize y=\"27.0\"/>\n            </VehicleComponentParams>\n            <SEntityComponentDefaultLoadoutParams/>\n          </Components>\n        </EntityClassDefinition.Spaceships.AEGS_TestShip>",
+"path": "/EntityClassDefinition.Spaceships.AEGS_TestShip"
+},
+"xml_file": {
+"$path": "C:/Users/mason/AppData/Local/Temp/pytest-of-mason/pytest-0/test_discovers_ship_not_in_loc0/AEGS_Test_Ship.xml"
+},
+"key": "vehicle_DescAEGS_TestShip"
+},
+"result": "AEGS Test Ship\nClass: vehicle_career_Fighter | Role: vehicle_role_LightFighter | Crew: 1 | Length: 27.0m"
+}
+],
+"_parse_compendium_locations": [
+{
+"args": {
+"base_content": ""
+},
+"result": {
+"$dict": []
+}
+},
+{
+"args": {
+"base_content": "Intro prose with no dash-entry shape here.\\n\\nAgricium - ARC-L3, Cellin, CRU-L5, Daymar\\n\\nAluminium - Aaron Halo, ARC-L1"
+},
+"result": {
+"$dict": [
+[
+"agricium",
+[
+"ARC-L3",
+"Cellin",
+"CRU-L5",
+"Daymar"
+]
+],
+[
+"aluminium",
+[
+"Aaron Halo",
+"ARC-L1"
+]
+]
+]
+}
+},
+{
+"args": {
+"base_content": "Aluminium - Aaron Halo, ARC-L1"
+},
+"result": {
+"$dict": [
+[
+"aluminium",
+[
+"Aaron Halo",
+"ARC-L1"
+]
+]
+]
+}
+},
+{
+"args": {
+"base_content": "Aphorite - All Moons/Planets/Caves"
+},
+"result": {
+"$dict": [
+[
+"aphorite",
+[
+"All Moons/Planets/Caves"
+]
+]
+]
+}
+},
+{
+"args": {
+"base_content": "Savrilium - Glaciem Ring, Keeger Belt"
+},
+"result": {
+"$dict": [
+[
+"savrilium",
+[
+"Glaciem Ring",
+"Keeger Belt"
+]
+]
+]
+}
+}
+],
+"_lookup_commodity_locations": [
+{
+"args": {
+"mineral_locations": {
+"$dict": []
+},
+"display": "Hadanite",
+"internal_name": "hadanite"
+},
+"result": null
+},
+{
+"args": {
+"mineral_locations": {
+"$dict": []
+},
+"display": "Agricium",
+"internal_name": "agricium"
+},
+"result": null
+},
+{
+"args": {
+"mineral_locations": {
+"$dict": [
+[
+"agricium",
+[
+"ARC-L3",
+"Cellin",
+"CRU-L5",
+"Daymar"
+]
+],
+[
+"aluminium",
+[
+"Aaron Halo",
+"ARC-L1"
+]
+]
+]
+},
+"display": "Agricium",
+"internal_name": "agricium"
+},
+"result": [
+"ARC-L3",
+"Cellin",
+"CRU-L5",
+"Daymar"
+]
+},
+{
+"args": {
+"mineral_locations": {
+"$dict": [
+[
+"agricium",
+[
+"ARC-L3",
+"Cellin",
+"CRU-L5",
+"Daymar"
+]
+],
+[
+"aluminium",
+[
+"Aaron Halo",
+"ARC-L1"
+]
+]
+]
+},
+"display": "Aluminium (Ore)",
+"internal_name": "aluminum_ore"
+},
+"result": [
+"Aaron Halo",
+"ARC-L1"
+]
+},
+{
+"args": {
+"mineral_locations": {
+"$dict": [
+[
+"agricium",
+[
+"ARC-L3",
+"Cellin",
+"CRU-L5",
+"Daymar"
+]
+],
+[
+"aluminium",
+[
+"Aaron Halo",
+"ARC-L1"
+]
+]
+]
+},
+"display": "Gold",
+"internal_name": "gold"
+},
+"result": null
+}
+],
+"_strip_cig_size_prefix": [
+{
+"args": {
+"name": "Norfield"
+},
+"result": "Norfield"
+},
+{
+"args": {
+"name": "Pyro Pickaxe"
+},
+"result": "Pyro Pickaxe"
+},
+{
+"args": {
+"name": "S0 Helix"
+},
+"result": "Helix"
+},
+{
+"args": {
+"name": "S00 Hofstede"
+},
+"result": "Hofstede"
+},
+{
+"args": {
+"name": "S1 ExampleHead"
+},
+"result": "ExampleHead"
+},
+{
+"args": {
+"name": "S15 BiggerHead"
+},
+"result": "BiggerHead"
+},
+{
+"args": {
+"name": "Sasquatch"
+},
+"result": "Sasquatch"
+},
+{
+"args": {
+"name": "Slicer Pistol"
+},
+"result": "Slicer Pistol"
+},
+{
+"args": {
+"name": "Surveyor-Go"
+},
+"result": "Surveyor-Go"
+},
+{
+"args": {
+"name": "Foo S0 Bar"
+},
+"result": "Foo S0 Bar"
+},
+{
+"args": {
+"name": "S0 "
+},
+"result": ""
+},
+{
+"args": {
+"name": "Thing"
+},
+"result": "Thing"
+},
+{
+"args": {
+"name": "Aspirum"
+},
+"result": "Aspirum"
+},
+{
+"args": {
+"name": "Test Component"
+},
+"result": "Test Component"
+}
+],
+"_pool_rank_label": [
+{
+"args": {
+"pool_name": ""
+},
+"result": ""
+},
+{
+"args": {
+"pool_name": "shubinrank0to1"
+},
+"result": "Rank 0–1"
+},
+{
+"args": {
+"pool_name": "shubinrank2to3"
+},
+"result": "Rank 2–3"
+},
+{
+"args": {
+"pool_name": "shubinrank4"
+},
+"result": "Rank 4"
+},
+{
+"args": {
+"pool_name": "shubinrank0"
+},
+"result": "Rank 0"
+},
+{
+"args": {
+"pool_name": "ShubinRank4"
+},
+"result": "Rank 4"
+},
+{
+"args": {
+"pool_name": "SHUBINRANK0TO1"
+},
+"result": "Rank 0–1"
+},
+{
+"args": {
+"pool_name": "headhuntersmercenaryshipregionc"
+},
+"result": ""
+},
+{
+"args": {
+"pool_name": "collectorwikelo"
+},
+"result": ""
+},
+{
+"args": {
+"pool_name": "test"
+},
+"result": ""
+}
+],
+"_normalize_commodity_name": [
+{
+"args": {
+"raw": "hadanite"
+},
+"result": "hadanite"
+},
+{
+"args": {
+"raw": "agricium"
+},
+"result": "agricium"
+}
+],
+"_humanize_craft_category": [
+{
+"args": {
+"cat": "."
+},
+"result": "."
+},
+{
+"args": {
+"cat": "crafting/vehiclegear/powerplant"
+},
+"result": "Power Plants"
+},
+{
+"args": {
+"cat": "crafting/vehiclegear/cooler"
+},
+"result": "Coolers"
+},
+{
+"args": {
+"cat": "crafting/vehiclegear/refuelling/nozzle"
+},
+"result": "Refuel Nozzles"
+},
+{
+"args": {
+"cat": "crafting/vehiclegear/somethingnew"
+},
+"result": "Somethingnew"
+}
+],
+"_qd_size_range": [
+{
+"args": {
+"sizes": [
+3
+]
+},
+"result": "S3"
+},
+{
+"args": {
+"sizes": [
+1,
+2,
+3
+]
+},
+"result": "S1-S3"
+},
+{
+"args": {
+"sizes": [
+2,
+4
+]
+},
+"result": "S2, S4"
+}
+],
+"_condense_crafted_items": [
+{
+"args": {
+"items_list": [
+[
+".",
+"test_weapon"
+]
+]
+},
+"result": [
+".: 1 items"
+]
+},
+{
+"args": {
+"items_list": [
+[
+".",
+"omnisky_like"
+]
+]
+},
+"result": [
+".: 1 items"
+]
+},
+{
+"args": {
+"items_list": [
+[
+"weapons/rifle",
+"Karna Rifle"
+],
+[
+"crafting/vehiclegear/powerplant",
+"a"
+],
+[
+"crafting/vehiclegear/quantumdrive/size1",
+"b"
+],
+[
+"crafting/vehiclegear/quantumdrive/size2",
+"c"
+],
+[
+"crafting/vehiclegear/quantumdrive/size3",
+"d"
+]
+]
+},
+"result": [
+"Karna Rifle",
+"Power Plants: 1 items",
+"Quantum Drives: 3 items (S1-S3)"
+]
+}
+],
+"_extract_difficulty": [
+{
+"args": {
+"element": {
+"$el": "<root>\n\n<ContractGeneratorHandler_List debugName=\"Adagio_Stanton_HandMining\">\n    <Contract debugName=\"Adagio_Stanton_HandMining_T1\">\n        <Title>\n            <ContractStringParam param=\"Title\" value=\"@adagio_mining_title\"/>\n            <ContractStringParam param=\"Description\" value=\"@adagio_mining_desc\"/>\n        </Title>\n        <BlueprintRewards blueprintPool=\"pool-fps-uuid\" chance=\"1.0\"/>\n        <BlueprintRewards blueprintPool=\"pool-comp-uuid\" chance=\"1.0\"/>\n    </Contract>\n</ContractGeneratorHandler_List>\n\n</root>",
+"path": "/root/ContractGeneratorHandler_List/Contract"
+}
+},
+"result": ""
+},
+{
+"args": {
+"element": {
+"$el": "<root>\n\n<ContractGeneratorHandler_List debugName=\"DupeTest_Stanton\">\n    <Contract debugName=\"DupeTest_Stanton_T1\">\n        <Title>\n            <ContractStringParam param=\"Title\" value=\"@dupe_title\"/>\n            <ContractStringParam param=\"Description\" value=\"@dupe_desc\"/>\n        </Title>\n        <BlueprintRewards blueprintPool=\"pool-a\" chance=\"1.0\"/>\n        <BlueprintRewards blueprintPool=\"pool-b\" chance=\"1.0\"/>\n    </Contract>\n</ContractGeneratorHandler_List>\n\n</root>",
+"path": "/root/ContractGeneratorHandler_List/Contract"
+}
+},
+"result": ""
+},
+{
+"args": {
+"element": {
+"$el": "<root>\n\n<ContractGeneratorHandler_List debugName=\"SingleTest_Stanton\">\n    <Contract debugName=\"SingleTest_Stanton_T1\">\n        <Title>\n            <ContractStringParam param=\"Title\" value=\"@single_title\"/>\n            <ContractStringParam param=\"Description\" value=\"@single_desc\"/>\n        </Title>\n        <BlueprintRewards blueprintPool=\"pool-only\" chance=\"0.5\"/>\n    </Contract>\n</ContractGeneratorHandler_List>\n\n</root>",
+"path": "/root/ContractGeneratorHandler_List/Contract"
+}
+},
+"result": ""
+},
+{
+"args": {
+"element": {
+"$el": "<root>\n\n<ContractGeneratorHandler_List debugName=\"YormandiEye_Stanton\">\n    <Contract debugName=\"YormandiEye_Stanton_VariantA\">\n        <Title>\n            <ContractStringParam param=\"Title\" value=\"@yormandi_eye_title\"/>\n            <ContractStringParam param=\"Description\" value=\"@yormandi_eye_desc\"/>\n        </Title>\n        <BlueprintRewards blueprintPool=\"pool-palatino-p8ar\" chance=\"1.0\"/>\n    </Contract>\n    <Contract debugName=\"YormandiEye_Stanton_VariantB\">\n        <Title>\n            <ContractStringParam param=\"Title\" value=\"@yormandi_eye_title\"/>\n            <ContractStringParam param=\"Description\" value=\"@yormandi_eye_desc\"/>\n        </Title>\n        <BlueprintRewards blueprintPool=\"pool-prism\" chance=\"1.0\"/>\n    </Contract>\n</ContractGeneratorHandler_List>\n\n</root>",
+"path": "/root/ContractGeneratorHandler_List/Contract[1]"
+}
+},
+"result": ""
+},
+{
+"args": {
+"element": {
+"$el": "<root>\n\n<ContractGeneratorHandler_List debugName=\"YormandiEye_Stanton\">\n    <Contract debugName=\"YormandiEye_Stanton_VariantA\">\n        <Title>\n            <ContractStringParam param=\"Title\" value=\"@yormandi_eye_title\"/>\n            <ContractStringParam param=\"Description\" value=\"@yormandi_eye_desc\"/>\n        </Title>\n        <BlueprintRewards blueprintPool=\"pool-palatino-p8ar\" chance=\"1.0\"/>\n    </Contract>\n    <Contract debugName=\"YormandiEye_Stanton_VariantB\">\n        <Title>\n            <ContractStringParam param=\"Title\" value=\"@yormandi_eye_title\"/>\n            <ContractStringParam param=\"Description\" value=\"@yormandi_eye_desc\"/>\n        </Title>\n        <BlueprintRewards blueprintPool=\"pool-prism\" chance=\"1.0\"/>\n    </Contract>\n</ContractGeneratorHandler_List>\n\n</root>",
+"path": "/root/ContractGeneratorHandler_List/Contract[2]"
+}
+},
+"result": ""
+},
+{
+"args": {
+"element": {
+"$el": "<root>\n\n<ContractGeneratorHandler_List debugName=\"SamePool_Stanton\">\n    <Contract debugName=\"SamePool_Stanton_VariantA\">\n        <Title>\n            <ContractStringParam param=\"Title\" value=\"@samepool_title\"/>\n            <ContractStringParam param=\"Description\" value=\"@samepool_desc\"/>\n        </Title>\n        <BlueprintRewards blueprintPool=\"pool-shared\" chance=\"1.0\"/>\n    </Contract>\n    <Contract debugName=\"SamePool_Stanton_VariantB\">\n        <Title>\n            <ContractStringParam param=\"Title\" value=\"@samepool_title\"/>\n            <ContractStringParam param=\"Description\" value=\"@samepool_desc\"/>\n        </Title>\n        <BlueprintRewards blueprintPool=\"pool-shared\" chance=\"1.0\"/>\n    </Contract>\n</ContractGeneratorHandler_List>\n\n</root>",
+"path": "/root/ContractGeneratorHandler_List/Contract[1]"
+}
+},
+"result": ""
+},
+{
+"args": {
+"element": {
+"$el": "<root>\n\n<ContractGeneratorHandler_List debugName=\"SamePool_Stanton\">\n    <Contract debugName=\"SamePool_Stanton_VariantA\">\n        <Title>\n            <ContractStringParam param=\"Title\" value=\"@samepool_title\"/>\n            <ContractStringParam param=\"Description\" value=\"@samepool_desc\"/>\n        </Title>\n        <BlueprintRewards blueprintPool=\"pool-shared\" chance=\"1.0\"/>\n    </Contract>\n    <Contract debugName=\"SamePool_Stanton_VariantB\">\n        <Title>\n            <ContractStringParam param=\"Title\" value=\"@samepool_title\"/>\n            <ContractStringParam param=\"Description\" value=\"@samepool_desc\"/>\n        </Title>\n        <BlueprintRewards blueprintPool=\"pool-shared\" chance=\"1.0\"/>\n    </Contract>\n</ContractGeneratorHandler_List>\n\n</root>",
+"path": "/root/ContractGeneratorHandler_List/Contract[2]"
+}
+},
+"result": ""
+},
+{
+"args": {
+"element": {
+"$el": "<root>\n\n<ContractGeneratorHandler_List debugName=\"ShubinTest_Stanton\">\n    <Contract debugName=\"ShubinTest_Stanton_T1\">\n        <Title>\n            <ContractStringParam param=\"Title\" value=\"@shubin_title\"/>\n            <ContractStringParam param=\"Description\" value=\"@shubin_desc\"/>\n        </Title>\n        <BlueprintRewards blueprintPool=\"pool-rank0to1\" chance=\"1.0\"/>\n        <BlueprintRewards blueprintPool=\"pool-rank4\" chance=\"1.0\"/>\n    </Contract>\n</ContractGeneratorHandler_List>\n\n</root>",
+"path": "/root/ContractGeneratorHandler_List/Contract"
+}
+},
+"result": ""
+},
+{
+"args": {
+"element": {
+"$el": "<root>\n\n<ContractGeneratorHandler_List debugName=\"NoLabelTest_Stanton\">\n    <Contract debugName=\"NoLabelTest_Stanton_T1\">\n        <Title>\n            <ContractStringParam param=\"Title\" value=\"@nolabel_title\"/>\n            <ContractStringParam param=\"Description\" value=\"@nolabel_desc\"/>\n        </Title>\n        <BlueprintRewards blueprintPool=\"pool-x\" chance=\"1.0\"/>\n    </Contract>\n</ContractGeneratorHandler_List>\n\n</root>",
+"path": "/root/ContractGeneratorHandler_List/Contract"
+}
+},
+"result": ""
+},
+{
+"args": {
+"element": {
+"$el": "<ContractGenerator>\n  <ContractGeneratorHandler_List debugName=\"Stanton_DefendShip\">\n    <Contract debugName=\"Stanton_StopAttack\" notForRelease=\"0\" minStanding=\"\">\n      <ContractStringParam param=\"Title\" value=\"@eckhart_defendship_MRT_title_001\"/>\n      <ContractStringParam param=\"Description\" value=\"@eckhart_defendship_MRT_title_001\"/>\n      <BlueprintRewards blueprintPool=\"11111111-1111-1111-1111-111111111111\" chance=\"1\"/>\n    </Contract>\n  </ContractGeneratorHandler_List>\n</ContractGenerator>",
+"path": "/ContractGenerator/ContractGeneratorHandler_List/Contract"
+}
+},
+"result": ""
+},
+{
+"args": {
+"element": {
+"$el": "<ContractGenerator>\n  <ContractGeneratorHandler_Career debugName=\"Stanton_TestHandler\" notForRelease=\"0\">\n    <CareerContract debugName=\"Stanton_Released\" notForRelease=\"0\" minStanding=\"\">\n      <ContractStringParam param=\"Title\" value=\"@released_title_key\"/>\n      <ContractStringParam param=\"Description\" value=\"@released_desc_key\"/>\n    </CareerContract>\n    <CareerContract debugName=\"Stanton_NotReleased\" notForRelease=\"1\" minStanding=\"\">\n      <ContractStringParam param=\"Title\" value=\"@unreleased_title_key\"/>\n      <ContractStringParam param=\"Description\" value=\"@unreleased_desc_key\"/>\n    </CareerContract>\n  </ContractGeneratorHandler_Career>\n</ContractGenerator>",
+"path": "/ContractGenerator/ContractGeneratorHandler_Career/CareerContract[1]"
+}
+},
+"result": ""
+},
+{
+"args": {
+"element": {
+"$el": "<MissionBrokerEntry description=\"@Shared_desc\"><spawnDescriptions><SpawnDescription_ShipGroup Name=\"SalvageableShip\"><ships><SpawnDescription_Ship concurrentAmount=\"1\"/></ships></SpawnDescription_ShipGroup><SpawnDescription_ShipGroup Name=\"Pirates\"><ships><SpawnDescription_Ship concurrentAmount=\"4\"/></ships></SpawnDescription_ShipGroup></spawnDescriptions></MissionBrokerEntry>",
+"path": "/MissionBrokerEntry"
+}
+},
+"result": ""
+}
+],
+"_extract_mission_flags": [
+{
+"args": {
+"root": {
+"$el": "<MissionBrokerEntry description=\"@Shared_desc\"><spawnDescriptions><SpawnDescription_ShipGroup Name=\"SalvageableShip\"><ships><SpawnDescription_Ship concurrentAmount=\"1\"/></ships></SpawnDescription_ShipGroup><SpawnDescription_ShipGroup Name=\"Pirates\"><ships><SpawnDescription_Ship concurrentAmount=\"4\"/></ships></SpawnDescription_ShipGroup></spawnDescriptions></MissionBrokerEntry>",
+"path": "/MissionBrokerEntry"
+}
+},
+"result": []
+}
+],
+"_extract_mission_xp": [
+{
+"args": {
+"root": {
+"$el": "<MissionBrokerEntry description=\"@Shared_desc\"><spawnDescriptions><SpawnDescription_ShipGroup Name=\"SalvageableShip\"><ships><SpawnDescription_Ship concurrentAmount=\"1\"/></ships></SpawnDescription_ShipGroup><SpawnDescription_ShipGroup Name=\"Pirates\"><ships><SpawnDescription_Ship concurrentAmount=\"4\"/></ships></SpawnDescription_ShipGroup></spawnDescriptions></MissionBrokerEntry>",
+"path": "/MissionBrokerEntry"
+},
+"reputation_lookup": {
+"$dict": []
+}
+},
+"result": 0
+}
+]
+}

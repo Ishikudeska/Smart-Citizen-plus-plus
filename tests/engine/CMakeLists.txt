@@ -40,3 +40,15 @@ sc_add_test(tst_engine_dataforge
     LIBS scengine
     LABELS unit engine
 )
+
+sc_add_test(tst_engine_gamedata
+    SOURCES tst_gamedata.cpp
+    LIBS scengine Qt6::Core
+    LABELS unit engine
+)
+
+sc_add_test(tst_engine_treeindex
+    SOURCES tst_treeindex.cpp
+    LIBS scengine
+    LABELS unit engine
+)

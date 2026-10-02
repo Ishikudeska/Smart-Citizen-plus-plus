@@ -1,6 +1,10 @@
 {
   "version": 6,
-  "cmakeMinimumRequired": { "major": 3, "minor": 25, "patch": 0 },
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 25,
+    "patch": 0
+  },
   "configurePresets": [
     {
       "name": "mingw-base",
@@ -25,31 +29,64 @@
       "name": "mingw-debug",
       "displayName": "MinGW Debug",
       "inherits": "mingw-base",
-      "cacheVariables": { "CMAKE_BUILD_TYPE": "Debug" }
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug"
+      }
     },
     {
       "name": "mingw-release",
       "displayName": "MinGW Release",
       "inherits": "mingw-base",
-      "cacheVariables": { "CMAKE_BUILD_TYPE": "Release" }
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release"
+      }
+    },
+    {
+      "name": "mingw-release-portable",
+      "displayName": "MinGW Release (portable)",
+      "inherits": "mingw-base",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "APP_PORTABLE": "ON",
+        "SC_BUILD_TESTS": "OFF",
+        "SC_BUILD_TOOLS": "OFF"
+      }
     }
   ],
   "buildPresets": [
-    { "name": "mingw-debug", "configurePreset": "mingw-debug" },
-    { "name": "mingw-release", "configurePreset": "mingw-release" }
+    {
+      "name": "mingw-debug",
+      "configurePreset": "mingw-debug"
+    },
+    {
+      "name": "mingw-release",
+      "configurePreset": "mingw-release"
+    },
+    {
+      "name": "mingw-release-portable",
+      "configurePreset": "mingw-release-portable"
+    }
   ],
   "testPresets": [
     {
       "name": "mingw-debug",
       "configurePreset": "mingw-debug",
-      "output": { "outputOnFailure": true },
-      "execution": { "noTestsAction": "error" }
+      "output": {
+        "outputOnFailure": true
+      },
+      "execution": {
+        "noTestsAction": "error"
+      }
     },
     {
       "name": "mingw-release",
       "configurePreset": "mingw-release",
-      "output": { "outputOnFailure": true },
-      "execution": { "noTestsAction": "error" }
+      "output": {
+        "outputOnFailure": true
+      },
+      "execution": {
+        "noTestsAction": "error"
+      }
     }
   ]
 }

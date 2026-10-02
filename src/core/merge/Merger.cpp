@@ -1,5 +1,7 @@
 #include "core/merge/Merger.h"
 
+#include "core/text/PyText.h"
+
 #include <QHash>
 
 #include <array>
@@ -14,15 +16,6 @@ constexpr std::array kComponentCodes = {u"shld", u"powr", u"cool", u"qdrv", u"ju
 bool isItemKey(const QString &key)
 {
     return key.startsWith(u"item_name", Qt::CaseInsensitive) || key.startsWith(u"item_desc", Qt::CaseInsensitive);
-}
-
-// Python's len(): code points, not UTF-16 units.
-qsizetype codePoints(const QString &s)
-{
-    qsizetype n = s.size();
-    for (const QChar c : s)
-        n -= c.isLowSurrogate() ? 1 : 0;
-    return n;
 }
 
 } // namespace
@@ -80,7 +73,7 @@ void syncKeyVariants(IniMap &merged, const QSet<QString> &userEditedKeys)
         qsizetype bestLength = -1;
         for (const QString &c : candidates) {
             const QString *value = merged.find(c);
-            const qsizetype length = codePoints(*value);
+            const qsizetype length = py::len(*value);
             if (length > bestLength) {
                 best = value;
                 bestLength = length;

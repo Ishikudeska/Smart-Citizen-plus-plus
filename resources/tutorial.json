@@ -1,0 +1,149 @@
+{
+  "_comment": "The guided tour. Each step names the page to show ('' keeps the current one) and the objectName of the item to spotlight ('' for none). Order here is tour order. Translations override title/description with tutorial.<id>.title / .description in their ui.json. {app} is the app's name. Allowed side values: above, below, left, right, auto.",
+  "steps": [
+    {
+      "id": "welcome",
+      "page": "strings",
+      "target": "",
+      "side": "auto",
+      "title": "Welcome to {app}",
+      "description": "This quick tour covers the core workflow: customizing strings and applying the result back to Star Citizen. Many of these steps run automatically, but you can run them by hand too. You can skip anytime."
+    },
+    {
+      "id": "extract",
+      "page": "config",
+      "target": "configP4k",
+      "side": "below",
+      "title": "1. Extract from Data.p4k",
+      "description": "Extract unpacks your installed game's stock localization file. You are prompted to run it when a patch makes your copy stale, and you can always run it here. The strings reload into the table when extraction finishes."
+    },
+    {
+      "id": "enhancements",
+      "page": "enhancements",
+      "target": "generateButton",
+      "side": "below",
+      "title": "2. Enhancements",
+      "description": "Optional but recommended: the Enhancements page adds stat overlays for ships, components, weapons, mission blueprints and rewards, and commodity crafting. Generate Enhancements builds them from the game's data. The next few steps walk through this page."
+    },
+    {
+      "id": "enh_categories",
+      "page": "enhancements",
+      "target": "enhancementCategories",
+      "side": "below",
+      "title": "3. Enhancements: Categories",
+      "description": "Toggle which enhancement categories run when you Generate. Ships, components, ship weapons, FPS weapons, missions, mission rewards, commodity crafting and medical consumables can each be enabled on their own."
+    },
+    {
+      "id": "enh_mission_labels",
+      "page": "enhancements",
+      "target": "missionLabels",
+      "side": "above",
+      "title": "4. Enhancements: Mission Labels",
+      "description": "Customize the section headers (MISSION DETAILS / POTENTIAL BLUEPRINTS / ITEM REWARDS / BLUEPRINT DATA), the XP label shown on missions without a reputation rank (default Rep), and the emphasis tag (EM3 = underline, EM4 = color) for headers."
+    },
+    {
+      "id": "enh_tag_builder",
+      "page": "enhancements",
+      "target": "tagBuilder",
+      "side": "above",
+      "title": "5. Enhancements: Tag Builder",
+      "description": "Build the bracketed name tags added to components, missiles, ship weapons and commodities. Reorder elements with ▲/▼, untick to exclude, change abbreviation length, pick separator and brackets, or place the tag after the name. The preview shows the result as you go."
+    },
+    {
+      "id": "blueprint_tracker",
+      "page": "blueprints",
+      "target": "blueprintsAvailable",
+      "side": "right",
+      "title": "6. Blueprint Tracker",
+      "description": "Mark the blueprints you own. Search by name or mission, or narrow by Type, Class, Size and Grade, then use the arrows to move items to your owned list. Scan Logs finds blueprints you received in game. Owned blueprints get an [Owned] tag wherever they show up in a mission's potential rewards."
+    },
+    {
+      "id": "edit",
+      "page": "strings",
+      "target": "stringsTable",
+      "side": "auto",
+      "title": "7. Edit strings",
+      "description": "Each row is one localization string. Double-click a cell in the Custom Value column to edit it; your changes are saved automatically. The ★ column marks ships as favorites so they sort to the top of the in-game ASOP terminal."
+    },
+    {
+      "id": "filter_row",
+      "page": "strings",
+      "target": "stringsFilterRow",
+      "side": "below",
+      "title": "8. Filter by column",
+      "description": "The row of search boxes under the column headers filters the table as you type. Each box searches its own column, and filters in different columns combine. The category, status and checkbox filters above narrow it further."
+    },
+    {
+      "id": "editor",
+      "page": "strings",
+      "target": "editorButton",
+      "side": "below",
+      "title": "9. Editor pane",
+      "description": "For longer strings, click Editor to open a side panel with more room. It follows the row you select, and its Underline and Highlight buttons wrap the selected text in emphasis tags."
+    },
+    {
+      "id": "preview",
+      "page": "strings",
+      "target": "stringsPreview",
+      "side": "above",
+      "title": "10. Preview pane",
+      "description": "When you select a row, this pane shows its current value rendered the way the game draws it."
+    },
+    {
+      "id": "apply",
+      "page": "strings",
+      "target": "applyButton",
+      "side": "below",
+      "title": "11. Apply Enhancements",
+      "description": "Apply writes the merged result to the game's global.ini. A timestamped backup of the current global.ini is made first (the last five are kept, and Restore Backup brings one back)."
+    },
+    {
+      "id": "explorer",
+      "page": "explorer",
+      "target": "nav_explorer",
+      "side": "below",
+      "title": "12. P4K Explorer",
+      "description": "Browse everything inside Data.p4k: search paths, preview files (binary CryXML shows as readable XML), extract a selection, browse the DataForge game database as XML records, and export game data as JSON."
+    },
+    {
+      "id": "cfg_appearance",
+      "page": "config",
+      "target": "configAppearance",
+      "side": "above",
+      "title": "13. Config: Appearance",
+      "description": "Pick the app theme, the favorite prefix for ship names, and whether this tour runs automatically after an update."
+    },
+    {
+      "id": "cfg_sc_install",
+      "page": "config",
+      "target": "configInstall",
+      "side": "below",
+      "title": "14. Config: Star Citizen Installation",
+      "description": "The folder that holds LIVE, PTU, EPTU and so on. It is detected automatically; change it here if your game lives elsewhere. The Channel menu at the top picks which channel the app reads and writes."
+    },
+    {
+      "id": "cfg_data_folder",
+      "page": "config",
+      "target": "configData",
+      "side": "above",
+      "title": "15. Config: Data Folders",
+      "description": "Where user.ini, caches, generated enhancement files and backups live. Move it off OneDrive if extraction or cleanup is slow."
+    },
+    {
+      "id": "cfg_tools",
+      "page": "config",
+      "target": "configTools",
+      "side": "above",
+      "title": "16. Config: Tools",
+      "description": "Import an external INI into your overrides (with a conflict review), or reset your user.ini for the active channel (it is backed up first). Settings Backup below moves all your settings to another PC."
+    },
+    {
+      "id": "help",
+      "page": "",
+      "target": "helpButton",
+      "side": "below",
+      "title": "17. Help",
+      "description": "Help opens a side panel with the full guide, and Tutorial replays this tour. That's everything you need to get started. Good luck, citizen."
+    }
+  ]
+}

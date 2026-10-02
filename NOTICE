@@ -1,0 +1,68 @@
+Smart Citizen++
+A C++/Qt port of Smart Citizen.
+
+This product is licensed under the Apache License, Version 2.0
+(the "License"); you may not use this product except in compliance
+with the License. You may obtain a copy of the License at:
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+================================================================================
+Smart Citizen
+================================================================================
+
+This product is a derivative work of Smart Citizen
+(https://github.com/Osiris-DevWorks/smart-citizen), whose NOTICE reads:
+
+    Smart Citizen
+    Copyright 2026 Osiris DevWorks, LLC
+
+    This product is licensed under the Apache License, Version 2.0.
+
+Smart Citizen's application logic, settings formats, UI translations
+(resources/languages/) and language source mappings were ported or copied
+from that project.
+
+================================================================================
+unp4k / unforge
+================================================================================
+
+The Data.p4k archive reader and DataForge-to-XML converter in src/engine/
+are a C++ port of the unp4k and unforge tools from
+https://github.com/dolkensp/unp4k by Peter Dolkens and contributors, and of
+Osiris DevWorks' parallelized fork
+(https://github.com/Osiris-DevWorks/odw-fast-unp4k).
+
+unp4k is licensed under the MIT License:
+
+    Permission is hereby granted, free of charge, to any person obtaining
+    a copy of this software and associated documentation files (the
+    "Software"), to deal in the Software without restriction, including
+    without limitation the rights to use, copy, modify, merge, publish,
+    distribute, sublicense, and/or sell copies of the Software, and to
+    permit persons to whom the Software is furnished to do so, subject
+    to the following conditions:
+
+    The above copyright notice and this permission notice shall be
+    included in all copies or substantial portions of the Software.
+
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+    EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+    MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+    IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+    CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+    TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+    SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+================================================================================
+Trademarks and game data
+================================================================================
+
+Star Citizen and all associated game data, including Data.p4k, are the
+property of Cloud Imperium Rights LLC and Cloud Imperium Rights Ltd.
+Smart Citizen++ reads game files from your own licensed Star Citizen
+installation and does not redistribute any RSI or CIG content.
+
+Smart Citizen++ is a community fan project and is not affiliated with,
+endorsed by, or sponsored by Cloud Imperium Games, Roberts Space
+Industries, or Osiris DevWorks.

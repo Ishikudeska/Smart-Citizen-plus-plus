@@ -59,4 +59,12 @@ QString dataForgeRecordsDir(const QString &cacheDir);
 bool baseIniIsFresh(const QString &p4kPath, const QString &baseIniPath);
 bool dataForgeCacheIsFresh(const QString &p4kPath, const QString &cacheDir);
 
+// game_data.json (sc.gamedata's output) from the archive's DataForge
+// database. `baseIniPath` resolves display names (empty: prettified ids);
+// `overlayPath` backfills vehicle physics from an earlier file; an empty
+// `channel` is left out of the JSON. Returns the pass summary lines.
+engine::Result<QStringList> exportGameData(const engine::p4k::Archive &archive, const QString &outputPath,
+                                           const QString &baseIniPath, const QString &overlayPath = {},
+                                           const QString &channel = {}, const StepProgress &progress = {});
+
 } // namespace core

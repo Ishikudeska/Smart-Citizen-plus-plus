@@ -1,0 +1,2918 @@
+{
+  "branding": {
+    "title": {
+      "ht": "SMART CITIZEN",
+      "at": "SMART CITIZEN"
+    },
+    "tagline": {
+      "ht": "STRINGS APRIMORADAS PARA O STAR CITIZEN",
+      "at": "STRINGS APRIMORADAS PARA O STAR CITIZEN"
+    }
+  },
+  "window": {
+    "title": {
+      "ht": "Smart Citizen v{version}",
+      "at": "Smart Citizen v{version}"
+    }
+  },
+  "simple_mode": {
+    "switch_to_advanced": {
+      "ht": "",
+      "at": "Mudar para o Modo Avançado"
+    },
+    "switch_to_advanced_tip": {
+      "ht": "",
+      "at": "Mostra a interface completa do Smart Citizen, com todas as abas e opções."
+    },
+    "generate_apply_btn": {
+      "ht": "",
+      "at": "Aplicar Aprimoramentos"
+    },
+    "generate_apply_tip": {
+      "ht": "",
+      "at": "Gera os aprimoramentos mais recentes com as configurações padrão e os aplica ao seu jogo. Um backup do global.ini atual é criado antes."
+    },
+    "defaults_hint": {
+      "ht": "",
+      "at": "Usa suas configurações padrão. A primeira execução pode levar alguns minutos enquanto o DataForge é extraído."
+    },
+    "set_game_folder_title": {
+      "ht": "",
+      "at": "Defina a pasta do jogo"
+    },
+    "set_game_folder_body": {
+      "ht": "",
+      "at": "O Smart Citizen precisa saber onde o Star Citizen está instalado antes de aplicar mudanças.\n\nMudando para o modo Avançado para você definir a pasta do jogo na aba Config."
+    },
+    "apply_enhancements_confirm_title": {
+      "ht": "",
+      "at": "Aplicar Aprimoramentos"
+    },
+    "apply_enhancements_confirm_body": {
+      "ht": "",
+      "at": "Isso vai gerar os aprimoramentos mais recentes com suas configurações atuais e aplicá-los ao global.ini do seu jogo. Um backup com carimbo de data/hora é feito antes.\n\nA primeira execução pode levar alguns minutos enquanto o DataForge é extraído. Continuar?"
+    }
+  },
+  "tabs": {
+    "string_editor": {
+      "ht": "Editor de Strings",
+      "at": "Editor de Strings"
+    },
+    "config": {
+      "ht": "Config",
+      "at": "Config"
+    },
+    "enhancements": {
+      "ht": "Aprimoramentos",
+      "at": "Aprimoramentos"
+    },
+    "blueprint_tracker": {
+      "ht": "",
+      "at": "Rastreador de Blueprints"
+    },
+    "log": {
+      "ht": "Log",
+      "at": "Log"
+    },
+    "about": {
+      "ht": "Sobre",
+      "at": "Sobre"
+    },
+    "faq": {
+      "ht": "",
+      "at": "FAQ"
+    },
+    "legal": {
+      "ht": "Legal",
+      "at": "Legal"
+    },
+    "about_load_failed": {
+      "ht": "",
+      "at": "Não foi possível carregar as informações de Sobre."
+    },
+    "faq_load_failed": {
+      "ht": "",
+      "at": "Não foi possível carregar o FAQ."
+    },
+    "legal_load_failed": {
+      "ht": "",
+      "at": "Não foi possível carregar as informações legais."
+    }
+  },
+  "toolbar": {
+    "apply_btn": {
+      "ht": "Aplicar Aprimoramentos",
+      "at": "Aplicar Aprimoramentos"
+    },
+    "restore_backup_btn": {
+      "ht": "Restaurar Backup",
+      "at": "Restaurar Backup"
+    },
+    "clear_btn": {
+      "ht": "Limpar",
+      "at": "Limpar"
+    },
+    "import_export_btn": {
+      "ht": "Importar / Exportar",
+      "at": "Importar / Exportar"
+    },
+    "open_loc_dir_btn": {
+      "ht": "Abrir Diretório da Localização",
+      "at": "Abrir Diretório da Localização"
+    },
+    "editor_btn": {
+      "ht": "Editor",
+      "at": "Editor"
+    },
+    "help_btn": {
+      "ht": "Ajuda",
+      "at": "Ajuda"
+    },
+    "tutorial_btn": {
+      "ht": "Tutorial",
+      "at": "Tutorial"
+    },
+    "more_btn": {
+      "ht": "",
+      "at": "Mais"
+    },
+    "menu_clear_localization": {
+      "ht": "Limpar Localização",
+      "at": "Limpar Localização"
+    },
+    "menu_clear_cache": {
+      "ht": "Limpar Cache",
+      "at": "Limpar Cache"
+    },
+    "menu_import_ini": {
+      "ht": "Importar INI…",
+      "at": "Importar INI…"
+    },
+    "menu_export_ini": {
+      "ht": "Exportar INI…",
+      "at": "Exportar INI…"
+    },
+    "menu_test_plan": {
+      "ht": "",
+      "at": "Plano de Teste"
+    },
+    "menu_switch_to_simple": {
+      "ht": "",
+      "at": "Mudar para o Modo Simples"
+    },
+    "menu_reset_window_proportions": {
+      "ht": "",
+      "at": "Redefinir proporções da janela"
+    },
+    "editor_tooltip": {
+      "ht": "",
+      "at": "Alternar o Editor de Strings lateral, uma área maior para editar o valor personalizado da linha selecionada"
+    },
+    "help_tooltip": {
+      "ht": "",
+      "at": "Alternar o painel lateral de Ajuda"
+    },
+    "tutorial_tooltip": {
+      "ht": "",
+      "at": "Iniciar o tour guiado do fluxo de trabalho do Smart Citizen. Executa automaticamente na primeira inicialização; clique aqui a qualquer momento para repetir."
+    },
+    "restore_backup_tooltip": {
+      "ht": "",
+      "at": "Restaurar um global.ini anterior a partir da pasta de backups. Até 5 backups com carimbo de data/hora são mantidos; o mais antigo é removido quando um novo é criado."
+    },
+    "test_plan_tooltip": {
+      "ht": "",
+      "at": "Abrir o Plano de Teste do testador: uma lista de verificação do que mudou nesta versão, com acompanhamento de progresso e um relatório que você pode enviar."
+    },
+    "switch_to_simple_tooltip": {
+      "ht": "",
+      "at": "Mudar para a visualização simplificada de um botão."
+    },
+    "reset_window_proportions_tooltip": {
+      "ht": "",
+      "at": "Restaura o tamanho da janela, o layout dos painéis e a largura das colunas do editor de strings para os padrões."
+    },
+    "more_tooltip": {
+      "ht": "",
+      "at": "Mais ações: restaurar um backup, limpar localização ou cache, importar ou exportar, abrir a pasta de localização"
+    },
+    "osiris_github_tooltip": {
+      "ht": "",
+      "at": "Abrir a organização do Osiris DevWorks no GitHub"
+    },
+    "feedback_tooltip": {
+      "ht": "",
+      "at": "Abrir o canal do Discord do Smart Citizen para feedback, relatos de bugs e votação em recursos futuros (requer entrar no Discord da Osiris DevWorks)."
+    },
+    "apply_enabled_tooltip": {
+      "ht": "",
+      "at": "Gravar o conteúdo mesclado da tabela no global.ini do jogo. Um backup com carimbo de data/hora do global.ini atual é criado primeiro."
+    },
+    "apply_disabled_tooltip": {
+      "ht": "",
+      "at": "Já aplicado — nada mudou desde a última aplicação ao jogo."
+    },
+    "feedback_fallback_text": {
+      "ht": "",
+      "at": "Feedback, bugs e votação de recursos"
+    },
+    "paypal_fallback_text": {
+      "ht": "",
+      "at": "Doar via PayPal"
+    },
+    "venmo_fallback_text": {
+      "ht": "",
+      "at": "Venmo"
+    }
+  },
+  "filters": {
+    "category_label": {
+      "ht": "Categoria:",
+      "at": "Categoria:"
+    },
+    "status_label": {
+      "ht": "Status:",
+      "at": "Status:"
+    },
+    "status_all": {
+      "ht": "Tudo",
+      "at": "Tudo"
+    },
+    "status_modified": {
+      "ht": "Modificado",
+      "at": "Modificado"
+    },
+    "status_enhanced": {
+      "ht": "Aprimorado",
+      "at": "Aprimorado"
+    },
+    "status_unmodified": {
+      "ht": "Inalterado",
+      "at": "Inalterado"
+    },
+    "status_new": {
+      "ht": "Novo",
+      "at": "Novo"
+    },
+    "hide_unmodified": {
+      "ht": "Esconder Inalterados",
+      "at": "Esconder Inalterados"
+    },
+    "ship_vehicle_names_only": {
+      "ht": "",
+      "at": "Somente Nomes de Naves e Veículos"
+    },
+    "ship_vehicle_names_only_tooltip": {
+      "ht": "",
+      "at": "Mostrar apenas as linhas de nomes de naves e veículos, ocultando todo o resto, incluindo as descrições de naves e todas as outras categorias. Deixa exatamente as linhas às quais se aplicam os favoritos e a ordenação do ASOP."
+    },
+    "favorites_only": {
+      "ht": "★ Apenas Favoritos",
+      "at": "★ Apenas Favoritos"
+    },
+    "bp_titles_only": {
+      "ht": "",
+      "at": "Títulos de BP"
+    },
+    "bp_descs_only": {
+      "ht": "",
+      "at": "Descrições de BP"
+    },
+    "group_sort_btn": {
+      "ht": "Ordenar por grupo",
+      "at": "Ordenar por grupo"
+    },
+    "clear_filters_btn": {
+      "ht": "Limpar Filtros",
+      "at": "Limpar Filtros"
+    },
+    "copy_filtered_btn": {
+      "ht": "Copiar Filtrados",
+      "at": "Copiar Filtrados"
+    },
+    "category_tooltip": {
+      "ht": "",
+      "at": "Filtrar linhas por domínio (Naves, Itens de Nave, Missões, Equipamentos, Mercadorias, Diário, Outros). As categorias são derivadas do prefixo da chave de localização."
+    },
+    "status_tooltip": {
+      "ht": "",
+      "at": "Filtrar por status. Modificado = você definiu um Valor Personalizado; Aprimorado = produzido pelo pipeline de aprimoramentos do Smart Citizen (estatísticas de naves, recompensas de missões, etc.); Inalterado = apenas texto padrão; Novo = a chave existe somente em enhancements/user.ini, não no arquivo base."
+    },
+    "hide_unmodified_tooltip": {
+      "ht": "",
+      "at": "Mostrar apenas linhas onde você definiu um Valor Personalizado. O mesmo que a opção Modificado do filtro de Status, mas ativável de forma independente."
+    },
+    "favorites_only_tooltip": {
+      "ht": "",
+      "at": "Mostrar apenas as linhas marcadas como favoritas. Os favoritos recebem um prefixo configurável adicionado ao nome para que apareçam no topo da lista dentro do jogo."
+    },
+    "bp_titles_only_tooltip": {
+      "ht": "",
+      "at": "Mostrar apenas títulos de missão com a tag de blueprint [BP] / [BP?]."
+    },
+    "bp_descs_only_tooltip": {
+      "ht": "",
+      "at": "Mostrar apenas descrições de missão que contenham uma seção POTENTIAL BLUEPRINTS."
+    },
+    "group_sort_tooltip": {
+      "ht": "",
+      "at": "Ordenar títulos e descrições juntos para a mesma entidade"
+    },
+    "clear_filters_tooltip": {
+      "ht": "",
+      "at": "Redefinir todos os filtros (categoria, status, busca, campos por coluna, caixas de seleção) para exibir a tabela completa."
+    },
+    "copy_filtered_tooltip": {
+      "ht": "",
+      "at": "Copiar todas as linhas filtradas visíveis para a área de transferência (separadas por tabulação)"
+    }
+  },
+  "strings_tab": {
+    "col_category": {
+      "ht": "Categoria",
+      "at": "Categoria"
+    },
+    "col_key": {
+      "ht": "Chave",
+      "at": "Chave"
+    },
+    "col_default_value": {
+      "ht": "Valor Padrão",
+      "at": "Valor Padrão"
+    },
+    "col_current_value": {
+      "ht": "Valor Atual",
+      "at": "Valor Atual"
+    },
+    "col_star": {
+      "ht": "★",
+      "at": "★"
+    },
+    "col_order": {
+      "ht": "#",
+      "at": "#"
+    },
+    "col_custom_value": {
+      "ht": "Valor Personalizado",
+      "at": "Valor Personalizado"
+    },
+    "col_status": {
+      "ht": "Status",
+      "at": "Status"
+    },
+    "col_owned": {
+      "ht": "",
+      "at": "Adquirido"
+    },
+    "no_data": {
+      "ht": "Nenhum dado carregado",
+      "at": "Nenhum dado carregado"
+    },
+    "preview_placeholder": {
+      "ht": "Selecione uma linha para visualizar o texto renderizado.",
+      "at": "Selecione uma linha para visualizar o texto renderizado."
+    },
+    "context_underline": {
+      "ht": "",
+      "at": "Sublinhar"
+    },
+    "context_highlight": {
+      "ht": "",
+      "at": "Destacar"
+    },
+    "editor_underline_tooltip": {
+      "ht": "",
+      "at": "Sublinhar o texto selecionado (envolve-o em <EM3>...</EM3>)"
+    },
+    "editor_highlight_tooltip": {
+      "ht": "",
+      "at": "Destacar o texto selecionado com ênfase de cor (envolve-o em <EM4>...</EM4>)"
+    },
+    "column_filter_tooltip": {
+      "ht": "",
+      "at": "Filtrar a coluna {column}. Os filtros entre colunas se combinam com E."
+    },
+    "column_filter_placeholder": {
+      "ht": "",
+      "at": "Filtrar {column}…"
+    },
+    "editor_dock_title": {
+      "ht": "",
+      "at": "Editor de strings"
+    },
+    "no_row_selected": {
+      "ht": "",
+      "at": "(nenhuma linha selecionada)"
+    },
+    "editor_underline_btn": {
+      "ht": "",
+      "at": "Sublinhar"
+    },
+    "editor_highlight_btn": {
+      "ht": "",
+      "at": "Destacar"
+    },
+    "editor_placeholder": {
+      "ht": "",
+      "at": "Selecione uma linha na tabela do Editor de strings para editar seu valor personalizado aqui."
+    },
+    "context_copy_cell": {
+      "ht": "",
+      "at": "Copiar célula"
+    },
+    "context_copy_key": {
+      "ht": "",
+      "at": "Copiar chave"
+    },
+    "context_edit": {
+      "ht": "",
+      "at": "Editar"
+    },
+    "context_reset_to_original": {
+      "ht": "",
+      "at": "Restaurar original"
+    },
+    "context_copy_all_filtered": {
+      "ht": "",
+      "at": "Copiar todos os filtrados"
+    },
+    "context_remove_favorite": {
+      "ht": "",
+      "at": "★ Remover dos favoritos"
+    },
+    "context_add_favorite": {
+      "ht": "",
+      "at": "★ Adicionar aos favoritos"
+    },
+    "showing_count": {
+      "ht": "",
+      "at": "Exibindo {shown} de {total} strings"
+    },
+    "copied_key": {
+      "ht": "",
+      "at": "Copiado: {loc_key}"
+    },
+    "pyperclip_missing": {
+      "ht": "",
+      "at": "pyperclip não instalado"
+    }
+  },
+  "config": {
+    "title": {
+      "ht": "Configuração",
+      "at": "Configuração"
+    },
+    "instructions": {
+      "ht": "Configure o diretório de instalação do Star Citizen, extraia a localização base do arquivo Data.p4k e importe arquivos INI externos para personalizar suas strings.",
+      "at": "Configure o diretório de instalação do Star Citizen, extraia a localização base do arquivo Data.p4k e importe arquivos INI externos para personalizar suas strings."
+    },
+    "tools_group": {
+      "ht": "Ferramentas",
+      "at": "Ferramentas"
+    },
+    "tools_desc": {
+      "ht": "Importe um arquivo INI externo para incorporar strings personalizadas ao seu user.ini. As chaves são validadas em relação ao base.ini, e os conflitos são resolvidos de forma interativa.",
+      "at": "Importe um arquivo INI externo para incorporar strings personalizadas ao seu user.ini. As chaves são validadas em relação ao base.ini, e os conflitos são resolvidos de forma interativa."
+    },
+    "import_ini_btn": {
+      "ht": "Importar INI...",
+      "at": "Importar INI..."
+    },
+    "reset_user_ini_btn": {
+      "ht": "Resetar user.ini...",
+      "at": "Resetar user.ini..."
+    },
+    "restore_user_ini_btn": {
+      "ht": "",
+      "at": "Restaurar user.ini..."
+    },
+    "preview_apply_btn": {
+      "ht": "Pré-visualizar Aplicar",
+      "at": "Pré-visualizar Aplicar"
+    },
+    "check_updates_btn": {
+      "ht": "Verificar por atualizações",
+      "at": "Verificar por atualizações"
+    },
+    "appearance_group": {
+      "ht": "Aparência",
+      "at": "Aparência"
+    },
+    "theme_label": {
+      "ht": "Tema:",
+      "at": "Tema:"
+    },
+    "theme_default": {
+      "ht": "Padrão",
+      "at": "Padrão"
+    },
+    "theme_light": {
+      "ht": "Claro",
+      "at": "Claro"
+    },
+    "theme_dark": {
+      "ht": "Escuro",
+      "at": "Escuro"
+    },
+    "theme_odw": {
+      "ht": "ODW",
+      "at": "ODW"
+    },
+    "star_citizen_group": {
+      "ht": "Star Citizen",
+      "at": "Star Citizen"
+    },
+    "installation_label": {
+      "ht": "Instalação",
+      "at": "Instalação"
+    },
+    "installation_desc": {
+      "ht": "Caminho para a raiz da instalação do Star Citizen (o diretório que contém LIVE, PTU, EPTU, HOTFIX, TECH-PREVIEW).",
+      "at": "Caminho para a raiz da instalação do Star Citizen (o diretório que contém LIVE, PTU, EPTU, HOTFIX, TECH-PREVIEW)."
+    },
+    "browse_btn": {
+      "ht": "Procurar...",
+      "at": "Procurar..."
+    },
+    "channel_label": {
+      "ht": "Canal:",
+      "at": "Canal:"
+    },
+    "language_label": {
+      "ht": "Idioma:",
+      "at": "Idioma:"
+    },
+    "map_language_btn": {
+      "ht": "",
+      "at": "Mapear Arquivo de Idioma"
+    },
+    "map_language_title": {
+      "ht": "",
+      "at": "Mapear Arquivo de Idioma"
+    },
+    "map_language_desc": {
+      "ht": "",
+      "at": "Defina uma URL para o global.ini de cada idioma. Ao trocar para esse idioma, o Smart Citizen o baixa e o usa como strings base, em vez da extração em inglês do Data.p4k. O download fica em cache por idioma e só é baixado novamente quando houver alterações. Deixe um campo em branco para usar o padrão incluído (se houver)."
+    },
+    "base_localization_label": {
+      "ht": "Localização Base",
+      "at": "Localização Base"
+    },
+    "base_localization_desc": {
+      "ht": "Extrai o arquivo global.ini do Data.p4k instalado para obter as strings originais do jogo, que sempre correspondem à sua versão instalada.",
+      "at": "Extrai o arquivo global.ini do Data.p4k instalado para obter as strings originais do jogo, que sempre correspondem à sua versão instalada."
+    },
+    "extract_btn": {
+      "ht": "Extrair do Data.p4k",
+      "at": "Extrair do Data.p4k"
+    },
+    "data_group": {
+      "ht": "Dados do Smart Citizen",
+      "at": "Dados do Smart Citizen"
+    },
+    "data_desc": {
+      "ht": "Pasta para o user.ini, o cache de código-fonte, os arquivos INI aprimorados e os backups. Mova-a para fora da pasta “Documentos” sincronizada com o OneDrive caso a limpeza do cache falhe. O cache XML do DataForge tem seu próprio caminho abaixo — ele ocupa cerca de 1,4 GB, por isso a configuração padrão o mantém automaticamente fora do OneDrive.",
+      "at": "Pasta para o user.ini, o cache de código-fonte, os arquivos INI aprimorados e os backups. Mova-a para fora da pasta “Documentos” sincronizada com o OneDrive caso a limpeza do cache falhe. O cache XML do DataForge tem seu próprio caminho abaixo — ele ocupa cerca de 1,4 GB, por isso a configuração padrão o mantém automaticamente fora do OneDrive."
+    },
+    "app_data_label": {
+      "ht": "Pasta de dados do app:",
+      "at": "Pasta de dados do app:"
+    },
+    "dataforge_cache_label": {
+      "ht": "Pasta cache do DataForge:",
+      "at": "Pasta cache do DataForge:"
+    },
+    "reset_btn": {
+      "ht": "Resetar",
+      "at": "Resetar"
+    },
+    "p4k_group": {
+      "ht": "Localização Base (Extração do P4K)",
+      "at": "Localização Base (Extração do P4K)"
+    },
+    "p4k_desc": {
+      "ht": "Extrai o arquivo global.ini do Data.p4k instalado para obter as strings originais do jogo, que sempre correspondem à sua versão instalada.",
+      "at": "Extrai o arquivo global.ini do Data.p4k instalado para obter as strings originais do jogo, que sempre correspondem à sua versão instalada."
+    },
+    "p4k_status_found_with_base": {
+      "ht": "Data.p4k encontrado  |  Última atualização do base.ini: {date}",
+      "at": "Data.p4k encontrado  |  Última atualização do base.ini: {date}"
+    },
+    "p4k_status_found_no_base": {
+      "ht": "Data.p4k encontrado  |  base.ini ainda não foi extraído",
+      "at": "Data.p4k encontrado  |  base.ini ainda não foi extraído"
+    },
+    "p4k_status_not_found": {
+      "ht": "Data.p4k não encontrado em: {path}",
+      "at": "Data.p4k não encontrado em: {path}"
+    },
+    "p4k_status_no_path": {
+      "ht": "Caminho de instalação do jogo não está configurado",
+      "at": "Caminho de instalação do jogo não está configurado"
+    },
+    "select_sc_root": {
+      "ht": "Selecione a pasta raiz de instalação do Star Citizen",
+      "at": "Selecione a pasta raiz de instalação do Star Citizen"
+    },
+    "select_data_folder": {
+      "ht": "Selecione a pasta de Dados do Smart Citizen",
+      "at": "Selecione a pasta de Dados do Smart Citizen"
+    },
+    "select_cache_folder": {
+      "ht": "Selecionar a pasta Cache do DataForge",
+      "at": "Selecionar a pasta Cache do DataForge"
+    },
+    "migrate_data_title": {
+      "ht": "",
+      "at": "Mover Seus Dados?"
+    },
+    "migrate_data_body": {
+      "ht": "",
+      "at": "Mover seus dados existentes do Smart Citizen (personalizações, backups, strings em cache) de\n\n{old_dir}\n\npara a nova pasta\n\n{new_dir}?\n\nOs arquivos que já estão na nova pasta são mantidos. A pasta antiga será limpa após a mudança."
+    },
+    "migrate_data_done_title": {
+      "ht": "",
+      "at": "Dados Movidos"
+    },
+    "migrate_data_done_body": {
+      "ht": "",
+      "at": "{count} arquivo(s) movido(s) para a nova pasta de dados."
+    },
+    "migrate_data_failed_title": {
+      "ht": "",
+      "at": "Falha na Migração"
+    },
+    "migrate_data_failed_body": {
+      "ht": "",
+      "at": "Não foi possível migrar seus dados:\n{error}"
+    },
+    "channel_not_installed_title": {
+      "ht": "Canal não instalado",
+      "at": "Canal não instalado"
+    },
+    "channel_not_installed_body": {
+      "ht": "{channel} não está instalado na raiz atual. Instale pelo RSI Launcher ou escolha um canal diferente.",
+      "at": "{channel} não está instalado na raiz atual. Instale pelo RSI Launcher ou escolha um canal diferente."
+    },
+    "invalid_data_folder_title": {
+      "ht": "Pasta de Dados inválida",
+      "at": "Pasta de Dados inválida"
+    },
+    "invalid_cache_folder_title": {
+      "ht": "Pasta de Cache inválida",
+      "at": "Pasta de Cache inválida"
+    },
+    "dataforge_cache_changed_title": {
+      "ht": "Alterado o caminho do cache do DataForge",
+      "at": "Alterado o caminho do cache do DataForge"
+    },
+    "dataforge_cache_changed_body": {
+      "ht": "Para alterar o caminho do cache do DataForge, é necessário reextrair o arquivo do Data.p4k.\n\nO que deve acontecer com o cache anterior após a conclusão da reextração?",
+      "at": "Para alterar o caminho do cache do DataForge, é necessário reextrair o arquivo do Data.p4k.\n\nO que deve acontecer com o cache anterior após a conclusão da reextração?"
+    },
+    "re_extract_delete_old": {
+      "ht": "Reextrair e apagar o antigo",
+      "at": "Reextrair e apagar o antigo"
+    },
+    "re_extract_keep_old": {
+      "ht": "Reextrair e manter o antigo",
+      "at": "Reextrair e manter o antigo"
+    },
+    "preview_title": {
+      "ht": "Aplicar Pré-visualização",
+      "at": "Aplicar Pré-visualização"
+    },
+    "preview_header": {
+      "ht": "Aplicar Pré-visualização\n\nOrdem de Mesclagem (de cima para baixo):\n",
+      "at": "Aplicar Pré-visualização\n\nOrdem de Mesclagem (de cima para baixo):\n"
+    },
+    "preview_total": {
+      "ht": "\nTotal de Chaves: {count:,}\nDetalhamento por Status:\n",
+      "at": "\nTotal de Chaves: {count:,}\nDetalhamento por Status:\n"
+    },
+    "no_sources_warning": {
+      "ht": "Não há fontes disponíveis para mesclar.",
+      "at": "Não há fontes disponíveis para mesclar."
+    },
+    "include_new_tooltip": {
+      "ht": "",
+      "at": "Quando marcado, itens descobertos no XML do DataForge (status 'Novo') que tenham texto não vazio serão incluídos no global.ini aplicado."
+    },
+    "import_ini_tooltip": {
+      "ht": "",
+      "at": "Incorporar um .ini externo às suas substituições. Uma caixa de diálogo de resolução de conflitos permite decidir por chave: manter a atual, usar a importada, anexar, prefixar ou fornecer um valor personalizado."
+    },
+    "reset_user_ini_tooltip": {
+      "ht": "",
+      "at": "Excluir todas as substituições de string personalizadas do canal ativo. Um backup com carimbo de data/hora é salvo ao lado do original para que você possa restaurá-lo."
+    },
+    "restore_user_ini_tooltip": {
+      "ht": "",
+      "at": "Restaurar suas substituições de string personalizadas a partir de um snapshot automático. O Smart Citizen mantém os últimos estados do user.ini, permitindo reverter uma edição ruim ou recuperar o arquivo após ele ter sido esvaziado."
+    },
+    "preview_apply_tooltip": {
+      "ht": "",
+      "at": "Resumo de simulação do que Aplicar Aprimoramentos escreveria — contagem de chaves por fonte (com os Aprimoramentos detalhados por categoria) e uma contagem de status Modificado / Aprimorado / Inalterado / Novo. Nada é gravado no jogo até você clicar em Aplicar Aprimoramentos."
+    },
+    "check_updates_tooltip": {
+      "ht": "",
+      "at": "Verificar no GitHub se há uma versão mais recente do Smart Citizen."
+    },
+    "theme_tooltip": {
+      "ht": "",
+      "at": "Alterar o tema do aplicativo. Tem efeito imediato na janela principal, barra de ferramentas, abas e painel de Ajuda."
+    },
+    "disable_tutorial_tooltip": {
+      "ht": "",
+      "at": "Quando marcado, o tour guiado não será iniciado automaticamente em uma nova versão. O botão Tutorial na barra de ferramentas continua funcionando."
+    },
+    "game_path_tooltip": {
+      "ht": "",
+      "at": "Raiz de instalação do Star Citizen — o diretório que contém LIVE/, PTU/, EPTU/, HOTFIX/ e/ou TECH-PREVIEW/. Detectado automaticamente na instalação; edite se o seu jogo estiver em outro local. O menu suspenso 'Canal' abaixo escolhe qual deles o aplicativo lê e grava."
+    },
+    "browse_game_tooltip": {
+      "ht": "",
+      "at": "Escolher a raiz de instalação do Star Citizen em um navegador de pastas."
+    },
+    "channel_tooltip": {
+      "ht": "",
+      "at": "Canal do Star Citizen de onde ler o Data.p4k e onde gravar o global.ini. Canais sem Data.p4k sob a raiz de instalação ficam desabilitados. Trocar de canal recarrega imediatamente as strings com os dados do novo canal."
+    },
+    "channel_not_installed_tooltip": {
+      "ht": "",
+      "at": "{channel} não está instalado — nenhum Data.p4k em {path}"
+    },
+    "language_tooltip": {
+      "ht": "",
+      "at": "Idioma a aplicar ao jogo. As chaves ausentes da tradução retornam automaticamente ao inglês."
+    },
+    "map_language_tooltip": {
+      "ht": "",
+      "at": "Definir uma URL para o global.ini de cada idioma. Ao mudar para esse idioma, o Smart Citizen o baixa e o usa como strings base em vez da extração em inglês do Data.p4k."
+    },
+    "data_dir_tooltip": {
+      "ht": "",
+      "at": "Raiz de dados do aplicativo Smart Citizen. Cada canal recebe sua própria subpasta dentro deste diretório. Deixe em branco ou clique em Resetar para usar Documents\\Smart Citizen."
+    },
+    "browse_data_tooltip": {
+      "ht": "",
+      "at": "Escolher a pasta de dados do Smart Citizen em um navegador de pastas."
+    },
+    "reset_data_tooltip": {
+      "ht": "",
+      "at": "Limpar a pasta de dados personalizada e usar Documents\\Smart Citizen."
+    },
+    "cache_dir_tooltip": {
+      "ht": "",
+      "at": "Pasta base para a árvore XML extraída do DataForge (~1,4 GB). Cada canal se aninha sob esta como {base}\\{channel}\\cache\\dataforge\\. O padrão é %LOCALAPPDATA%\\Smart Citizen para ficar fora do OneDrive. Alterar o caminho aciona uma nova extração."
+    },
+    "browse_cache_tooltip": {
+      "ht": "",
+      "at": "Escolher a pasta base do cache do DataForge em um navegador de pastas."
+    },
+    "reset_cache_tooltip": {
+      "ht": "",
+      "at": "Limpar a pasta de cache personalizada e usar o padrão da plataforma."
+    },
+    "extract_tooltip": {
+      "ht": "",
+      "at": "Extrair a localização original (base.ini) e os XMLs de entidades do DataForge do seu Data.p4k instalado. Execute após cada patch do Star Citizen — as strings recarregam automaticamente na tabela quando a extração terminar."
+    },
+    "include_new_cb": {
+      "ht": "",
+      "at": "Incluir itens descobertos"
+    },
+    "disable_tutorial_cb": {
+      "ht": "",
+      "at": "Desativar tutorial"
+    },
+    "invalid_data_folder_body": {
+      "ht": "",
+      "at": "A pasta de dados selecionada é um arquivo, não um diretório:\n{path}"
+    },
+    "onedrive_folder_title": {
+      "ht": "",
+      "at": "Pasta de dados dentro do OneDrive"
+    },
+    "onedrive_folder_body": {
+      "ht": "",
+      "at": "Esta pasta está dentro do OneDrive:\n\n{path}\n\nO OneDrive pode sincronizar e até esvaziar esses arquivos, o que já causou perda de edições. Uma pasta local fora do OneDrive é fortemente recomendada.\n\nUsar esta pasta do OneDrive mesmo assim?"
+    },
+    "dataforge_cache_old_new": {
+      "ht": "",
+      "at": "Antigo: {old}\nNovo: {new}"
+    },
+    "channel_not_installed_hint": {
+      "ht": "",
+      "at": "⚠ {channel} não está instalado nesta raiz — escolha outro canal"
+    },
+    "preview_merge_failed": {
+      "ht": "",
+      "at": "Falha ao pré-visualizar a mesclagem: {error}"
+    },
+    "game_path_placeholder": {
+      "ht": "",
+      "at": "C:\\Program Files\\Roberts Space Industries\\StarCitizen"
+    },
+    "language_source_placeholder": {
+      "ht": "",
+      "at": "https://…/global.ini"
+    },
+    "backup_group": {
+      "ht": "",
+      "at": "Backup de Configurações"
+    },
+    "backup_desc": {
+      "ht": "",
+      "at": "Salve todas as suas configurações (preferências, configurações de tags, sua pasta do Star Citizen e suas substituições de texto personalizadas para cada canal) em um único arquivo de backup pequeno. Importe em um PC novo, após descompactar uma versão portátil nova, ou para desfazer uma configuração errada. Os backups funcionam entre versões do Smart Citizen. Os caches do jogo não são incluídos; eles se reconstroem automaticamente a partir dos arquivos do seu jogo."
+    },
+    "export_settings_btn": {
+      "ht": "",
+      "at": "Exportar Configurações..."
+    },
+    "export_settings_tooltip": {
+      "ht": "",
+      "at": "Salve suas preferências, pasta do Star Citizen e substituições de texto personalizadas em um pequeno zip de backup (poucos KB). Guarde onde quiser (nuvem, pendrive) e importe depois, em qualquer versão do Smart Citizen, para restaurar suas configurações."
+    },
+    "import_settings_btn": {
+      "ht": "",
+      "at": "Importar Configurações..."
+    },
+    "import_settings_tooltip": {
+      "ht": "",
+      "at": "Restaura um zip de backup de configurações feito por qualquer versão do Smart Citizen. Seus arquivos user.ini atuais são salvos primeiro, sua pasta do Star Citizen é restaurada (ou detectada automaticamente se o caminho do backup não estiver neste PC), e o Smart Citizen reinicia com as configurações importadas."
+    }
+  },
+  "enhancements": {
+    "title": {
+      "ht": "Aprimoramentos",
+      "at": "Aprimoramentos"
+    },
+    "desc": {
+      "ht": "Recursos opcionais que expandem os dados de localização básicos: alternadores de categoria para o gerador de aprimoramentos, um prefixo de favoritos para a lista de naves no jogo e um Construtor de Tags que personaliza as tags entre colchetes nos componentes, mísseis e armas das naves.",
+      "at": "Recursos opcionais que expandem os dados de localização básicos: alternadores de categoria para o gerador de aprimoramentos, um prefixo de favoritos para a lista de naves no jogo e um Construtor de Tags que personaliza as tags entre colchetes nos componentes, mísseis e armas das naves."
+    },
+    "enhancements_group": {
+      "ht": "Aprimoramentos na Localização",
+      "at": "Aprimoramentos na Localização"
+    },
+    "enhancements_desc": {
+      "ht": "Selecione as categorias de aprimoramento a serem incluídas. Clique em Aplicar para salvar as alterações. Os aprimoramentos são gerados a partir do arquivo Data.p4k instalado.",
+      "at": "Selecione as categorias de aprimoramento a serem incluídas. Clique em Aplicar para salvar as alterações. Os aprimoramentos são gerados a partir do arquivo Data.p4k instalado."
+    },
+    "cat_desc_ships": {
+      "ht": "Dados sobre o desempenho, equipamentos e a tripulação",
+      "at": "Dados sobre o desempenho, equipamentos e a tripulação"
+    },
+    "cat_desc_ship_items": {
+      "ht": "Anotações e estatísticas sobre classe/tamanho/qualidade dos componentes",
+      "at": "Anotações e estatísticas sobre classe/tamanho/qualidade dos componentes"
+    },
+    "cat_desc_gear": {
+      "ht": "Estatísticas de combate para armas de FPS",
+      "at": "Estatísticas de combate para armas de FPS"
+    },
+    "cat_desc_missions": {
+      "ht": "Recompensas de XP e obtenção de blueprints nas missões",
+      "at": "Recompensas de XP e obtenção de blueprints nas missões"
+    },
+    "cat_desc_commodities": {
+      "ht": "Receitas de fabricação e uso de materiais",
+      "at": "Receitas de fabricação e uso de materiais"
+    },
+    "cat_desc_journal": {
+      "ht": "Compêndio de mineração com dados de fabricação por mineral",
+      "at": "Compêndio de mineração com dados de fabricação por mineral"
+    },
+    "cat_desc_medical_consumables": {
+      "ht": "",
+      "at": "Resumos em linguagem simples dos efeitos das canetas médicas CureLife"
+    },
+    "apply_btn": {
+      "ht": "Aplicar",
+      "at": "Aplicar"
+    },
+    "generate_btn": {
+      "ht": "Gerar Aprimoramentos",
+      "at": "Gerar Aprimoramentos"
+    },
+    "favorites_group": {
+      "ht": "Favoritos",
+      "at": "Favoritos"
+    },
+    "favorites_desc": {
+      "ht": "Um prefixo configurável é adicionado aos nomes das naves marcadas com asterisco na lista de naves gerada, para que elas apareçam no topo da lista de seleção de naves no jogo.",
+      "at": "Um prefixo configurável é adicionado aos nomes das naves marcadas com asterisco na lista de naves gerada, para que elas apareçam no topo da lista de seleção de naves no jogo."
+    },
+    "sort_prefix_label": {
+      "ht": "Ordernar prefixo:",
+      "at": "Ordernar prefixo:"
+    },
+    "tag_builder_group": {
+      "ht": "Criador de tags",
+      "at": "Criador de tags"
+    },
+    "tag_builder_desc": {
+      "ht": "Personaliza as etiquetas de nome entre colchetes em componentes, mísseis e armas da nave. As alterações entram em vigor após clicar em “Aplicar alterações nas tags” e executar novamente a opção “Gerar Aprimoramentos”.",
+      "at": "Personaliza as etiquetas de nome entre colchetes em componentes, mísseis e armas da nave. As alterações entram em vigor após clicar em “Aplicar alterações nas tags” e executar novamente a opção “Gerar Aprimoramentos”."
+    },
+    "preview_label": {
+      "ht": "Pré-visualizar:",
+      "at": "Pré-visualizar:"
+    },
+    "annotate_mission_descs_cb": {
+      "ht": "Anotar componentes nas descrições das missões",
+      "at": "Anotar componentes nas descrições das missões"
+    },
+    "apply_tag_changes_btn": {
+      "ht": "Aplicar alterações nas tags",
+      "at": "Aplicar alterações nas tags"
+    },
+    "reset_defaults_btn": {
+      "ht": "Restaurar padrões",
+      "at": "Restaurar padrões"
+    },
+    "edit_mapping_btn": {
+      "ht": "Editar mapeamento...",
+      "at": "Editar mapeamento..."
+    },
+    "blueprints_group": {
+      "ht": "",
+      "at": "Blueprints"
+    },
+    "blueprints_desc": {
+      "ht": "",
+      "at": "Marque os blueprints que você já possui. Itens adquiridos recebem uma tag [Owned] onde quer que apareçam nas recompensas potenciais de blueprint de uma missão, para você ver de relance o que ainda vale caçar. Selecione itens à esquerda e use as setas para movê-los para a sua lista."
+    },
+    "blueprints_empty_note": {
+      "ht": "",
+      "at": "Gere os aprimoramentos de missão primeiro para preencher esta lista. Os blueprints vêm dos dados de recompensa de missão."
+    },
+    "blueprints_search_placeholder": {
+      "ht": "",
+      "at": "Buscar blueprints por nome…"
+    },
+    "blueprints_show_tags_checkbox": {
+      "ht": "",
+      "at": "Mostrar tags nos nomes de blueprints"
+    },
+    "blueprints_mission_label": {
+      "ht": "",
+      "at": "Missão:"
+    },
+    "blueprints_facet_any": {
+      "ht": "",
+      "at": "Qualquer"
+    },
+    "blueprints_facet_type": {
+      "ht": "",
+      "at": "Tipo:"
+    },
+    "blueprints_facet_class": {
+      "ht": "",
+      "at": "Classe:"
+    },
+    "blueprints_facet_size": {
+      "ht": "",
+      "at": "Tamanho:"
+    },
+    "blueprints_facet_grade": {
+      "ht": "",
+      "at": "Grau:"
+    },
+    "blueprints_filter_note": {
+      "ht": "",
+      "at": "Tipo classifica tudo em componentes, armas FPS, armaduras ou Outros. Classe, Tamanho e Grau se aplicam apenas a componentes de nave."
+    },
+    "blueprints_tooltip_missions": {
+      "ht": "",
+      "at": "Missões: {missions}"
+    },
+    "blueprints_available_label": {
+      "ht": "",
+      "at": "Blueprints disponíveis"
+    },
+    "blueprints_owned_label": {
+      "ht": "",
+      "at": "Blueprints adquiridos"
+    },
+    "blueprints_add_tooltip": {
+      "ht": "",
+      "at": "Marcar os blueprints selecionados como adquiridos"
+    },
+    "blueprints_remove_tooltip": {
+      "ht": "",
+      "at": "Remover os blueprints selecionados dos adquiridos"
+    },
+    "bp_scan_title": {
+      "ht": "",
+      "at": "Escaneamento de BP"
+    },
+    "bp_scan_starting": {
+      "ht": "",
+      "at": "Escaneando os logs do Star Citizen em busca de blueprints recebidos…"
+    },
+    "bp_scan_progress": {
+      "ht": "",
+      "at": "Escaneando {file}…"
+    },
+    "bp_scan_finishing": {
+      "ht": "",
+      "at": "Finalizando…"
+    },
+    "bp_scan_no_path": {
+      "ht": "",
+      "at": "Nenhum caminho de instalação do Star Citizen está configurado, então não há logs para escanear. Defina a pasta do jogo na aba Config primeiro."
+    },
+    "bp_scan_none": {
+      "ht": "",
+      "at": "Nenhum blueprint novo encontrado desde o último escaneamento."
+    },
+    "mission_field_ace_tooltip": {
+      "ht": "",
+      "at": "Mostrar uma linha \"Ace Pilot: Yes\" no corpo dos detalhes da missão quando a missão gerar um piloto ás. A tag de título [ACE] é uma opção separada em Tags Gerais. Entra em vigor na próxima Geração de Aprimoramentos."
+    },
+    "mission_field_default_tooltip": {
+      "ht": "",
+      "at": "Mostrar a linha {label} nos corpos de missão gerados. Entra em vigor na próxima Geração de Aprimoramentos."
+    },
+    "stats_prepend_tooltip": {
+      "ht": "",
+      "at": "Colocar o bloco de estatísticas gerado acima da descrição do fabricante/RP em vez de abaixo (naves, componentes, armas). Entra em vigor na próxima Geração de Aprimoramentos."
+    },
+    "standardize_ship_names_tooltip": {
+      "ht": "",
+      "at": "Renomear variantes de nave exec-hangar (PYX) e Wikelo (WIK) para incluir um sufixo que as diferencie da versão padrão da loja de pledge (ex.: \"Anvil F8C Lightning PYX\"). Entra em vigor na próxima Geração de Aprimoramentos."
+    },
+    "rs_ore_name_annotations_tooltip": {
+      "ht": "",
+      "at": "Adiciona a Assinatura de Recurso base de cada minério ao seu próprio nome de exibição (ex.: \"Alumínio (RS 4285)\"), para que apareça em todos os lugares onde o jogo mostra esse nome -- incluindo o rastreador de missão. Independente de Assinaturas de Recursos em Campos de Detalhes da Missão. Entra em vigor na próxima Geração de Aprimoramentos."
+    },
+    "apply_categories_tooltip": {
+      "ht": "",
+      "at": "Salvar a seleção de categorias. Categorias desmarcadas serão desativadas."
+    },
+    "generate_enabled_tooltip": {
+      "ht": "",
+      "at": "Gerar arquivos de localização aprimorados a partir do Data.p4k do seu jogo.\nOs dados do DataForge serão extraídos automaticamente se ainda não estiverem em cache\n(a primeira execução leva alguns minutos; as seguintes são rápidas)."
+    },
+    "generate_disabled_tooltip": {
+      "ht": "",
+      "at": "Já atualizado — nada que afete a saída gerada (categorias, campos de missão, opções de estatísticas/nomes, Criador de tags) mudou desde a última execução."
+    },
+    "favorite_prefix_tooltip": {
+      "ht": "",
+      "at": "Caractere adicionado antes dos nomes de naves favoritas para que apareçam no topo da lista de naves no jogo. Clique em Aplicar Prefixo após alterar para atualizar todos os favoritos existentes."
+    },
+    "rep_xp_label_tooltip": {
+      "ht": "",
+      "at": "Rótulo para missões sem nome de patente (ex.: 'Rep: +100 XP')"
+    },
+    "header_em_tooltip": {
+      "ht": "",
+      "at": "Estilo dos cabeçalhos de seção: Sublinhado (EM3) ou Texto azul (EM4)"
+    },
+    "prefix_enabled_tooltip": {
+      "ht": "",
+      "at": "Salvar o prefixo selecionado e atualizar todos os favoritos existentes para usá-lo"
+    },
+    "prefix_disabled_tooltip": {
+      "ht": "",
+      "at": "Já aplicado — o prefixo selecionado corresponde aos seus favoritos atuais."
+    },
+    "annotate_mission_descs_tooltip": {
+      "ht": "",
+      "at": "Quando marcado, a tag [CLASS-Sx-grade] configurada é adicionada aos nomes de componentes dentro da lista POTENTIAL BLUEPRINTS das descrições de missão. Desmarque para um corpo de missão mais limpo, mantendo a tag nos nomes reais dos componentes em outros lugares."
+    },
+    "reset_tag_tooltip": {
+      "ht": "",
+      "at": "Restaurar o padrão, mapeamento e ordenação padrão para cada categoria (Componentes / Mísseis / Armas de Nave). Não salva nem regenera até você clicar em Aplicar Alterações nas Tags ou Gerar Aprimoramentos."
+    },
+    "tag_enabled_tooltip": {
+      "ht": "",
+      "at": "Salvar as configurações de tags de Componentes / Mísseis / Armas de Nave e executar novamente o gerador de aprimoramentos. Novas tags aparecem no jogo após a próxima Aplicação de Aprimoramentos."
+    },
+    "tag_disabled_tooltip": {
+      "ht": "",
+      "at": "Já salvo — nenhuma alteração no Criador de tags desde o último salvamento."
+    },
+    "generating_enhancements_tooltip": {
+      "ht": "",
+      "at": "Gerando aprimoramentos…"
+    },
+    "extracting_dataforge_tooltip": {
+      "ht": "",
+      "at": "Extraindo o DataForge do Data.p4k…"
+    },
+    "tag_move_up_tooltip": {
+      "ht": "",
+      "at": "Mover este elemento para cima"
+    },
+    "tag_move_down_tooltip": {
+      "ht": "",
+      "at": "Mover este elemento para baixo"
+    },
+    "tag_untick_exclude_tooltip": {
+      "ht": "",
+      "at": "Desmarque para excluir este elemento da tag"
+    },
+    "tag_edit_mapping_row_btn": {
+      "ht": "",
+      "at": "Editar mapeamento…"
+    },
+    "tag_mapping_tooltip_ordinance": {
+      "ht": "",
+      "at": "Editar o texto Curto / Médio / Longo de cada tipo de rastreamento (ex.: Infrared → I / IR / Infrared)."
+    },
+    "tag_mapping_tooltip_damage": {
+      "ht": "",
+      "at": "Editar o texto Curto / Médio / Longo de cada tipo de dano (ex.: Energy → E / EN / Energy)."
+    },
+    "tag_mapping_tooltip_type": {
+      "ht": "",
+      "at": "Editar o texto Curto / Médio / Longo de cada tipo de componente (ex.: Shield Generator → SH / SHLD / Shield)."
+    },
+    "tag_mapping_tooltip_label": {
+      "ht": "",
+      "at": "Editar o texto Curto / Médio / Longo do rótulo de fabricação (ex.: Crafting → CF / Craft / Crafting)."
+    },
+    "tag_mapping_tooltip_collection": {
+      "ht": "",
+      "at": "Editar o texto Curto / Médio / Longo do rótulo de coleção (ex.: Collection → Col / Collect / Collection)."
+    },
+    "tag_mapping_tooltip_default": {
+      "ht": "",
+      "at": "Editar o texto Curto / Médio / Longo de cada classe (ex.: Military → M / MIL / Military)."
+    },
+    "mission_detail_fields_heading": {
+      "ht": "",
+      "at": "Campos de detalhes da missão:"
+    },
+    "mission_field_mission_type": {
+      "ht": "",
+      "at": "Tipo de missão"
+    },
+    "mission_field_difficulty": {
+      "ht": "",
+      "at": "Dificuldade"
+    },
+    "mission_field_hostiles": {
+      "ht": "",
+      "at": "Hostis"
+    },
+    "mission_field_reputation": {
+      "ht": "",
+      "at": "Reputação"
+    },
+    "mission_field_blueprints": {
+      "ht": "",
+      "at": "Blueprints"
+    },
+    "mission_field_ace_pilot": {
+      "ht": "",
+      "at": "Piloto Ace"
+    },
+    "mission_field_resource_signatures": {
+      "ht": "",
+      "at": "Assinaturas de Recursos"
+    },
+    "mission_detail_fields_note": {
+      "ht": "",
+      "at": "Os campos desmarcados ficam de fora das descrições de missão. Vale a partir do próximo Gerar Aprimoramentos."
+    },
+    "stats_prepend_cb": {
+      "ht": "",
+      "at": "Mostrar estatísticas acima da descrição"
+    },
+    "standardize_ship_names_cb": {
+      "ht": "",
+      "at": "Padronizar os nomes das naves obteníveis"
+    },
+    "rs_ore_name_annotations_cb": {
+      "ht": "",
+      "at": "Mostrar Assinaturas de Recursos (RS) ao lado dos nomes dos minérios"
+    },
+    "mission_labels_group": {
+      "ht": "",
+      "at": "Rótulos de missão"
+    },
+    "mission_label_details": {
+      "ht": "",
+      "at": "Detalhes:"
+    },
+    "mission_label_blueprints": {
+      "ht": "",
+      "at": "Blueprints:"
+    },
+    "mission_label_item_rewards": {
+      "ht": "",
+      "at": "Itens de recompensa:"
+    },
+    "mission_label_blueprint_data": {
+      "ht": "",
+      "at": "Dados de blueprint:"
+    },
+    "mission_label_xp": {
+      "ht": "",
+      "at": "Rótulo de XP:"
+    },
+    "mission_label_header_style": {
+      "ht": "",
+      "at": "Estilo do cabeçalho:"
+    },
+    "em_label_underline": {
+      "ht": "",
+      "at": "Sublinhado"
+    },
+    "em_label_blue_text": {
+      "ht": "",
+      "at": "Texto azul"
+    },
+    "forge_status_not_extracted": {
+      "ht": "",
+      "at": "DataForge: ainda não extraído — clique em 'Gerar Aprimoramentos' para começar"
+    },
+    "forge_status_outdated": {
+      "ht": "",
+      "at": "DataForge: cache desatualizado — clique em 'Gerar Aprimoramentos' para re-extrair e atualizar"
+    },
+    "forge_status_up_to_date": {
+      "ht": "",
+      "at": "DataForge: cache atualizado ✓"
+    },
+    "tag_separator_label": {
+      "ht": "",
+      "at": "Separador:"
+    },
+    "tag_enclosing_label": {
+      "ht": "",
+      "at": "Delimitadores:"
+    },
+    "tag_placement_label": {
+      "ht": "",
+      "at": "Posição:"
+    },
+    "tag_craft_usage_separator_label": {
+      "ht": "",
+      "at": "Separador de uso de fabricação:"
+    },
+    "mt_hauling_group": {
+      "ht": "",
+      "at": "Missões de transporte"
+    },
+    "mt_enable_route_cb": {
+      "ht": "",
+      "at": "Adicionar rota aos títulos das missões de transporte"
+    },
+    "mt_standardize_cb": {
+      "ht": "",
+      "at": "Padronizar os nomes das missões de transporte (ex.: \"Medium Cargo Haul\" para todas as empresas, em vez de \"Large Shipment\" / \"Haul - Small Scale\")"
+    },
+    "mt_route_hint": {
+      "ht": "",
+      "at": "O jogo preenche os locais reais de coleta e entrega quando a missão é aceita."
+    },
+    "mt_route_arrow_label": {
+      "ht": "",
+      "at": "Seta da rota:"
+    },
+    "mt_title_separator_label": {
+      "ht": "",
+      "at": "Separador de título:"
+    },
+    "mt_rank_separator_label": {
+      "ht": "",
+      "at": "Separador de patente:"
+    },
+    "mt_location_detail_label": {
+      "ht": "",
+      "at": "Detalhe de local:"
+    },
+    "mt_shorten_titles_cb": {
+      "ht": "",
+      "at": "Encurtar títulos originais (encurta frases padrão, ex.: \"Local Shipment Route\" → \"Route\")"
+    },
+    "mt_shorten_sizes_cb": {
+      "ht": "",
+      "at": "Encurtar tamanhos de carga (abrevia os tamanhos, ex.: \"Extra Small\" → \"XS\")"
+    },
+    "mt_underline_direct_cb": {
+      "ht": "",
+      "at": "Sublinhar \"Direct\" (destaca os fretes \"Direct\" no jogo)"
+    },
+    "mt_general_tags_group": {
+      "ht": "",
+      "at": "Tags gerais"
+    },
+    "mt_general_tags_hint": {
+      "ht": "",
+      "at": "Mostrar ou ocultar essas tags apenas no título da missão"
+    },
+    "mt_tag_rep_cb": {
+      "ht": "",
+      "at": "Tag Rep (adiciona \"[500 REP]\")"
+    },
+    "mt_tag_blueprint_cb": {
+      "ht": "",
+      "at": "Tag BP (adiciona \"[BP]\" / \"[BP?]\")"
+    },
+    "mt_tag_ace_cb": {
+      "ht": "",
+      "at": "Tag ACE (adiciona \"[ACE]\" / \"[ACE?]\")"
+    },
+    "mt_tag_rep_track_cb": {
+      "ht": "",
+      "at": "Tag de trilha de reputação (adiciona \"(Security)\" / \"(Contractor)\" à tag Rep)"
+    },
+    "mt_scanning_group": {
+      "ht": "",
+      "at": "Missões de escaneamento/mineração"
+    },
+    "mt_scanning_hint": {
+      "ht": "",
+      "at": "As missões de escaneamento/mineração de Recco Battaglia visam minérios específicos; mostra o valor de Assinatura de Recurso (RS) de cada minério no título da missão."
+    },
+    "mt_tag_rs_cb": {
+      "ht": "",
+      "at": "Mostrar tags de Assinatura de Recurso (RS)"
+    },
+    "mt_preview_route_off": {
+      "ht": "",
+      "at": "Prévia:  {display} [50 REP]  (rota desligada)"
+    },
+    "mt_preview_route_on": {
+      "ht": "",
+      "at": "Prévia:  {display} [50 REP]"
+    },
+    "tag_preview": {
+      "ht": "",
+      "at": "Prévia:  {content}"
+    },
+    "tag_preview_no_tag": {
+      "ht": "",
+      "at": "Prévia:  {name}   (sem tag — todos os elementos estão vazios ou desativados)"
+    }
+  },
+  "blueprint_tracker": {
+    "title": {
+      "ht": "",
+      "at": "Rastreador de Blueprints"
+    },
+    "scan_logs_btn": {
+      "ht": "",
+      "at": "Escanear Logs por Blueprints Adquiridos"
+    },
+    "scan_logs_tooltip": {
+      "ht": "",
+      "at": "Escaneia os arquivos de log do Star Citizen (Game.log e logbackups) em busca de notificações de recompensa \"Received Blueprint\" e marca esses blueprints automaticamente como adquiridos."
+    },
+    "scan_other_channels_checkbox": {
+      "ht": "",
+      "at": "Também escanear LIVE/HOTFIX (o que não estiver ativo)"
+    },
+    "scan_other_channels_tooltip": {
+      "ht": "",
+      "at": "LIVE e HOTFIX compartilham o mesmo progresso de conta, então uma planta obtida em um aparece também nos registros do outro. Também escaneia o que não for seu canal ativo entre os dois, se estiver instalado. PTU, EPTU e TECH-PREVIEW são builds de teste separadas com progresso próprio e nunca são escaneadas."
+    },
+    "force_rescan_checkbox": {
+      "ht": "",
+      "at": "Reescanear todos os registros (ignorar a última verificação)"
+    },
+    "force_rescan_tooltip": {
+      "ht": "",
+      "at": "Normalmente uma verificação só lê eventos desde a última verificação, para continuar rápida. Marque isto se sua lista de itens possuídos parecer errada e você quiser reler cada registro do zero. Desmarca-se sozinha após a próxima verificação."
+    },
+    "apply_owned_tag_btn": {
+      "ht": "",
+      "at": "Aplicar Tags [Owned]"
+    },
+    "apply_owned_tag_tooltip": {
+      "ht": "",
+      "at": "Atualiza a tag [Owned] nos nomes de blueprints na tabela de strings para refletir sua lista atual de adquiridos."
+    },
+    "apply_owned_tag_tooltip_disabled": {
+      "ht": "",
+      "at": "Já está atualizado: sua lista de adquiridos não mudou desde a última aplicação."
+    },
+    "owned_tags_refreshed": {
+      "ht": "",
+      "at": "Tags [Owned] atualizadas para corresponder à sua lista de Adquiridos atual."
+    },
+    "export_owned_btn": {
+      "ht": "",
+      "at": "Exportar Blueprints Adquiridos…"
+    },
+    "export_owned_tooltip": {
+      "ht": "",
+      "at": "Salve sua lista de Adquiridos em um arquivo JSON ou CSV, para compartilhar seu progresso com outras ferramentas ou outra instalação do Smart Citizen."
+    },
+    "import_owned_btn": {
+      "ht": "",
+      "at": "Importar Blueprints Adquiridos…"
+    },
+    "import_owned_tooltip": {
+      "ht": "",
+      "at": "Adicione blueprints adquiridos de um arquivo JSON ou CSV (incluindo uma exportação do scmdb.net) à sua lista atual de Adquiridos. Nunca remove nada que já esteja marcado como adquirido."
+    },
+    "export_nothing_title": {
+      "ht": "",
+      "at": "Nada para exportar"
+    },
+    "export_nothing_body": {
+      "ht": "",
+      "at": "Sua lista de Adquiridos está vazia, então não há nada para exportar."
+    },
+    "export_dialog_title": {
+      "ht": "",
+      "at": "Exportar Blueprints Adquiridos"
+    },
+    "export_default_filename": {
+      "ht": "",
+      "at": "blueprints-adquiridos"
+    },
+    "export_json_filter": {
+      "ht": "",
+      "at": "Arquivos JSON (*.json)"
+    },
+    "export_csv_filter": {
+      "ht": "",
+      "at": "Arquivos CSV (*.csv)"
+    },
+    "export_failed_title": {
+      "ht": "",
+      "at": "Falha na exportação"
+    },
+    "export_failed_body": {
+      "ht": "",
+      "at": "Não foi possível gravar o arquivo.\n\n{error_type}: {error}"
+    },
+    "export_done_title": {
+      "ht": "",
+      "at": "Exportação concluída"
+    },
+    "export_done_singular": {
+      "ht": "",
+      "at": "1 blueprint adquirido exportado para:\n{path}"
+    },
+    "export_done_plural": {
+      "ht": "",
+      "at": "{count} blueprints adquiridos exportados para:\n{path}"
+    },
+    "import_dialog_title": {
+      "ht": "",
+      "at": "Importar Blueprints Adquiridos"
+    },
+    "import_file_filter": {
+      "ht": "",
+      "at": "Arquivos de exportação de blueprints (*.json *.csv)"
+    },
+    "import_invalid_title": {
+      "ht": "",
+      "at": "Falha na importação"
+    },
+    "import_invalid_body": {
+      "ht": "",
+      "at": "Não foi possível ler esse arquivo.\n\n{error}"
+    },
+    "import_nothing_matched_body": {
+      "ht": "",
+      "at": "Nenhum dos {count} blueprints desse arquivo é rastreado pelo Smart Citizen no momento, então nada foi importado."
+    },
+    "owned_added_singular": {
+      "ht": "",
+      "at": "1 blueprint adicionado à sua lista de Adquiridos. Ele mostrará a tag [Owned] em qualquer lugar que aparecer nas recompensas de blueprint de uma missão."
+    },
+    "owned_added_plural": {
+      "ht": "",
+      "at": "{count} blueprints adicionados à sua lista de Adquiridos. Eles mostrarão a tag [Owned] em qualquer lugar que aparecerem nas recompensas de blueprint de uma missão."
+    },
+    "import_skipped_note": {
+      "ht": "",
+      "at": "{skipped} outros do arquivo não são rastreados pelo Smart Citizen no momento e foram ignorados."
+    },
+    "show_skipped_btn": {
+      "ht": "",
+      "at": "Mostrar Blueprints Ignorados"
+    },
+    "hide_skipped_btn": {
+      "ht": "",
+      "at": "Ocultar Blueprints Ignorados"
+    },
+    "show_added_btn": {
+      "ht": "",
+      "at": "Mostrar Blueprints Adicionados"
+    },
+    "hide_added_btn": {
+      "ht": "",
+      "at": "Ocultar Blueprints Adicionados"
+    }
+  },
+  "log": {
+    "min_level_label": {
+      "ht": "Nível mínimo:",
+      "at": "Nível mínimo:"
+    },
+    "auto_scroll_check": {
+      "ht": "Rolagem automática",
+      "at": "Rolagem automática"
+    },
+    "clear_btn": {
+      "ht": "Limpar",
+      "at": "Limpar"
+    },
+    "export_btn": {
+      "ht": "Exportar para arquivo…",
+      "at": "Exportar para arquivo…"
+    },
+    "export_title": {
+      "ht": "Exportar log",
+      "at": "Exportar log"
+    },
+    "export_failed_title": {
+      "ht": "Falha ao Exportar",
+      "at": "Falha ao Exportar"
+    },
+    "lines_label": {
+      "ht": "{count} linhas",
+      "at": "{count} linhas"
+    },
+    "min_level_tooltip": {
+      "ht": "",
+      "at": "Severidade mínima a exibir. Entradas abaixo do nível selecionado ficam ocultas (DEBUG < INFO < WARNING < ERROR)."
+    },
+    "auto_scroll_tooltip": {
+      "ht": "",
+      "at": "Rolar automaticamente até a entrada mais recente do log conforme ela chega. Desative para fixar a visualização ao inspecionar linhas mais antigas."
+    },
+    "clear_tooltip": {
+      "ht": "",
+      "at": "Limpar o buffer de log exibido na tela. O arquivo de log da sessão em disco não é afetado."
+    },
+    "export_tooltip": {
+      "ht": "",
+      "at": "Salvar o buffer de log atual em um arquivo .log — útil ao registrar um relatório de bug."
+    }
+  },
+  "import_dialog": {
+    "title": {
+      "ht": "Importar Conflitos",
+      "at": "Importar Conflitos"
+    },
+    "conflicts_group": {
+      "ht": "Conflitos ({count} chaves)",
+      "at": "Conflitos ({count} chaves)"
+    },
+    "keep_all_btn": {
+      "ht": "Mantenha Tudo Atualizado",
+      "at": "Mantenha Tudo Atualizado"
+    },
+    "import_all_btn": {
+      "ht": "Importar Tudo",
+      "at": "Importar Tudo"
+    },
+    "col_key": {
+      "ht": "Chave",
+      "at": "Chave"
+    },
+    "col_current_value": {
+      "ht": "Valor Atual",
+      "at": "Valor Atual"
+    },
+    "col_imported_value": {
+      "ht": "Valor Importado",
+      "at": "Valor Importado"
+    },
+    "col_resolution": {
+      "ht": "Resolução",
+      "at": "Resolução"
+    },
+    "resolution_keep": {
+      "ht": "Manter Atual",
+      "at": "Manter Atual"
+    },
+    "resolution_use": {
+      "ht": "Utilizar Importado",
+      "at": "Utilizar Importado"
+    },
+    "resolution_append": {
+      "ht": "Anexar Importado",
+      "at": "Anexar Importado"
+    },
+    "resolution_prepend": {
+      "ht": "Colocar antes dos importados",
+      "at": "Colocar antes dos importados"
+    },
+    "resolution_custom": {
+      "ht": "Personalizado...",
+      "at": "Personalizado..."
+    },
+    "custom_value_title": {
+      "ht": "Valor Personalizado",
+      "at": "Valor Personalizado"
+    },
+    "custom_value_prompt": {
+      "ht": "Insira um valor personalizado para a chave:\n{loc_key}",
+      "at": "Insira um valor personalizado para a chave:\n{loc_key}"
+    },
+    "auto_add_summary": {
+      "ht": "{count} chaves serão adicionadas automaticamente.",
+      "at": "{count} chaves serão adicionadas automaticamente."
+    },
+    "excluded_summary": {
+      "ht": "{count} chaves excluídas (não estão no arquivo base.ini).",
+      "at": "{count} chaves excluídas (não estão no arquivo base.ini)."
+    },
+    "keep_all_tooltip": {
+      "ht": "",
+      "at": "Resolver todos os conflitos mantendo seu valor existente e descartando o importado."
+    },
+    "import_all_tooltip": {
+      "ht": "",
+      "at": "Resolver todos os conflitos aceitando o valor importado e substituindo o existente."
+    }
+  },
+  "coach": {
+    "back_btn": {
+      "ht": "Voltar",
+      "at": "Voltar"
+    },
+    "next_btn": {
+      "ht": "Próximo",
+      "at": "Próximo"
+    },
+    "skip_btn": {
+      "ht": "Pular",
+      "at": "Pular"
+    },
+    "finish_btn": {
+      "ht": "Finalizar",
+      "at": "Finalizar"
+    },
+    "step_counter": {
+      "ht": "Passo {current} de {total}",
+      "at": "Passo {current} de {total}"
+    }
+  },
+  "tag_mapping_dialog": {
+    "hint": {
+      "ht": "Edite a forma como cada valor bruto é exibido nos formatos Curto / Médio / Longo. O menu suspenso de estilo do elemento no Criador de Tags determina qual formato é usado.",
+      "at": "Edite a forma como cada valor bruto é exibido nos formatos Curto / Médio / Longo. O menu suspenso de estilo do elemento no Criador de Tags determina qual formato é usado."
+    },
+    "reset_btn": {
+      "ht": "Restaurar padrões",
+      "at": "Restaurar padrões"
+    },
+    "col_value": {
+      "ht": "Valor",
+      "at": "Valor"
+    },
+    "col_short": {
+      "ht": "Curto",
+      "at": "Curto"
+    },
+    "col_medium": {
+      "ht": "Médio",
+      "at": "Médio"
+    },
+    "col_long": {
+      "ht": "Longo",
+      "at": "Longo"
+    },
+    "reset_tooltip": {
+      "ht": "",
+      "at": "Restaurar todas as células desta tabela de mapeamento para os padrões internos do Smart Citizen."
+    }
+  },
+  "dialogs": {
+    "warning_title": {
+      "ht": "Alerta",
+      "at": "Alerta"
+    },
+    "error_title": {
+      "ht": "Erro",
+      "at": "Erro"
+    },
+    "success_title": {
+      "ht": "Sucesso",
+      "at": "Sucesso"
+    },
+    "no_file_loaded": {
+      "ht": "Carregue um arquivo primeiro",
+      "at": "Carregue um arquivo primeiro"
+    },
+    "no_game_path": {
+      "ht": "Configure o caminho de instalação do jogo na aba “Config”",
+      "at": "Configure o caminho de instalação do jogo na aba “Config”"
+    },
+    "missing_sources_title": {
+      "ht": "Fontes ausentes",
+      "at": "Fontes ausentes"
+    },
+    "missing_sources_body": {
+      "ht": "Não foi possível carregar as seguintes fontes ativadas:\n\n  {names}\n\nSuas personalizações NÃO serão incluídas no arquivo aplicado.\n\nDeseja aplicar mesmo assim?",
+      "at": "Não foi possível carregar as seguintes fontes ativadas:\n\n  {names}\n\nSuas personalizações NÃO serão incluídas no arquivo aplicado.\n\nDeseja aplicar mesmo assim?"
+    },
+    "apply_status": {
+      "ht": "Aplicado ao jogo | {user_count} edições de usuários | {enhancement_count} aprimoramentos",
+      "at": "Aplicado ao jogo | {user_count} edições de usuários | {enhancement_count} aprimoramentos"
+    },
+    "apply_failed_status": {
+      "ht": "Falha na aplicação — erro de validação",
+      "at": "Falha na aplicação — erro de validação"
+    },
+    "validation_failed_title": {
+      "ht": "Falha na Validação",
+      "at": "Falha na Validação"
+    },
+    "validation_failed_body": {
+      "ht": "O arquivo não passou na validação e foi excluído.\n\n{msg}{restore_note}",
+      "at": "O arquivo não passou na validação e foi excluído.\n\n{msg}{restore_note}"
+    },
+    "nothing_to_clear_title": {
+      "ht": "Nada para limpar",
+      "at": "Nada para limpar"
+    },
+    "nothing_to_clear_body": {
+      "ht": "Não foi encontrado nenhum arquivo global.ini personalizado no diretório de localização do jogo.\nO jogo já está usando o texto padrão.",
+      "at": "Não foi encontrado nenhum arquivo global.ini personalizado no diretório de localização do jogo.\nO jogo já está usando o texto padrão."
+    },
+    "clear_localization_title": {
+      "ht": "Limpar localização",
+      "at": "Limpar localização"
+    },
+    "clear_localization_body": {
+      "ht": "Isso excluirá o arquivo global.ini personalizado de:\n{loc_dir}\n\nO jogo voltará a usar o texto de localização padrão (original).\n\nSuas configurações personalizadas serão mantidas no aplicativo e poderão ser reaplicadas a qualquer momento.\n\nDeseja continuar?",
+      "at": "Isso excluirá o arquivo global.ini personalizado de:\n{loc_dir}\n\nO jogo voltará a usar o texto de localização padrão (original).\n\nSuas configurações personalizadas serão mantidas no aplicativo e poderão ser reaplicadas a qualquer momento.\n\nDeseja continuar?"
+    },
+    "clear_localization_done_title": {
+      "ht": "Feito",
+      "at": "Feito"
+    },
+    "clear_localization_done_body": {
+      "ht": "A localização personalizada foi removida.\nO jogo agora usará o texto padrão.\n\nPara reaplicar suas alterações e descrições de estatísticas, clique em “Aplicar ao Jogo”.",
+      "at": "A localização personalizada foi removida.\nO jogo agora usará o texto padrão.\n\nPara reaplicar suas alterações e descrições de estatísticas, clique em “Aplicar ao Jogo”."
+    },
+    "clear_localization_status": {
+      "ht": "Localização removida — o jogo voltou ao texto original",
+      "at": "Localização removida — o jogo voltou ao texto original"
+    },
+    "cache_empty_title": {
+      "ht": "Cache Vazio",
+      "at": "Cache Vazio"
+    },
+    "cache_empty_body": {
+      "ht": "O diretório de cache já está vazio.",
+      "at": "O diretório de cache já está vazio."
+    },
+    "clear_cache_title": {
+      "ht": "Limpar Cache",
+      "at": "Limpar Cache"
+    },
+    "dataforge_cache_title": {
+      "ht": "Limpar Cache do DataForge?",
+      "at": "Limpar Cache do DataForge?"
+    },
+    "cache_cleared_title": {
+      "ht": "Cache Limpo",
+      "at": "Cache Limpo"
+    },
+    "dir_not_found_title": {
+      "ht": "Diretório Não Encontrado",
+      "at": "Diretório Não Encontrado"
+    },
+    "nothing_to_export_title": {
+      "ht": "Nada para Exportar",
+      "at": "Nada para Exportar"
+    },
+    "nothing_to_export_body": {
+      "ht": "Não foi encontrado nenhum arquivo global.ini aplicado no diretório de localização do jogo.\n\nClique primeiro em “Aplicar ao Jogo” para salvar suas personalizações e, em seguida, em “Exportar” para compactá-las e compartilhá-las.",
+      "at": "Não foi encontrado nenhum arquivo global.ini aplicado no diretório de localização do jogo.\n\nClique primeiro em “Aplicar ao Jogo” para salvar suas personalizações e, em seguida, em “Exportar” para compactá-las e compartilhá-las."
+    },
+    "export_loc_pack_title": {
+      "ht": "Exportar Loc-Pack",
+      "at": "Exportar Loc-Pack"
+    },
+    "export_complete_title": {
+      "ht": "Exportação Concluída",
+      "at": "Exportação Concluída"
+    },
+    "export_complete_body": {
+      "ht": "Loc-pack gravado em:\n{out_path}\n\nCanal: {channel}\nTamanho da fonte: {source_size:,} bytes\nTamanho do zip: {zip_size:,} bytes",
+      "at": "Loc-pack gravado em:\n{out_path}\n\nCanal: {channel}\nTamanho da fonte: {source_size:,} bytes\nTamanho do zip: {zip_size:,} bytes"
+    },
+    "export_failed_title": {
+      "ht": "Falha na Exportação",
+      "at": "Falha na Exportação"
+    },
+    "export_failed_body": {
+      "ht": "Não foi possível gravar o arquivo zip do loc-pack:\n{error}",
+      "at": "Não foi possível gravar o arquivo zip do loc-pack:\n{error}"
+    },
+    "update_available_title": {
+      "ht": "Smart Citizen — Atualização Disponível",
+      "at": "Smart Citizen — Atualização Disponível"
+    },
+    "update_available_body": {
+      "ht": "Uma nova versão está disponível: v{latest}\nVocê está na versão v{current}.",
+      "at": "Uma nova versão está disponível: v{latest}\nVocê está na versão v{current}."
+    },
+    "update_open_release": {
+      "ht": "Abrir Página de Versão",
+      "at": "Abrir Página de Versão"
+    },
+    "update_later": {
+      "ht": "Mais tarde",
+      "at": "Mais tarde"
+    },
+    "update_now": {
+      "ht": "",
+      "at": "Atualizar agora"
+    },
+    "update_auto_note": {
+      "ht": "",
+      "at": "O Smart Citizen vai fechar, instalar a atualização e reabrir automaticamente. O Windows pedirá permissão primeiro."
+    },
+    "update_download_title": {
+      "ht": "",
+      "at": "Baixando atualização"
+    },
+    "update_download_label": {
+      "ht": "",
+      "at": "Baixando Smart Citizen v{latest}..."
+    },
+    "update_download_failed_title": {
+      "ht": "",
+      "at": "Falha ao baixar a atualização"
+    },
+    "update_download_failed_body": {
+      "ht": "",
+      "at": "Não foi possível baixar a atualização:\n\n{message}\n\nVocê pode baixá-la manualmente na página da versão."
+    },
+    "update_launch_failed_title": {
+      "ht": "",
+      "at": "Atualização não iniciada"
+    },
+    "update_launch_failed_body": {
+      "ht": "",
+      "at": "O instalador da atualização não foi iniciado (a permissão do Windows foi negada ou a execução falhou).\n\nVocê pode executá-lo manualmente mais tarde:\n{path}\n\nO Smart Citizen continuará rodando na versão atual por enquanto."
+    },
+    "up_to_date_title": {
+      "ht": "Smart Citizen — Atualizado",
+      "at": "Smart Citizen — Atualizado"
+    },
+    "up_to_date_body": {
+      "ht": "Você está na versão mais recente (v{current}).",
+      "at": "Você está na versão mais recente (v{current})."
+    },
+    "update_check_failed_title": {
+      "ht": "Smart Citizen — Falha na verificação de atualizações",
+      "at": "Smart Citizen — Falha na verificação de atualizações"
+    },
+    "update_check_failed_body": {
+      "ht": "Não foi possível verificar se há atualizações:\n\n{message}",
+      "at": "Não foi possível verificar se há atualizações:\n\n{message}"
+    },
+    "nothing_to_reset_title": {
+      "ht": "Nada para Reiniciar",
+      "at": "Nada para Reiniciar"
+    },
+    "nothing_to_reset_body": {
+      "ht": "Não existe um arquivo user.ini para o canal {channel} — já está com os valores padrão.\n\nCaminho verificado:\n{path}",
+      "at": "Não existe um arquivo user.ini para o canal {channel} — já está com os valores padrão.\n\nCaminho verificado:\n{path}"
+    },
+    "reset_user_ini_title": {
+      "ht": "Redefinir user.ini?",
+      "at": "Redefinir user.ini?"
+    },
+    "reset_failed_title": {
+      "ht": "Falha na redefinição",
+      "at": "Falha na redefinição"
+    },
+    "reset_failed_body": {
+      "ht": "Não foi possível redefinir o arquivo user.ini:\n\n{error}\n\nO arquivo ainda está aberto. Feche qualquer outro aplicativo que possa tê-lo aberto (editor de texto, cliente de sincronização) e tente novamente.",
+      "at": "Não foi possível redefinir o arquivo user.ini:\n\n{error}\n\nO arquivo ainda está aberto. Feche qualquer outro aplicativo que possa tê-lo aberto (editor de texto, cliente de sincronização) e tente novamente."
+    },
+    "no_sources_body": {
+      "ht": "Nenhuma fonte de dados configurada. Configure as fontes de dados na aba “Config”.",
+      "at": "Nenhuma fonte de dados configurada. Configure as fontes de dados na aba “Config”."
+    },
+    "merge_failed": {
+      "ht": "Falha na Mesclagem",
+      "at": "Falha na Mesclagem"
+    },
+    "merging_sources": {
+      "ht": "Mesclando fontes...",
+      "at": "Mesclando fontes..."
+    },
+    "language_changed_status": {
+      "ht": "Idioma alterado para {language} — recarregando fontes…",
+      "at": "Idioma alterado para {language} — recarregando fontes…"
+    },
+    "language_downloading": {
+      "ht": "",
+      "at": "Baixando a localização {language}…"
+    },
+    "language_no_url": {
+      "ht": "",
+      "at": "Nenhuma URL de download definida para {language}; exibindo a base em inglês. Use “Mapear Arquivo de Idioma” para definir uma."
+    },
+    "language_download_failed": {
+      "ht": "",
+      "at": "Não foi possível baixar a localização {language}, e nenhuma cópia em cache foi encontrada. Exibindo a base em inglês. Verifique a URL em “Mapear Arquivo de Idioma” e sua conexão, e tente novamente."
+    },
+    "language_generating_enhancements": {
+      "ht": "",
+      "at": "Gerando aprimoramentos {language} a partir do DataForge…"
+    },
+    "file_not_found_title": {
+      "ht": "",
+      "at": "Arquivo Não Encontrado"
+    },
+    "file_not_found_body": {
+      "ht": "",
+      "at": "O arquivo não existe:\n{path}"
+    },
+    "empty_file_title": {
+      "ht": "",
+      "at": "Arquivo Vazio"
+    },
+    "empty_file_body": {
+      "ht": "",
+      "at": "O arquivo importado não contém entradas chave=valor válidas."
+    },
+    "copy_filtered_title": {
+      "ht": "",
+      "at": "Copiar Filtrados"
+    },
+    "copy_filtered_empty": {
+      "ht": "",
+      "at": "Nenhuma linha para copiar."
+    },
+    "copy_filtered_done": {
+      "ht": "",
+      "at": "{count} linhas copiadas para a área de transferência."
+    },
+    "copy_error_title": {
+      "ht": "",
+      "at": "Erro ao Copiar"
+    },
+    "copy_error_body": {
+      "ht": "",
+      "at": "Falha ao copiar para a área de transferência: {error}"
+    },
+    "unapplied_changes_title": {
+      "ht": "",
+      "at": "Alterações Não Aplicadas"
+    },
+    "unapplied_changes_body": {
+      "ht": "",
+      "at": "Você tem alterações que ainda não foram aplicadas ao jogo (o botão Aplicar Aprimoramentos ainda está vermelho).\n\nAplicar agora, ou sair sem aplicar?"
+    },
+    "unapplied_changes_apply_now": {
+      "ht": "",
+      "at": "Aplicar Agora"
+    },
+    "unapplied_changes_exit": {
+      "ht": "",
+      "at": "Sair Sem Aplicar"
+    },
+    "browse_ini_tooltip": {
+      "ht": "",
+      "at": "Escolher um arquivo .ini local para importar."
+    },
+    "generate_now_tooltip": {
+      "ht": "",
+      "at": "Executar agora a extração do DataForge + o pipeline de aprimoramentos. Leva alguns minutos na primeira vez."
+    },
+    "skip_generate_tooltip": {
+      "ht": "",
+      "at": "Continuar sem gerar aprimoramentos. Você pode executá-lo depois na aba Aprimoramentos."
+    },
+    "crash_error_title": {
+      "ht": "",
+      "at": "Smart Citizen — Erro"
+    },
+    "show_log_btn": {
+      "ht": "",
+      "at": "Mostrar log"
+    },
+    "dismiss_btn": {
+      "ht": "",
+      "at": "Dispensar"
+    },
+    "suppressed_errors_suffix": {
+      "ht": "",
+      "at": "\n\n(+{count} erro(s) adicional(is) suprimido(s) — consulte a aba Log para detalhes)"
+    },
+    "failed_to_delete_global_ini": {
+      "ht": "",
+      "at": "Falha ao excluir global.ini: {error}"
+    },
+    "failed_to_merge_sources": {
+      "ht": "",
+      "at": "Falha ao mesclar as fontes: {error}"
+    },
+    "failed_to_load_sources": {
+      "ht": "",
+      "at": "Falha ao carregar as fontes: {error}"
+    },
+    "app_title": {
+      "ht": "",
+      "at": "Smart Citizen"
+    },
+    "reset_proportions_title": {
+      "ht": "",
+      "at": "Redefinir proporções da janela"
+    },
+    "reset_proportions_body": {
+      "ht": "",
+      "at": "Redefinir o tamanho da janela, o layout dos painéis e a largura das colunas do editor de strings para os padrões?\n\nOs tamanhos salvos serão esquecidos. Suas configurações e dados de localização não são afetados."
+    }
+  },
+  "progress": {
+    "reading_sources": {
+      "ht": "",
+      "at": "Lendo arquivos de origem..."
+    },
+    "creating_entries": {
+      "ht": "",
+      "at": "Criando entradas de strings..."
+    },
+    "computing_sort_keys": {
+      "ht": "",
+      "at": "Calculando chaves de ordenação..."
+    },
+    "ready": {
+      "ht": "",
+      "at": "Pronto"
+    },
+    "applying_patches": {
+      "ht": "",
+      "at": "Aplicando patches do DataForge…"
+    },
+    "loading_generator": {
+      "ht": "",
+      "at": "Carregando o gerador de aprimoramentos..."
+    },
+    "generating_enhancements": {
+      "ht": "",
+      "at": "Gerando aprimoramentos (pode levar alguns minutos na primeira execução)..."
+    },
+    "unp4k_launch": {
+      "ht": "",
+      "at": "Iniciando o unp4k, isso pode levar um minuto..."
+    },
+    "unp4k_launch_short": {
+      "ht": "",
+      "at": "Iniciando o unp4k…"
+    },
+    "copy_global": {
+      "ht": "",
+      "at": "Copiando o global.ini extraído para o cache..."
+    },
+    "copy_global_short": {
+      "ht": "",
+      "at": "Copiando o global.ini extraído…"
+    },
+    "extract_dcb": {
+      "ht": "",
+      "at": "Extraindo Game2.dcb do Data.p4k…"
+    },
+    "unforge": {
+      "ht": "",
+      "at": "Convertendo o banco de dados do DataForge, isso leva vários minutos…"
+    },
+    "unforge_short": {
+      "ht": "",
+      "at": "Convertendo o banco DataForge…"
+    },
+    "caching_entities": {
+      "ht": "",
+      "at": "Armazenando arquivos de entidades em cache…"
+    },
+    "snapshot_diff": {
+      "ht": "",
+      "at": "Capturando o cache para o diff…"
+    },
+    "syncing_sources": {
+      "ht": "",
+      "at": "Sincronizando fontes..."
+    },
+    "starting_up_title": {
+      "ht": "",
+      "at": "Iniciando"
+    },
+    "enhancements_label": {
+      "ht": "",
+      "at": "Gerando localizações aprimoradas a partir do DataForge…\n\nIsso pode levar alguns minutos na primeira execução."
+    },
+    "generating_enhancements_title": {
+      "ht": "",
+      "at": "Gerando Aprimoramentos"
+    },
+    "reloading_with_enhancements": {
+      "ht": "",
+      "at": "Recarregando strings com os aprimoramentos atualizados…"
+    },
+    "reloading_after_user_ini_restore": {
+      "ht": "",
+      "at": "Recarregando {channel} após restaurar o user.ini..."
+    }
+  },
+  "status_bar": {
+    "no_strings_loaded": {
+      "ht": "",
+      "at": "Nenhuma string carregada: extraia do Data.p4k na aba Config primeiro"
+    },
+    "update_checking": {
+      "ht": "Verificando",
+      "at": "Verificando"
+    },
+    "update_available": {
+      "ht": "v{version} disponível",
+      "at": "v{version} disponível"
+    },
+    "update_up_to_date": {
+      "ht": "Atualizado (v{version})",
+      "at": "Atualizado (v{version})"
+    },
+    "update_check_failed": {
+      "ht": "Falha na verificação",
+      "at": "Falha na verificação"
+    },
+    "update_indicator_available": {
+      "ht": "v{current} · atualização disponível",
+      "at": "v{current} · atualização disponível"
+    },
+    "update_indicator_up_to_date": {
+      "ht": "v{current} · atualizado",
+      "at": "v{current} · atualizado"
+    },
+    "update_indicator_failed": {
+      "ht": "v{current} · falha na verificação",
+      "at": "v{current} · falha na verificação"
+    },
+    "open_release_page_tooltip": {
+      "ht": "",
+      "at": "Abrir a página de lançamento da v{version}"
+    },
+    "downloading_ini": {
+      "ht": "",
+      "at": "Baixando arquivo INI..."
+    },
+    "starting_up": {
+      "ht": "",
+      "at": "Iniciando — sincronizando fontes..."
+    },
+    "generating_enhancements_background": {
+      "ht": "",
+      "at": "Gerando aprimoramentos em segundo plano…"
+    },
+    "enhancements_generated_applying": {
+      "ht": "",
+      "at": "Aprimoramentos gerados — aplicando ao jogo…"
+    },
+    "enhancements_generated_reloading": {
+      "ht": "",
+      "at": "Aprimoramentos gerados — recarregando entradas…"
+    },
+    "enhancement_generation_failed": {
+      "ht": "",
+      "at": "Falha na geração de aprimoramentos — consulte a aba Log para detalhes"
+    },
+    "user_ini_reset": {
+      "ht": "",
+      "at": "user.ini redefinido para {channel} (backup criado)"
+    },
+    "user_ini_restored": {
+      "ht": "",
+      "at": "user.ini restaurado para {channel}"
+    },
+    "channel_indicator": {
+      "ht": "",
+      "at": "Canal: {channel}"
+    },
+    "channel_switched_extracting": {
+      "ht": "",
+      "at": "Mudou para {channel} — extraindo Data.p4k…"
+    },
+    "channel_switched_reloading": {
+      "ht": "",
+      "at": "Mudou para {channel} — recarregando fontes…"
+    },
+    "data_folder_changed_extracting": {
+      "ht": "",
+      "at": "Pasta de dados alterada para {data_dir} — extraindo Data.p4k…"
+    },
+    "data_folder_changed_reloading": {
+      "ht": "",
+      "at": "Pasta de dados alterada para {data_dir} — recarregando fontes…"
+    },
+    "cache_folder_changed": {
+      "ht": "",
+      "at": "Pasta do cache do DataForge alterada — re-extraindo do Data.p4k…"
+    },
+    "syncing_source": {
+      "ht": "",
+      "at": "Sincronizando {source_name}..."
+    },
+    "source_updated": {
+      "ht": "",
+      "at": "atualizado ↑"
+    },
+    "source_offline": {
+      "ht": "",
+      "at": "(offline?)"
+    },
+    "entry_count": {
+      "ht": "",
+      "at": "{count} entradas"
+    },
+    "override_count_suffix": {
+      "ht": "",
+      "at": " | {count} substituições"
+    },
+    "manifest_missing": {
+      "ht": "",
+      "at": "SC {channel} (manifesto ausente)"
+    },
+    "settings_exported": {
+      "ht": "",
+      "at": "Backup de configuracoes exportado"
+    },
+    "window_proportions_reset": {
+      "ht": "",
+      "at": "Proporções da janela redefinidas."
+    }
+  },
+  "import_flow": {
+    "source_dialog_title": {
+      "ht": "",
+      "at": "Importar arquivo INI"
+    },
+    "source_dialog_label": {
+      "ht": "",
+      "at": "Informe um caminho de arquivo local ou uma URL:"
+    },
+    "source_dialog_placeholder": {
+      "ht": "",
+      "at": "C:\\caminho\\para\\arquivo.ini ou https://exemplo.com/arquivo.ini"
+    },
+    "browse_btn": {
+      "ht": "",
+      "at": "Procurar..."
+    },
+    "select_ini_file_title": {
+      "ht": "",
+      "at": "Selecionar arquivo INI"
+    },
+    "ini_file_filter": {
+      "ht": "",
+      "at": "Arquivos INI (*.ini);;Todos os arquivos (*)"
+    },
+    "download_error_title": {
+      "ht": "",
+      "at": "Erro de download"
+    },
+    "download_error_body": {
+      "ht": "",
+      "at": "Falha ao baixar:\n{source}\n\n{error}"
+    },
+    "no_base_data_title": {
+      "ht": "",
+      "at": "Sem dados base"
+    },
+    "no_base_data_body": {
+      "ht": "",
+      "at": "INI base ainda não carregado. Extraia do Data.p4k primeiro."
+    },
+    "no_valid_keys_title": {
+      "ht": "",
+      "at": "Nenhuma chave válida"
+    },
+    "no_valid_keys_body": {
+      "ht": "",
+      "at": "Nenhuma das {count} chaves importadas existe no base.ini.\nTodas as chaves foram excluídas."
+    },
+    "nothing_to_import_title": {
+      "ht": "",
+      "at": "Nada a importar"
+    },
+    "nothing_to_import_body": {
+      "ht": "",
+      "at": "Todas as chaves importadas já existem no user.ini com os mesmos valores."
+    },
+    "confirm_title": {
+      "ht": "",
+      "at": "Importar INI"
+    },
+    "confirm_body": {
+      "ht": "",
+      "at": "{new_count} novas chaves serão adicionadas ao user.ini.\n{excluded_count} chaves excluídas (não estão no base.ini).\n\nProsseguir?"
+    },
+    "reload_status": {
+      "ht": "",
+      "at": "Recarregando com os dados importados..."
+    },
+    "complete_title": {
+      "ht": "",
+      "at": "Importação concluída"
+    },
+    "complete_body": {
+      "ht": "",
+      "at": "Importação concluída.\n\n  Adicionadas: {added} chaves\n  Conflitos resolvidos: {resolved} chaves\n  Excluídas: {excluded} chaves"
+    },
+    "error_title": {
+      "ht": "",
+      "at": "Erro de importação"
+    },
+    "error_body": {
+      "ht": "",
+      "at": "Falha ao importar o arquivo INI:\n{error}"
+    }
+  },
+  "restore_backup": {
+    "select_file_title": {
+      "ht": "",
+      "at": "Selecionar o backup a restaurar"
+    },
+    "file_filter": {
+      "ht": "",
+      "at": "Arquivos de backup (*.bak_*);;Arquivos INI (*.ini);;Todos os arquivos (*)"
+    },
+    "success_body": {
+      "ht": "",
+      "at": "Backup restaurado de:\n{name}"
+    },
+    "error_body": {
+      "ht": "",
+      "at": "Falha ao restaurar o backup: {error}"
+    }
+  },
+  "onedrive": {
+    "warning_title": {
+      "ht": "",
+      "at": "Seus dados do Smart Citizen estão no OneDrive"
+    },
+    "warning_body": {
+      "ht": "",
+      "at": "O Smart Citizen armazena suas edições (user.ini), o cache de fontes e os backups em:\n\n{data_dir}\n\nEssa pasta está dentro do OneDrive. O OneDrive pode sincronizar e até esvaziar esses arquivos, o que já causou perda de edições. Mover seus dados para uma pasta local fora do OneDrive evita isso.\n\nMover para:\n{local} ?"
+    },
+    "move_btn": {
+      "ht": "",
+      "at": "Mover para uma pasta local"
+    },
+    "keep_here_btn": {
+      "ht": "",
+      "at": "Manter aqui"
+    },
+    "dont_warn_again": {
+      "ht": "",
+      "at": "Não avisar novamente"
+    }
+  },
+  "user_ini_reset": {
+    "backup_note": {
+      "ht": "",
+      "at": "\n\nBackup salvo em:\n{path}"
+    },
+    "complete_title": {
+      "ht": "",
+      "at": "user.ini redefinido"
+    },
+    "complete_body": {
+      "ht": "",
+      "at": "Todas as substituições personalizadas do canal {channel} foram removidas.{backup_note}"
+    }
+  },
+  "restore_user_ini": {
+    "no_snapshots_title": {
+      "ht": "",
+      "at": "Ainda sem snapshots"
+    },
+    "no_snapshots_body": {
+      "ht": "",
+      "at": "O Smart Citizen ainda não tem snapshots automáticos do user.ini para o canal {channel}. Um snapshot é salvo sempre que suas substituições mudam; os pontos de restauração aparecem depois que você fizer e salvar edições."
+    },
+    "snapshot_label": {
+      "ht": "",
+      "at": "{when}  —  {lines} substituições, {size_kb} KB"
+    },
+    "picker_title": {
+      "ht": "",
+      "at": "Restaurar user.ini"
+    },
+    "picker_label": {
+      "ht": "",
+      "at": "Escolha um snapshot para restaurar para o canal {channel}.\nSeu user.ini atual é salvo em snapshot antes, então isso é reversível."
+    },
+    "restore_failed_title": {
+      "ht": "",
+      "at": "Falha na restauração"
+    },
+    "restore_failed_body": {
+      "ht": "",
+      "at": "O Smart Citizen não conseguiu restaurar o snapshot:\n\n{error_type}: {error}"
+    },
+    "restored_title": {
+      "ht": "",
+      "at": "user.ini restaurado"
+    },
+    "restored_body": {
+      "ht": "",
+      "at": "Suas substituições para o canal {channel} foram restauradas de:\n{name}\n\nExecute Aplicar Aprimoramentos para levar as substituições restauradas ao jogo."
+    }
+  },
+  "extract": {
+    "path_required_title": {
+      "ht": "",
+      "at": "Caminho do Star Citizen necessário"
+    },
+    "path_required_body": {
+      "ht": "",
+      "at": "Nenhum caminho de instalação do Star Citizen está configurado e nenhum dado de localização em cache foi encontrado.\n\nDefina o caminho de instalação do Star Citizen na aba Config e clique em Extrair para carregar as strings de localização do seu jogo."
+    },
+    "p4k_prompt_title": {
+      "ht": "",
+      "at": "Extrair do Data.p4k"
+    },
+    "p4k_prompt_base_missing": {
+      "ht": "",
+      "at": "Nenhum arquivo de localização base encontrado no cache.\n\nExtrair global.ini do Data.p4k agora?\n(Necessário para carregar e exibir as strings de localização.)"
+    },
+    "p4k_prompt_p4k_newer": {
+      "ht": "",
+      "at": "O Data.p4k é mais recente que o seu base.ini em cache.\n\nExtrair global.ini do Data.p4k agora?\n(Isso fornece as strings originais correspondentes à sua versão exata do jogo.)"
+    },
+    "dataforge_outdated_title": {
+      "ht": "",
+      "at": "Cache do DataForge desatualizado"
+    },
+    "dataforge_outdated_body": {
+      "ht": "",
+      "at": "Seu cache de entidades do DataForge é mais antigo que o Data.p4k atual.\n\nRe-extrair o DataForge e regenerar os aprimoramentos agora?\n\nIsso leva alguns minutos e roda em segundo plano — você pode continuar editando as strings enquanto isso. Pule por enquanto se preferir não esperar; você sempre pode acionar isso na aba Aprimoramentos."
+    },
+    "generate_dialog_title": {
+      "ht": "",
+      "at": "Gerar Aprimoramentos"
+    },
+    "category_singular": {
+      "ht": "",
+      "at": "categoria de aprimoramento está"
+    },
+    "category_plural": {
+      "ht": "",
+      "at": "categorias de aprimoramento estão"
+    },
+    "missing_categories_body": {
+      "ht": "",
+      "at": "{count} {noun} faltando.\nSelecione quais gerar.\nVocê pode mudar isso depois na aba Aprimoramentos."
+    },
+    "missing_category_label": {
+      "ht": "",
+      "at": "{label}  (faltando)"
+    },
+    "dataforge_auto_extract_note": {
+      "ht": "",
+      "at": "Os dados do DataForge serão extraídos automaticamente se ainda não estiverem em cache.\nA primeira execução leva alguns minutos."
+    },
+    "generate_btn": {
+      "ht": "",
+      "at": "Gerar"
+    },
+    "skip_btn": {
+      "ht": "",
+      "at": "Pular"
+    },
+    "dataforge_extracting_background": {
+      "ht": "",
+      "at": "Extraindo DataForge em segundo plano — isso leva vários minutos…"
+    },
+    "dataforge_extracting_label": {
+      "ht": "",
+      "at": "Extraindo DataForge do Data.p4k — isso leva vários minutos…"
+    },
+    "dataforge_extraction_title": {
+      "ht": "",
+      "at": "Extração do DataForge"
+    },
+    "dataforge_extraction_error_title": {
+      "ht": "",
+      "at": "Erro na extração do DataForge"
+    },
+    "dataforge_extraction_error_body": {
+      "ht": "",
+      "at": "A extração do DataForge falhou:\n\n{message}\n\nConsulte a aba Log para detalhes."
+    },
+    "dataforge_extracted_generating": {
+      "ht": "",
+      "at": "DataForge extraído — gerando aprimoramentos…"
+    },
+    "dataforge_extraction_failed": {
+      "ht": "",
+      "at": "Falha na extração do DataForge — consulte a aba Log para detalhes"
+    },
+    "p4k_extracting_label": {
+      "ht": "",
+      "at": "Extraindo global.ini do Data.p4k..."
+    },
+    "p4k_extraction_title": {
+      "ht": "",
+      "at": "Extração P4K"
+    },
+    "extraction_error_title": {
+      "ht": "",
+      "at": "Erro de extração"
+    },
+    "p4k_locked": {
+      "ht": "",
+      "at": "O Star Citizen parece estar atualizando agora. Os arquivos do jogo (Data.p4k) estão bloqueados por outro programa, geralmente o RSI Launcher baixando ou verificando uma atualização.\n\nAguarde todas as atualizações e verificações terminarem no RSI Launcher e tente novamente."
+    },
+    "dataforge_timeout": {
+      "ht": "",
+      "at": "A conversão do banco de dados do jogo passou de 30 minutos e foi interrompida.\n\nBanco de dados encontrado: {dcb} ({size} MB) em:\n{path}\n\nUma instalação íntegra converte em bem menos de um minuto. Normalmente isso significa que o Smart Citizen está lendo a pasta errada do Star Citizen. Uma instalação antiga ou remanescente no disco parece válida, mas contém arquivos de jogo desatualizados.\n\nAbra o RSI Launcher e verifique o local de instalação exibido. Se não for o caminho acima, corrija-o na aba Config do Smart Citizen. Se for o mesmo caminho, execute \"Verify Files\" no launcher."
+    }
+  },
+  "apply": {
+    "cannot_save_edits_title": {
+      "ht": "",
+      "at": "Não foi possível salvar suas edições"
+    },
+    "cannot_save_edits_body": {
+      "ht": "",
+      "at": "O Smart Citizen não conseguiu gravar suas edições em:\n\n  {path}\n\n{error_type}: {error}\n\nO arquivo do jogo NÃO foi modificado. Causas comuns:\n  • Antivírus / Acesso controlado a pastas do Windows bloqueando gravações na pasta do jogo\n  • O arquivo user.ini está aberto em outro programa\n  • O disco está somente leitura ou sem espaço\n\nResolva o problema e aplique novamente."
+    },
+    "applied_body": {
+      "ht": "",
+      "at": "Aplicado em {target_path}\n\n  Edições do usuário: {user_count}\n\n{enhancement_block}"
+    },
+    "failed_body": {
+      "ht": "",
+      "at": "Falha ao aplicar ao jogo: {error}"
+    }
+  },
+  "test_plan": {
+    "intro": {
+      "ht": "",
+      "at": "Percorra cada item nesta build e marque-o conforme verificar. Seu progresso é salvo automaticamente. Ao terminar, use Copiar relatório ou Enviar para compartilhar o que encontrou."
+    },
+    "tester_label": {
+      "ht": "",
+      "at": "Testador:"
+    },
+    "tester_placeholder": {
+      "ht": "",
+      "at": "Seu nome ou apelido"
+    },
+    "submit_btn": {
+      "ht": "",
+      "at": "Enviar para o Discord"
+    },
+    "no_webhook_tooltip": {
+      "ht": "",
+      "at": "Nenhum webhook do Discord configurado. Defina a variável de ambiente {env_var} (ou a configuração test_plan/webhook_url) para habilitar o envio. Use Copiar relatório enquanto isso."
+    },
+    "copy_report_btn": {
+      "ht": "",
+      "at": "Copiar relatório"
+    },
+    "reset_btn": {
+      "ht": "",
+      "at": "Redefinir"
+    },
+    "notes_label": {
+      "ht": "",
+      "at": "Feedback adicional (opcional):"
+    },
+    "notes_placeholder": {
+      "ht": "",
+      "at": "Descreva bugs, surpresas ou sugestões..."
+    },
+    "copied_status": {
+      "ht": "",
+      "at": "Relatório copiado para a área de transferência."
+    },
+    "copy_failed_status": {
+      "ht": "",
+      "at": "Não foi possível copiar o relatório para a área de transferência."
+    },
+    "reset_status": {
+      "ht": "",
+      "at": "Checklist redefinida."
+    },
+    "no_webhook_status": {
+      "ht": "",
+      "at": "Nenhum webhook do Discord configurado."
+    },
+    "sending_status": {
+      "ht": "",
+      "at": "Enviando relatório para o Discord..."
+    }
+  },
+  "tutorial": {
+    "welcome": {
+      "title": {
+        "ht": "",
+        "at": "Bem-vindo ao Smart Citizen"
+      },
+      "description": {
+        "ht": "",
+        "at": "Este tour rápido apresenta o fluxo principal: personalizar strings e aplicar o resultado de volta ao Star Citizen. Muitas dessas etapas são executadas automaticamente, mas também podem ser feitas manualmente se necessário. Você pode pular a qualquer momento."
+      }
+    },
+    "extract": {
+      "title": {
+        "ht": "",
+        "at": "1. Extrair do Data.p4k"
+      },
+      "description": {
+        "ht": "",
+        "at": "Clicar em Extrair descompacta o arquivo de localização original do jogo instalado. O app deve sugerir essa extração quando seu arquivo ficar desatualizado após um patch; se não sugerir, você sempre pode executá-la manualmente. As strings recarregam na tabela automaticamente quando a extração termina."
+      }
+    },
+    "enhancements": {
+      "title": {
+        "ht": "",
+        "at": "2. Aprimoramentos"
+      },
+      "description": {
+        "ht": "",
+        "at": "Opcional, mas recomendado: a aba Aprimoramentos ativa sobreposições de estatísticas para naves, componentes, armas, blueprints/recompensas de missão e fabricação de commodities. Gerar Aprimoramentos executa o processo que produz essas sobreposições a partir dos dados extraídos. As próximas etapas percorrem as seções desta aba."
+      }
+    },
+    "enh_categories": {
+      "title": {
+        "ht": "",
+        "at": "3. Aprimoramentos: Categorias"
+      },
+      "description": {
+        "ht": "",
+        "at": "Escolha quais categorias de aprimoramentos rodam ao Gerar. Naves, componentes, armas de nave, armas FPS, missões, recompensas de missão, fabricação de mercadorias e consumíveis médicos podem ser ativados de forma independente."
+      }
+    },
+    "enh_favorites": {
+      "title": {
+        "ht": "",
+        "at": "4. Aprimoramentos: Favoritos"
+      },
+      "description": {
+        "ht": "",
+        "at": "Escolha o caractere de prefixo adicionado aos nomes das naves favoritas para que elas apareçam no topo do terminal ASOP no jogo. O padrão é *."
+      }
+    },
+    "enh_mission_labels": {
+      "title": {
+        "ht": "",
+        "at": "5. Aprimoramentos: Rótulos de Missão"
+      },
+      "description": {
+        "ht": "",
+        "at": "Personalize os cabeçalhos de seção (MISSION DETAILS / POTENTIAL BLUEPRINTS / ITEM REWARDS / BLUEPRINT DATA), o rótulo de XP exibido em missões sem um rank de reputação específico (padrão Rep) e a tag de ênfase (EM3 = sublinhado, EM4 = cor) dos cabeçalhos."
+      }
+    },
+    "enh_tag_builder": {
+      "title": {
+        "ht": "",
+        "at": "6. Aprimoramentos: Criador de Tags"
+      },
+      "description": {
+        "ht": "",
+        "at": "Monte as tags entre colchetes adicionadas aos nomes de componentes, mísseis, armas de nave e commodities. Reordene os elementos com ▲/▼, desmarque para excluir, mude o tamanho das abreviações, escolha o separador e os colchetes, ou coloque a tag depois do nome em vez de antes."
+      }
+    },
+    "edit": {
+      "title": {
+        "ht": "",
+        "at": "7. Editar strings"
+      },
+      "description": {
+        "ht": "",
+        "at": "Cada linha é um registro de localização. Dê um duplo clique em uma célula da coluna Valor Personalizado para editar; suas alterações são salvas automaticamente. A coluna ★ marca naves como favoritas para que elas subam ao topo do ASOP."
+      }
+    },
+    "filter_row": {
+      "title": {
+        "ht": "",
+        "at": "8. Filtrar por coluna"
+      },
+      "description": {
+        "ht": "",
+        "at": "A fileira de caixas de busca sob os cabeçalhos filtra a tabela enquanto você digita. Cada caixa atua na própria coluna (Chave, Valor Padrão, Valor Atual, Valor Personalizado); filtros de colunas diferentes se combinam com E. Clique no × dentro de uma caixa para limpá-la."
+      }
+    },
+    "editor": {
+      "title": {
+        "ht": "",
+        "at": "9. Painel do Editor"
+      },
+      "description": {
+        "ht": "",
+        "at": "Para strings mais longas, clique em Editor para abrir uma área de edição acoplada na lateral, com mais espaço. O painel acompanha a linha selecionada; clique com o botão direito no texto selecionado para aplicar Sublinhar / Destacar. Arraste a barra de título para desacoplá-lo em uma janela flutuante."
+      }
+    },
+    "preview": {
+      "title": {
+        "ht": "",
+        "at": "10. Painel de Pré-visualização"
+      },
+      "description": {
+        "ht": "",
+        "at": "Sempre que você seleciona uma linha, este painel à direita mostra o texto renderizado do valor atual."
+      }
+    },
+    "apply": {
+      "title": {
+        "ht": "",
+        "at": "11. Aplicar ao Jogo"
+      },
+      "description": {
+        "ht": "",
+        "at": "Aplicar grava o resultado mesclado no global.ini do jogo. Um backup com data e hora do global.ini atual é criado antes (até 5 são mantidos, restauráveis em Restaurar Backup)."
+      }
+    },
+    "cfg_appearance": {
+      "title": {
+        "ht": "",
+        "at": "12. Config: Aparência"
+      },
+      "description": {
+        "ht": "",
+        "at": "Escolha o tema do app (Padrão / Claro / Escuro / ODW) e, se quiser, desative o tour automático a cada nova versão."
+      }
+    },
+    "cfg_sc_install": {
+      "title": {
+        "ht": "",
+        "at": "13. Config: Instalação do Star Citizen"
+      },
+      "description": {
+        "ht": "",
+        "at": "Caminho para a raiz da instalação do Star Citizen (o diretório que contém LIVE, PTU, EPTU, etc.). Detectado automaticamente na instalação; edite aqui se o jogo estiver em outro lugar. O menu Canal escolhe qual canal o app lê e grava, e o menu Idioma troca tanto a interface do app quanto as strings do jogo."
+      }
+    },
+    "cfg_data_folder": {
+      "title": {
+        "ht": "",
+        "at": "14. Config: Dados do Smart Citizen"
+      },
+      "description": {
+        "ht": "",
+        "at": "Onde ficam o user.ini, os caches, a extração do DataForge, os INI de aprimoramento gerados e os backups. O padrão é Documents\\Smart Citizen; mova para fora do OneDrive se a extração ou a limpeza do cache estiver lenta."
+      }
+    },
+    "cfg_p4k_extraction": {
+      "title": {
+        "ht": "",
+        "at": "15. Config: Localização Base"
+      },
+      "description": {
+        "ht": "",
+        "at": "O botão Extrair do Data.p4k fica aqui. Esta é a única fonte das strings base e dos dados de aprimoramento; execute novamente após cada patch do jogo para atualizar."
+      }
+    },
+    "cfg_tools": {
+      "title": {
+        "ht": "",
+        "at": "16. Config: Ferramentas"
+      },
+      "description": {
+        "ht": "",
+        "at": "Importe um INI externo para suas personalizações pela caixa de resolução de conflitos, ou redefina seu user.ini do canal ativo (com backup automático antes de limpar)."
+      }
+    },
+    "help": {
+      "title": {
+        "ht": "",
+        "at": "17. Ajuda e feedback"
+      },
+      "description": {
+        "ht": "",
+        "at": "O botão Ajuda abre um painel lateral com o guia completo, a lista de Problemas Conhecidos e um link para o canal do Smart Citizen no Discord. Isso é tudo o que você precisa para começar: boa sorte, cidadão."
+      }
+    },
+    "blueprint_tracker": {
+      "title": {
+        "ht": "",
+        "at": "7. Rastreador de Blueprints"
+      },
+      "description": {
+        "ht": "",
+        "at": "Marque os blueprints que você possui. Busque na lista da esquerda por nome ou missão, ou refine por Tipo, Classe, Tamanho e Grau de componente, e então use as setas para mover itens para a sua lista de adquiridos. Blueprints adquiridos recebem uma tag [Owned] onde quer que apareçam nas recompensas potenciais de uma missão, para você ver de relance o que ainda vale caçar."
+      }
+    }
+  },
+  "settings_backup": {
+    "export_dialog_title": {
+      "ht": "",
+      "at": "Exportar Backup de Configurações"
+    },
+    "export_done_title": {
+      "ht": "",
+      "at": "Configurações Exportadas"
+    },
+    "export_done_body": {
+      "ht": "",
+      "at": "Suas configurações foram salvas em:\n{path}\n\nIncluído: {n_settings} configurações e substituições de texto personalizadas para: {channels}.\n\nGuarde este arquivo onde quiser, ele é pequeno. Use Importar Configurações para restaurá-lo em um PC novo ou após migrar para uma nova versão portátil."
+    },
+    "export_failed_title": {
+      "ht": "",
+      "at": "Falha ao Exportar"
+    },
+    "export_failed_body": {
+      "ht": "",
+      "at": "Não foi possível gravar o zip de backup.\n\n{error_type}: {error}"
+    },
+    "import_dialog_title": {
+      "ht": "",
+      "at": "Importar Backup de Configurações"
+    },
+    "import_confirm_title": {
+      "ht": "",
+      "at": "Importar estas configurações?"
+    },
+    "import_confirm_body": {
+      "ht": "",
+      "at": "Backup feito com Smart Citizen v{version} em {when}.\n\nContém {n_settings} configurações e substituições de texto para: {channels}.\n\nImportar sobrepõe isso às suas configurações atuais e substitui o user.ini dos canais listados (seus arquivos user.ini atuais são salvos primeiro, então isso é reversível via Restaurar user.ini). Continuar?"
+    },
+    "import_done_title": {
+      "ht": "",
+      "at": "Configurações Importadas"
+    },
+    "import_done_body_detected": {
+      "ht": "",
+      "at": "{applied} configurações e substituições de texto importadas para: {channels}.\n\nA pasta do Star Citizen do backup não está neste PC, então foi detectada automaticamente:\n{root}\n\nO Smart Citizen precisa reiniciar para carregar suas configurações importadas. Após reiniciar, ele oferecerá regenerar e aplicar seus aprimoramentos."
+    },
+    "import_done_body_no_install": {
+      "ht": "",
+      "at": "{applied} configurações e substituições de texto importadas para: {channels}.\n\nNenhuma instalação do Star Citizen foi encontrada neste PC; defina-a na aba Configuração após reiniciar.\n\nO Smart Citizen precisa reiniciar para carregar suas configurações importadas."
+    },
+    "import_done_body_restored": {
+      "ht": "",
+      "at": "{applied} configurações e substituições de texto importadas para: {channels}.\n\nSua pasta do Star Citizen foi restaurada a partir do backup:\n{root}\n\nO Smart Citizen precisa reiniciar para carregar suas configurações importadas. Após reiniciar, ele oferecerá regenerar e aplicar seus aprimoramentos."
+    },
+    "import_failed_title": {
+      "ht": "",
+      "at": "Falha ao Importar"
+    },
+    "import_failed_body": {
+      "ht": "",
+      "at": "Não foi possível gravar as substituições importadas.\n\n{error_type}: {error}\n\nNenhuma configuração foi alterada."
+    },
+    "import_invalid_title": {
+      "ht": "",
+      "at": "Isto Não é um Backup de Configurações"
+    },
+    "import_invalid_body": {
+      "ht": "",
+      "at": "Este arquivo não pôde ser importado:\n\n{error}"
+    },
+    "no_channels": {
+      "ht": "",
+      "at": "nenhum"
+    },
+    "post_import_apply_title": {
+      "ht": "",
+      "at": "Quase Pronto: Aplicar ao Seu Jogo?"
+    },
+    "post_import_apply_body": {
+      "ht": "",
+      "at": "Suas configurações foram importadas. A última etapa é gerar seus aprimoramentos a partir dos arquivos de jogo deste PC e gravá-los no jogo.\n\nOs backups guardam suas configurações, não o texto de jogo gerado, então isso precisa ser feito uma vez em cada PC novo. Geralmente leva alguns minutos, um pouco mais na primeira vez, enquanto os arquivos do jogo são descompactados.\n\nVocê também pode fazer isso depois com o botão Aplicar Aprimoramentos."
+    },
+    "post_import_apply_now_btn": {
+      "ht": "",
+      "at": "Aplicar Agora"
+    },
+    "post_import_apply_later_btn": {
+      "ht": "",
+      "at": "Depois"
+    },
+    "post_import_no_install_title": {
+      "ht": "",
+      "at": "Defina Sua Pasta do Star Citizen"
+    },
+    "post_import_no_install_body": {
+      "ht": "",
+      "at": "Suas configurações importadas foram carregadas, mas nenhuma instalação do Star Citizen está configurada ainda. Defina a pasta de instalação na aba Configuração e use Aplicar Aprimoramentos para colocar suas personalizações no jogo."
+    },
+    "relaunch_failed_title": {
+      "ht": "",
+      "at": "Falha ao Reiniciar"
+    },
+    "relaunch_failed_body": {
+      "ht": "",
+      "at": "O Smart Citizen não conseguiu reiniciar sozinho. Inicie-o novamente manualmente; suas configurações importadas serão carregadas então."
+    },
+    "restart_now_btn": {
+      "ht": "",
+      "at": "Reiniciar Agora"
+    },
+    "restart_later_btn": {
+      "ht": "",
+      "at": "Reiniciar Depois"
+    },
+    "zip_filter": {
+      "ht": "",
+      "at": "Backup de configurações (*.zip)"
+    }
+  }
+}
