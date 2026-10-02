@@ -31,10 +31,10 @@ jobs:
           aqtsource: 'git+https://github.com/miurahr/aqtinstall.git@076e1659807d0b362a3ed684d54c2e9c775eb9c7'
 
       - name: Configure
-        run: cmake --preset mingw-release
+        run: cmake --preset mingw-debug
 
       - name: Build
-        run: cmake --build --preset mingw-release
+        run: cmake --build --preset mingw-debug
 
       - name: Test
-        run: ctest --preset mingw-release -LE parity
+        run: ctest --preset mingw-debug -LE parity
