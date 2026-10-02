@@ -1,0 +1,71 @@
+# Builds the installer and the portable zip with packaging/package.ps1.
+# Runs on a version tag (v1.2.3), which also publishes a GitHub release, or by
+# hand from the Actions tab (artifacts only).
+#
+# Qt is installed to C:\Qt so the paths in CMakePresets.json hold.
+
+name: Release
+
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  package:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Qt and MinGW
+        uses: jurplel/install-qt-action@v4
+        with:
+          version: "6.12.0"
+          host: windows
+          target: desktop
+          arch: win64_mingw
+          dir: C:\
+          tools: "tools_mingw1310 tools_ninja tools_cmake"
+          cache: true
+
+      - name: Install Inno Setup
+        run: choco install innosetup --no-progress -y
+
+      - name: Check the tag matches the app version
+        if: startsWith(github.ref, 'refs/tags/v')
+        shell: pwsh
+        run: |
+          $identity = Get-Content cmake/AppIdentity.cmake -Raw
+          if ($identity -notmatch 'set\(APP_VERSION\s+"([^"]+)"\)') { throw "APP_VERSION not found" }
+          if ("v$($Matches[1])" -ne "${{ github.ref_name }}") {
+            throw "Tag ${{ github.ref_name }} does not match APP_VERSION $($Matches[1])"
+          }
+
+      - name: Build, test and package
+        shell: pwsh
+        run: |
+          $env:PATH = "C:\Qt\Tools\mingw1310_64\bin;C:\Qt\6.12.0\mingw_64\bin;C:\Qt\Tools\Ninja;C:\Qt\Tools\CMake_64\bin;$env:PATH"
+          cmake --preset mingw-release
+          cmake --build --preset mingw-release
+          ctest --preset mingw-release -L "unit|smoke"
+          if ($LASTEXITCODE -ne 0) { throw "tests failed" }
+          ./packaging/package.ps1
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: packages
+          path: |
+            dist/*-Setup.exe
+            dist/*-Portable-*.zip
+
+      - name: Publish the release
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          draft: true
+          files: |
+            dist/*-Setup.exe
+            dist/*-Portable-*.zip

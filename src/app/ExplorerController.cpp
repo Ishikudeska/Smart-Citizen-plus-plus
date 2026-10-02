@@ -606,8 +606,12 @@ void ExplorerController::extract(const QVariantList &nodes, const QUrl &outputDi
     const QString out = localPath(outputDir);
     std::vector<std::size_t> entries;
     std::vector<std::uint32_t> recordItems;
-    for (const std::uint32_t item : items)
-        (data_->isRecord(item) ? static_cast<void>(recordItems.push_back(item)) : static_cast<void>(entries.push_back(item)));
+    for (const std::uint32_t item : items) {
+        if (data_->isRecord(item))
+            recordItems.push_back(item);
+        else
+            entries.push_back(item);
+    }
 
     struct Extracted
     {

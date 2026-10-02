@@ -125,7 +125,8 @@ private slots:
         QTest::newRow("enhanced by") << "| Localizations Enhanced by Smart Citizen 1.3.0";
         QTest::newRow("enhanced by v") << "| Localizations Enhanced by Smart Citizen v1.3.0";
         QTest::newRow("pipe form") << "| Localizations Enhanced with Smart Citizen v1.3.0";
-        QTest::newRow("this app") << "| Localizations Enhanced with SCX v0.0.1";
+        QTest::newRow("this app") << "| Localizations Enhanced with Smart Citizen++ v0.0.1";
+        QTest::newRow("this app, current form") << R"(\nLocalizations Enhanced with Smart Citizen++ v0.0.1)";
         QTest::newRow("extra space") << "  |  Localizations Enhanced with Smart Citizen v1.3.1   ";
     }
 
@@ -134,8 +135,8 @@ private slots:
         QFETCH(QString, suffix);
         IniMap m;
         m.insert(kFrontendVersionKey, QStringLiteral("Star Citizen Alpha 4.8.0 PTU ") + suffix);
-        stampFrontendVersion(m, QStringLiteral("SCX"), QStringLiteral("0.1.0"));
-        QCOMPARE(frontend(m), QStringLiteral(R"(Star Citizen Alpha 4.8.0 PTU\nLocalizations Enhanced with SCX v0.1.0)"));
+        stampFrontendVersion(m, QStringLiteral("Smart Citizen++"), QStringLiteral("0.1.0"));
+        QCOMPARE(frontend(m), QStringLiteral(R"(Star Citizen Alpha 4.8.0 PTU\nLocalizations Enhanced with Smart Citizen++ v0.1.0)"));
     }
 
     void frontendStampKeepsOrdinaryPipes()

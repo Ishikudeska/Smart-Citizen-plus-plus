@@ -11,8 +11,8 @@
   },
   "window": {
     "title": {
-      "ht": "Smart Citizen v{version}",
-      "at": "Smart Citizen v{version}"
+      "ht": "Smart Citizen++ v{version}",
+      "at": "Smart Citizen++ v{version}"
     }
   },
   "simple_mode": {
@@ -22,7 +22,7 @@
     },
     "switch_to_advanced_tip": {
       "ht": "",
-      "at": "Affiche l'interface complète de Smart Citizen avec tous les onglets et options."
+      "at": "Affiche l'interface complète de Smart Citizen++ avec tous les onglets et options."
     },
     "generate_apply_btn": {
       "ht": "",
@@ -42,7 +42,7 @@
     },
     "set_game_folder_body": {
       "ht": "",
-      "at": "Smart Citizen doit savoir où Star Citizen est installé avant de pouvoir appliquer des changements.\n\nPassage en mode Avancé pour définir le dossier du jeu dans l'onglet Paramètres."
+      "at": "Smart Citizen++ doit savoir où Star Citizen est installé avant de pouvoir appliquer des changements.\n\nPassage en mode Avancé pour définir le dossier du jeu dans l'onglet Paramètres."
     },
     "apply_enhancements_confirm_title": {
       "ht": "",
@@ -174,7 +174,7 @@
     },
     "tutorial_tooltip": {
       "ht": "",
-      "at": "Démarrer la visite guidée du fonctionnement de Smart Citizen. Elle se lance automatiquement au premier démarrage ; cliquez ici à tout moment pour la revoir."
+      "at": "Démarrer la visite guidée du fonctionnement de Smart Citizen++. Elle se lance automatiquement au premier démarrage ; cliquez ici à tout moment pour la revoir."
     },
     "restore_backup_tooltip": {
       "ht": "",
@@ -202,7 +202,7 @@
     },
     "feedback_tooltip": {
       "ht": "",
-      "at": "Ouvrir le salon Discord de Smart Citizen pour les retours, rapports de bugs et votes sur les futures fonctionnalités (nécessite de rejoindre le Discord d'Osiris DevWorks)."
+      "at": "Ouvrir le salon Discord de Smart Citizen++ pour les retours, rapports de bugs et votes sur les futures fonctionnalités (nécessite de rejoindre le Discord d'Osiris DevWorks)."
     },
     "apply_enabled_tooltip": {
       "ht": "",
@@ -296,7 +296,7 @@
     },
     "status_tooltip": {
       "ht": "",
-      "at": "Filtrer par statut. Modifié = vous avez défini une valeur personnalisée ; Amélioré = généré par le pipeline d'enrichissements de Smart Citizen (statistiques de vaisseau, récompenses de mission, etc.) ; Inchangé = texte par défaut uniquement ; Nouveau = la clé n'existe que dans enhancements/user.ini, pas dans le fichier de base."
+      "at": "Filtrer par statut. Modifié = vous avez défini une valeur personnalisée ; Amélioré = généré par le pipeline d'enrichissements de Smart Citizen++ (statistiques de vaisseau, récompenses de mission, etc.) ; Inchangé = texte par défaut uniquement ; Nouveau = la clé n'existe que dans enhancements/user.ini, pas dans le fichier de base."
     },
     "hide_unmodified_tooltip": {
       "ht": "",
@@ -552,7 +552,7 @@
     },
     "map_language_desc": {
       "ht": "",
-      "at": "Définissez une URL vers le fichier global.ini de chaque langue. Lorsque vous passez à cette langue, Smart Citizen le télécharge et l'utilise comme textes de base, à la place de l'extraction anglaise du Data.p4k. Le téléchargement est mis en cache par langue et n'est retéléchargé que s'il a changé. Laissez un champ vide pour utiliser la valeur par défaut intégrée (le cas échéant)."
+      "at": "Définissez une URL vers le fichier global.ini de chaque langue. Lorsque vous passez à cette langue, Smart Citizen++ le télécharge et l'utilise comme textes de base, à la place de l'extraction anglaise du Data.p4k. Le téléchargement est mis en cache par langue et n'est retéléchargé que s'il a changé. Laissez un champ vide pour utiliser la valeur par défaut intégrée (le cas échéant)."
     },
     "base_localization_label": {
       "ht": "Localisation de base",
@@ -567,8 +567,8 @@
       "at": "Extraire depuis Data.p4k"
     },
     "data_group": {
-      "ht": "Données Smart Citizen",
-      "at": "Données Smart Citizen"
+      "ht": "Données Smart Citizen++",
+      "at": "Données Smart Citizen++"
     },
     "data_desc": {
       "ht": "Dossier contenant user.ini, le cache des sources, les INI d'enrichissements et les sauvegardes. Déplacez-le hors du dossier Documents synchronisé par OneDrive si le nettoyage du cache échoue. Le cache XML DataForge dispose de son propre emplacement ci-dessous — il pèse environ 1,4 Go, le réglage par défaut l'exclut donc automatiquement de OneDrive.",
@@ -615,8 +615,8 @@
       "at": "Sélectionnez le dossier racine de l'installation Star Citizen"
     },
     "select_data_folder": {
-      "ht": "Sélectionnez le dossier de données Smart Citizen",
-      "at": "Sélectionnez le dossier de données Smart Citizen"
+      "ht": "Sélectionnez le dossier de données Smart Citizen++",
+      "at": "Sélectionnez le dossier de données Smart Citizen++"
     },
     "select_cache_folder": {
       "ht": "Sélectionnez le dossier du cache DataForge",
@@ -628,7 +628,7 @@
     },
     "migrate_data_body": {
       "ht": "",
-      "at": "Déplacer vos données Smart Citizen existantes (modifications, sauvegardes, textes en cache) de\n\n{old_dir}\n\nvers le nouveau dossier\n\n{new_dir} ?\n\nLes fichiers déjà présents dans le nouveau dossier sont conservés. L'ancien dossier sera nettoyé après le déplacement."
+      "at": "Déplacer vos données Smart Citizen++ existantes (modifications, sauvegardes, textes en cache) de\n\n{old_dir}\n\nvers le nouveau dossier\n\n{new_dir} ?\n\nLes fichiers déjà présents dans le nouveau dossier sont conservés. L'ancien dossier sera nettoyé après le déplacement."
     },
     "migrate_data_done_title": {
       "ht": "",
@@ -708,7 +708,7 @@
     },
     "restore_user_ini_tooltip": {
       "ht": "",
-      "at": "Restaurer vos remplacements de chaînes personnalisés à partir d'un instantané automatique. Smart Citizen conserve les derniers états de user.ini, ce qui permet d'annuler une mauvaise modification ou de récupérer le fichier après qu'il a été vidé."
+      "at": "Restaurer vos remplacements de chaînes personnalisés à partir d'un instantané automatique. Smart Citizen++ conserve les derniers états de user.ini, ce qui permet d'annuler une mauvaise modification ou de récupérer le fichier après qu'il a été vidé."
     },
     "preview_apply_tooltip": {
       "ht": "",
@@ -716,7 +716,7 @@
     },
     "check_updates_tooltip": {
       "ht": "",
-      "at": "Vérifier sur GitHub si une nouvelle version de Smart Citizen est disponible."
+      "at": "Vérifier sur GitHub si une nouvelle version de Smart Citizen++ est disponible."
     },
     "theme_tooltip": {
       "ht": "",
@@ -748,23 +748,23 @@
     },
     "map_language_tooltip": {
       "ht": "",
-      "at": "Définir une URL pour le global.ini de chaque langue. Lorsque vous basculez vers cette langue, Smart Citizen le télécharge et l'utilise comme chaînes de base au lieu de l'extraction anglaise de Data.p4k."
+      "at": "Définir une URL pour le global.ini de chaque langue. Lorsque vous basculez vers cette langue, Smart Citizen++ le télécharge et l'utilise comme chaînes de base au lieu de l'extraction anglaise de Data.p4k."
     },
     "data_dir_tooltip": {
       "ht": "",
-      "at": "Racine des données de l'application Smart Citizen. Chaque canal reçoit son propre sous-dossier dans ce répertoire. Laissez vide ou cliquez sur Réinitialiser pour utiliser Documents\\Smart Citizen."
+      "at": "Racine des données de l'application Smart Citizen++. Chaque canal reçoit son propre sous-dossier dans ce répertoire. Laissez vide ou cliquez sur Réinitialiser pour utiliser Documents\\Smart Citizen++."
     },
     "browse_data_tooltip": {
       "ht": "",
-      "at": "Choisir le dossier de données de Smart Citizen dans un navigateur de dossiers."
+      "at": "Choisir le dossier de données de Smart Citizen++ dans un navigateur de dossiers."
     },
     "reset_data_tooltip": {
       "ht": "",
-      "at": "Effacer le dossier de données personnalisé et utiliser Documents\\Smart Citizen."
+      "at": "Effacer le dossier de données personnalisé et utiliser Documents\\Smart Citizen++."
     },
     "cache_dir_tooltip": {
       "ht": "",
-      "at": "Dossier de base pour l'arborescence XML DataForge extraite (~1,4 Go). Chaque canal se place sous celui-ci en tant que {base}\\{channel}\\cache\\dataforge\\. Par défaut %LOCALAPPDATA%\\Smart Citizen afin de rester hors de OneDrive. Modifier ce chemin déclenche une nouvelle extraction."
+      "at": "Dossier de base pour l'arborescence XML DataForge extraite (~1,4 Go). Chaque canal se place sous celui-ci en tant que {base}\\{channel}\\cache\\dataforge\\. Par défaut %LOCALAPPDATA%\\Smart Citizen++ afin de rester hors de OneDrive. Modifier ce chemin déclenche une nouvelle extraction."
     },
     "browse_cache_tooltip": {
       "ht": "",
@@ -824,7 +824,7 @@
     },
     "backup_desc": {
       "ht": "",
-      "at": "Enregistrez tous vos paramètres (préférences, configurations d'étiquettes, votre dossier Star Citizen et vos modifications de texte personnalisées pour chaque canal) dans un seul petit fichier de sauvegarde. Importez-le sur un nouveau PC, après une extraction portable fraîche, ou pour annuler une mauvaise configuration. Les sauvegardes fonctionnent entre les versions de Smart Citizen. Les caches du jeu ne sont pas inclus ; ils se reconstruisent automatiquement à partir de vos fichiers de jeu."
+      "at": "Enregistrez tous vos paramètres (préférences, configurations d'étiquettes, votre dossier Star Citizen et vos modifications de texte personnalisées pour chaque canal) dans un seul petit fichier de sauvegarde. Importez-le sur un nouveau PC, après une extraction portable fraîche, ou pour annuler une mauvaise configuration. Les sauvegardes fonctionnent entre les versions de Smart Citizen++. Les caches du jeu ne sont pas inclus ; ils se reconstruisent automatiquement à partir de vos fichiers de jeu."
     },
     "export_settings_btn": {
       "ht": "",
@@ -832,7 +832,7 @@
     },
     "export_settings_tooltip": {
       "ht": "",
-      "at": "Enregistrez vos préférences, votre dossier Star Citizen et vos modifications de texte personnalisées dans un petit fichier zip de sauvegarde (quelques Ko). Conservez-le n'importe où (drive cloud, clé USB) et importez-le plus tard, sur n'importe quelle version de Smart Citizen, pour restaurer vos paramètres."
+      "at": "Enregistrez vos préférences, votre dossier Star Citizen et vos modifications de texte personnalisées dans un petit fichier zip de sauvegarde (quelques Ko). Conservez-le n'importe où (drive cloud, clé USB) et importez-le plus tard, sur n'importe quelle version de Smart Citizen++, pour restaurer vos paramètres."
     },
     "import_settings_btn": {
       "ht": "",
@@ -840,7 +840,7 @@
     },
     "import_settings_tooltip": {
       "ht": "",
-      "at": "Restaurez un fichier de sauvegarde des paramètres créé par n'importe quelle version de Smart Citizen. Vos fichiers user.ini actuels sont d'abord sauvegardés, votre dossier Star Citizen est restauré (ou détecté automatiquement si le chemin de la sauvegarde n'est pas sur ce PC), et Smart Citizen redémarre avec les paramètres importés."
+      "at": "Restaurez un fichier de sauvegarde des paramètres créé par n'importe quelle version de Smart Citizen++. Vos fichiers user.ini actuels sont d'abord sauvegardés, votre dossier Star Citizen est restauré (ou détecté automatiquement si le chemin de la sauvegarde n'est pas sur ce PC), et Smart Citizen++ redémarre avec les paramètres importés."
     }
   },
   "enhancements": {
@@ -1404,7 +1404,7 @@
     },
     "export_owned_tooltip": {
       "ht": "",
-      "at": "Enregistrez votre liste de plans possédés dans un fichier JSON ou CSV, pour partager votre progression avec d'autres outils ou une autre installation de Smart Citizen."
+      "at": "Enregistrez votre liste de plans possédés dans un fichier JSON ou CSV, pour partager votre progression avec d'autres outils ou une autre installation de Smart Citizen++."
     },
     "import_owned_btn": {
       "ht": "",
@@ -1476,7 +1476,7 @@
     },
     "import_nothing_matched_body": {
       "ht": "",
-      "at": "Aucun des {count} plans de ce fichier n'est actuellement suivi par Smart Citizen, donc rien n'a été importé."
+      "at": "Aucun des {count} plans de ce fichier n'est actuellement suivi par Smart Citizen++, donc rien n'a été importé."
     },
     "owned_added_singular": {
       "ht": "",
@@ -1488,7 +1488,7 @@
     },
     "import_skipped_note": {
       "ht": "",
-      "at": "{skipped} autres éléments du fichier ne sont pas actuellement suivis par Smart Citizen et ont été ignorés."
+      "at": "{skipped} autres éléments du fichier ne sont pas actuellement suivis par Smart Citizen++ et ont été ignorés."
     },
     "show_skipped_btn": {
       "ht": "",
@@ -1680,7 +1680,7 @@
     },
     "reset_tooltip": {
       "ht": "",
-      "at": "Restaurer toutes les cellules de cette table de correspondance aux valeurs par défaut intégrées de Smart Citizen."
+      "at": "Restaurer toutes les cellules de cette table de correspondance aux valeurs par défaut intégrées de Smart Citizen++."
     }
   },
   "dialogs": {
@@ -1809,8 +1809,8 @@
       "at": "Impossible d'enregistrer le loc-pack ZIP :\n{error}"
     },
     "update_available_title": {
-      "ht": "Smart Citizen — Mise à jour disponible",
-      "at": "Smart Citizen — Mise à jour disponible"
+      "ht": "Smart Citizen++ — Mise à jour disponible",
+      "at": "Smart Citizen++ — Mise à jour disponible"
     },
     "update_available_body": {
       "ht": "Une nouvelle version est disponible : v{latest}\nVous utilisez la v{current}.",
@@ -1830,7 +1830,7 @@
     },
     "update_auto_note": {
       "ht": "",
-      "at": "Smart Citizen va se fermer, installer la mise à jour et se rouvrir automatiquement. Windows demandera d'abord votre autorisation."
+      "at": "Smart Citizen++ va se fermer, installer la mise à jour et se rouvrir automatiquement. Windows demandera d'abord votre autorisation."
     },
     "update_download_title": {
       "ht": "",
@@ -1838,7 +1838,7 @@
     },
     "update_download_label": {
       "ht": "",
-      "at": "Téléchargement de Smart Citizen v{latest}..."
+      "at": "Téléchargement de Smart Citizen++ v{latest}..."
     },
     "update_download_failed_title": {
       "ht": "",
@@ -1854,19 +1854,19 @@
     },
     "update_launch_failed_body": {
       "ht": "",
-      "at": "L'installateur de la mise à jour n'a pas démarré (autorisation Windows refusée ou échec du lancement).\n\nVous pouvez l'exécuter vous-même plus tard :\n{path}\n\nSmart Citizen continuera de fonctionner avec la version actuelle pour le moment."
+      "at": "L'installateur de la mise à jour n'a pas démarré (autorisation Windows refusée ou échec du lancement).\n\nVous pouvez l'exécuter vous-même plus tard :\n{path}\n\nSmart Citizen++ continuera de fonctionner avec la version actuelle pour le moment."
     },
     "up_to_date_title": {
-      "ht": "Smart Citizen — À jour",
-      "at": "Smart Citizen — À jour"
+      "ht": "Smart Citizen++ — À jour",
+      "at": "Smart Citizen++ — À jour"
     },
     "up_to_date_body": {
       "ht": "Vous utilisez la dernière version (v{current}).",
       "at": "Vous utilisez la dernière version (v{current})."
     },
     "update_check_failed_title": {
-      "ht": "Smart Citizen — Vérification des mises à jour échouée",
-      "at": "Smart Citizen — Vérification des mises à jour échouée"
+      "ht": "Smart Citizen++ — Vérification des mises à jour échouée",
+      "at": "Smart Citizen++ — Vérification des mises à jour échouée"
     },
     "update_check_failed_body": {
       "ht": "Impossible de vérifier les mises à jour :\n\n{message}",
@@ -1990,7 +1990,7 @@
     },
     "crash_error_title": {
       "ht": "",
-      "at": "Smart Citizen — Erreur"
+      "at": "Smart Citizen++ — Erreur"
     },
     "show_log_btn": {
       "ht": "",
@@ -2018,7 +2018,7 @@
     },
     "app_title": {
       "ht": "",
-      "at": "Smart Citizen"
+      "at": "Smart Citizen++"
     },
     "reset_proportions_title": {
       "ht": "",
@@ -2352,11 +2352,11 @@
   "onedrive": {
     "warning_title": {
       "ht": "",
-      "at": "Vos données Smart Citizen sont dans OneDrive"
+      "at": "Vos données Smart Citizen++ sont dans OneDrive"
     },
     "warning_body": {
       "ht": "",
-      "at": "Smart Citizen stocke vos modifications (user.ini), le cache des sources et les sauvegardes dans :\n\n{data_dir}\n\nCe dossier est dans OneDrive. OneDrive peut synchroniser voire vider ces fichiers, ce qui a déjà causé des pertes de modifications. Déplacer vos données vers un dossier local hors de OneDrive évite cela.\n\nLes déplacer vers :\n{local} ?"
+      "at": "Smart Citizen++ stocke vos modifications (user.ini), le cache des sources et les sauvegardes dans :\n\n{data_dir}\n\nCe dossier est dans OneDrive. OneDrive peut synchroniser voire vider ces fichiers, ce qui a déjà causé des pertes de modifications. Déplacer vos données vers un dossier local hors de OneDrive évite cela.\n\nLes déplacer vers :\n{local} ?"
     },
     "move_btn": {
       "ht": "",
@@ -2392,7 +2392,7 @@
     },
     "no_snapshots_body": {
       "ht": "",
-      "at": "Smart Citizen n'a encore aucun instantané automatique de user.ini pour le canal {channel}. Un instantané est enregistré à chaque changement de vos remplacements ; des points de restauration apparaîtront dès que vous aurez fait et enregistré des modifications."
+      "at": "Smart Citizen++ n'a encore aucun instantané automatique de user.ini pour le canal {channel}. Un instantané est enregistré à chaque changement de vos remplacements ; des points de restauration apparaîtront dès que vous aurez fait et enregistré des modifications."
     },
     "snapshot_label": {
       "ht": "",
@@ -2412,7 +2412,7 @@
     },
     "restore_failed_body": {
       "ht": "",
-      "at": "Smart Citizen n'a pas pu restaurer l'instantané :\n\n{error_type} : {error}"
+      "at": "Smart Citizen++ n'a pas pu restaurer l'instantané :\n\n{error_type} : {error}"
     },
     "restored_title": {
       "ht": "",
@@ -2530,7 +2530,7 @@
     },
     "dataforge_timeout": {
       "ht": "",
-      "at": "La conversion de la base de données du jeu a dépassé 30 minutes et a été interrompue.\n\nBase de données trouvée : {dcb} ({size} Mo) dans :\n{path}\n\nUne installation saine se convertit en bien moins d'une minute. Cela signifie généralement que Smart Citizen lit le mauvais dossier Star Citizen. Une ancienne installation restée sur votre disque paraît valide mais contient des fichiers de jeu obsolètes.\n\nOuvrez le RSI Launcher et vérifiez l'emplacement d'installation affiché. S'il ne correspond pas au chemin ci-dessus, corrigez-le dans l'onglet Config de Smart Citizen. S'il correspond, lancez plutôt \"Verify Files\" dans le launcher."
+      "at": "La conversion de la base de données du jeu a dépassé 30 minutes et a été interrompue.\n\nBase de données trouvée : {dcb} ({size} Mo) dans :\n{path}\n\nUne installation saine se convertit en bien moins d'une minute. Cela signifie généralement que Smart Citizen++ lit le mauvais dossier Star Citizen. Une ancienne installation restée sur votre disque paraît valide mais contient des fichiers de jeu obsolètes.\n\nOuvrez le RSI Launcher et vérifiez l'emplacement d'installation affiché. S'il ne correspond pas au chemin ci-dessus, corrigez-le dans l'onglet Config de Smart Citizen++. S'il correspond, lancez plutôt \"Verify Files\" dans le launcher."
     }
   },
   "apply": {
@@ -2540,7 +2540,7 @@
     },
     "cannot_save_edits_body": {
       "ht": "",
-      "at": "Smart Citizen n'a pas pu écrire vos modifications dans :\n\n  {path}\n\n{error_type} : {error}\n\nLe fichier du jeu n'a PAS été modifié. Causes fréquentes :\n  • Un antivirus / l'Accès contrôlé aux dossiers de Windows bloque l'écriture dans le dossier du jeu\n  • Le fichier user.ini est ouvert dans un autre programme\n  • Le disque est en lecture seule ou plein\n\nRésolvez le problème sous-jacent puis appliquez de nouveau."
+      "at": "Smart Citizen++ n'a pas pu écrire vos modifications dans :\n\n  {path}\n\n{error_type} : {error}\n\nLe fichier du jeu n'a PAS été modifié. Causes fréquentes :\n  • Un antivirus / l'Accès contrôlé aux dossiers de Windows bloque l'écriture dans le dossier du jeu\n  • Le fichier user.ini est ouvert dans un autre programme\n  • Le disque est en lecture seule ou plein\n\nRésolvez le problème sous-jacent puis appliquez de nouveau."
     },
     "applied_body": {
       "ht": "",
@@ -2613,7 +2613,7 @@
     "welcome": {
       "title": {
         "ht": "",
-        "at": "Bienvenue dans Smart Citizen"
+        "at": "Bienvenue dans Smart Citizen++"
       },
       "description": {
         "ht": "",
@@ -2753,11 +2753,11 @@
     "cfg_data_folder": {
       "title": {
         "ht": "",
-        "at": "14. Paramètres : Données Smart Citizen"
+        "at": "14. Paramètres : Données Smart Citizen++"
       },
       "description": {
         "ht": "",
-        "at": "Emplacement de user.ini, des caches, de l'extraction DataForge, des INI d'enrichissements générés et des sauvegardes. Par défaut : Documents\\Smart Citizen ; déplacez-le hors de OneDrive si l'extraction ou le nettoyage du cache est lent."
+        "at": "Emplacement de user.ini, des caches, de l'extraction DataForge, des INI d'enrichissements générés et des sauvegardes. Par défaut : Documents\\Smart Citizen++ ; déplacez-le hors de OneDrive si l'extraction ou le nettoyage du cache est lent."
       }
     },
     "cfg_p4k_extraction": {
@@ -2787,7 +2787,7 @@
       },
       "description": {
         "ht": "",
-        "at": "Le bouton Aide ouvre un panneau latéral avec le guide complet, la liste des problèmes connus et un lien vers le canal Discord de Smart Citizen pour vos retours. Vous avez tout ce qu'il faut pour démarrer : bonne chance, citoyen."
+        "at": "Le bouton Aide ouvre un panneau latéral avec le guide complet, la liste des problèmes connus et un lien vers le canal Discord de Smart Citizen++ pour vos retours. Vous avez tout ce qu'il faut pour démarrer : bonne chance, citoyen."
       }
     },
     "blueprint_tracker": {
@@ -2832,7 +2832,7 @@
     },
     "import_confirm_body": {
       "ht": "",
-      "at": "Sauvegarde créée avec Smart Citizen v{version} le {when}.\n\nElle contient {n_settings} paramètres et modifications de texte pour : {channels}.\n\nL'importation superpose ces données à vos paramètres actuels et remplace user.ini pour les canaux listés (vos fichiers user.ini actuels sont d'abord sauvegardés, donc c'est réversible via Restaurer user.ini). Continuer ?"
+      "at": "Sauvegarde créée avec Smart Citizen++ v{version} le {when}.\n\nElle contient {n_settings} paramètres et modifications de texte pour : {channels}.\n\nL'importation superpose ces données à vos paramètres actuels et remplace user.ini pour les canaux listés (vos fichiers user.ini actuels sont d'abord sauvegardés, donc c'est réversible via Restaurer user.ini). Continuer ?"
     },
     "import_done_title": {
       "ht": "",
@@ -2840,15 +2840,15 @@
     },
     "import_done_body_detected": {
       "ht": "",
-      "at": "{applied} paramètres et modifications de texte importés pour : {channels}.\n\nLe dossier Star Citizen de la sauvegarde n'est pas sur ce PC, il a donc été détecté automatiquement à la place :\n{root}\n\nSmart Citizen doit redémarrer pour charger vos paramètres importés. Après le redémarrage, il proposera de régénérer et d'appliquer vos améliorations."
+      "at": "{applied} paramètres et modifications de texte importés pour : {channels}.\n\nLe dossier Star Citizen de la sauvegarde n'est pas sur ce PC, il a donc été détecté automatiquement à la place :\n{root}\n\nSmart Citizen++ doit redémarrer pour charger vos paramètres importés. Après le redémarrage, il proposera de régénérer et d'appliquer vos améliorations."
     },
     "import_done_body_no_install": {
       "ht": "",
-      "at": "{applied} paramètres et modifications de texte importés pour : {channels}.\n\nAucune installation de Star Citizen n'a été trouvée sur ce PC ; définissez-la dans l'onglet Configuration après le redémarrage.\n\nSmart Citizen doit redémarrer pour charger vos paramètres importés."
+      "at": "{applied} paramètres et modifications de texte importés pour : {channels}.\n\nAucune installation de Star Citizen n'a été trouvée sur ce PC ; définissez-la dans l'onglet Configuration après le redémarrage.\n\nSmart Citizen++ doit redémarrer pour charger vos paramètres importés."
     },
     "import_done_body_restored": {
       "ht": "",
-      "at": "{applied} paramètres et modifications de texte importés pour : {channels}.\n\nVotre dossier Star Citizen a été restauré depuis la sauvegarde :\n{root}\n\nSmart Citizen doit redémarrer pour charger vos paramètres importés. Après le redémarrage, il proposera de régénérer et d'appliquer vos améliorations."
+      "at": "{applied} paramètres et modifications de texte importés pour : {channels}.\n\nVotre dossier Star Citizen a été restauré depuis la sauvegarde :\n{root}\n\nSmart Citizen++ doit redémarrer pour charger vos paramètres importés. Après le redémarrage, il proposera de régénérer et d'appliquer vos améliorations."
     },
     "import_failed_title": {
       "ht": "",
@@ -2900,7 +2900,7 @@
     },
     "relaunch_failed_body": {
       "ht": "",
-      "at": "Smart Citizen n'a pas pu se relancer. Veuillez le redémarrer manuellement ; vos paramètres importés se chargeront alors."
+      "at": "Smart Citizen++ n'a pas pu se relancer. Veuillez le redémarrer manuellement ; vos paramètres importés se chargeront alors."
     },
     "restart_now_btn": {
       "ht": "",

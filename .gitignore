@@ -17,6 +17,7 @@ CMakeUserPresets.json
 .idea/
 .qtcreator/
 compile_commands.json
+.ckaude/
 
 # Parity-test scratch output
 /tools/parity/.venv/

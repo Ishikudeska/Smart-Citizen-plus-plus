@@ -1,10 +1,11 @@
 <#
 .SYNOPSIS
     Builds the release artifacts into dist/:
-      dist/SCX/                       installed-build folder (cmake --install)
-      dist/SCX-<ver>-Setup.exe        Inno Setup installer (when ISCC is found)
-      dist/SCX-Portable/              portable build folder
-      dist/SCX-Portable-<ver>.zip     portable zip
+      dist/<exe>/                       installed-build folder (cmake --install)
+      dist/<exe>-<ver>-Setup.exe        Inno Setup installer (when ISCC is found)
+      dist/<exe>-Portable/              portable build folder
+      dist/<exe>-Portable-<ver>.zip     portable zip
+    where <exe> is APP_EXE_NAME from cmake/AppIdentity.cmake.
 
 .DESCRIPTION
     Uses the mingw-release and mingw-release-portable CMake presets, so the
@@ -41,7 +42,9 @@ if ($identity -notmatch 'set\(APP_VERSION\s+"([^"]+)"\)') { throw "APP_VERSION n
 $version = $Matches[1]
 if ($identity -notmatch 'set\(APP_EXE_NAME\s+"([^"]+)"\)') { throw "APP_EXE_NAME not found in cmake/AppIdentity.cmake" }
 $name = $Matches[1]
-Write-Host "Packaging $name $version"
+if ($identity -notmatch 'set\(APP_NAME\s+"([^"]+)"\)') { throw "APP_NAME not found in cmake/AppIdentity.cmake" }
+$displayName = $Matches[1]
+Write-Host "Packaging $displayName $version ($name)"
 
 $cmake = (Get-Command cmake -ErrorAction SilentlyContinue)
 if ($cmake) { $cmake = $cmake.Source } else { $cmake = "C:\Qt\Tools\CMake_64\bin\cmake.exe" }
@@ -56,9 +59,11 @@ function Build-Variant([string]$preset, [string]$folder) {
     if (Test-Path $out) { Remove-Item -Recurse -Force $out }
     Push-Location $root
     try {
-        Invoke-Checked $cmake @("--preset", $preset)
-        Invoke-Checked $cmake @("--build", "--preset", $preset, "--target", "scapp")
-        Invoke-Checked $cmake @("--install", "build\$preset", "--prefix", $out)
+        # To the console, not the pipeline: a function returns everything its
+        # commands output, and only the folder path should come back.
+        Invoke-Checked $cmake @("--preset", $preset) | Out-Host
+        Invoke-Checked $cmake @("--build", "--preset", $preset, "--target", "scapp") | Out-Host
+        Invoke-Checked $cmake @("--install", "build\$preset", "--prefix", $out) | Out-Host
     } finally {
         Pop-Location
     }
@@ -82,8 +87,9 @@ if (-not $SkipInstaller) {
         }
     }
     if ($Iscc) {
-        Invoke-Checked $Iscc @("/Q", "/DAppVersion=$version", "/DSourceDir=$installed", "/DOutputDir=$dist",
-                               (Join-Path $PSScriptRoot "installer.iss"))
+        Invoke-Checked $Iscc @("/Q", "/DAppVersion=$version", "/DAppName=$displayName", "/DAppExeName=$name",
+                               "/DSourceDir=$installed", "/DOutputDir=$dist",
+                               (Join-Path $PSScriptRoot "installer.iss")) | Out-Host
         Write-Host "Installer: $(Join-Path $dist "$name-$version-Setup.exe")"
     } else {
         Write-Warning "Inno Setup 6 (ISCC.exe) not found; skipping the installer. Install it from https://jrsoftware.org/isinfo.php or pass -Iscc."
@@ -95,7 +101,13 @@ if (-not $SkipPortable) {
     $portable = Build-Variant "mingw-release-portable" "$name-Portable"
     $zip = Join-Path $dist "$name-Portable-$version.zip"
     if (Test-Path $zip) { Remove-Item -Force $zip }
-    # Zip the folder itself, so it unpacks into one directory.
-    Compress-Archive -Path $portable -DestinationPath $zip -CompressionLevel Optimal
+    # Zip the folder itself, so it unpacks into one directory. Windows' tar
+    # writes '/' separators; PowerShell 5's Compress-Archive writes backslashes.
+    $tar = Join-Path $env:SystemRoot "System32\tar.exe"
+    if (Test-Path $tar) {
+        Invoke-Checked $tar @("-a", "-c", "-f", $zip, "-C", $dist, (Split-Path -Leaf $portable)) | Out-Host
+    } else {
+        Compress-Archive -Path $portable -DestinationPath $zip -CompressionLevel Optimal
+    }
     Write-Host "Portable zip: $zip"
 }
