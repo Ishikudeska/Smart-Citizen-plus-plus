@@ -6,6 +6,18 @@ A Complete re-write of Smart Citizen in C++.
 
 Smart Citizen++ stands on the shoulders of these projects and people.
 
+# Why?
+
+ Well for a few reasons:
+ > 1. Python, while not terrible, is going to be slower at everything this application is trying to accomplish.
+ > 2. C++ (IMO) can be modified and added to with minimal work. Whereas the Python side takes quite some time for a new version. 
+ > 3. Cross-Platform Compatibility. This application was built using the STD:: library. Meaning it can easily be run on any flavor of linux you so choose!
+
+ # Linux and non-windows platforms:
+
+ Should work "out of box". The application uses Qt as it's backend for UI, so your milage will vary. 
+    If something doesn't work please let me know by creating an issue.
+
 ### Smart Citizen
 
 This is a port of [**Smart Citizen**](https://github.com/Osiris-DevWorks/smart-citizen) by [**Osiris DevWorks**](https://github.com/Osiris-DevWorks). Its features, merge logic, settings formats and translations all come from the original Python app. Thank you to the Smart Citizen developers and contributors:
@@ -43,16 +55,4 @@ Smart Citizen++ is licensed under the **Apache License, Version 2.0**, the same 
 
 
 
-# Why?
 
- Well for a few reasons:
- > 1. Python, while not terrible, is going to be slower at everything this application is trying to accomplish.
- > 2. C++ (IMO) can be modified and added to with minimal work. Whereas the Python side takes quite some time for a new version. 
- > 3. Cross-Platform Compatibility. This application was built using the STD:: library. Meaning it can easily be run on any flavor of linux you so choose!
-
- # Linux and non-windows platforms:
-
- Should work "out of box". The application uses Qt as it's backend for UI, so your milage will vary. 
-    If something doesn't work please let me know by creating an issue.
-
-# Contribution details:
