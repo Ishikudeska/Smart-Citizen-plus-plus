@@ -473,11 +473,9 @@ QString enhancementsRadar(Node root)
     if (const std::vector<Node> aim = iter(root, "aimAssist"); !aim.empty()) {
         const auto minD = get(aim.front(), "distanceMinAssignment");
         const auto maxD = get(aim.front(), "distanceMaxAssignment");
-        std::optional<double> minV = minD && !minD->empty() ? toFloat(*minD) : std::nullopt;
-        std::optional<double> maxV = maxD && !maxD->empty() ? toFloat(*maxD) : std::nullopt;
-        // One bad number voids both, as the shared try block does.
-        if ((minD && !minD->empty() && !minV) || (maxD && !maxD->empty() && !maxV))
-            minV = maxV = std::nullopt;
+        const std::optional<double> minV = minD && !minD->empty() ? toFloat(*minD) : std::nullopt;
+        const std::optional<double> maxV = maxD && !maxD->empty() ? toFloat(*maxD) : std::nullopt;
+        // Both must parse: one bad number voids the line, as the shared try block does.
         if (minV && maxV && *maxV > 0)
             lines << QStringLiteral("Aim Assist Range: %1–%2 m").arg(f0(*minV), f0(*maxV));
     }

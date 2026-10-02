@@ -31,7 +31,7 @@ Item {
         clip: true
 
         ColumnLayout {
-            width: Math.min(scroller.availableWidth - 32, 1200)
+            width: scroller.availableWidth - 32
             x: 16
             spacing: 14
 
