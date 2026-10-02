@@ -99,6 +99,11 @@ UpdateCheck checkForUpdate(const QString &repo, const QString &currentVersion, i
     QNetworkAccessManager nam;
     std::unique_ptr<QNetworkReply> reply(nam.get(request));
     wait(reply.get(), nullptr);
+    // 404: the repository has no published release yet, so nothing is newer.
+    if (reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt() == 404) {
+        out.status = UpdateCheck::Status::UpToDate;
+        return out;
+    }
     if (reply->error() != QNetworkReply::NoError) {
         out.error = reply->errorString();
         return out;

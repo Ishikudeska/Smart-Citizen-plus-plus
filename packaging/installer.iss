@@ -1,29 +1,40 @@
 ; Inno Setup 6 script for the installed (per-user) build.
 ;
 ; Built by packaging/package.ps1, which passes:
-;   /DAppVersion=<x.y.z>   from cmake/AppIdentity.cmake
+;   /DAppVersion=<x.y.z>   APP_VERSION  \
+;   /DAppName=<name>       APP_NAME      } from cmake/AppIdentity.cmake
+;   /DAppExeName=<name>    APP_EXE_NAME /
 ;   /DSourceDir=<dir>      the `cmake --install` output (exe + Qt + licenses)
 ;   /DOutputDir=<dir>      where the Setup.exe goes
 ;
-; Per-user install (no admin): %LOCALAPPDATA%\Programs\SCX. The wizard asks
-; for the UI language, Simple or Advanced mode, the Star Citizen folder and
-; the data/cache folders, and writes them to the app's settings file
-; (%APPDATA%\SCX\settings.ini). Uninstalling removes the program only; user
-; data, settings and caches stay.
+; Per-user install (no admin): %LOCALAPPDATA%\Programs\<AppName>. The wizard
+; asks for the UI language, Simple or Advanced mode, the Star Citizen folder
+; and the data/cache folders, and writes them to the app's settings file
+; (%APPDATA%\<AppName>\settings.ini). Uninstalling removes the program only;
+; user data, settings and caches stay.
+;
+; The Setup.exe is named <AppExeName>-<version>-Setup.exe: the in-app update
+; check picks the release asset by that pattern.
 
 #ifndef AppVersion
   #define AppVersion "0.0.0"
 #endif
+#ifndef AppName
+  #define AppName "Smart Citizen++"
+#endif
+#ifndef AppExeName
+  #define AppExeName "SmartCitizenPlusPlus"
+#endif
 #ifndef SourceDir
-  #define SourceDir "..\dist\SCX"
+  #define SourceDir "..\dist\" + AppExeName
 #endif
 #ifndef OutputDir
   #define OutputDir "..\dist"
 #endif
 
-#define AppName "SCX"
-#define AppExe "SCX.exe"
-#define AppOrg "SCX"
+#define AppExe AppExeName + ".exe"
+; Settings live in %APPDATA%\<APP_ORG>; APP_ORG is the app name.
+#define AppOrg AppName
 
 [Setup]
 AppId={{CD004C41-A57E-4035-AD06-36B2B6BA2836}
@@ -35,7 +46,7 @@ DefaultGroupName={#AppName}
 DisableProgramGroupPage=yes
 PrivilegesRequired=lowest
 OutputDir={#OutputDir}
-OutputBaseFilename={#AppName}-{#AppVersion}-Setup
+OutputBaseFilename={#AppExeName}-{#AppVersion}-Setup
 Compression=lzma2
 SolidCompression=yes
 ArchitecturesAllowed=x64compatible

@@ -92,7 +92,7 @@ Use **Import INI** in the **Config** tab (also available under the toolbar's **M
 
 ## 11. Export Loc-Pack
 
-Open the **More** menu and choose **Export INI…** to bundle the currently applied `global.ini` into a single zip — `SmartCitizen-LocPack-{channel}-{YYYYMMDD}.zip` — that anyone else can drop into their `StarCitizen\<channel>\data\Localization\english\` to run the same loc-pack without installing {app}. Useful for sharing presets with friends or your org.
+Open the **More** menu and choose **Export INI…** to bundle the currently applied `global.ini` into a single zip — `SmartCitizen++-LocPack-{channel}-{YYYYMMDD}.zip` — that anyone else can drop into their `StarCitizen\<channel>\data\Localization\english\` to run the same loc-pack without installing {app}. Useful for sharing presets with friends or your org.
 
 ## 12. Reset user.ini
 

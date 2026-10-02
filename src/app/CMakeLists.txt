@@ -56,7 +56,6 @@ qt_add_qml_module(scapp
         qml/pages/ExplorerPage.qml
         qml/pages/SimplePage.qml
         qml/pages/DocsPage.qml
-        qml/pages/PlaceholderPage.qml
 )
 
 # Bundled data: UI translations, DataForge patches, docs and the tour, read from qrc.

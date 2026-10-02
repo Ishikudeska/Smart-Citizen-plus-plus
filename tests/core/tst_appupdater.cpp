@@ -1,3 +1,4 @@
+#include "core/AppIdentity.h"
 #include "core/net/AppUpdater.h"
 
 #include <QJsonArray>
@@ -62,6 +63,20 @@ private slots:
                  QUrl(QStringLiteral("https://api.github.com/repos/owner/repo/releases/latest")));
         QVERIFY(latestReleaseApi(QStringLiteral(" ")).isEmpty());
         QCOMPARE(checkForUpdate(QString(), QStringLiteral("1.0.0")).status, UpdateCheck::Status::Disabled);
+    }
+
+    // Opt-in (SCX_NETWORK_TESTS=1): the configured repository answers. A repo
+    // with no release yet counts as up to date.
+    void liveRepository()
+    {
+        if (qEnvironmentVariable("SCX_NETWORK_TESTS") != u"1")
+            QSKIP("set SCX_NETWORK_TESTS=1 to query GitHub");
+        const QString repo = QString::fromLatin1(core::identity::kUpdateRepo);
+        if (repo.isEmpty())
+            QSKIP("no update repository configured");
+        const UpdateCheck check = checkForUpdate(repo, QStringLiteral("0.0.1"));
+        QVERIFY2(check.status != UpdateCheck::Status::Failed, qPrintable(check.error));
+        qInfo() << "latest release:" << (check.latest.isEmpty() ? QStringLiteral("(none)") : check.latest);
     }
 };
 

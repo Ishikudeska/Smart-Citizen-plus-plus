@@ -37,11 +37,8 @@ void TutorialController::load()
             continue;
         title = translated(QStringLiteral("tutorial.%1.title").arg(id), title);
         description = translated(QStringLiteral("tutorial.%1.description").arg(id), description);
-        // Translations carry Smart Citizen's name; the bundled copy uses {app}.
-        for (QString *s : {&title, &description}) {
-            s->replace(QStringLiteral("{app}"), app);
-            s->replace(QStringLiteral("Smart Citizen"), app);
-        }
+        title.replace(QStringLiteral("{app}"), app);
+        description.replace(QStringLiteral("{app}"), app);
         steps_.push_back(QVariantMap{{QStringLiteral("id"), id},
                                      {QStringLiteral("page"), o.value(u"page").toString()},
                                      {QStringLiteral("target"), o.value(u"target").toString()},

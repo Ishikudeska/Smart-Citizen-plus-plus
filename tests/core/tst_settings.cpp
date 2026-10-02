@@ -2,6 +2,7 @@
 // test_language_paths.py, test_cache_dir.py, test_sc_install_root.py and
 // test_sc_install_scan_picks_live.py.
 
+#include "core/AppIdentity.h"
 #include "core/Paths.h"
 #include "core/ScInstall.h"
 #include "core/Settings.h"
@@ -193,7 +194,8 @@ private slots:
         Settings s(dir.filePath(QStringLiteral("settings.ini")));
         s.setScInstallRoot(dir.filePath(QStringLiteral("RSI/StarCitizen")));
         const Paths p(s, roots(dir));
-        const QString user = dir.filePath(QStringLiteral("Documents/SCX"));
+        const QString app = QString::fromUtf8(core::identity::kAppName);
+        const QString user = dir.filePath(QStringLiteral("Documents/") + app);
 
         QCOMPARE(p.userDataRoot(), user);
         QCOMPARE(p.channelDataDir(), user + QStringLiteral("/LIVE"));
@@ -204,7 +206,7 @@ private slots:
         QCOMPARE(p.enhancementsDir(), user + QStringLiteral("/LIVE/cache"));
         QCOMPARE(p.baseIni(QStringLiteral("german")), user + QStringLiteral("/LIVE/cache/lang/german/base.ini"));
         QCOMPARE(p.enhancementsDir(QStringLiteral("german")), user + QStringLiteral("/LIVE/cache/lang/german"));
-        QCOMPARE(p.dataForgeCacheDir(), dir.filePath(QStringLiteral("Local/SCX/LIVE/cache/dataforge")));
+        QCOMPARE(p.dataForgeCacheDir(), dir.filePath(QStringLiteral("Local/") + app + QStringLiteral("/LIVE/cache/dataforge")));
         QCOMPARE(p.p4kPath(), dir.filePath(QStringLiteral("RSI/StarCitizen/LIVE/Data.p4k")));
         QCOMPARE(p.gameGlobalIni(QStringLiteral("portuguese_br")),
                  dir.filePath(QStringLiteral("RSI/StarCitizen/LIVE/data/Localization/portuguese_(brazil)/global.ini")));

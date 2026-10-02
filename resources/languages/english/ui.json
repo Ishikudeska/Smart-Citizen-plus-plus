@@ -11,7 +11,7 @@
   },
   "window": {
     "title": {
-      "ht": "Smart Citizen v{version}",
+      "ht": "Smart Citizen++ v{version}",
       "at": ""
     }
   },
@@ -21,7 +21,7 @@
       "at": ""
     },
     "switch_to_advanced_tip": {
-      "ht": "Show the full Smart Citizen interface with all tabs and options.",
+      "ht": "Show the full Smart Citizen++ interface with all tabs and options.",
       "at": ""
     },
     "generate_apply_btn": {
@@ -41,7 +41,7 @@
       "at": ""
     },
     "set_game_folder_body": {
-      "ht": "Smart Citizen needs to know where Star Citizen is installed before it can apply changes.\n\nSwitching to Advanced mode so you can set the game folder on the Config tab.",
+      "ht": "Smart Citizen++ needs to know where Star Citizen is installed before it can apply changes.\n\nSwitching to Advanced mode so you can set the game folder on the Config tab.",
       "at": ""
     },
     "apply_enhancements_confirm_title": {
@@ -173,7 +173,7 @@
       "at": ""
     },
     "tutorial_tooltip": {
-      "ht": "Start the guided tour of Smart Citizen's workflow. Runs automatically on first launch; click here anytime to replay.",
+      "ht": "Start the guided tour of Smart Citizen++'s workflow. Runs automatically on first launch; click here anytime to replay.",
       "at": ""
     },
     "restore_backup_tooltip": {
@@ -201,7 +201,7 @@
       "at": ""
     },
     "feedback_tooltip": {
-      "ht": "Open the Smart Citizen Discord channel for feedback, bug reports, and voting on upcoming features (requires joining the Osiris DevWorks Discord).",
+      "ht": "Open the Smart Citizen++ Discord channel for feedback, bug reports, and voting on upcoming features (requires joining the Osiris DevWorks Discord).",
       "at": ""
     },
     "apply_enabled_tooltip": {
@@ -295,7 +295,7 @@
       "at": ""
     },
     "status_tooltip": {
-      "ht": "Filter by status. Modified = you've set a Custom Value; Enhanced = produced by Smart Citizen's enhancements pipeline (ship stats, mission rewards, etc.); Unmodified = default text only; New = key exists only in enhancements/user.ini, not in the base file.",
+      "ht": "Filter by status. Modified = you've set a Custom Value; Enhanced = produced by Smart Citizen++'s enhancements pipeline (ship stats, mission rewards, etc.); Unmodified = default text only; New = key exists only in enhancements/user.ini, not in the base file.",
       "at": ""
     },
     "hide_unmodified_tooltip": {
@@ -515,7 +515,7 @@
       "at": ""
     },
     "backup_desc": {
-      "ht": "Save all your settings — preferences, tag configurations, your Star Citizen folder, and your custom string overrides for every channel — into one small backup file. Import it on a new PC, after a fresh portable unzip, or to undo a misconfiguration. Backups work across Smart Citizen versions. Game caches are not included; they rebuild from your game files automatically.",
+      "ht": "Save all your settings — preferences, tag configurations, your Star Citizen folder, and your custom string overrides for every channel — into one small backup file. Import it on a new PC, after a fresh portable unzip, or to undo a misconfiguration. Backups work across Smart Citizen++ versions. Game caches are not included; they rebuild from your game files automatically.",
       "at": ""
     },
     "export_settings_btn": {
@@ -523,7 +523,7 @@
       "at": ""
     },
     "export_settings_tooltip": {
-      "ht": "Save your preferences, Star Citizen folder, and custom string overrides to a small backup zip (a few KB). Keep it anywhere — cloud drive, USB stick — and import it later, on any Smart Citizen version, to restore your settings.",
+      "ht": "Save your preferences, Star Citizen folder, and custom string overrides to a small backup zip (a few KB). Keep it anywhere — cloud drive, USB stick — and import it later, on any Smart Citizen++ version, to restore your settings.",
       "at": ""
     },
     "import_settings_btn": {
@@ -531,7 +531,7 @@
       "at": ""
     },
     "import_settings_tooltip": {
-      "ht": "Restore a settings backup zip made by any Smart Citizen version. Your current user.ini files are snapshotted first, your Star Citizen folder is restored (or auto-detected if the backup's path isn't on this PC), and Smart Citizen restarts with the imported settings.",
+      "ht": "Restore a settings backup zip made by any Smart Citizen++ version. Your current user.ini files are snapshotted first, your Star Citizen folder is restored (or auto-detected if the backup's path isn't on this PC), and Smart Citizen++ restarts with the imported settings.",
       "at": ""
     },
     "check_updates_btn": {
@@ -595,7 +595,7 @@
       "at": ""
     },
     "map_language_desc": {
-      "ht": "Set a URL to each language's global.ini. When you switch to that language, Smart Citizen downloads it and uses it as the base strings, instead of the English Data.p4k extraction. The download is cached per language and only re-fetched when it changes. Leave a field blank to use the bundled default (if any).",
+      "ht": "Set a URL to each language's global.ini. When you switch to that language, Smart Citizen++ downloads it and uses it as the base strings, instead of the English Data.p4k extraction. The download is cached per language and only re-fetched when it changes. Leave a field blank to use the bundled default (if any).",
       "at": ""
     },
     "base_localization_label": {
@@ -611,7 +611,7 @@
       "at": ""
     },
     "data_group": {
-      "ht": "Smart Citizen Data",
+      "ht": "Smart Citizen++ Data",
       "at": ""
     },
     "data_desc": {
@@ -659,7 +659,7 @@
       "at": ""
     },
     "select_data_folder": {
-      "ht": "Select Smart Citizen Data Folder",
+      "ht": "Select Smart Citizen++ Data Folder",
       "at": ""
     },
     "select_cache_folder": {
@@ -671,7 +671,7 @@
       "at": ""
     },
     "migrate_data_body": {
-      "ht": "Move your existing Smart Citizen data (overrides, backups, cached strings) from\n\n{old_dir}\n\nto the new folder\n\n{new_dir}?\n\nFiles already in the new folder are kept. The old folder will be cleaned up after the move.",
+      "ht": "Move your existing Smart Citizen++ data (overrides, backups, cached strings) from\n\n{old_dir}\n\nto the new folder\n\n{new_dir}?\n\nFiles already in the new folder are kept. The old folder will be cleaned up after the move.",
       "at": ""
     },
     "migrate_data_done_title": {
@@ -751,7 +751,7 @@
       "at": ""
     },
     "restore_user_ini_tooltip": {
-      "ht": "Restore your custom string overrides from an automatic snapshot. Smart Citizen keeps the last few states of user.ini, so you can roll back a bad edit or recover after the file was emptied.",
+      "ht": "Restore your custom string overrides from an automatic snapshot. Smart Citizen++ keeps the last few states of user.ini, so you can roll back a bad edit or recover after the file was emptied.",
       "at": ""
     },
     "preview_apply_tooltip": {
@@ -759,7 +759,7 @@
       "at": ""
     },
     "check_updates_tooltip": {
-      "ht": "Check GitHub for a newer Smart Citizen release.",
+      "ht": "Check GitHub for a newer Smart Citizen++ release.",
       "at": ""
     },
     "theme_tooltip": {
@@ -791,23 +791,23 @@
       "at": ""
     },
     "map_language_tooltip": {
-      "ht": "Set a URL to each language's global.ini. When you switch to that language, Smart Citizen downloads it and uses it as the base strings instead of the English Data.p4k extraction.",
+      "ht": "Set a URL to each language's global.ini. When you switch to that language, Smart Citizen++ downloads it and uses it as the base strings instead of the English Data.p4k extraction.",
       "at": ""
     },
     "data_dir_tooltip": {
-      "ht": "Smart Citizen's app data root. Each channel gets its own subfolder inside this directory. Leave blank or click Reset to use Documents\\Smart Citizen.",
+      "ht": "Smart Citizen++'s app data root. Each channel gets its own subfolder inside this directory. Leave blank or click Reset to use Documents\\Smart Citizen++.",
       "at": ""
     },
     "browse_data_tooltip": {
-      "ht": "Pick the Smart Citizen data folder in a folder browser.",
+      "ht": "Pick the Smart Citizen++ data folder in a folder browser.",
       "at": ""
     },
     "reset_data_tooltip": {
-      "ht": "Clear the custom data folder and use Documents\\Smart Citizen.",
+      "ht": "Clear the custom data folder and use Documents\\Smart Citizen++.",
       "at": ""
     },
     "cache_dir_tooltip": {
-      "ht": "Base folder for the extracted DataForge XML tree (~1.4 GB). Each channel nests under this as {base}\\{channel}\\cache\\dataforge\\. Defaults to %LOCALAPPDATA%\\Smart Citizen so it stays out of OneDrive. Changing the path triggers a re-extraction.",
+      "ht": "Base folder for the extracted DataForge XML tree (~1.4 GB). Each channel nests under this as {base}\\{channel}\\cache\\dataforge\\. Defaults to %LOCALAPPDATA%\\Smart Citizen++ so it stays out of OneDrive. Changing the path triggers a re-extraction.",
       "at": ""
     },
     "browse_cache_tooltip": {
@@ -1423,7 +1423,7 @@
       "at": ""
     },
     "export_owned_tooltip": {
-      "ht": "Save your Owned list to a JSON or CSV file, for sharing progress with other tools or another Smart Citizen install.",
+      "ht": "Save your Owned list to a JSON or CSV file, for sharing progress with other tools or another Smart Citizen++ install.",
       "at": ""
     },
     "import_owned_btn": {
@@ -1495,7 +1495,7 @@
       "at": ""
     },
     "import_nothing_matched_body": {
-      "ht": "None of the {count} blueprints in that file are currently tracked by Smart Citizen, so nothing was imported.",
+      "ht": "None of the {count} blueprints in that file are currently tracked by Smart Citizen++, so nothing was imported.",
       "at": ""
     },
     "owned_added_singular": {
@@ -1507,7 +1507,7 @@
       "at": ""
     },
     "import_skipped_note": {
-      "ht": "{skipped} others in the file aren't currently tracked by Smart Citizen and were skipped.",
+      "ht": "{skipped} others in the file aren't currently tracked by Smart Citizen++ and were skipped.",
       "at": ""
     },
     "show_skipped_btn": {
@@ -1699,7 +1699,7 @@
       "at": ""
     },
     "reset_tooltip": {
-      "ht": "Restore every cell in this mapping table to the built-in Smart Citizen defaults.",
+      "ht": "Restore every cell in this mapping table to the built-in Smart Citizen++ defaults.",
       "at": ""
     }
   },
@@ -1829,7 +1829,7 @@
       "at": ""
     },
     "update_available_title": {
-      "ht": "Smart Citizen — Update Available",
+      "ht": "Smart Citizen++ — Update Available",
       "at": ""
     },
     "update_available_body": {
@@ -1849,7 +1849,7 @@
       "at": ""
     },
     "update_auto_note": {
-      "ht": "Smart Citizen will close, install the update, and reopen automatically. Windows will ask for permission first.",
+      "ht": "Smart Citizen++ will close, install the update, and reopen automatically. Windows will ask for permission first.",
       "at": ""
     },
     "update_download_title": {
@@ -1857,7 +1857,7 @@
       "at": ""
     },
     "update_download_label": {
-      "ht": "Downloading Smart Citizen v{latest}...",
+      "ht": "Downloading Smart Citizen++ v{latest}...",
       "at": ""
     },
     "update_download_failed_title": {
@@ -1873,11 +1873,11 @@
       "at": ""
     },
     "update_launch_failed_body": {
-      "ht": "The update installer did not start (Windows permission was declined or the launch failed).\n\nYou can run it yourself later:\n{path}\n\nSmart Citizen will keep running on the current version for now.",
+      "ht": "The update installer did not start (Windows permission was declined or the launch failed).\n\nYou can run it yourself later:\n{path}\n\nSmart Citizen++ will keep running on the current version for now.",
       "at": ""
     },
     "up_to_date_title": {
-      "ht": "Smart Citizen — Up to Date",
+      "ht": "Smart Citizen++ — Up to Date",
       "at": ""
     },
     "up_to_date_body": {
@@ -1885,7 +1885,7 @@
       "at": ""
     },
     "update_check_failed_title": {
-      "ht": "Smart Citizen — Update Check Failed",
+      "ht": "Smart Citizen++ — Update Check Failed",
       "at": ""
     },
     "update_check_failed_body": {
@@ -2009,7 +2009,7 @@
       "at": ""
     },
     "crash_error_title": {
-      "ht": "Smart Citizen — Error",
+      "ht": "Smart Citizen++ — Error",
       "at": ""
     },
     "show_log_btn": {
@@ -2037,7 +2037,7 @@
       "at": ""
     },
     "app_title": {
-      "ht": "Smart Citizen",
+      "ht": "Smart Citizen++",
       "at": ""
     },
     "reset_proportions_title": {
@@ -2371,11 +2371,11 @@
   },
   "onedrive": {
     "warning_title": {
-      "ht": "Your Smart Citizen Data Is in OneDrive",
+      "ht": "Your Smart Citizen++ Data Is in OneDrive",
       "at": ""
     },
     "warning_body": {
-      "ht": "Smart Citizen stores your edits (user.ini), source cache, and backups in:\n\n{data_dir}\n\nThat folder is inside OneDrive. OneDrive can sync and even empty these files, which has caused lost edits. Moving your data to a local folder outside OneDrive avoids this.\n\nMove it to:\n{local} ?",
+      "ht": "Smart Citizen++ stores your edits (user.ini), source cache, and backups in:\n\n{data_dir}\n\nThat folder is inside OneDrive. OneDrive can sync and even empty these files, which has caused lost edits. Moving your data to a local folder outside OneDrive avoids this.\n\nMove it to:\n{local} ?",
       "at": ""
     },
     "move_btn": {
@@ -2411,7 +2411,7 @@
       "at": ""
     },
     "no_snapshots_body": {
-      "ht": "Smart Citizen has no automatic user.ini snapshots for the {channel} channel yet. A snapshot is saved each time your overrides change, so restore points appear once you've made and saved edits.",
+      "ht": "Smart Citizen++ has no automatic user.ini snapshots for the {channel} channel yet. A snapshot is saved each time your overrides change, so restore points appear once you've made and saved edits.",
       "at": ""
     },
     "snapshot_label": {
@@ -2431,7 +2431,7 @@
       "at": ""
     },
     "restore_failed_body": {
-      "ht": "Smart Citizen could not restore the snapshot:\n\n{error_type}: {error}",
+      "ht": "Smart Citizen++ could not restore the snapshot:\n\n{error_type}: {error}",
       "at": ""
     },
     "restored_title": {
@@ -2549,7 +2549,7 @@
       "at": ""
     },
     "dataforge_timeout": {
-      "ht": "Converting the game database took longer than 30 minutes and was stopped.\n\nThe database found was {dcb} ({size} MB) at:\n{path}\n\nA healthy install converts in well under a minute, so this usually means Smart Citizen is reading the wrong Star Citizen folder. An old or leftover install still on your drive will look valid but hold outdated game files.\n\nOpen the RSI Launcher and check the install location it shows for Star Citizen. If it is not the path above, correct it in Smart Citizen's Config tab. If it IS the same path, run Verify Files in the launcher to repair the install instead.",
+      "ht": "Converting the game database took longer than 30 minutes and was stopped.\n\nThe database found was {dcb} ({size} MB) at:\n{path}\n\nA healthy install converts in well under a minute, so this usually means Smart Citizen++ is reading the wrong Star Citizen folder. An old or leftover install still on your drive will look valid but hold outdated game files.\n\nOpen the RSI Launcher and check the install location it shows for Star Citizen. If it is not the path above, correct it in Smart Citizen++'s Config tab. If it IS the same path, run Verify Files in the launcher to repair the install instead.",
       "at": ""
     }
   },
@@ -2559,7 +2559,7 @@
       "at": ""
     },
     "cannot_save_edits_body": {
-      "ht": "Smart Citizen could not write your edits to:\n\n  {path}\n\n{error_type}: {error}\n\nThe game file was NOT modified. Common causes:\n  • Antivirus / Windows Controlled Folder Access blocking writes under the game folder\n  • The user.ini file is open in another program\n  • The drive is read-only or out of space\n\nResolve the underlying issue and Apply again.",
+      "ht": "Smart Citizen++ could not write your edits to:\n\n  {path}\n\n{error_type}: {error}\n\nThe game file was NOT modified. Common causes:\n  • Antivirus / Windows Controlled Folder Access blocking writes under the game folder\n  • The user.ini file is open in another program\n  • The drive is read-only or out of space\n\nResolve the underlying issue and Apply again.",
       "at": ""
     },
     "applied_body": {
@@ -2675,7 +2675,7 @@
       "at": ""
     },
     "import_confirm_body": {
-      "ht": "Backup made with Smart Citizen v{version} on {when}.\n\nIt contains {n_settings} settings and string overrides for: {channels}.\n\nImporting layers these over your current settings and replaces user.ini for the listed channels (your current user.ini files are snapshotted first, so this is reversible via Restore user.ini). Continue?",
+      "ht": "Backup made with Smart Citizen++ v{version} on {when}.\n\nIt contains {n_settings} settings and string overrides for: {channels}.\n\nImporting layers these over your current settings and replaces user.ini for the listed channels (your current user.ini files are snapshotted first, so this is reversible via Restore user.ini). Continue?",
       "at": ""
     },
     "import_failed_title": {
@@ -2691,15 +2691,15 @@
       "at": ""
     },
     "import_done_body_restored": {
-      "ht": "Imported {applied} settings and string overrides for: {channels}.\n\nYour Star Citizen folder was restored from the backup:\n{root}\n\nSmart Citizen needs to restart to load your imported settings. After the restart it will offer to regenerate and apply your enhancements.",
+      "ht": "Imported {applied} settings and string overrides for: {channels}.\n\nYour Star Citizen folder was restored from the backup:\n{root}\n\nSmart Citizen++ needs to restart to load your imported settings. After the restart it will offer to regenerate and apply your enhancements.",
       "at": ""
     },
     "import_done_body_detected": {
-      "ht": "Imported {applied} settings and string overrides for: {channels}.\n\nThe backup's Star Citizen folder isn't on this PC, so it was auto-detected instead:\n{root}\n\nSmart Citizen needs to restart to load your imported settings. After the restart it will offer to regenerate and apply your enhancements.",
+      "ht": "Imported {applied} settings and string overrides for: {channels}.\n\nThe backup's Star Citizen folder isn't on this PC, so it was auto-detected instead:\n{root}\n\nSmart Citizen++ needs to restart to load your imported settings. After the restart it will offer to regenerate and apply your enhancements.",
       "at": ""
     },
     "import_done_body_no_install": {
-      "ht": "Imported {applied} settings and string overrides for: {channels}.\n\nNo Star Citizen install was found on this PC — set it on the Config tab after the restart.\n\nSmart Citizen needs to restart to load your imported settings.",
+      "ht": "Imported {applied} settings and string overrides for: {channels}.\n\nNo Star Citizen install was found on this PC — set it on the Config tab after the restart.\n\nSmart Citizen++ needs to restart to load your imported settings.",
       "at": ""
     },
     "restart_now_btn": {
@@ -2715,7 +2715,7 @@
       "at": ""
     },
     "relaunch_failed_body": {
-      "ht": "Smart Citizen could not restart itself. Please start it again manually — your imported settings will load then.",
+      "ht": "Smart Citizen++ could not restart itself. Please start it again manually — your imported settings will load then.",
       "at": ""
     },
     "post_import_no_install_title": {

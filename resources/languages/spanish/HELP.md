@@ -1,14 +1,14 @@
-# Smart Citizen: guía de inicio rápido
+# Smart Citizen++: guía de inicio rápido
 
 > Esta página es una traducción proporcionada para tu comodidad. En caso de discrepancia, la versión en inglés prevalece. Estado de las traducciones: `languages/TRANSLATIONS.md`.
 
 ## Primera configuración
 
-Al iniciarse, Smart Citizen recarga las personalizaciones de tu sesión anterior y busca tu instalación de Star Citizen: el instalador rellena esta ruta automáticamente, pero puedes cambiarla en la pestaña **Configuración**. Toda la localización original y los datos de DataForge provienen **directamente de tu `Data.p4k` instalado** (sin descargas, sin réplicas de la comunidad), así que extraer una vez es un primer paso obligatorio tras la instalación o tras cualquier parche del juego.
+Al iniciarse, Smart Citizen++ recarga las personalizaciones de tu sesión anterior y busca tu instalación de Star Citizen: el instalador rellena esta ruta automáticamente, pero puedes cambiarla en la pestaña **Configuración**. Toda la localización original y los datos de DataForge provienen **directamente de tu `Data.p4k` instalado** (sin descargas, sin réplicas de la comunidad), así que extraer una vez es un primer paso obligatorio tras la instalación o tras cualquier parche del juego.
 
 ## Modo simple y modo avanzado
 
-Smart Citizen se abre en uno de dos modos, y puedes cambiar en cualquier momento.
+Smart Citizen++ se abre en uno de dos modos, y puedes cambiar en cualquier momento.
 
 - El **modo simple** es una pantalla de dos botones: uno, **Aplicar mejoras**, ejecuta toda la cadena con tu configuración actual (extracción, generación y aplicación, con una copia de seguridad previa de tu archivo del juego); el otro cambia al **modo avanzado**. Es la vía rápida cuando solo quieres aplicar las mejoras sin editar textos a mano.
 - El **modo avanzado** es la aplicación completa: la tabla de textos, los filtros, la pestaña Mejoras, la pestaña Configuración y todo lo demás de esta guía.
@@ -26,13 +26,13 @@ Cuando la extracción termina, el `base.ini` extraído se carga automáticamente
 - Haz doble clic en cualquier celda de **Valor personalizado** para editar el texto.
 - **Valor por defecto**: texto original del `base.ini` extraído de `Data.p4k`.
 - **Valor actual**: el valor efectivo antes de tu cambio (base + capas INI importadas).
-- **Valor personalizado**: tu edición personal. Se guarda automáticamente con cada cambio y se conserva en `<carpeta de datos>\<canal>\user.ini` (la carpeta de datos por defecto es `Documents\Smart Citizen`, y cada canal de Star Citizen — LIVE, PTU, EPTU, HOTFIX, TECH-PREVIEW — tiene sus propios cambios aislados).
+- **Valor personalizado**: tu edición personal. Se guarda automáticamente con cada cambio y se conserva en `<carpeta de datos>\<canal>\user.ini` (la carpeta de datos por defecto es `Documents\Smart Citizen++`, y cada canal de Star Citizen — LIVE, PTU, EPTU, HOTFIX, TECH-PREVIEW — tiene sus propios cambios aislados).
 - La columna **Estado** indica de dónde procede el valor actual de cada fila:
   - **Modificado**: editaste explícitamente el Valor personalizado.
   - **Mejorado**: generado automáticamente por el proceso de mejoras (superposiciones de estadísticas, etiquetas de blueprints, etc.).
   - **Sin modificar**: texto original del `base.ini`.
   - **Nuevo**: la clave solo existe en tus cambios o en el proceso de mejoras, no en el `base.ini` original.
-- **Cambia el ancho de cualquier columna** arrastrando el separador entre dos encabezados, o haz doble clic en un separador para ajustar la columna al ancho de su contenido más largo. Tus anchos se recuerdan entre sesiones. Mientras no cambies nada tú mismo, Smart Citizen ajusta las columnas a tu ventana automáticamente, de modo que una instalación nueva siempre se abre correctamente en su propia pantalla. Para recuperar esa disposición automática, usa **Restablecer las proporciones de la ventana** (más abajo).
+- **Cambia el ancho de cualquier columna** arrastrando el separador entre dos encabezados, o haz doble clic en un separador para ajustar la columna al ancho de su contenido más largo. Tus anchos se recuerdan entre sesiones. Mientras no cambies nada tú mismo, Smart Citizen++ ajusta las columnas a tu ventana automáticamente, de modo que una instalación nueva siempre se abre correctamente en su propia pantalla. Para recuperar esa disposición automática, usa **Restablecer las proporciones de la ventana** (más abajo).
 
 ## 3. Panel de vista previa
 
@@ -76,13 +76,13 @@ Usa el filtro de **Categoría** para centrarte en un dominio:
 
 Haz clic en **Aplicar mejoras** para escribir tus ediciones en la instalación del juego. Antes de sobrescribir nada, se crea una copia de seguridad con fecha y hora del `global.ini` actual en `<carpeta de datos>\<canal>\backups\`.
 
-El color del botón te dice en qué punto estás: **rojo** significa que algo ha cambiado desde tu última aplicación (una edición, una regeneración, un cambio de idioma o de canal) y el juego aún no lo tiene; **verde** significa que el juego ya coincide con lo cargado, y el botón queda desactivado porque no hay nada que rehacer. La misma convención rojo/verde se aplica a **Generar mejoras** y **Aplicar cambios de etiquetas** en la pestaña Mejoras. Si cierras la aplicación con el botón Aplicar todavía en rojo, Smart Citizen te pregunta si aplicar ahora o salir sin aplicar, para que el trabajo sin aplicar nunca se pierda en silencio.
+El color del botón te dice en qué punto estás: **rojo** significa que algo ha cambiado desde tu última aplicación (una edición, una regeneración, un cambio de idioma o de canal) y el juego aún no lo tiene; **verde** significa que el juego ya coincide con lo cargado, y el botón queda desactivado porque no hay nada que rehacer. La misma convención rojo/verde se aplica a **Generar mejoras** y **Aplicar cambios de etiquetas** en la pestaña Mejoras. Si cierras la aplicación con el botón Aplicar todavía en rojo, Smart Citizen++ te pregunta si aplicar ahora o salir sin aplicar, para que el trabajo sin aplicar nunca se pierda en silencio.
 
-Smart Citizen también estampa una pequeña marca de agua en el texto de versión del lanzador (`Frontend_PU_Version`), añadiendo `\nLocalizations Enhanced with Smart Citizen v{VERSION}` en su propia línea. Así confirmas en el juego que tu loc-pack está activo: mira la etiqueta de versión en el menú principal de Star Citizen. La marca se reescribe con cada aplicación, así que nunca se acumula entre versiones.
+Smart Citizen++ también estampa una pequeña marca de agua en el texto de versión del lanzador (`Frontend_PU_Version`), añadiendo `\nLocalizations Enhanced with Smart Citizen++ v{VERSION}` en su propia línea. Así confirmas en el juego que tu loc-pack está activo: mira la etiqueta de versión en el menú principal de Star Citizen. La marca se reescribe con cada aplicación, así que nunca se acumula entre versiones.
 
 ## 8. Restaurar una copia de seguridad
 
-Abre el menú **Más** de la barra de herramientas y elige **Restaurar copia** para volver a una versión anterior. Smart Citizen conserva hasta **5 copias de seguridad automáticas**; la más antigua se elimina a medida que se crean nuevas.
+Abre el menú **Más** de la barra de herramientas y elige **Restaurar copia** para volver a una versión anterior. Smart Citizen++ conserva hasta **5 copias de seguridad automáticas**; la más antigua se elimina a medida que se crean nuevas.
 
 ## 9. Limpiar la localización
 
@@ -94,7 +94,7 @@ Usa **Importar INI** en la pestaña **Configuración** (también disponible en e
 
 ## 11. Exportar un Loc-Pack
 
-Abre el menú **Más** y elige **Exportar INI…** para empaquetar el `global.ini` actualmente aplicado en un único zip, `SmartCitizen-LocPack-{canal}-{AAAAMMDD}.zip`, que cualquiera puede soltar en su carpeta `StarCitizen\<canal>\data\Localization\english\` para usar el mismo loc-pack sin instalar Smart Citizen. Útil para compartir configuraciones con amigos o con tu organización.
+Abre el menú **Más** y elige **Exportar INI…** para empaquetar el `global.ini` actualmente aplicado en un único zip, `SmartCitizen-LocPack-{canal}-{AAAAMMDD}.zip`, que cualquiera puede soltar en su carpeta `StarCitizen\<canal>\data\Localization\english\` para usar el mismo loc-pack sin instalar Smart Citizen++. Útil para compartir configuraciones con amigos o con tu organización.
 
 ## 12. Restablecer user.ini
 
@@ -102,7 +102,7 @@ Usa **Restablecer user.ini** en la pestaña **Configuración** para borrar todas
 
 ## 13. Exportar / Importar ajustes
 
-Usa **Exportar ajustes…** e **Importar ajustes…** en la pestaña **Configuración** para mover toda tu configuración de Smart Citizen entre PC, o para respaldarla antes de una instalación limpia. La exportación empaqueta tus ajustes de la aplicación y los cambios de `user.ini` de todos los canales en un único zip pequeño, incluida tu ruta de instalación de Star Citizen; las rutas propias de cada máquina que no tendrían sentido en otro PC (tu carpeta de datos, la ubicación de la caché, la geometría de la ventana, los anchos de columna del editor de cadenas) se quedan fuera. La importación superpone esa copia a tu configuración actual y sustituye el `user.ini` de los canales que contiene: tus archivos `user.ini` actuales se guardan antes como instantánea mediante **Restaurar user.ini**, así que una importación es reversible. Tu ruta de Star Citizen solo se conserva si sigue existiendo en el PC donde importas; si no, Smart Citizen la detecta automáticamente. Tras una importación, Smart Citizen se reinicia para cargar la nueva configuración y después ofrece regenerar y aplicar tus mejoras.
+Usa **Exportar ajustes…** e **Importar ajustes…** en la pestaña **Configuración** para mover toda tu configuración de Smart Citizen++ entre PC, o para respaldarla antes de una instalación limpia. La exportación empaqueta tus ajustes de la aplicación y los cambios de `user.ini` de todos los canales en un único zip pequeño, incluida tu ruta de instalación de Star Citizen; las rutas propias de cada máquina que no tendrían sentido en otro PC (tu carpeta de datos, la ubicación de la caché, la geometría de la ventana, los anchos de columna del editor de cadenas) se quedan fuera. La importación superpone esa copia a tu configuración actual y sustituye el `user.ini` de los canales que contiene: tus archivos `user.ini` actuales se guardan antes como instantánea mediante **Restaurar user.ini**, así que una importación es reversible. Tu ruta de Star Citizen solo se conserva si sigue existiendo en el PC donde importas; si no, Smart Citizen++ la detecta automáticamente. Tras una importación, Smart Citizen++ se reinicia para cargar la nueva configuración y después ofrece regenerar y aplicar tus mejoras.
 
 ## 14. Tras las actualizaciones del juego
 
@@ -124,9 +124,9 @@ Al aplicar, la aplicación escribe en la carpeta de idioma correspondiente de tu
 
 ## 16. Actualizaciones de la aplicación
 
-Smart Citizen comprueba si hay una versión nueva cada vez que arranca. Cuando hay una disponible, las notas de la versión aparecen en una ventana con dos opciones:
+Smart Citizen++ comprueba si hay una versión nueva cada vez que arranca. Cuando hay una disponible, las notas de la versión aparecen en una ventana con dos opciones:
 
-- **Actualizar ahora** descarga el nuevo instalador, Windows pide permiso, y Smart Citizen se cierra, se actualiza y se vuelve a abrir en la versión nueva. Tus ediciones, copias de seguridad y configuración quedan intactas.
+- **Actualizar ahora** descarga el nuevo instalador, Windows pide permiso, y Smart Citizen++ se cierra, se actualiza y se vuelve a abrir en la versión nueva. Tus ediciones, copias de seguridad y configuración quedan intactas.
 - **Más tarde** te mantiene en la versión actual; la pregunta volverá en el próximo arranque.
 
 También puedes comprobarlo manualmente en cualquier momento con **Buscar actualizaciones** en la pestaña Configuración. Las versiones portables muestran en su lugar un botón **Abrir página de la versión**, ya que no hay instalador que ejecutar: descarga el zip nuevo y descomprímelo sobre la carpeta antigua.
@@ -155,7 +155,7 @@ Lleva el control de qué blueprints de fabricación ya posees, y míralo refleja
 - **Escanear registros en busca de blueprints adquiridos** rellena la colección automáticamente: lee los archivos de registro de Star Citizen en busca de los blueprints recibidos en el juego y los marca como adquiridos. Solo se importan los blueprints recibidos desde el último escaneo, así que repetirlo en cualquier momento apenas cuesta. El escaneo necesita que la ruta de instalación de Star Citizen esté configurada en la pestaña Configuración.
 - **Analizar también LIVE/HOTFIX (el que no esté activo)** comprueba también el que de esos dos no sea tu canal actual, ya que comparten la misma progresión de cuenta: un blueprint obtenido en LIVE aparece en los registros de HOTFIX y viceversa. Activado por defecto. PTU, EPTU y TECH-PREVIEW son compilaciones de prueba independientes con su propia progresión y nunca se analizan, independientemente de esta opción.
 - **Reanalizar todos los registros (ignorar el último análisis)** obliga al siguiente escaneo a releer todas las entradas de registro desde cero, en lugar de solo lo nuevo desde tu último escaneo. Úsalo si tu colección parece incorrecta y un escaneo normal no lo arregla. La casilla se desmarca sola al terminar el escaneo.
-- **Exportar blueprints adquiridos… / Importar blueprints adquiridos…** mueven tu colección entre PC, o la comparten con un amigo. La exportación escribe todo lo que posees en un archivo JSON o CSV; la importación lee uno y añade lo que encuentra, sin quitar nunca nada que ya poseas. Las exportaciones de scmdb.net también se importan. El resumen de la importación indica cuántos blueprints eran nuevos y lista los nombres del archivo que Smart Citizen no rastrea.
+- **Exportar blueprints adquiridos… / Importar blueprints adquiridos…** mueven tu colección entre PC, o la comparten con un amigo. La exportación escribe todo lo que posees en un archivo JSON o CSV; la importación lee uno y añade lo que encuentra, sin quitar nunca nada que ya poseas. Las exportaciones de scmdb.net también se importan. El resumen de la importación indica cuántos blueprints eran nuevos y lista los nombres del archivo que Smart Citizen++ no rastrea.
 - **Aplicar etiquetas [Owned]** vuelve a tejer las etiquetas `[Owned]` en tus textos cargados tras cambiar la colección. Como los demás botones de acción, se pone **rojo** cuando tu colección tiene cambios que la tabla aún no ha incorporado y **verde** cuando todo está sincronizado.
 - La columna **Adquirido** de la tabla de textos sigue mostrando una estrella y ordenando primero los adquiridos, pero ahora es de solo lectura; la colección se gestiona desde esta pestaña.
 
@@ -163,11 +163,11 @@ Lleva el control de qué blueprints de fabricación ya posees, y míralo refleja
 
 - **Apariencia**: elige el tema de la aplicación (ver más abajo).
 - **Instalación de Star Citizen**: ruta a tu directorio LIVE; detectada automáticamente en la instalación, editable aquí. El menú **Canal** elige qué canal lee y escribe la aplicación, y el menú **Idioma** cambia la aplicación y los textos del juego (ver *Cambiar de idioma* más arriba).
-- **Datos de Smart Citizen**: carpeta para `user.ini`, cachés, extracción de DataForge, INI de mejoras generados y copias de seguridad. Por defecto `Documents\Smart Citizen`; sácala de OneDrive si la extracción o la limpieza de caché van lentas.
+- **Datos de Smart Citizen++**: carpeta para `user.ini`, cachés, extracción de DataForge, INI de mejoras generados y copias de seguridad. Por defecto `Documents\Smart Citizen++`; sácala de OneDrive si la extracción o la limpieza de caché van lentas.
 - **Localización base (extracción P4K)**: haz clic en **Extraer desde Data.p4k** para descomprimir la localización original y los datos de entidades de DataForge directamente desde tu juego instalado. Es la única fuente de los textos base y de los datos de mejoras.
 - **Importar INI**: incorpora un archivo INI existente a tus cambios mediante el diálogo de resolución de conflictos.
 - **Restablecer user.ini**: borra todas tus ediciones personales del canal activo. Pide confirmación y hace una copia de seguridad automática del `user.ini` actual antes de limpiar.
-- **Restaurar user.ini**: devuelve tus ediciones personales a una instantánea anterior. Smart Citizen conserva copias rotativas de `user.ini` (hasta 5, tomadas automáticamente antes de cada cambio): si una importación o edición sale mal, elige una versión anterior y recupera tus textos. La restauración es a su vez reversible: el archivo actual se guarda primero.
+- **Restaurar user.ini**: devuelve tus ediciones personales a una instantánea anterior. Smart Citizen++ conserva copias rotativas de `user.ini` (hasta 5, tomadas automáticamente antes de cada cambio): si una importación o edición sale mal, elige una versión anterior y recupera tus textos. La restauración es a su vez reversible: el archivo actual se guarda primero.
 - **Exportar ajustes… / Importar ajustes…**: respalda toda tu configuración (ajustes más el `user.ini` de todos los canales) en un único zip pequeño, o restáurala en un PC nuevo. Ver *Exportar / Importar ajustes* más arriba.
 
 ## Pestaña Registro
@@ -185,7 +185,7 @@ Elige un tema en **Configuración → Apariencia**:
 
 ## Disposición de la ventana
 
-Smart Citizen recuerda el tamaño de tu ventana, la disposición del editor de cadenas acoplado y los anchos de tus columnas entre sesiones. Cada pestaña desplaza su propio contenido, así que puedes reducir la ventana todo lo que quieras y llegar a cualquier control desplazándote, en lugar de ver los controles comprimidos o recortados.
+Smart Citizen++ recuerda el tamaño de tu ventana, la disposición del editor de cadenas acoplado y los anchos de tus columnas entre sesiones. Cada pestaña desplaza su propio contenido, así que puedes reducir la ventana todo lo que quieras y llegar a cualquier control desplazándote, en lugar de ver los controles comprimidos o recortados.
 
 Si tu disposición acaba en un estado incómodo (una columna reducida a una franja, o un tamaño de ventana que ya no encaja en tu pantalla), usa **Más → Restablecer las proporciones de la ventana**. Restaura el tamaño de la ventana, la disposición de los paneles y los anchos de columna a sus valores predeterminados. Tus ajustes, tus ediciones y tus datos de localización no se tocan.
 
@@ -199,7 +199,7 @@ Haz clic en el botón **Tutorial** de la barra de herramientas en cualquier mome
 
 ## Pestaña FAQ
 
-La pestaña **FAQ** responde a las preguntas que más nos hacen, directamente en la aplicación: qué archivos toca Smart Citizen, si pueden banearte por usarlo, por qué Windows señala el instalador, y cómo deshacer tus cambios. Consúltala primero; si tu pregunta no está cubierta, el Discord está a un clic.
+La pestaña **FAQ** responde a las preguntas que más nos hacen, directamente en la aplicación: qué archivos toca Smart Citizen++, si pueden banearte por usarlo, por qué Windows señala el instalador, y cómo deshacer tus cambios. Consúltala primero; si tu pregunta no está cubierta, el Discord está a un clic.
 
 ## Atajos de teclado
 
@@ -215,9 +215,9 @@ La pestaña **FAQ** responde a las preguntas que más nos hacen, directamente en
 
 ## Problemas conocidos
 
-Algunas anomalías de texto tienen su origen en los propios datos de Star Citizen: una referencia errónea de clave de localización en un registro de contrato de CIG, o una recompensa de blueprint cuyos datos no remiten a ningún nombre de visualización real. El juego lee los contratos y las recompensas de blueprint desde su propio `Data.p4k` en tiempo de ejecución, así que Smart Citizen no puede corregir esto en el origen; solo puede corregir el *texto* que genera y aplica. Cuando resulta práctico, sorteamos estos errores a nivel de datos o de generación para que el resultado en el juego se muestre correcto de todos modos.
+Algunas anomalías de texto tienen su origen en los propios datos de Star Citizen: una referencia errónea de clave de localización en un registro de contrato de CIG, o una recompensa de blueprint cuyos datos no remiten a ningún nombre de visualización real. El juego lee los contratos y las recompensas de blueprint desde su propio `Data.p4k` en tiempo de ejecución, así que Smart Citizen++ no puede corregir esto en el origen; solo puede corregir el *texto* que genera y aplica. Cuando resulta práctico, sorteamos estos errores a nivel de datos o de generación para que el resultado en el juego se muestre correcto de todos modos.
 
-- **Dosier de Jorrit, «Updated Power Usage Data» muestra el texto de Energy Anomaly**: CIG Issue Council [STARC-176797](https://issue-council.robertsspaceindustries.com/projects/STAR-CITIZEN/issues/STARC-176797). El contrato `Hockrow_FacilityDelve_P2M4-Stanton4_Repeat` de CIG apunta su parámetro `Description` a `@Hockrow_FacilityDelve_P2M1_Repeat_desc` en lugar de a su propio `P2M4_Repeat_desc`, así que los jugadores ven en el juego el texto de ambientación de Energy Anomaly de P2M1 en una misión titulada «Power Usage Data». Smart Citizen lo sortea en dos pasos, ambos declarados en `patches/contracts/contractgenerator/mercenary_guild/hockrowagency/hockrowagency_facilitydelve.patch.json`:
+- **Dosier de Jorrit, «Updated Power Usage Data» muestra el texto de Energy Anomaly**: CIG Issue Council [STARC-176797](https://issue-council.robertsspaceindustries.com/projects/STAR-CITIZEN/issues/STARC-176797). El contrato `Hockrow_FacilityDelve_P2M4-Stanton4_Repeat` de CIG apunta su parámetro `Description` a `@Hockrow_FacilityDelve_P2M1_Repeat_desc` en lugar de a su propio `P2M4_Repeat_desc`, así que los jugadores ven en el juego el texto de ambientación de Energy Anomaly de P2M1 en una misión titulada «Power Usage Data». Smart Citizen++ lo sortea en dos pasos, ambos declarados en `patches/contracts/contractgenerator/mercenary_guild/hockrowagency/hockrowagency_facilitydelve.patch.json`:
   1. Una edición del XML de DataForge para que nuestro generador de mejoras asocie la lista correcta de blueprints de P2M4 (Corbel Smolder, Geist Rogue/Whiteout) a `P2M4_Repeat_desc` en lugar de reducirla a la de P2M1.
   2. Un arreglo de texto que añade el contenido completo de `P2M4_Repeat_desc` (su texto de ambientación más su propia lista de blueprints) al final de `P2M1_Repeat_desc`, separado por un divisor rotulado. Como el juego lee el puntero defectuoso y consulta `P2M1_Repeat_desc` para ambos contratos, el contrato P2M4 ahora muestra su contenido previsto. Los jugadores de P2M1 ven el bloque de P2M4 como un apéndice rotulado tras su propia descripción: más ruidoso, pero ambos contratos muestran ya la lista de blueprints correcta y el texto de ambientación correcto.
 
