@@ -1,8 +1,10 @@
 #include "core/pipeline/Extraction.h"
 
+#include "core/EnginePaths.h"
 #include "engine/Try.h"
 #include "engine/forge/DataForge.h"
 #include "engine/forge/Exporter.h"
+#include "engine/gamedata/GameData.h"
 #include "engine/io/FileSystem.h"
 
 #include <QDateTime>
@@ -18,11 +20,6 @@ using engine::Errc;
 using engine::fail;
 
 namespace {
-
-std::filesystem::path fsPath(const QString &path)
-{
-    return std::filesystem::path(path.toStdU16String());
-}
 
 std::optional<std::size_t> findEntry(const engine::p4k::Archive &archive, const std::function<bool(std::string_view)> &match)
 {
@@ -222,6 +219,43 @@ bool dataForgeCacheIsFresh(const QString &p4kPath, const QString &cacheDir)
     // A stamp without content (an interrupted first run) is not fresh.
     QDirIterator it(dataForgeRecordsDir(cacheDir), {QStringLiteral("*.xml")}, QDir::Files, QDirIterator::Subdirectories);
     return it.hasNext();
+}
+
+engine::Result<QStringList> exportGameData(const engine::p4k::Archive &archive, const QString &outputPath,
+                                           const QString &baseIniPath, const QString &overlayPath,
+                                           const QString &channel, const StepProgress &progress)
+{
+    auto report = [&](const QString &step, qint64 done, qint64 total) {
+        if (progress)
+            progress(step, done, total);
+    };
+    const auto dcb = findEntry(archive, [](std::string_view name) { return iendsWith(name, ".dcb"); });
+    if (!dcb)
+        return fail(Errc::NotFound, "no DataForge database (.dcb) in " + archive.path().string());
+    report(QStringLiteral("Reading %1").arg(QString::fromUtf8(archive.name(*dcb))), 0, 2);
+    auto bytes = archive.read(*dcb);
+    if (!bytes)
+        return std::unexpected(bytes.error());
+    auto forge = engine::forge::DataForge::load(std::move(*bytes));
+    if (!forge)
+        return std::unexpected(forge.error());
+
+    report(QStringLiteral("Building game data"), 1, 2);
+    engine::gamedata::Options options;
+    options.baseIniPath = baseIniPath.toStdString();
+    options.overlayPath = overlayPath.toStdString();
+    if (!channel.isEmpty())
+        options.channel = channel.toStdString();
+    QStringList lines;
+    auto json = engine::gamedata::buildGameDataJson(*forge, options, [&](const std::string &line) {
+        lines << QString::fromStdString(line);
+    });
+    if (!json)
+        return std::unexpected(json.error());
+    SC_TRY(engine::io::createDirectories(fsPath(QFileInfo(outputPath).absolutePath())));
+    SC_TRY(engine::io::writeFile(fsPath(outputPath), std::string_view(*json)));
+    report(QStringLiteral("Wrote %1").arg(QDir::toNativeSeparators(outputPath)), 2, 2);
+    return lines;
 }
 
 } // namespace core

@@ -1,0 +1,71 @@
+{
+ "json": {
+  "components": "{\"abbreviated_phrases\": [], \"class_mapping\": {\"Civilian\": [\"C\", \"CIV\", \"Civilian\"], \"Competition\": [\"R\", \"CMP\", \"Competition\"], \"Cooler\": [\"CL\", \"COOL\", \"Cooler\"], \"Fuel Nozzle\": [\"FN\", \"FNoz\", \"Fuel Nozzle\"], \"Industrial\": [\"I\", \"IND\", \"Industrial\"], \"Military\": [\"M\", \"MIL\", \"Military\"], \"Mining Laser\": [\"ML\", \"MineL\", \"Mining Laser\"], \"Power Plant\": [\"PW\", \"POWR\", \"Power\"], \"Quantum Drive\": [\"QD\", \"QDRV\", \"Quantum\"], \"Radar\": [\"RD\", \"RADR\", \"Radar\"], \"Shield Generator\": [\"SH\", \"SHLD\", \"Shield\"], \"Stealth\": [\"S\", \"STH\", \"Stealth\"]}, \"elements\": [{\"enabled\": true, \"kind\": \"class\", \"style\": \"med\"}, {\"enabled\": true, \"kind\": \"size\", \"style\": \"sn\"}, {\"enabled\": true, \"kind\": \"grade\", \"style\": \"letter\"}, {\"enabled\": false, \"kind\": \"type\", \"style\": \"short\"}], \"enclosing\": \"square\", \"location_detail\": \"address\", \"placement\": \"prepend\", \"rank_separator\": \"dash\", \"route_arrow\": \"gt\", \"separator\": \"hyphen\", \"shortened_sizes\": [], \"standardize_hauling_names\": false, \"title_separator\": \"dash\", \"usage_separator\": \"pipe\"}",
+  "missiles": "{\"abbreviated_phrases\": [], \"class_mapping\": {\"Bomb\": [\"B\", \"B\", \"Bomb\"], \"CrossSection\": [\"C\", \"CS\", \"CrossSection\"], \"Electromagnetic\": [\"E\", \"EM\", \"Electromagnetic\"], \"Infrared\": [\"I\", \"IR\", \"Infrared\"]}, \"elements\": [{\"enabled\": true, \"kind\": \"ordinance\", \"style\": \"med\"}, {\"enabled\": true, \"kind\": \"size\", \"style\": \"sn\"}], \"enclosing\": \"square\", \"location_detail\": \"address\", \"placement\": \"prepend\", \"rank_separator\": \"dash\", \"route_arrow\": \"gt\", \"separator\": \"hyphen\", \"shortened_sizes\": [], \"standardize_hauling_names\": false, \"title_separator\": \"dash\", \"usage_separator\": \"pipe\"}",
+  "ship_weapons": "{\"abbreviated_phrases\": [], \"class_mapping\": {\"Biochemical\": [\"B\", \"BIO\", \"Biochemical\"], \"Distortion\": [\"D\", \"DIS\", \"Distortion\"], \"Energy\": [\"E\", \"EN\", \"Energy\"], \"Physical\": [\"P\", \"PHY\", \"Physical\"], \"Stun\": [\"S\", \"STN\", \"Stun\"], \"Thermal\": [\"T\", \"THM\", \"Thermal\"]}, \"elements\": [{\"enabled\": true, \"kind\": \"damage\", \"style\": \"short\"}, {\"enabled\": true, \"kind\": \"size\", \"style\": \"sn\"}], \"enclosing\": \"square\", \"location_detail\": \"address\", \"placement\": \"prepend\", \"rank_separator\": \"dash\", \"route_arrow\": \"gt\", \"separator\": \"hyphen\", \"shortened_sizes\": [], \"standardize_hauling_names\": false, \"title_separator\": \"dash\", \"usage_separator\": \"pipe\"}",
+  "commodities": "{\"abbreviated_phrases\": [], \"class_mapping\": {\"Ammo\": [\"A\", \"AM\", \"AMMO\"], \"Armor\": [\"AR\", \"ARM\", \"ARMR\"], \"Collection\": [\"Col\", \"Collect\", \"Collection\"], \"Cooler\": [\"C\", \"CL\", \"COOL\"], \"Crafting\": [\"CF\", \"Craft\", \"Crafting\"], \"FPS Weapon\": [\"G\", \"FW\", \"FPSW\"], \"Mining Laser\": [\"M\", \"ML\", \"MINE\"], \"Mission Item\": [\"MI\", \"MIT\", \"MITM\"], \"Power Plant\": [\"P\", \"PP\", \"POWR\"], \"Quantum Drive\": [\"Q\", \"QD\", \"QDRV\"], \"Radar\": [\"R\", \"RD\", \"RADR\"], \"Refuel Nozzle\": [\"F\", \"RF\", \"FUEL\"], \"Salvage Module\": [\"SV\", \"SLV\", \"SALV\"], \"Shield\": [\"S\", \"SH\", \"SHLD\"], \"Ship Weapon (Ballistic)\": [\"B\", \"BW\", \"BGUN\"], \"Ship Weapon (Distortion)\": [\"D\", \"DW\", \"DGUN\"], \"Ship Weapon (Energy)\": [\"E\", \"EW\", \"EGUN\"], \"Tractor Beam\": [\"T\", \"TB\", \"TRAC\"]}, \"elements\": [{\"enabled\": false, \"kind\": \"label\", \"style\": \"short\"}, {\"enabled\": false, \"kind\": \"usage\", \"style\": \"long\"}, {\"enabled\": false, \"kind\": \"collection\", \"style\": \"long\"}], \"enclosing\": \"square\", \"location_detail\": \"address\", \"placement\": \"append\", \"rank_separator\": \"dash\", \"route_arrow\": \"gt\", \"separator\": \"pipe\", \"shortened_sizes\": [], \"standardize_hauling_names\": false, \"title_separator\": \"dash\", \"usage_separator\": \"pipe\"}",
+  "mission_titles": "{\"abbreviated_phrases\": [], \"class_mapping\": {}, \"elements\": [{\"enabled\": true, \"kind\": \"route\", \"style\": \"\"}], \"enclosing\": \"square\", \"location_detail\": \"address\", \"placement\": \"append\", \"rank_separator\": \"dash\", \"route_arrow\": \"gt\", \"separator\": \"hyphen\", \"shortened_sizes\": [], \"standardize_hauling_names\": false, \"title_separator\": \"dash\", \"usage_separator\": \"pipe\"}"
+ },
+ "fingerprint_true": "9ef79573b338",
+ "fingerprint_false": "4d0057a5948b",
+ "render": {
+  "components_default": "[MIL-S2-A]",
+  "components_custom": "(Military|Size 2|Grade A|CL)",
+  "components_unknown": "(Unknownish)",
+  "missile_bomb": "[S2]",
+  "missile_ir": "[IR-S1]",
+  "commodity_all": "[CF|QDRV|SHLD|Bogus|Collection]",
+  "commodity_empty": ""
+ },
+ "abbreviate": [
+  [
+   "Rookie Rank - Small Cargo Haul",
+   "Rookie | Small",
+   "Rookie Rank: Small Cargo Haul",
+   "Rookie Small Cargo Haul",
+   "Rookie Rank - Small Haul"
+  ],
+  [
+   "~mission(ReputationRank) Rank - Direct ~mission(CargoGradeToken) Cargo Haul Circuit",
+   "~mission(ReputationRank) | Direct ~mission(CargoGradeToken) Circuit",
+   "~mission(ReputationRank) Rank: <EM3>DIRECT</EM3> ~mission(CargoGradeToken) Cargo Haul Circuit",
+   "~mission(ReputationRank) Direct ~mission(CargoGradeToken) Cargo Haul Circuit",
+   "~mission(ReputationRank) Rank - Direct ~mission(CargoGradeToken) Haul Circuit"
+  ],
+  [
+   "Ling Family ~mission(ReputationRank) Cargo Haul - ~mission(CargoGradeToken) Scale",
+   "Ling Family ~mission(ReputationRank) - ~mission(CargoGradeToken) Scale",
+   "~mission(ReputationRank) Rank: Cargo Haul - ~mission(CargoGradeToken) Scale",
+   "~mission(ReputationRank) ~mission(CargoGradeToken) Cargo Haul",
+   "~mission(ReputationRank) Rank - ~mission(CargoGradeToken) Haul"
+  ],
+  [
+   "~mission(ReputationRank) Hauler Needed for ~mission(CargoGradeToken) Shipment",
+   "~mission(ReputationRank) Hauler Needed for ~mission(CargoGradeToken) Shipment",
+   "~mission(ReputationRank) Rank: ~mission(CargoGradeToken) Shipment",
+   "~mission(ReputationRank) ~mission(CargoGradeToken) Cargo Haul",
+   "~mission(ReputationRank) Rank - ~mission(CargoGradeToken) Haul"
+  ],
+  [
+   "Opportunity for Independent Cargo Hauler",
+   "Opportunity for Independent Hauler",
+   "Intro",
+   "Opportunity for Independent Cargo Hauler",
+   "Opportunity for Independent Hauler"
+  ],
+  [
+   "Direct Local Shipment Route, Rank - x",
+   "Direct Local Shipment Route, | x",
+   "<EM3>DIRECT</EM3> Route, Rank: x",
+   "Direct Local Shipment Route, x",
+   "Direct Local Shipment Route, Rank - x"
+  ]
+ ],
+ "route": [
+  "A =>- B",
+  "from A",
+  "to B",
+  "A -> B"
+ ],
+ "legacy_from_dict": "{\"abbreviated_phrases\": [\"cargo\", \"haul\", \"hauler_needed_for\", \"intro\", \"ling_family_prefix\", \"ling_family_rank\", \"local_shipment_route\", \"rank\"], \"class_mapping\": {\"X\": [\"a\", \"a\", \"b\"]}, \"elements\": [{\"enabled\": true, \"kind\": \"class\", \"style\": \"long\"}, {\"enabled\": true, \"kind\": \"size\", \"style\": \"\"}], \"enclosing\": \"square\", \"location_detail\": \"address\", \"placement\": \"prepend\", \"rank_separator\": \"dash\", \"route_arrow\": \"gt\", \"separator\": \"hyphen\", \"shortened_sizes\": [\"Extra Large\", \"Extra Small\", \"Large\", \"Medium\", \"Small\"], \"standardize_hauling_names\": false, \"title_separator\": \"dash\", \"usage_separator\": \"pipe\"}"
+}

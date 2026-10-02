@@ -149,6 +149,24 @@ private slots:
         QVERIFY(!dataForgeCacheIsFresh(p4k, cache));
     }
 
+    void exportsGameData()
+    {
+        QTemporaryDir dir;
+        const auto archive = open(buildP4k(dir));
+        QVERIFY(archive);
+        const QString out = dir.filePath(QStringLiteral("export/game_data.json"));
+        QStringList steps;
+        const auto lines = exportGameData(*archive, out, {}, {}, QStringLiteral("LIVE"),
+                                          [&](const QString &step, qint64, qint64) { steps << step; });
+        QVERIFY2(lines, lines ? "" : lines.error().message.c_str());
+        QVERIFY(lines->contains(QStringLiteral("Weapons: 0 (0 guns + 0 missiles)")));
+        QCOMPARE(steps.size(), 3);
+        const QByteArray json = readAll(out);
+        QVERIFY(json.startsWith("{\r\n  \"schema_version\": 1,\r\n"));
+        QVERIFY(json.contains("\"channel\": \"LIVE\""));
+        QVERIFY(json.endsWith("\"racks\": []\r\n}\r\n"));
+    }
+
     void patchesAreAppliedAndIdempotent()
     {
         QTemporaryDir dir;

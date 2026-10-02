@@ -6,6 +6,7 @@
 #include "core/text/IniFile.h"
 
 #include <QList>
+#include <QSet>
 #include <QString>
 
 #include <functional>
@@ -23,6 +24,13 @@ struct ApplyInputs
     QString scLanguageId;
     QString appName;
     QString version;
+    // Enhancement keys left out of the merge: the "New" lines (not in the
+    // stock base.ini) unless the user opted to include them.
+    QSet<QString> excludeEnhancementKeys;
+    // languages.ini shipped for the selected language, copied to
+    // <channel>\data\languages.ini when both are set.
+    QString languagesIniSource;
+    QString languagesIniDest;
     // Runs on the merged strings before the stamps (e.g. weaving [Owned]
     // into blueprint lists).
     std::function<void(IniMap &)> beforeStamps;

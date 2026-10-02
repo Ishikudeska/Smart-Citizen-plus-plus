@@ -5,6 +5,7 @@
 #include "core/Paths.h"
 #include "core/ScInstall.h"
 #include "core/Settings.h"
+#include "core/enhancements/Generator.h"
 
 #include <QDir>
 #include <QFile>
@@ -77,6 +78,98 @@ private slots:
         s.sync();
         QCOMPARE(Settings(file).value(QStringLiteral("tag_builder/components/config")).toString(),
                  QStringLiteral("{\"a\":1}"));
+    }
+
+    void tagConfigs()
+    {
+        QTemporaryDir dir;
+        Settings s(dir.filePath(QStringLiteral("settings.ini")));
+        QVERIFY(s.tagConfig(QStringLiteral("missiles")) == tags::defaultConfig(QStringLiteral("missiles")));
+        QVERIFY(s.annotateMissionDescs());
+
+        tags::TagConfig c = tags::defaultConfig(QStringLiteral("components"));
+        c.separator = QStringLiteral("dot");
+        s.setTagConfig(QStringLiteral("components"), c);
+        QVERIFY(s.tagConfig(QStringLiteral("components")) == c);
+
+        s.setValue(QStringLiteral("tag_builder/ship_weapons/config"), QStringLiteral("{broken"));
+        QVERIFY(s.tagConfig(QStringLiteral("ship_weapons")) == tags::defaultConfig(QStringLiteral("ship_weapons")));
+
+        // Commodities' "none" separator is upgraded once, then left alone.
+        tags::TagConfig com = tags::defaultConfig(QStringLiteral("commodities"));
+        com.separator = QStringLiteral("none");
+        s.setTagConfig(QStringLiteral("commodities"), com);
+        QCOMPARE(s.tagConfig(QStringLiteral("commodities")).separator, QStringLiteral("pipe"));
+        s.setTagConfig(QStringLiteral("commodities"), com);
+        QCOMPARE(s.tagConfig(QStringLiteral("commodities")).separator, QStringLiteral("none"));
+
+        QCOMPARE(s.allTagConfigs().size(), tags::kCategories.size());
+    }
+
+    void generatorOptions()
+    {
+        QTemporaryDir dir;
+        const QString file = dir.filePath(QStringLiteral("settings.ini"));
+        {
+            Settings s(file);
+            QCOMPARE(s.repXpLabel(), QStringLiteral("Rep"));
+            QCOMPARE(s.missionHeaderEmTag(), QStringLiteral("EM3"));
+            for (const QString &f : kMissionFieldKeys)
+                QVERIFY(s.missionDetailField(f));
+            for (const QString &f : kMissionTitleTagKeys)
+                QCOMPARE(s.missionTitleTag(f), f != u"rep_track");
+            QVERIFY(!s.statsPrepend());
+            QVERIFY(!s.standardizeEarnableShipNames());
+            QVERIFY(s.rsOreNameAnnotations());
+
+            const enh::GeneratorOptions defaults = enh::optionsFromSettings(s);
+            QCOMPARE(defaults.categories->size(), enh::kGeneratorCategories.size());
+            QVERIFY(!defaults.missionTitleTags.value(QStringLiteral("rep_track")));
+            QCOMPARE(defaults.missionHeaders.value(QStringLiteral("items")), QStringLiteral("ITEM REWARDS"));
+
+            s.setRepXpLabel(QStringLiteral("XP"));
+            s.setMissionHeaderEmTag(QStringLiteral("EM1")); // removed in 1.5.0: reads as the default
+            s.setMissionDetailField(QStringLiteral("spawns"), false);
+            s.setMissionDetailField(QStringLiteral("nonsense"), false); // ignored
+            s.setMissionTitleTag(QStringLiteral("rep_track"), true);
+            s.setStatsPrepend(true);
+            s.setRsOreNameAnnotations(false);
+            s.setEnhancementCategoryEnabled(QStringLiteral("journal"), false);
+            s.sync();
+        }
+        Settings s(file);
+        QCOMPARE(s.missionHeaderEmTag(), QStringLiteral("EM3"));
+        QVERIFY(!s.allKeys().contains(QStringLiteral("mission_field/nonsense")));
+        const enh::GeneratorOptions o = enh::optionsFromSettings(s);
+        QCOMPARE(o.repXpLabel, QStringLiteral("XP"));
+        QVERIFY(!o.missionDetailFields.value(QStringLiteral("spawns")));
+        QVERIFY(o.missionTitleTags.value(QStringLiteral("rep_track")));
+        QVERIFY(o.statsPrepend);
+        QVERIFY(!o.rsOreNameAnnotations);
+        QVERIFY(!o.categories->contains(QStringLiteral("journal")));
+
+        // The pre-2.2 blueprint_tag/ace toggles carry into the title tags once.
+        s.setValue(QStringLiteral("mission_field/blueprint_tag"), false);
+        s.migrateTitleTagSettings();
+        QVERIFY(!s.missionTitleTag(QStringLiteral("blueprint")));
+        QVERIFY(s.missionTitleTag(QStringLiteral("ace")));
+        s.setMissionTitleTag(QStringLiteral("blueprint"), true);
+        s.migrateTitleTagSettings();
+        QVERIFY(s.missionTitleTag(QStringLiteral("blueprint")));
+    }
+
+    void languageSources()
+    {
+        QTemporaryDir dir;
+        Settings s(dir.filePath(QStringLiteral("settings.ini")));
+        const QString shipped = QStringLiteral(SC_SOURCE_DIR "/resources/languages");
+        QVERIFY(languageBaseUrl(s, QStringLiteral("french"), shipped).startsWith(QStringLiteral("https://")));
+        QVERIFY(languageBaseUrl(s, QStringLiteral("english"), shipped).isEmpty());
+        s.setLanguageSourceOverride(QStringLiteral("french"), QStringLiteral("https://example.com/fr.ini"));
+        QCOMPARE(languageBaseUrl(s, QStringLiteral("french"), shipped), QStringLiteral("https://example.com/fr.ini"));
+        s.setLanguageSourceOverride(QStringLiteral("french"), QString());
+        QVERIFY(s.languageSourceOverride(QStringLiteral("french")).isEmpty());
+        QVERIFY(languageBaseUrl(s, QStringLiteral("french"), dir.filePath(QStringLiteral("none"))).isEmpty());
     }
 
     void unknownChannelFallsBackToLive()

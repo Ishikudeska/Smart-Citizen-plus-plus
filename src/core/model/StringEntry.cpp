@@ -100,9 +100,7 @@ QString computeCategory(const QString &key)
         const QStringView after = QStringView(key).sliced(9);
         if (!after.isEmpty() && after[0] != u'_')
             return after[0].isUpper() ? category::kShipItems : category::kGear;
-        static const QRegularExpression shipWeaponSize(QStringLiteral(R"(_S\d+|_X{1,2}L(-\d+)?|_[LMS]-\d+)"),
-                                                       QRegularExpression::CaseInsensitiveOption);
-        if (shipWeaponSize.match(key).hasMatch())
+        if (hasShipWeaponSize(key))
             return category::kShipItems;
         if (l.startsWith(u"item_name_") || l.startsWith(u"item_desc_"))
             return category::kGear;
@@ -132,6 +130,23 @@ QString statusName(EntryStatus status)
     case EntryStatus::New: return QStringLiteral("New");
     }
     return {};
+}
+
+bool hasFpsWeaponWord(QStringView lowerKey)
+{
+    return containsAny(lowerKey, kFpsWeaponWords);
+}
+
+bool hasArmorGearWord(QStringView lowerKey)
+{
+    return containsAny(lowerKey, kArmorGearWords);
+}
+
+bool hasShipWeaponSize(const QString &key)
+{
+    static const QRegularExpression shipWeaponSize(QStringLiteral(R"(_S\d+|_X{1,2}L(-\d+)?|_[LMS]-\d+)"),
+                                                   QRegularExpression::CaseInsensitiveOption);
+    return shipWeaponSize.match(key).hasMatch();
 }
 
 QString extractCategory(const QString &key)

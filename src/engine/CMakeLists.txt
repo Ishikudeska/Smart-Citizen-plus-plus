@@ -22,6 +22,8 @@ add_library(scengine STATIC
     p4k/Archive.cpp
     p4k/Extractor.h
     p4k/Extractor.cpp
+    p4k/TreeIndex.h
+    p4k/TreeIndex.cpp
 
     cryxml/CryXml.h
     cryxml/CryXml.cpp
@@ -42,6 +44,13 @@ add_library(scengine STATIC
     forge/RecordBuilder.cpp
     forge/Exporter.h
     forge/Exporter.cpp
+
+    gamedata/DotNet.h
+    gamedata/DotNet.cpp
+    gamedata/Json.h
+    gamedata/Json.cpp
+    gamedata/GameData.h
+    gamedata/GameData.cpp
 )
 
 target_include_directories(scengine PUBLIC ${PROJECT_SOURCE_DIR}/src)

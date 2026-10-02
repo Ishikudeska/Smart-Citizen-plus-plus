@@ -32,6 +32,13 @@ QString statusName(EntryStatus status); // "Unmodified", "Modified", ...
 // loc key, from its prefix and shape. Memoized; thread-safe.
 QString extractCategory(const QString &key);
 
+// Key-shape tests the category rules share with the blueprint classifier:
+// FPS weapon tokens ("_rifle_", ...), armour/gear tokens ("helmet", ...) in
+// a lower-cased key, and a ship-weapon size designator (_S2, _XL, _L-2).
+bool hasFpsWeaponWord(QStringView lowerKey);
+bool hasArmorGearWord(QStringView lowerKey);
+bool hasShipWeaponSize(const QString &key);
+
 // A ship/vehicle NAME key (as opposed to a description in the same
 // category). Only names take the favourite prefix and ASOP sort order (#329).
 bool isShipNameKey(QStringView key);

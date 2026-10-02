@@ -5,6 +5,7 @@
 #include "core/apply/Stamps.h"
 
 #include <QFile>
+#include <QDir>
 #include <QFileInfo>
 
 namespace core {
@@ -34,7 +35,16 @@ ApplyOutcome applyToGame(const ApplyInputs &in)
         return out;
     }
 
-    IniMap merged = mergeSourcesByHierarchy(in.sources.sources, in.sources.hierarchy, &in.userOverrides);
+    SourceMap sources = in.sources.sources;
+    if (!in.excludeEnhancementKeys.isEmpty())
+        if (const auto enh = sources.find(kSourceEnhancements); enh != sources.end()) {
+            IniMap kept;
+            for (const auto &[key, value] : enh->second)
+                if (!in.excludeEnhancementKeys.contains(key))
+                    kept.insert(key, value);
+            enh->second = std::move(kept);
+        }
+    IniMap merged = mergeSourcesByHierarchy(sources, in.sources.hierarchy, &in.userOverrides);
     if (in.beforeStamps)
         in.beforeStamps(merged);
 
@@ -61,6 +71,12 @@ ApplyOutcome applyToGame(const ApplyInputs &in)
         return out;
     }
 
+    if (!in.languagesIniSource.isEmpty() && !in.languagesIniDest.isEmpty() && QFileInfo::exists(in.languagesIniSource)) {
+        QDir().mkpath(QFileInfo(in.languagesIniDest).absolutePath());
+        QFile::remove(in.languagesIniDest);
+        if (!QFile::copy(in.languagesIniSource, in.languagesIniDest))
+            qWarning("could not copy languages.ini to %s", qPrintable(in.languagesIniDest));
+    }
     if (!in.channelInstallDir.isEmpty())
         out.userCfg = ensureUserCfgLanguage(in.channelInstallDir, in.scLanguageId);
     out.ok = true;

@@ -10,6 +10,9 @@ set(APP_ORG      "SCX")
 set(APP_EXE_NAME "SCX")
 set(APP_VERSION  "0.1.0")
 set(APP_USER_MODEL_ID "SCX.App")
+# GitHub "owner/repo" whose releases the in-app update check reads. Empty
+# turns the check off (no network call is made).
+set(APP_UPDATE_REPO  "")
 
 option(APP_PORTABLE "Portable build: keep settings and data next to the executable" OFF)
 

@@ -3,9 +3,10 @@
 /Smart Citizen CPLusPLus/
 /unp4k/
 
-# Build trees
+# Build trees and packaged artifacts
 /build/
 /out/
+/dist/
 
 # Local CMake / IDE state
 CMakeUserPresets.json
