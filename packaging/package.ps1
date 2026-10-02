@@ -62,7 +62,7 @@ function Build-Variant([string]$preset, [string]$folder) {
         # To the console, not the pipeline: a function returns everything its
         # commands output, and only the folder path should come back.
         Invoke-Checked $cmake @("--preset", $preset) | Out-Host
-        Invoke-Checked $cmake @("--build", "--preset", $preset, "--target", "scapp") | Out-Host
+        Invoke-Checked $cmake @("--build", "--preset", $preset) | Out-Host
         Invoke-Checked $cmake @("--install", "build\$preset", "--prefix", $out) | Out-Host
     } finally {
         Pop-Location

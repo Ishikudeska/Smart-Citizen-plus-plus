@@ -30,6 +30,9 @@ jobs:
           dir: C:\
           tools: "tools_mingw1310 tools_ninja tools_cmake"
           cache: true
+          # aqtinstall 3.3.0 (latest on PyPI) predates the per-compiler repo layout
+          # Qt uses from 6.11, so use a master commit with that support until 3.4.0.
+          aqtsource: "git+https://github.com/miurahr/aqtinstall.git@076e1659807d0b362a3ed684d54c2e9c775eb9c7"
 
       - name: Install Inno Setup
         run: choco install innosetup --no-progress -y
@@ -44,14 +47,11 @@ jobs:
             throw "Tag ${{ github.ref_name }} does not match APP_VERSION $($Matches[1])"
           }
 
-      - name: Build, test and package
+      # The release presets build only the app (no tests or tools).
+      - name: Build and package
         shell: pwsh
         run: |
           $env:PATH = "C:\Qt\Tools\mingw1310_64\bin;C:\Qt\6.12.0\mingw_64\bin;C:\Qt\Tools\Ninja;C:\Qt\Tools\CMake_64\bin;$env:PATH"
-          cmake --preset mingw-release
-          cmake --build --preset mingw-release
-          ctest --preset mingw-release -L "unit|smoke"
-          if ($LASTEXITCODE -ne 0) { throw "tests failed" }
           ./packaging/package.ps1
 
       - uses: actions/upload-artifact@v4
