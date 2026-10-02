@@ -56,6 +56,8 @@ Popup {
             }
             contentItem: Item {
                 implicitHeight: 8
+                // The indeterminate runner slides in from off the left edge.
+                clip: true
                 Rectangle {
                     visible: !bar.indeterminate
                     width: bar.visualPosition * parent.width

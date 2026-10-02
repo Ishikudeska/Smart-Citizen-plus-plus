@@ -308,10 +308,31 @@ Item {
                         model: page.model
                         onCurrentChanged: (current) => page.currentRow = current.row
                     }
-                    columnWidthProvider: (column) => {
+                    // Spare width goes to the text columns the user has not
+                    // sized, in proportion; to the last column if all are sized.
+                    readonly property var stretchColumns: [1, 2, 3, 6]
+                    function baseWidth(column) {
                         const w = explicitColumnWidth(column)
                         return w >= 0 ? w : page.model.defaultColumnWidth(column)
                     }
+                    columnWidthProvider: (column) => {
+                        const base = baseWidth(column)
+                        let total = 0
+                        let flex = 0
+                        for (let c = 0; c < columns; ++c) {
+                            total += baseWidth(c)
+                            if (stretchColumns.includes(c) && explicitColumnWidth(c) < 0)
+                                flex += baseWidth(c)
+                        }
+                        const spare = width - total
+                        if (spare <= 0)
+                            return base
+                        if (flex > 0)
+                            return stretchColumns.includes(column) && explicitColumnWidth(column) < 0
+                                   ? base + spare * base / flex : base
+                        return column === columns - 1 ? base + spare : base
+                    }
+                    onWidthChanged: forceLayout()
                     rowHeightProvider: () => 26
                     onLayoutChanged: {
                         page.widthsRevision++
