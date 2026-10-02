@@ -35,10 +35,12 @@
     },
     {
       "name": "mingw-release",
-      "displayName": "MinGW Release",
+      "displayName": "MinGW Release (app only)",
       "inherits": "mingw-base",
       "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "Release"
+        "CMAKE_BUILD_TYPE": "Release",
+        "SC_BUILD_TESTS": "OFF",
+        "SC_BUILD_TOOLS": "OFF"
       }
     },
     {
@@ -60,27 +62,23 @@
     },
     {
       "name": "mingw-release",
-      "configurePreset": "mingw-release"
+      "configurePreset": "mingw-release",
+      "targets": [
+        "scapp"
+      ]
     },
     {
       "name": "mingw-release-portable",
-      "configurePreset": "mingw-release-portable"
+      "configurePreset": "mingw-release-portable",
+      "targets": [
+        "scapp"
+      ]
     }
   ],
   "testPresets": [
     {
       "name": "mingw-debug",
       "configurePreset": "mingw-debug",
-      "output": {
-        "outputOnFailure": true
-      },
-      "execution": {
-        "noTestsAction": "error"
-      }
-    },
-    {
-      "name": "mingw-release",
-      "configurePreset": "mingw-release",
       "output": {
         "outputOnFailure": true
       },

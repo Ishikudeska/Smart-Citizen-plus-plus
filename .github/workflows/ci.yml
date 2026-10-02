@@ -26,6 +26,9 @@ jobs:
           dir: 'C:\'
           tools: 'tools_mingw1310 tools_ninja'
           cache: true
+          # aqtinstall 3.3.0 (latest on PyPI) predates the per-compiler repo layout
+          # Qt uses from 6.11, so use a master commit with that support until 3.4.0.
+          aqtsource: 'git+https://github.com/miurahr/aqtinstall.git@076e1659807d0b362a3ed684d54c2e9c775eb9c7'
 
       - name: Configure
         run: cmake --preset mingw-release
