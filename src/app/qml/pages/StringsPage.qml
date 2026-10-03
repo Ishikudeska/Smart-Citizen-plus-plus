@@ -1,3 +1,4 @@
+pragma ComponentBehavior: Bound
 import QtQuick
 import QtQuick.Controls.Basic
 import QtQuick.Dialogs
@@ -260,14 +261,14 @@ Item {
                     clip: false
                     function clearAll() {
                         for (let i = 0; i < repeater.count; ++i)
-                            repeater.itemAt(i).text = ""
+                            (repeater.itemAt(i) as TextField).text = ""
                     }
                     Repeater {
                         id: repeater
                         model: 9
                         delegate: TextField {
                             required property int index
-                            width: { page.widthsRevision; return Math.max(0, table.columnWidth(index)) }
+                            width: { void page.widthsRevision; return Math.max(0, table.columnWidth(index)) }
                             height: 28
                             placeholderText: index === 8 ? "" : "⌕"
                             enabled: index !== 8
@@ -569,7 +570,7 @@ Item {
                     textFormat: Text.RichText
                     wrapMode: Text.Wrap
                     color: Theme.text
-                    text: { page.dataRevision; return page.rowValid(page.currentRow) ? page.model.previewHtml(page.currentRow) : "" }
+                    text: { void page.dataRevision; return page.rowValid(page.currentRow) ? page.model.previewHtml(page.currentRow) : "" }
                 }
             }
             Label {

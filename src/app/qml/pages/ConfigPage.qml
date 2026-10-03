@@ -1,3 +1,4 @@
+pragma ComponentBehavior: Bound
 import QtQuick
 import QtQuick.Controls.Basic
 import QtQuick.Dialogs
@@ -418,6 +419,7 @@ Item {
                 model: config.importConflicts
                 ScrollBar.vertical: ScrollBar {}
                 delegate: Rectangle {
+                    id: conflictRow
                     required property int index
                     required property var modelData
                     width: conflictList.width - 12
@@ -431,22 +433,22 @@ Item {
                         spacing: 4
                         RowLayout {
                             Layout.fillWidth: true
-                            Label { text: modelData.key; color: Theme.title; font.family: Theme.monoFont; Layout.fillWidth: true; elide: Text.ElideRight }
+                            Label { text: conflictRow.modelData.key; color: Theme.title; font.family: Theme.monoFont; Layout.fillWidth: true; elide: Text.ElideRight }
                             ComboBox {
                                 implicitWidth: 200
                                 model: [qsTr("import_dialog.resolution_keep"), qsTr("import_dialog.resolution_use"),
                                         qsTr("import_dialog.resolution_append"), qsTr("import_dialog.resolution_prepend")]
                                 readonly property var keys: ["keep", "use", "append", "prepend"]
-                                currentIndex: Math.max(0, keys.indexOf(conflictDialog.choices[index]))
+                                currentIndex: Math.max(0, keys.indexOf(conflictDialog.choices[conflictRow.index]))
                                 onActivated: (i) => {
                                     const c = conflictDialog.choices.slice()
-                                    c[index] = keys[i]
+                                    c[conflictRow.index] = keys[i]
                                     conflictDialog.choices = c
                                 }
                             }
                         }
-                        Label { text: qsTr("import_dialog.col_current_value") + ": " + modelData.current; color: Theme.dim; wrapMode: Text.WrapAnywhere; Layout.fillWidth: true; maximumLineCount: 3; elide: Text.ElideRight }
-                        Label { text: qsTr("import_dialog.col_imported_value") + ": " + modelData.imported; color: Theme.text; wrapMode: Text.WrapAnywhere; Layout.fillWidth: true; maximumLineCount: 3; elide: Text.ElideRight }
+                        Label { text: qsTr("import_dialog.col_current_value") + ": " + conflictRow.modelData.current; color: Theme.dim; wrapMode: Text.WrapAnywhere; Layout.fillWidth: true; maximumLineCount: 3; elide: Text.ElideRight }
+                        Label { text: qsTr("import_dialog.col_imported_value") + ": " + conflictRow.modelData.imported; color: Theme.text; wrapMode: Text.WrapAnywhere; Layout.fillWidth: true; maximumLineCount: 3; elide: Text.ElideRight }
                     }
                 }
             }
@@ -482,18 +484,19 @@ Item {
                 Repeater {
                     model: languageSources.rows
                     delegate: RowLayout {
+                        id: sourceRow
                         required property var modelData
                         Layout.columnSpan: 2
                         Layout.fillWidth: true
-                        Label { text: modelData.name; color: Theme.text; Layout.preferredWidth: 140 }
+                        Label { text: sourceRow.modelData.name; color: Theme.text; Layout.preferredWidth: 140 }
                         TextField {
                             Layout.fillWidth: true
-                            text: modelData.url
-                            placeholderText: modelData.bundled !== "" ? modelData.bundled : qsTr("config.language_source_placeholder")
+                            text: sourceRow.modelData.url
+                            placeholderText: sourceRow.modelData.bundled !== "" ? sourceRow.modelData.bundled : qsTr("config.language_source_placeholder")
                             color: Theme.text
                             placeholderTextColor: Theme.placeholder
                             background: Rectangle { color: Theme.base; border.color: Theme.border; radius: Theme.radius }
-                            onEditingFinished: config.setLanguageSource(modelData.id, text)
+                            onEditingFinished: config.setLanguageSource(sourceRow.modelData.id, text)
                         }
                     }
                 }

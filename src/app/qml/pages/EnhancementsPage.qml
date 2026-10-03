@@ -1,3 +1,4 @@
+pragma ComponentBehavior: Bound
 import QtQuick
 import QtQuick.Controls.Basic
 import QtQuick.Layouts
@@ -20,7 +21,7 @@ Item {
         textRole: "label"
         valueRole: "key"
         model: enh.choices(choicesField)
-        currentIndex: { enh.tagRevision; const v = enh.option(category, field); return model.findIndex(o => o.key === v) }
+        currentIndex: { void enh.tagRevision; const v = enh.option(category, field); return model.findIndex(o => o.key === v) }
         onActivated: enh.setOption(category, field, currentValue)
     }
 
@@ -54,23 +55,24 @@ Item {
                     Repeater {
                         model: enh.categories
                         delegate: RowLayout {
+                            id: categoryRow
                             required property var modelData
                             spacing: 6
                             Layout.fillWidth: true
                             Rectangle {
-                                width: 10; height: 10; radius: 5
-                                color: !modelData.enabled ? Theme.disabled
-                                     : modelData.generated ? Theme.action("apply") : Theme.action("restore")
+                                implicitWidth: 10; implicitHeight: 10; radius: 5
+                                color: !categoryRow.modelData.enabled ? Theme.disabled
+                                     : categoryRow.modelData.generated ? Theme.action("apply") : Theme.action("restore")
                                 ToolTip.visible: dotHover.hovered
-                                ToolTip.text: modelData.generated ? qsTr("scx.category_generated") : qsTr("scx.category_missing")
+                                ToolTip.text: categoryRow.modelData.generated ? qsTr("scx.category_generated") : qsTr("scx.category_missing")
                                 HoverHandler { id: dotHover }
                             }
                             AppCheckBox {
-                                text: modelData.label
-                                checked: modelData.enabled
-                                onToggled: enh.setCategoryEnabled(modelData.id, checked)
+                                text: categoryRow.modelData.label
+                                checked: categoryRow.modelData.enabled
+                                onToggled: enh.setCategoryEnabled(categoryRow.modelData.id, checked)
                             }
-                            Label { text: modelData.description; color: Theme.dim; font.pixelSize: Theme.smallFont; Layout.fillWidth: true; elide: Text.ElideRight }
+                            Label { text: categoryRow.modelData.description; color: Theme.dim; font.pixelSize: Theme.smallFont; Layout.fillWidth: true; elide: Text.ElideRight }
                         }
                     }
                 }
@@ -135,15 +137,16 @@ Item {
                             { key: "blueprint_data", label: qsTr("enhancements.mission_label_blueprint_data") }
                         ]
                         delegate: RowLayout {
+                            id: headerRow
                             required property var modelData
                             Layout.columnSpan: 2
-                            Label { text: modelData.label; color: Theme.text; Layout.preferredWidth: 110 }
+                            Label { text: headerRow.modelData.label; color: Theme.text; Layout.preferredWidth: 110 }
                             TextField {
                                 Layout.fillWidth: true
-                                text: enh.missionHeader(modelData.key)
+                                text: enh.missionHeader(headerRow.modelData.key)
                                 color: Theme.text
                                 background: Rectangle { color: Theme.base; border.color: Theme.border; radius: Theme.radius }
-                                onEditingFinished: enh.setMissionHeader(modelData.key, text)
+                                onEditingFinished: enh.setMissionHeader(headerRow.modelData.key, text)
                             }
                         }
                     }
@@ -190,11 +193,12 @@ Item {
                     Repeater {
                         model: enh.tagCategories()
                         delegate: TabButton {
+                            id: tabButton
                             required property var modelData
                             text: modelData.label
                             width: implicitWidth + 20
-                            contentItem: Label { text: parent.text; color: parent.checked ? Theme.title : Theme.text; font.bold: parent.checked; horizontalAlignment: Text.AlignHCenter }
-                            background: Rectangle { color: parent.checked ? Theme.window : Theme.alternateBase; border.color: Theme.border; radius: Theme.radius }
+                            contentItem: Label { text: tabButton.text; color: tabButton.checked ? Theme.title : Theme.text; font.bold: tabButton.checked; horizontalAlignment: Text.AlignHCenter }
+                            background: Rectangle { color: tabButton.checked ? Theme.window : Theme.alternateBase; border.color: Theme.border; radius: Theme.radius }
                         }
                     }
                 }
@@ -207,34 +211,35 @@ Item {
                     spacing: 6
 
                     Repeater {
-                        model: { enh.tagRevision; return enh.elements(tagSection.category) }
+                        model: { void enh.tagRevision; return enh.elements(tagSection.category) }
                         delegate: RowLayout {
+                            id: elementRow
                             required property int index
                             required property var modelData
                             readonly property string category: tagSection.category
                             spacing: 8
                             AppCheckBox {
-                                text: modelData.label
-                                checked: modelData.enabled
+                                text: elementRow.modelData.label
+                                checked: elementRow.modelData.enabled
                                 tip: qsTr("enhancements.tag_untick_exclude_tooltip")
-                                onToggled: enh.setElementEnabled(category, index, checked)
+                                onToggled: enh.setElementEnabled(elementRow.category, elementRow.index, checked)
                                 Layout.preferredWidth: 150
                             }
                             ComboBox {
                                 implicitWidth: 190
-                                visible: modelData.styles.length > 0
+                                visible: elementRow.modelData.styles.length > 0
                                 textRole: "label"
                                 valueRole: "key"
-                                model: modelData.styles
-                                currentIndex: modelData.styles.findIndex(s => s.key === modelData.style)
-                                onActivated: enh.setElementStyle(category, index, currentValue)
+                                model: elementRow.modelData.styles
+                                currentIndex: elementRow.modelData.styles.findIndex(s => s.key === elementRow.modelData.style)
+                                onActivated: enh.setElementStyle(elementRow.category, elementRow.index, currentValue)
                             }
-                            AppButton { text: "▲"; enabled: index > 0; tip: qsTr("enhancements.tag_move_up_tooltip"); onClicked: enh.moveElement(category, index, -1) }
-                            AppButton { text: "▼"; tip: qsTr("enhancements.tag_move_down_tooltip"); onClicked: enh.moveElement(category, index, 1) }
+                            AppButton { text: "▲"; enabled: elementRow.index > 0; tip: qsTr("enhancements.tag_move_up_tooltip"); onClicked: enh.moveElement(elementRow.category, elementRow.index, -1) }
+                            AppButton { text: "▼"; tip: qsTr("enhancements.tag_move_down_tooltip"); onClicked: enh.moveElement(elementRow.category, elementRow.index, 1) }
                             AppButton {
-                                visible: modelData.mapped
+                                visible: elementRow.modelData.mapped
                                 text: qsTr("enhancements.tag_edit_mapping_row_btn")
-                                onClicked: { mappingEditor.category = category; mappingEditor.kind = modelData.kind; mappingEditor.open() }
+                                onClicked: { mappingEditor.category = elementRow.category; mappingEditor.kind = elementRow.modelData.kind; mappingEditor.open() }
                             }
                         }
                     }
@@ -262,8 +267,8 @@ Item {
                     readonly property string cat: "mission_titles"
 
                     Label { text: qsTr("enhancements.mt_hauling_group"); color: Theme.title; font.bold: true }
-                    AppCheckBox { text: qsTr("enhancements.mt_enable_route_cb"); checked: { enh.tagRevision; return enh.flag("mission_titles", "route") } onToggled: enh.setFlag("mission_titles", "route", checked) }
-                    AppCheckBox { text: qsTr("enhancements.mt_standardize_cb"); checked: { enh.tagRevision; return enh.flag("mission_titles", "standardizeHauling") } onToggled: enh.setFlag("mission_titles", "standardizeHauling", checked) }
+                    AppCheckBox { text: qsTr("enhancements.mt_enable_route_cb"); checked: { void enh.tagRevision; return enh.flag("mission_titles", "route") } onToggled: enh.setFlag("mission_titles", "route", checked) }
+                    AppCheckBox { text: qsTr("enhancements.mt_standardize_cb"); checked: { void enh.tagRevision; return enh.flag("mission_titles", "standardizeHauling") } onToggled: enh.setFlag("mission_titles", "standardizeHauling", checked) }
                     Label { text: qsTr("enhancements.mt_route_hint"); color: Theme.dim; font.pixelSize: Theme.smallFont }
                     GridLayout {
                         columns: 4
@@ -288,13 +293,13 @@ Item {
                             delegate: AppCheckBox {
                                 required property var modelData
                                 text: modelData.label
-                                checked: { enh.tagRevision; return enh.phraseEnabled(modelData.key) }
+                                checked: { void enh.tagRevision; return enh.phraseEnabled(modelData.key) }
                                 onToggled: enh.setPhraseEnabled(modelData.key, checked)
                             }
                         }
                     }
-                    AppCheckBox { text: qsTr("enhancements.mt_shorten_sizes_cb"); checked: { enh.tagRevision; return enh.sizesShortened() } onToggled: enh.setSizesShortened(checked) }
-                    AppCheckBox { text: qsTr("enhancements.mt_underline_direct_cb"); checked: { enh.tagRevision; return enh.phraseEnabled("underline_direct") } onToggled: enh.setPhraseEnabled("underline_direct", checked) }
+                    AppCheckBox { text: qsTr("enhancements.mt_shorten_sizes_cb"); checked: { void enh.tagRevision; return enh.sizesShortened() } onToggled: enh.setSizesShortened(checked) }
+                    AppCheckBox { text: qsTr("enhancements.mt_underline_direct_cb"); checked: { void enh.tagRevision; return enh.phraseEnabled("underline_direct") } onToggled: enh.setPhraseEnabled("underline_direct", checked) }
 
                     Label { text: qsTr("enhancements.mt_general_tags_group"); color: Theme.title; font.bold: true }
                     Label { text: qsTr("enhancements.mt_general_tags_hint"); color: Theme.dim; font.pixelSize: Theme.smallFont }
@@ -311,14 +316,14 @@ Item {
                             delegate: AppCheckBox {
                                 required property var modelData
                                 text: modelData.label
-                                checked: { enh.tagRevision; return enh.titleTag(modelData.key) }
+                                checked: { void enh.tagRevision; return enh.titleTag(modelData.key) }
                                 onToggled: enh.setTitleTag(modelData.key, checked)
                             }
                         }
                     }
                     Label { text: qsTr("enhancements.mt_scanning_group"); color: Theme.title; font.bold: true }
                     Label { text: qsTr("enhancements.mt_scanning_hint"); color: Theme.dim; font.pixelSize: Theme.smallFont; wrapMode: Text.WordWrap; Layout.fillWidth: true }
-                    AppCheckBox { text: qsTr("enhancements.mt_tag_rs_cb"); checked: { enh.tagRevision; return enh.titleTag("rs") } onToggled: enh.setTitleTag("rs", checked) }
+                    AppCheckBox { text: qsTr("enhancements.mt_tag_rs_cb"); checked: { void enh.tagRevision; return enh.titleTag("rs") } onToggled: enh.setTitleTag("rs", checked) }
                 }
 
                 Rectangle {
@@ -335,7 +340,7 @@ Item {
                         wrapMode: Text.WordWrap
                         color: Theme.text
                         font.pixelSize: Theme.fontSize + 1
-                        text: { enh.tagRevision; return enh.preview(tagSection.category).replace(/</g, "&lt;").replace(/&lt;(\/?)u>/g, "<$1u>") }
+                        text: { void enh.tagRevision; return enh.preview(tagSection.category).replace(/</g, "&lt;").replace(/&lt;(\/?)u>/g, "<$1u>") }
                     }
                 }
 
@@ -387,22 +392,23 @@ Item {
                 Layout.fillHeight: true
                 clip: true
                 spacing: 4
-                model: { enh.tagRevision; return mappingEditor.visible ? enh.mapping(mappingEditor.category, mappingEditor.kind) : [] }
+                model: { void enh.tagRevision; return mappingEditor.visible ? enh.mapping(mappingEditor.category, mappingEditor.kind) : [] }
                 ScrollBar.vertical: ScrollBar {}
                 delegate: RowLayout {
+                    id: mappingRow
                     required property var modelData
                     width: mappingList.width - 12
-                    Label { text: modelData.value; color: Theme.text; Layout.preferredWidth: 200; elide: Text.ElideRight }
+                    Label { text: mappingRow.modelData.value; color: Theme.text; Layout.preferredWidth: 200; elide: Text.ElideRight }
                     Repeater {
                         model: ["short", "med", "long"]
                         delegate: TextField {
                             required property int index
                             required property string modelData
                             Layout.fillWidth: true
-                            text: parent.modelData[modelData]
+                            text: mappingRow.modelData[modelData]
                             color: Theme.text
                             background: Rectangle { color: Theme.base; border.color: Theme.border; radius: Theme.radius }
-                            onEditingFinished: enh.setMappingText(mappingEditor.category, parent.modelData.value, index, text)
+                            onEditingFinished: enh.setMappingText(mappingEditor.category, mappingRow.modelData.value, index, text)
                         }
                     }
                 }

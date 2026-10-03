@@ -1,3 +1,4 @@
+pragma ComponentBehavior: Bound
 import QtQuick
 import QtQuick.Controls.Basic
 import QtQuick.Dialogs
@@ -90,10 +91,11 @@ Item {
                     ToolTip.visible: rowHover.hovered && rowItem.modelData.tooltip !== ""
                     ToolTip.text: rowItem.modelData.tooltip
                     ToolTip.delay: 700
-                    TapHandler {
-                        onTapped: (point, button) => {
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: (mouse) => {
                             const name = rowItem.modelData.name
-                            const mods = point.modifiers
+                            const mods = mouse.modifiers
                             let sel = Object.assign({}, box.selected)
                             if (mods & Qt.ShiftModifier && box.anchorRow >= 0) {
                                 if (!(mods & Qt.ControlModifier))
@@ -112,7 +114,7 @@ Item {
                             }
                             box.selected = sel
                         }
-                        onDoubleTapped: box.activated([rowItem.modelData.name])
+                        onDoubleClicked: box.activated([rowItem.modelData.name])
                     }
                 }
             }

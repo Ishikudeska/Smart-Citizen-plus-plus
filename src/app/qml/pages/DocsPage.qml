@@ -24,7 +24,7 @@ Item {
             color: Theme.text
             linkColor: Theme.link
             font.pixelSize: Theme.fontSize + 1
-            text: { App.language; return DocsController.markdown(page.document, App.language) }
+            text: DocsController.markdown(page.document, App.language)
             onLinkActivated: (link) => Qt.openUrlExternally(link)
             HoverHandler { cursorShape: parent.hoveredLink !== "" ? Qt.PointingHandCursor : Qt.ArrowCursor }
         }
