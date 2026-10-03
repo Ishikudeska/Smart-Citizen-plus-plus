@@ -546,20 +546,12 @@
       "ht": "Theme:",
       "at": ""
     },
-    "theme_default": {
-      "ht": "Default",
-      "at": ""
-    },
     "theme_light": {
       "ht": "Light",
       "at": ""
     },
     "theme_dark": {
       "ht": "Dark",
-      "at": ""
-    },
-    "theme_odw": {
-      "ht": "ODW",
       "at": ""
     },
     "star_citizen_group": {

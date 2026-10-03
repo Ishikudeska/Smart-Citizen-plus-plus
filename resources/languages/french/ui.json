@@ -502,10 +502,6 @@
       "ht": "Thème :",
       "at": "Thème :"
     },
-    "theme_default": {
-      "ht": "Défaut",
-      "at": "Défaut"
-    },
     "theme_light": {
       "ht": "Clair",
       "at": "Clair"
@@ -513,10 +509,6 @@
     "theme_dark": {
       "ht": "Sombre",
       "at": "Sombre"
-    },
-    "theme_odw": {
-      "ht": "ODW",
-      "at": "ODW"
     },
     "star_citizen_group": {
       "ht": "Star Citizen",

@@ -502,10 +502,6 @@
       "ht": "",
       "at": "主题："
     },
-    "theme_default": {
-      "ht": "",
-      "at": "默认"
-    },
     "theme_light": {
       "ht": "",
       "at": "浅色"
@@ -513,10 +509,6 @@
     "theme_dark": {
       "ht": "",
       "at": "深色"
-    },
-    "theme_odw": {
-      "ht": "",
-      "at": "ODW"
     },
     "star_citizen_group": {
       "ht": "",

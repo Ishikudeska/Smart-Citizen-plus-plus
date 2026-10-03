@@ -385,10 +385,9 @@ void Settings::setRsOreNameAnnotations(bool enabled)
 
 QString Settings::theme() const
 {
-    static const QStringList themes = {QStringLiteral("light"), QStringLiteral("dark"), QStringLiteral("scle"),
-                                       QStringLiteral("odw")};
+    // Anything else, including the retired "scle" and "odw", reads as dark.
     const QString t = settings_->value(QStringLiteral("theme")).toString();
-    return themes.contains(t) ? t : QStringLiteral("scle");
+    return t == u"light" ? t : QStringLiteral("dark");
 }
 
 void Settings::setTheme(const QString &theme)

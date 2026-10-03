@@ -2,9 +2,8 @@ pragma Singleton
 import QtQuick
 import ScApp
 
-// The four palettes Smart Citizen shipped (theme.py): the navy "scle"
-// default, Light, Dark and the gold "odw". Everything visual reads from
-// here; App.theme picks the palette.
+// The Light and Dark palettes (from Smart Citizen's theme.py). Everything
+// visual reads from here; App.theme picks the palette.
 QtObject {
     id: theme
 
@@ -27,27 +26,9 @@ QtObject {
             chunk: "#3b82f6", favoriteRow: "#3a3000", tooltip: "#2d2d30",
             load: "#64b5f6", restore: "#ff8a65", apply: "#81c784", clear: "#bdbdbd",
             open: "#64b5f6", needsApply: "#e57373", buttonText: "#000000"
-        },
-        "scle": {
-            window: "#0d1826", text: "#d8e8f0", base: "#0d1826", alternateBase: "#152538",
-            panel: "#11202f", button: "#1a2d44", border: "#22405e", highlight: "#0099cc",
-            highlightedText: "#0a1220", link: "#4fd7e8", placeholder: "#6fb5d0", dim: "#d5d5d5",
-            disabled: "#587890", title: "#4fd7e8", tagline: "#6fb5d0", groove: "#152538",
-            chunk: "#4fd7e8", favoriteRow: "#3a3000", tooltip: "#152538",
-            load: "#4fd7e8", restore: "#ff8a42", apply: "#4ade80", clear: "#5f7a95",
-            open: "#4fd7e8", needsApply: "#ff5c5c", buttonText: "#000000"
-        },
-        "odw": {
-            window: "#1a1f2e", text: "#f0e6cf", base: "#1a1f2e", alternateBase: "#242938",
-            panel: "#1f2433", button: "#242938", border: "#3a3f50", highlight: "#d4a017",
-            highlightedText: "#1a1f2e", link: "#d4b876", placeholder: "#a08c5a", dim: "#d4b876",
-            disabled: "#645a46", title: "#c9a961", tagline: "#a08c5a", groove: "#242938",
-            chunk: "#d4a017", favoriteRow: "#3a3000", tooltip: "#242938",
-            load: "#d4b876", restore: "#c77a4d", apply: "#a5b989", clear: "#7a7d87",
-            open: "#d4b876", needsApply: "#c0392b", buttonText: "#000000"
         }
     })
-    readonly property var p: palettes[name] !== undefined ? palettes[name] : palettes["scle"]
+    readonly property var p: palettes[name] !== undefined ? palettes[name] : palettes["dark"]
 
     readonly property color window: p.window
     readonly property color text: p.text

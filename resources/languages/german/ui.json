@@ -502,10 +502,6 @@
       "ht": "",
       "at": "Design:"
     },
-    "theme_default": {
-      "ht": "",
-      "at": "Standard"
-    },
     "theme_light": {
       "ht": "",
       "at": "Hell"
@@ -513,10 +509,6 @@
     "theme_dark": {
       "ht": "",
       "at": "Dunkel"
-    },
-    "theme_odw": {
-      "ht": "",
-      "at": "ODW"
     },
     "star_citizen_group": {
       "ht": "",

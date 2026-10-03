@@ -502,10 +502,6 @@
       "ht": "",
       "at": "テーマ："
     },
-    "theme_default": {
-      "ht": "",
-      "at": "デフォルト"
-    },
     "theme_light": {
       "ht": "",
       "at": "ライト"
@@ -513,10 +509,6 @@
     "theme_dark": {
       "ht": "",
       "at": "ダーク"
-    },
-    "theme_odw": {
-      "ht": "",
-      "at": "ODW"
     },
     "star_citizen_group": {
       "ht": "",
