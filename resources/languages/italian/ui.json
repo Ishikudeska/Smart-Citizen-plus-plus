@@ -226,6 +226,14 @@
     }
   },
   "filters": {
+    "search_placeholder": {
+      "ht": "",
+      "at": "Cerca stringhe…"
+    },
+    "search_tooltip": {
+      "ht": "",
+      "at": "Mostra le righe la cui chiave, il valore predefinito, attuale o personalizzato contiene questo testo (senza distinzione tra maiuscole e minuscole). Si combina con gli altri filtri."
+    },
     "category_label": {
       "ht": "",
       "at": "Categoria:"

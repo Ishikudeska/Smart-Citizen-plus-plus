@@ -226,6 +226,14 @@
     }
   },
   "filters": {
+    "search_placeholder": {
+      "ht": "Search strings…",
+      "at": ""
+    },
+    "search_tooltip": {
+      "ht": "Show rows whose key, default, current or custom value contains this text (case-insensitive). Combines with the other filters.",
+      "at": ""
+    },
     "category_label": {
       "ht": "Category:",
       "at": ""

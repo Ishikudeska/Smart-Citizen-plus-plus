@@ -226,6 +226,14 @@
     }
   },
   "filters": {
+    "search_placeholder": {
+      "ht": "",
+      "at": "Strings durchsuchen…"
+    },
+    "search_tooltip": {
+      "ht": "",
+      "at": "Zeilen anzeigen, deren Schlüssel, Standard-, aktueller oder benutzerdefinierter Wert diesen Text enthält (ohne Beachtung der Groß-/Kleinschreibung). Lässt sich mit den anderen Filtern kombinieren."
+    },
     "category_label": {
       "ht": "",
       "at": "Kategorie:"

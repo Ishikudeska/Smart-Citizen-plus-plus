@@ -127,6 +127,10 @@ QList<int> filterEntryIndices(const QList<StringEntry> &entries, const IniMap &d
             if (!bpTitle && !bpDesc)
                 continue;
         }
+        if (!c.searchText.isEmpty() && !columnValue(e, ColKey).contains(c.searchText) &&
+            !columnValue(e, ColCurrent).contains(c.searchText) && !columnValue(e, ColCustom).contains(c.searchText) &&
+            !columnValue(e, ColDefault).contains(c.searchText))
+            continue;
         bool skip = false;
         for (const auto &[column, text] : active)
             if (!columnValue(e, column).contains(text)) {

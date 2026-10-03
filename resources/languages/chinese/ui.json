@@ -226,6 +226,14 @@
     }
   },
   "filters": {
+    "search_placeholder": {
+      "ht": "",
+      "at": "搜索字符串…"
+    },
+    "search_tooltip": {
+      "ht": "",
+      "at": "显示键、默认值、当前值或自定义值包含此文本的行（不区分大小写）。可与其他筛选条件组合使用。"
+    },
     "category_label": {
       "ht": "",
       "at": "分类："

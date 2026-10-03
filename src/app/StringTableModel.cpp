@@ -269,6 +269,16 @@ void StringTableModel::setStatusFilter(const QString &v)
     refilter();
 }
 
+void StringTableModel::setSearchText(const QString &v)
+{
+    const QString lowered = v.toLower();
+    if (criteria_.searchText == lowered)
+        return;
+    criteria_.searchText = lowered;
+    emit filtersChanged();
+    refilter();
+}
+
 #define SC_BOOL_FILTER(setter, field)                                                                                  \
     void StringTableModel::setter(bool v)                                                                              \
     {                                                                                                                  \

@@ -226,6 +226,14 @@
     }
   },
   "filters": {
+    "search_placeholder": {
+      "ht": "",
+      "at": "Buscar cadenas…"
+    },
+    "search_tooltip": {
+      "ht": "",
+      "at": "Muestra las filas cuya clave, valor predeterminado, actual o personalizado contiene este texto (sin distinguir mayúsculas y minúsculas). Se combina con los demás filtros."
+    },
     "category_label": {
       "ht": "Categoría:",
       "at": ""

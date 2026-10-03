@@ -162,6 +162,18 @@ private slots:
         col.columnText[ColStatus] = QStringLiteral("enh");
         QCOMPARE(filterEntryIndices(entries, defaults, col), QList<int>{2});
 
+        FilterCriteria search; // key, default, current and custom values
+        search.searchText = QStringLiteral("avenger");
+        QCOMPARE(filterEntryIndices(entries, defaults, search), (QList<int>{0, 1}));
+        search.searchText = QStringLiteral("stock");
+        QCOMPARE(filterEntryIndices(entries, defaults, search), QList<int>{2});
+        search.searchText = QStringLiteral("*a ship");
+        QCOMPARE(filterEntryIndices(entries, defaults, search), QList<int>{1});
+        search.searchText = QStringLiteral("haul");
+        QCOMPARE(filterEntryIndices(entries, defaults, search), QList<int>{3});
+        search.category = category::kShips; // combines with the other filters
+        QVERIFY(filterEntryIndices(entries, defaults, search).isEmpty());
+
         FilterCriteria bp;
         bp.bpTitlesOnly = true;
         QCOMPARE(filterEntryIndices(entries, defaults, bp), QList<int>{3});
