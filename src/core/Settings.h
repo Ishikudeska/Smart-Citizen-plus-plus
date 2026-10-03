@@ -124,7 +124,7 @@ public:
     void setRsOreNameAnnotations(bool enabled);
 
     // Appearance and UI state.
-    QString theme() const; // "scle" (default), "light", "dark", "odw"
+    QString theme() const; // "dark" (default) or "light"
     void setTheme(const QString &theme);
     QString uiMode() const; // "advanced" (default) or "simple"
     void setUiMode(const QString &mode);

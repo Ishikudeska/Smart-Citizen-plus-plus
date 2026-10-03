@@ -169,9 +169,8 @@ Track which crafting blueprints you already own, and see it reflected in-game: o
 
 Pick a theme in the **Config tab → Appearance** section:
 
-- **Default** — SCLE, a deep-navy cyber theme inspired by Star Citizen's mobiGlas UI.
-- **Light / Dark** — classic UI themes.
-- **ODW** — navy charcoal with antique gold, after Osiris DevWorks, who made Smart Citizen.
+- **Dark** — the default.
+- **Light**
 
 ## Window Layout
 

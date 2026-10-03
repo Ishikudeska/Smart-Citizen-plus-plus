@@ -502,20 +502,12 @@
       "ht": "Tema:",
       "at": ""
     },
-    "theme_default": {
-      "ht": "Predeterminado",
-      "at": ""
-    },
     "theme_light": {
       "ht": "Claro",
       "at": ""
     },
     "theme_dark": {
       "ht": "Oscuro",
-      "at": ""
-    },
-    "theme_odw": {
-      "ht": "ODW",
       "at": ""
     },
     "star_citizen_group": {

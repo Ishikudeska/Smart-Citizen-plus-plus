@@ -261,12 +261,10 @@ Item {
                         textRole: "label"
                         valueRole: "id"
                         model: [
-                            { id: "scle", label: qsTr("config.theme_default") },
-                            { id: "light", label: qsTr("config.theme_light") },
                             { id: "dark", label: qsTr("config.theme_dark") },
-                            { id: "odw", label: qsTr("config.theme_odw") }
+                            { id: "light", label: qsTr("config.theme_light") }
                         ]
-                        currentIndex: ["scle", "light", "dark", "odw"].indexOf(App.theme)
+                        currentIndex: ["dark", "light"].indexOf(App.theme)
                         onActivated: App.theme = currentValue
                         ToolTip.visible: hovered; ToolTip.text: qsTr("config.theme_tooltip"); ToolTip.delay: 800
                     }
