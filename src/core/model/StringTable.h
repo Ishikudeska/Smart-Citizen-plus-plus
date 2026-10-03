@@ -62,6 +62,7 @@ void setCustomValue(StringEntry &entry, const QString &value);
 struct FilterCriteria
 {
     std::array<QString, ColumnCount> columnText; // lower-cased substrings; empty = no filter
+    QString searchText; // lower-cased substring of the key or any value; empty = no filter
     QString category = QStringLiteral("All");
     QString status = QStringLiteral("All");      // statusName() or "All"
     bool hideUnmodified = false;

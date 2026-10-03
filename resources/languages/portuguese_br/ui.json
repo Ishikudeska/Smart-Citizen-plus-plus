@@ -226,6 +226,14 @@
     }
   },
   "filters": {
+    "search_placeholder": {
+      "ht": "",
+      "at": "Pesquisar strings…"
+    },
+    "search_tooltip": {
+      "ht": "",
+      "at": "Mostra as linhas cuja chave, valor padrão, atual ou personalizado contém este texto (sem diferenciar maiúsculas de minúsculas). Combina com os outros filtros."
+    },
     "category_label": {
       "ht": "Categoria:",
       "at": "Categoria:"

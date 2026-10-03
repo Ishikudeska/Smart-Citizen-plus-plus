@@ -23,6 +23,7 @@ class StringTableModel : public QAbstractTableModel
     Q_PROPERTY(QStringList categories READ categories NOTIFY dataReset)
     Q_PROPERTY(QString categoryFilter READ categoryFilter WRITE setCategoryFilter NOTIFY filtersChanged)
     Q_PROPERTY(QString statusFilter READ statusFilter WRITE setStatusFilter NOTIFY filtersChanged)
+    Q_PROPERTY(QString searchText READ searchText WRITE setSearchText NOTIFY filtersChanged)
     Q_PROPERTY(bool hideUnmodified READ hideUnmodified WRITE setHideUnmodified NOTIFY filtersChanged)
     Q_PROPERTY(bool favoritesOnly READ favoritesOnly WRITE setFavoritesOnly NOTIFY filtersChanged)
     Q_PROPERTY(bool shipNamesOnly READ shipNamesOnly WRITE setShipNamesOnly NOTIFY filtersChanged)
@@ -76,6 +77,8 @@ public:
     void setCategoryFilter(const QString &v);
     QString statusFilter() const { return criteria_.status; }
     void setStatusFilter(const QString &v);
+    QString searchText() const { return criteria_.searchText; }
+    void setSearchText(const QString &v);
     bool hideUnmodified() const { return criteria_.hideUnmodified; }
     void setHideUnmodified(bool v);
     bool favoritesOnly() const { return criteria_.favoritesOnly; }

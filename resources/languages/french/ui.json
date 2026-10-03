@@ -226,6 +226,14 @@
     }
   },
   "filters": {
+    "search_placeholder": {
+      "ht": "",
+      "at": "Rechercher des chaînes…"
+    },
+    "search_tooltip": {
+      "ht": "",
+      "at": "Afficher les lignes dont la clé, la valeur par défaut, actuelle ou personnalisée contient ce texte (insensible à la casse). Se combine avec les autres filtres."
+    },
     "category_label": {
       "ht": "Catégorie :",
       "at": "Catégorie :"

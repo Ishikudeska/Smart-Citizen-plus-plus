@@ -7,9 +7,10 @@ import QtQml.Models
 import ScApp
 
 // The String Editor: every localization string with its stock, current and
-// custom values. Filters across the top, per-column filters under the
-// header, inline editing of Custom Value and the ship sort order, a side
-// editor for long text and a rendered preview of the selected row.
+// custom values. A search box and filters across the top, per-column
+// filters under the header, inline editing of Custom Value and the ship
+// sort order, a side editor for long text and a rendered preview of the
+// selected row.
 Item {
     id: page
 
@@ -116,6 +117,21 @@ Item {
             spacing: Theme.spacing
             objectName: "stringsFilters"
 
+            TextField {
+                id: searchField
+                objectName: "stringsSearch"
+                width: 260
+                height: 30
+                placeholderText: qsTr("filters.search_placeholder")
+                selectByMouse: true
+                onTextEdited: searchDelay.restart()
+                onAccepted: { searchDelay.stop(); page.model.searchText = text }
+                Keys.onEscapePressed: { searchDelay.stop(); text = ""; page.model.searchText = "" }
+                Timer { id: searchDelay; interval: 250; onTriggered: page.model.searchText = searchField.text }
+                ToolTip.visible: hovered && text === ""
+                ToolTip.text: qsTr("filters.search_tooltip")
+                ToolTip.delay: 800
+            }
             Label { text: qsTr("filters.category_label"); color: Theme.text; height: 30; verticalAlignment: Text.AlignVCenter }
             ComboBox {
                 id: categoryCombo
@@ -189,6 +205,8 @@ Item {
                 onClicked: {
                     page.model.clearFilters()
                     filterRow.clearAll()
+                    searchDelay.stop()
+                    searchField.text = ""
                 }
             }
             AppButton {
