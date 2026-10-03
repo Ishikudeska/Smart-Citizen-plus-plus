@@ -1,6 +1,6 @@
+pragma ComponentBehavior: Bound
 import QtQuick
 import QtQuick.Controls.Basic
-import QtQuick.Layouts
 import ScApp
 
 // The page tabs across the top, under the title.

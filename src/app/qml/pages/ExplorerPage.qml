@@ -1,3 +1,4 @@
+pragma ComponentBehavior: Bound
 import QtQuick
 import QtQuick.Controls.Basic
 import QtQuick.Dialogs
@@ -51,7 +52,8 @@ Item {
     }
     function reveal(node) {
         const idx = ex.tree.indexOfNode(node)
-        if (!idx.valid)
+        // The linter has no members for QModelIndex; valid exists at run time.
+        if (!idx.valid) // qmllint disable missing-property
             return
         tree.expandToIndex(idx)
         tree.forceLayout()
@@ -209,6 +211,7 @@ Item {
 
                             delegate: TreeViewDelegate {
                                 id: cell
+                                required property int column
                                 required property int node
                                 required property bool folder
                                 implicitHeight: 24

@@ -15,6 +15,8 @@ option(SC_BUILD_TOOLS "Build developer tools (scxtool, scxgen)" ON)
 find_package(Qt6 6.8 REQUIRED COMPONENTS
     Core Gui Network Concurrent Qml Quick QuickControls2 Test QuickTest)
 qt_standard_project_setup(REQUIRES 6.8)
+# QML modules at the build root, where qmlls (-b <build dir>) looks for them.
+set(QT_QML_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 
 include(cmake/Dependencies.cmake)
 include(cmake/Warnings.cmake)
