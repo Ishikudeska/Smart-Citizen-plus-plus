@@ -7,7 +7,7 @@ Smart Citizen++ is a localization toolkit for Star Citizen. It changes the text 
 It is a native C++ and Qt application. There is no Python runtime to install and no helper programs to run.
 
 # ON AI USAGE:
- NOTICE, this repository was ***ORIGINALLY*** a fork of https://github.com/Osiris-DevWorks/smart-citizen. I have, after consideration, taken it OFF of that fork network. Seeing as this will become more than what smart citizen does, I feel as though there's a need to differentiate myself. Yes, you will see that Claude and Copilot are both contributors of this repo. However, this is a half-truth. The original Smart Citizen project uses AI. I however, cannot AFFORD to pay for Claude, Copilot, or any other AI (machine learning) program. I AM LITERALLY BROKE AND JOBLESS.
+ NOTICE, this repository was ***ORIGINALLY*** a fork of https://github.com/Osiris-DevWorks/smart-citizen. I have, after consideration, taken it OFF of that fork network. I use AI, to help me write commit messages. I'm sorry, but writing is NOT my goddamn strong suit and I need help with it.
 
 ## What it does
 
