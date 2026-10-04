@@ -21,7 +21,8 @@ using engine::fail;
 
 namespace {
 
-std::optional<std::size_t> findEntry(const engine::p4k::Archive &archive, const std::function<bool(std::string_view)> &match)
+std::optional<std::size_t> findEntry(const engine::p4k::Archive &archive,
+                                     const std::function<bool(std::string_view)> &match)
 {
     for (std::size_t i = 0; i < archive.entryCount(); ++i)
         if (match(archive.name(i)))
@@ -113,7 +114,8 @@ engine::Result<void> extractBaseIni(const engine::p4k::Archive &archive, const Q
 {
     const auto index = archive.find("Data/Localization/english/global.ini");
     if (!index)
-        return fail(Errc::NotFound, "Data/Localization/english/global.ini is not in " + archive.path().string());
+        return fail(Errc::NotFound,
+                    "Data/Localization/english/global.ini is not in " + archive.path().string());
     auto bytes = archive.read(*index);
     if (!bytes)
         return std::unexpected(bytes.error());
@@ -124,8 +126,9 @@ engine::Result<void> extractBaseIni(const engine::p4k::Archive &archive, const Q
     return {};
 }
 
-engine::Result<DataForgeExtraction> extractDataForge(const engine::p4k::Archive &archive, const QString &cacheDir,
-                                                     const QString &patchRoot, const StepProgress &progress,
+engine::Result<DataForgeExtraction> extractDataForge(const engine::p4k::Archive &archive,
+                                                     const QString &cacheDir, const QString &patchRoot,
+                                                     const StepProgress &progress,
                                                      const std::atomic<bool> *cancel)
 {
     auto report = [&](const QString &step, qint64 done, qint64 total) {
@@ -167,7 +170,8 @@ engine::Result<DataForgeExtraction> extractDataForge(const engine::p4k::Archive 
     };
     options.cancel = cancel;
     options.progress = [&](std::size_t done, std::size_t total) {
-        report(QStringLiteral("Converting DataForge records"), static_cast<qint64>(done), static_cast<qint64>(total));
+        report(QStringLiteral("Converting DataForge records"), static_cast<qint64>(done),
+               static_cast<qint64>(total));
     };
     auto stats = engine::forge::exportRecords(*forge, fsPath(staging), options);
     if (!stats) {
@@ -217,7 +221,8 @@ bool dataForgeCacheIsFresh(const QString &p4kPath, const QString &cacheDir)
     if (!current || !stamped || current->size != stamped->size)
         return false;
     // A stamp without content (an interrupted first run) is not fresh.
-    QDirIterator it(dataForgeRecordsDir(cacheDir), {QStringLiteral("*.xml")}, QDir::Files, QDirIterator::Subdirectories);
+    QDirIterator it(dataForgeRecordsDir(cacheDir), {QStringLiteral("*.xml")}, QDir::Files,
+                    QDirIterator::Subdirectories);
     return it.hasNext();
 }
 
@@ -247,9 +252,8 @@ engine::Result<QStringList> exportGameData(const engine::p4k::Archive &archive, 
     if (!channel.isEmpty())
         options.channel = channel.toStdString();
     QStringList lines;
-    auto json = engine::gamedata::buildGameDataJson(*forge, options, [&](const std::string &line) {
-        lines << QString::fromStdString(line);
-    });
+    auto json = engine::gamedata::buildGameDataJson(
+        *forge, options, [&](const std::string &line) { lines << QString::fromStdString(line); });
     if (!json)
         return std::unexpected(json.error());
     SC_TRY(engine::io::createDirectories(fsPath(QFileInfo(outputPath).absolutePath())));

@@ -22,8 +22,8 @@
 #include <QFileInfo>
 #include <QGuiApplication>
 #include <QLoggingCategory>
-#include <QTimer>
 #include <QStandardPaths>
+#include <QTimer>
 
 #include <filesystem>
 #include <map>
@@ -336,7 +336,8 @@ void AppController::setInstallRoot(const QString &root)
 {
     const QString normalized = normalizeInstallRoot(root);
     if (normalized.isEmpty()) {
-        prompts_->warning(text("dialogs.warning_title"), text("scx.not_an_install", {{QStringLiteral("path"), root}}));
+        prompts_->warning(text("dialogs.warning_title"),
+                          text("scx.not_an_install", {{QStringLiteral("path"), root}}));
         return;
     }
     if (normalized == installRoot())
@@ -353,14 +354,15 @@ void AppController::setInstallRoot(const QString &root)
 
 void AppController::detectInstall()
 {
-    tasks_->run<QString>(text("scx.detecting_install"), false, [](TaskRunner::Job &) { return locateScInstall(); },
-                         [this](const QString &found) {
-                             if (found.isEmpty()) {
-                                 prompts_->info(text("extract.path_required_title"), text("scx.no_install_found"));
-                                 return;
-                             }
-                             setInstallRoot(found);
-                         });
+    tasks_->run<QString>(
+        text("scx.detecting_install"), false, [](TaskRunner::Job &) { return locateScInstall(); },
+        [this](const QString &found) {
+            if (found.isEmpty()) {
+                prompts_->info(text("extract.path_required_title"), text("scx.no_install_found"));
+                return;
+            }
+            setInstallRoot(found);
+        });
 }
 
 void AppController::setChannel(const QString &channel)
@@ -403,8 +405,8 @@ void AppController::setLanguage(const QString &language)
     const QString url = languageBaseUrl(*settings_, language, languagesDir());
     const auto afterBase = [this, language, dest] {
         if (!QFileInfo::exists(dest)) {
-            prompts_->warning(text("dialogs.app_title"),
-                              text("dialogs.language_download_failed", {{QStringLiteral("language"), language}}));
+            prompts_->warning(text("dialogs.app_title"), text("dialogs.language_download_failed",
+                                                              {{QStringLiteral("language"), language}}));
             loadEntries(text("dialogs.merging_sources"));
             return;
         }
@@ -478,7 +480,8 @@ void AppController::warnIfOneDrive()
     PromptService::Prompt p;
     p.kind = PromptService::Kind::Warning;
     p.title = text("onedrive.warning_title");
-    p.text = text("onedrive.warning_body", {{QStringLiteral("data_dir"), dataDir}, {QStringLiteral("local"), local}});
+    p.text = text("onedrive.warning_body",
+                  {{QStringLiteral("data_dir"), dataDir}, {QStringLiteral("local"), local}});
     p.buttons = {text("onedrive.move_btn"), text("onedrive.keep_here_btn")};
     p.checkbox = text("onedrive.dont_warn_again");
     prompts_->ask(p, [this, dataDir, local](int button, bool dontWarn, int) {
@@ -501,7 +504,8 @@ void AppController::checkP4kThenLoad()
         PromptService::Prompt p;
         p.kind = PromptService::Kind::Question;
         p.title = text("extract.p4k_prompt_title");
-        p.text = text(status == u"missing" ? "extract.p4k_prompt_base_missing" : "extract.p4k_prompt_p4k_newer");
+        p.text =
+            text(status == u"missing" ? "extract.p4k_prompt_base_missing" : "extract.p4k_prompt_p4k_newer");
         p.buttons = {text("scx.yes"), text("scx.no")};
         prompts_->ask(p, [this](int button, bool, int) {
             if (button == 0) {
@@ -605,10 +609,12 @@ void AppController::loadEntries(const QString &message, std::function<void()> th
             knownItemNames_ = std::move(r.knownItemNames);
             if (!knownItemNames_.isEmpty()) {
                 // Names another localization editor left in the owned set (#372).
-                const auto repair = blueprints::repairForeignOwnedNames(settings_->ownedItems(), knownItemNames_);
+                const auto repair =
+                    blueprints::repairForeignOwnedNames(settings_->ownedItems(), knownItemNames_);
                 if (!repair.renamed.isEmpty()) {
                     for (auto it = repair.renamed.cbegin(); it != repair.renamed.cend(); ++it)
-                        qCInfo(lcApp) << "owned set: repaired" << it.key() << "->" << it.value().value_or(QStringLiteral("(duplicate)"));
+                        qCInfo(lcApp) << "owned set: repaired" << it.key() << "->"
+                                      << it.value().value_or(QStringLiteral("(duplicate)"));
                     settings_->setOwnedItems(repair.repaired);
                 }
             }
@@ -693,9 +699,10 @@ void AppController::applyToGame()
     const auto userCount = ini.save(strings_->entries());
     if (!userCount) {
         prompts_->error(text("apply.cannot_save_edits_title"),
-                        text("apply.cannot_save_edits_body", {{QStringLiteral("path"), ini.path()},
-                                                              {QStringLiteral("error_type"), QStringLiteral("OSError")},
-                                                              {QStringLiteral("error"), QStringLiteral("write failed")}}));
+                        text("apply.cannot_save_edits_body",
+                             {{QStringLiteral("path"), ini.path()},
+                              {QStringLiteral("error_type"), QStringLiteral("OSError")},
+                              {QStringLiteral("error"), QStringLiteral("write failed")}}));
         return;
     }
 
@@ -745,25 +752,29 @@ void AppController::applyToGame()
         },
         [this, users, enhancementCounts, enhancementTotal](ApplyOutcome out) {
             if (!out.validation.isEmpty()) {
-                const QString note = out.restoredBackup
-                                         ? QStringLiteral("\n\nThe previous file has been restored from backup:\n%1")
-                                               .arg(QFileInfo(out.backupPath).fileName())
-                                         : QStringLiteral("\n\nNo backup was available to restore.");
+                const QString note =
+                    out.restoredBackup
+                        ? QStringLiteral("\n\nThe previous file has been restored from backup:\n%1")
+                              .arg(QFileInfo(out.backupPath).fileName())
+                        : QStringLiteral("\n\nNo backup was available to restore.");
                 setStatus(text("dialogs.apply_failed_status"));
-                prompts_->error(text("dialogs.validation_failed_title"),
-                                text("dialogs.validation_failed_body", {{QStringLiteral("msg"), out.validation},
-                                                                        {QStringLiteral("restore_note"), note}}));
+                prompts_->error(
+                    text("dialogs.validation_failed_title"),
+                    text("dialogs.validation_failed_body",
+                         {{QStringLiteral("msg"), out.validation}, {QStringLiteral("restore_note"), note}}));
                 return;
             }
             if (!out.ok) {
-                prompts_->error(text("dialogs.error_title"), text("apply.failed_body", {{QStringLiteral("error"), out.error}}));
+                prompts_->error(text("dialogs.error_title"),
+                                text("apply.failed_body", {{QStringLiteral("error"), out.error}}));
                 return;
             }
             // Biggest category first, as Counter.most_common orders them.
             QList<std::pair<QString, int>> cats;
             for (auto it = enhancementCounts.cbegin(); it != enhancementCounts.cend(); ++it)
                 cats.push_back({it.key(), it.value()});
-            std::stable_sort(cats.begin(), cats.end(), [](const auto &a, const auto &b) { return a.second > b.second; });
+            std::stable_sort(cats.begin(), cats.end(),
+                             [](const auto &a, const auto &b) { return a.second > b.second; });
             QString block;
             if (cats.isEmpty()) {
                 block = QStringLiteral("  %1 enhancements: 0").arg(appName());
@@ -772,14 +783,17 @@ void AppController::applyToGame()
                 for (const auto &[cat, count] : cats)
                     lines << QStringLiteral("    %1: %2").arg(cat, QLocale(QLocale::English).toString(count));
                 block = QStringLiteral("  %1 enhancements (%2 total):\n%3")
-                            .arg(appName(), QLocale(QLocale::English).toString(enhancementTotal), lines.join(u'\n'));
+                            .arg(appName(), QLocale(QLocale::English).toString(enhancementTotal),
+                                 lines.join(u'\n'));
             }
-            setStatus(text("dialogs.apply_status", {{QStringLiteral("user_count"), users},
-                                                    {QStringLiteral("enhancement_count"), enhancementTotal}}));
+            setStatus(
+                text("dialogs.apply_status", {{QStringLiteral("user_count"), users},
+                                              {QStringLiteral("enhancement_count"), enhancementTotal}}));
             prompts_->info(text("dialogs.success_title"),
-                           text("apply.applied_body", {{QStringLiteral("target_path"), gameGlobalIni()},
-                                                       {QStringLiteral("user_count"), QLocale(QLocale::English).toString(users)},
-                                                       {QStringLiteral("enhancement_block"), block}}));
+                           text("apply.applied_body",
+                                {{QStringLiteral("target_path"), gameGlobalIni()},
+                                 {QStringLiteral("user_count"), QLocale(QLocale::English).toString(users)},
+                                 {QStringLiteral("enhancement_block"), block}}));
             setApplyDirty(false);
             unappliedEdit_ = false;
         });
@@ -803,13 +817,15 @@ void AppController::restoreBackup(const QString &path)
     }
     const QString error = GameFileBackups::restore(path, gameGlobalIni());
     if (!error.isEmpty()) {
-        prompts_->error(text("dialogs.error_title"), text("restore_backup.error_body", {{QStringLiteral("error"), error}}));
+        prompts_->error(text("dialogs.error_title"),
+                        text("restore_backup.error_body", {{QStringLiteral("error"), error}}));
         return;
     }
     qCInfo(lcApp) << "restored backup" << path << "to" << gameGlobalIni();
     reload();
-    prompts_->info(text("dialogs.success_title"),
-                   text("restore_backup.success_body", {{QStringLiteral("name"), QFileInfo(path).fileName()}}));
+    prompts_->info(
+        text("dialogs.success_title"),
+        text("restore_backup.success_body", {{QStringLiteral("name"), QFileInfo(path).fileName()}}));
 }
 
 void AppController::clearLocalization()
@@ -823,28 +839,31 @@ void AppController::clearLocalization()
         prompts_->info(text("dialogs.nothing_to_clear_title"), text("dialogs.nothing_to_clear_body"));
         return;
     }
-    prompts_->confirm(text("dialogs.clear_localization_title"),
-                      text("dialogs.clear_localization_body",
-                           {{QStringLiteral("loc_dir"), QDir::toNativeSeparators(QFileInfo(file).absolutePath())}}),
-                      [this, file] {
-                          if (!QFile::remove(file)) {
-                              prompts_->error(text("dialogs.error_title"),
-                                              text("dialogs.failed_to_delete_global_ini",
-                                                   {{QStringLiteral("error"), QStringLiteral("could not delete %1").arg(file)}}));
-                              return;
-                          }
-                          qCInfo(lcApp) << "deleted" << file;
-                          setStatus(text("dialogs.clear_localization_status"));
-                          prompts_->info(text("dialogs.clear_localization_done_title"),
-                                         text("dialogs.clear_localization_done_body"));
-                          setApplyDirty(true);
-                      });
+    prompts_->confirm(
+        text("dialogs.clear_localization_title"),
+        text("dialogs.clear_localization_body",
+             {{QStringLiteral("loc_dir"), QDir::toNativeSeparators(QFileInfo(file).absolutePath())}}),
+        [this, file] {
+            if (!QFile::remove(file)) {
+                prompts_->error(
+                    text("dialogs.error_title"),
+                    text("dialogs.failed_to_delete_global_ini",
+                         {{QStringLiteral("error"), QStringLiteral("could not delete %1").arg(file)}}));
+                return;
+            }
+            qCInfo(lcApp) << "deleted" << file;
+            setStatus(text("dialogs.clear_localization_status"));
+            prompts_->info(text("dialogs.clear_localization_done_title"),
+                           text("dialogs.clear_localization_done_body"));
+            setApplyDirty(true);
+        });
 }
 
 void AppController::clearCache()
 {
     const QDir cache(paths_->cacheDir());
-    const QFileInfoList files = cache.entryInfoList({QStringLiteral("*.ini"), QStringLiteral("*.txt")}, QDir::Files, QDir::Name);
+    const QFileInfoList files =
+        cache.entryInfoList({QStringLiteral("*.ini"), QStringLiteral("*.txt")}, QDir::Files, QDir::Name);
     const bool hasForge = QFileInfo(dataForgeDir()).isDir();
     if (files.isEmpty() && !hasForge) {
         prompts_->info(text("dialogs.cache_empty_title"), text("dialogs.cache_empty_body"));
@@ -853,9 +872,10 @@ void AppController::clearCache()
     QStringList names;
     for (const QFileInfo &f : files)
         names << QStringLiteral("  ") + f.fileName();
-    const QString body = QStringLiteral("This will delete the following cached files:\n\n%1\n\nbase.ini will need to be "
-                                        "re-extracted from Data.p4k before strings can be loaded.")
-                             .arg(names.join(u'\n'));
+    const QString body =
+        QStringLiteral("This will delete the following cached files:\n\n%1\n\nbase.ini will need to be "
+                       "re-extracted from Data.p4k before strings can be loaded.")
+            .arg(names.join(u'\n'));
     prompts_->confirm(text("dialogs.clear_cache_title"), body, [this, files, hasForge] {
         QStringList deleted, failed;
         for (const QFileInfo &f : files) {
@@ -881,9 +901,11 @@ void AppController::clearCache()
         }
         prompts_->confirm(
             text("dialogs.dataforge_cache_title"),
-            QStringLiteral("Also clear the DataForge entity cache?\n\nRecreating it takes a little while.\n\n"
-                           "The DataForge cache holds the extracted entity data used to generate ship and weapon "
-                           "stats. Keep it if you only want to refresh the localization strings.\n\nClear DataForge cache?"),
+            QStringLiteral(
+                "Also clear the DataForge entity cache?\n\nRecreating it takes a little while.\n\n"
+                "The DataForge cache holds the extracted entity data used to generate ship and weapon "
+                "stats. Keep it if you only want to refresh the localization strings.\n\nClear DataForge "
+                "cache?"),
             [this, deleted, failed, finish]() mutable {
                 if (QDir(dataForgeDir()).removeRecursively())
                     deleted << QStringLiteral("dataforge/");
@@ -903,10 +925,11 @@ void AppController::openLocalizationDir()
     }
     const QString dir = QFileInfo(gameGlobalIni()).absolutePath();
     if (!QFileInfo(dir).isDir()) {
-        prompts_->warning(text("dialogs.dir_not_found_title"),
-                          QStringLiteral("Localization directory not found:\n%1\n\nCheck your game install path on the "
-                                         "Config page.")
-                              .arg(QDir::toNativeSeparators(dir)));
+        prompts_->warning(
+            text("dialogs.dir_not_found_title"),
+            QStringLiteral("Localization directory not found:\n%1\n\nCheck your game install path on the "
+                           "Config page.")
+                .arg(QDir::toNativeSeparators(dir)));
         return;
     }
     openFolder(dir);
@@ -940,14 +963,16 @@ void AppController::exportLocPack(const QUrl &target)
     const QString out = target.isLocalFile() ? target.toLocalFile() : target.toString();
     const auto size = writeLocPackZip(source, out);
     if (!size) {
-        prompts_->error(text("dialogs.export_failed_title"), text("dialogs.export_failed_body", {{QStringLiteral("error"), size.error()}}));
+        prompts_->error(text("dialogs.export_failed_title"),
+                        text("dialogs.export_failed_body", {{QStringLiteral("error"), size.error()}}));
         return;
     }
-    prompts_->info(text("dialogs.export_complete_title"),
-                   text("dialogs.export_complete_body", {{QStringLiteral("out_path"), QDir::toNativeSeparators(out)},
-                                                         {QStringLiteral("channel"), channel()},
-                                                         {QStringLiteral("source_size"), *size},
-                                                         {QStringLiteral("zip_size"), QFileInfo(out).size()}}));
+    prompts_->info(
+        text("dialogs.export_complete_title"),
+        text("dialogs.export_complete_body", {{QStringLiteral("out_path"), QDir::toNativeSeparators(out)},
+                                              {QStringLiteral("channel"), channel()},
+                                              {QStringLiteral("source_size"), *size},
+                                              {QStringLiteral("zip_size"), QFileInfo(out).size()}}));
 }
 
 // ── extraction and generation ─────────────────────────────────────────────
@@ -1019,8 +1044,9 @@ void AppController::extractDataForge(bool thenGenerate)
             emit pathsChanged();
             if (!error.isEmpty()) {
                 simpleRunActive_ = false;
-                prompts_->warning(text("extract.dataforge_extraction_error_title"),
-                                  text("extract.dataforge_extraction_error_body", {{QStringLiteral("message"), error}}));
+                prompts_->warning(
+                    text("extract.dataforge_extraction_error_title"),
+                    text("extract.dataforge_extraction_error_body", {{QStringLiteral("message"), error}}));
                 return;
             }
             setStatus(text("extract.dataforge_extracted_generating"));
@@ -1121,7 +1147,8 @@ void AppController::simpleApply()
                           // Without a current base.ini there is nothing to apply over:
                           // extract it first (which continues into DataForge and generation).
                           const QString base = p4kStatus();
-                          if ((base == u"missing" || base == u"stale" || strings_->totalCount() == 0) && base != u"noarchive")
+                          if ((base == u"missing" || base == u"stale" || strings_->totalCount() == 0) &&
+                              base != u"noarchive")
                               extractFromP4k(true);
                           else
                               generateEnhancements();

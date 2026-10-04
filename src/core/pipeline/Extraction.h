@@ -49,8 +49,9 @@ struct DataForgeExtraction
 // database: exports the keep subtrees to a staging folder, swaps it in,
 // applies the patches from `patchRoot`, then stamps the cache. A failure or
 // cancel leaves the previous cache in place.
-engine::Result<DataForgeExtraction> extractDataForge(const engine::p4k::Archive &archive, const QString &cacheDir,
-                                                     const QString &patchRoot, const StepProgress &progress = {},
+engine::Result<DataForgeExtraction> extractDataForge(const engine::p4k::Archive &archive,
+                                                     const QString &cacheDir, const QString &patchRoot,
+                                                     const StepProgress &progress = {},
                                                      const std::atomic<bool> *cancel = nullptr);
 
 QString dataForgeRecordsDir(const QString &cacheDir);

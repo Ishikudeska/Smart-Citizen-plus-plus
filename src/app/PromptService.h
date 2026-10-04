@@ -29,11 +29,11 @@ public:
         Kind kind = Kind::Info;
         QString title;
         QString text;
-        QString detail;            // optional monospace block (paths, error text)
-        QStringList buttons;       // empty: a single OK
+        QString detail;      // optional monospace block (paths, error text)
+        QStringList buttons; // empty: a single OK
         int defaultButton = 0;
-        QString checkbox;          // optional "don't ask again" style checkbox
-        QStringList choices;       // optional list to pick from (answered as `choice`)
+        QString checkbox;    // optional "don't ask again" style checkbox
+        QStringList choices; // optional list to pick from (answered as `choice`)
     };
 
     // button: the index pressed (-1 when dismissed); checked: the checkbox;

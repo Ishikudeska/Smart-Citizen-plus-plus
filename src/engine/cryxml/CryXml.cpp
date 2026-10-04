@@ -24,11 +24,7 @@ struct Node
 class Reader
 {
 public:
-    Reader(std::span<const std::uint8_t> data, bool swap)
-        : data_(data)
-        , swap_(swap)
-    {
-    }
+    Reader(std::span<const std::uint8_t> data, bool swap) : data_(data), swap_(swap) {}
 
     bool i32(std::size_t pos, std::int32_t &out) const
     {
@@ -144,8 +140,8 @@ Result<xml::XmlTree::NodeId> parse(std::span<const std::uint8_t> data, xml::XmlT
         return offset >= 0 && count >= 0 &&
                static_cast<std::uint64_t>(offset) + static_cast<std::uint64_t>(count) * size <= data.size();
     };
-    if (!fits(nodeTableOffset, nodeCount, kNodeSize) || !fits(attributeTableOffset, attributeCount, kAttributeSize) ||
-        !fits(stringTableOffset, 0, 1))
+    if (!fits(nodeTableOffset, nodeCount, kNodeSize) ||
+        !fits(attributeTableOffset, attributeCount, kAttributeSize) || !fits(stringTableOffset, 0, 1))
         return std::unexpected(formatError("header offsets are out of range"));
 
     std::vector<Node> nodes(static_cast<std::size_t>(nodeCount));
@@ -196,7 +192,8 @@ Result<xml::XmlTree::NodeId> parse(std::span<const std::uint8_t> data, xml::XmlT
         const Node &n = nodes[i];
         const auto name = strings.find(n.nameOffset);
         if (name == strings.end())
-            return std::unexpected(formatError("node name offset " + std::to_string(n.nameOffset) + " is not a string"));
+            return std::unexpected(
+                formatError("node name offset " + std::to_string(n.nameOffset) + " is not a string"));
         if (auto error = xml::dotNetNameError(name->second.text))
             return std::unexpected(formatError(*error));
         const auto element = tree.createElement(toUtf8(name->second.text));
@@ -212,7 +209,8 @@ Result<xml::XmlTree::NodeId> parse(std::span<const std::uint8_t> data, xml::XmlT
                 return std::unexpected(formatError(*error));
             const std::string nameUtf8 = toUtf8(attrName->second.text);
             const auto value = strings.find(valueOffset);
-            tree.setAttribute(element, nameUtf8, value == strings.end() ? "BUGGED" : toUtf8(value->second.text));
+            tree.setAttribute(element, nameUtf8,
+                              value == strings.end() ? "BUGGED" : toUtf8(value->second.text));
         }
 
         if (const auto content = strings.find(n.contentOffset); content != strings.end()) {
@@ -223,7 +221,8 @@ Result<xml::XmlTree::NodeId> parse(std::span<const std::uint8_t> data, xml::XmlT
         }
 
         created[static_cast<std::int32_t>(i)] = element;
-        if (const auto parent = created.find(n.parent); parent != created.end() && n.parent != static_cast<std::int32_t>(i)) {
+        if (const auto parent = created.find(n.parent);
+            parent != created.end() && n.parent != static_cast<std::int32_t>(i)) {
             tree.appendChild(parent->second, element);
         } else if (root == xml::XmlTree::kNone) {
             root = element;

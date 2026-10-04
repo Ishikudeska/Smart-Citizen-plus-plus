@@ -1,5 +1,4 @@
 #include "DcbBuilder.h"
-
 #include "engine/forge/DataForge.h"
 #include "engine/forge/DotNetFormat.h"
 #include "engine/forge/Exporter.h"
@@ -23,8 +22,10 @@ std::string g(std::uint8_t seed)
 }
 
 const std::string kNullError =
-    "Error reading array property leaves of type varStrongPointer: System.IndexOutOfRangeException: Index was "
-    "outside the bounds of the array.&#xD;&#xA;   at unforge.DataForgeStructDefinition.ReadArrayValueAsXml(XmlNode "
+    "Error reading array property leaves of type varStrongPointer: System.IndexOutOfRangeException: Index "
+    "was "
+    "outside the bounds of the array.&#xD;&#xA;   at "
+    "unforge.DataForgeStructDefinition.ReadArrayValueAsXml(XmlNode "
     "parentNode, DataForgePropertyDefinition propertyDefinition, UInt32 firstIndex, UInt16 offset)";
 
 std::vector<std::uint8_t> buildFixture()
@@ -131,7 +132,8 @@ forge::DataForge loadFixture()
     return std::move(*df);
 }
 
-std::optional<std::string> recordXml(const forge::DataForge &df, std::string_view path, forge::BuildOptions options = {})
+std::optional<std::string> recordXml(const forge::DataForge &df, std::string_view path,
+                                     forge::BuildOptions options = {})
 {
     forge::RecordBuilder builder(df, options);
     xml::XmlTree tree;
@@ -203,10 +205,13 @@ private slots:
     {
         const auto df = loadFixture();
         const std::string expected =
-            "<Thing.Alpha baseFlag=\"1\" count=\"-5\" ratio=\"1.5\" big=\"0.1\" label=\"hello &amp; &lt;bye&gt;\" "
-            "loc=\"@loc_key\" kind=\"Enum_Value\" id=\"" + g(0x40) + "\" small=\"-3\" u16=\"65535\" "
-            "u64=\"18446744073709551615\" raw=\"2\" __type=\"Thing\" __ref=\"" + g(0x10) +
-            "\" __path=\"libs/foundry/records/things/alpha.xml\" __team=\"Unknown\" />";
+            "<Thing.Alpha baseFlag=\"1\" count=\"-5\" ratio=\"1.5\" big=\"0.1\" label=\"hello &amp; "
+            "&lt;bye&gt;\" "
+            "loc=\"@loc_key\" kind=\"Enum_Value\" id=\"" +
+            g(0x40) +
+            "\" small=\"-3\" u16=\"65535\" "
+            "u64=\"18446744073709551615\" raw=\"2\" __type=\"Thing\" __ref=\"" +
+            g(0x10) + "\" __path=\"libs/foundry/records/things/alpha.xml\" __team=\"Unknown\" />";
         QCOMPARE(recordXml(df, "libs/foundry/records/things/alpha.xml").value_or("<skipped>"), expected);
     }
 
@@ -221,7 +226,8 @@ private slots:
         const auto df = loadFixture();
         forge::BuildOptions clean;
         clean.nullArrayErrors = false;
-        QCOMPARE(recordXml(df, "libs/foundry/records/holder.xml", clean).value_or("<skipped>"), holderXml(false));
+        QCOMPARE(recordXml(df, "libs/foundry/records/holder.xml", clean).value_or("<skipped>"),
+                 holderXml(false));
     }
 
     // A pointer cycle prunes every element on the loop, so the record renders
@@ -235,9 +241,10 @@ private slots:
     void invalidRecordNameBecomesError()
     {
         const auto df = loadFixture();
-        QCOMPARE(recordXml(df, "libs/foundry/records/bad.xml").value_or("<skipped>"),
-                 std::string("<Error value=\"The ' ' character, hexadecimal value 0x20, cannot be included in a "
-                             "name.\" />"));
+        QCOMPARE(
+            recordXml(df, "libs/foundry/records/bad.xml").value_or("<skipped>"),
+            std::string("<Error value=\"The ' ' character, hexadecimal value 0x20, cannot be included in a "
+                        "name.\" />"));
     }
 
     // A derived property with an inherited name replaces the earlier
@@ -269,7 +276,9 @@ private slots:
 
         // Filtered export.
         QTemporaryDir only;
-        options.include = [](std::string_view path) { return path.starts_with("libs/foundry/records/things/"); };
+        options.include = [](std::string_view path) {
+            return path.starts_with("libs/foundry/records/things/");
+        };
         stats = forge::exportRecords(df, std::filesystem::path(only.path().toStdWString()), options);
         QVERIFY(stats);
         QCOMPARE(stats->written, std::size_t(1));

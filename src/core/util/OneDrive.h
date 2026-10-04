@@ -14,7 +14,8 @@ QStringList roots(const QProcessEnvironment &env = QProcessEnvironment::systemEn
 
 // At or under a OneDrive root, or containing a "OneDrive" / "OneDrive - Org"
 // path segment.
-bool isOneDrivePath(const QString &path, const QProcessEnvironment &env = QProcessEnvironment::systemEnvironment());
+bool isOneDrivePath(const QString &path,
+                    const QProcessEnvironment &env = QProcessEnvironment::systemEnvironment());
 
 // %USERPROFILE%\Documents\<appName>: the real local Documents even when the
 // shell's Documents is redirected into OneDrive.

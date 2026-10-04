@@ -45,8 +45,8 @@ bool isSafeChannel(const QString &channel)
 QJsonDocument parseJson(const std::vector<std::uint8_t> &bytes, QString *error)
 {
     QJsonParseError e;
-    const QJsonDocument doc =
-        QJsonDocument::fromJson(QByteArray(reinterpret_cast<const char *>(bytes.data()), qsizetype(bytes.size())), &e);
+    const QJsonDocument doc = QJsonDocument::fromJson(
+        QByteArray(reinterpret_cast<const char *>(bytes.data()), qsizetype(bytes.size())), &e);
     if (e.error != QJsonParseError::NoError)
         *error = e.errorString();
     return doc;
@@ -56,12 +56,14 @@ QJsonDocument parseJson(const std::vector<std::uint8_t> &bytes, QString *error)
 
 QString defaultBackupFilename(QDate today)
 {
-    return QStringLiteral("%1-Settings-Backup-%2.zip").arg(appMarker(), today.toString(QStringLiteral("yyyyMMdd")));
+    return QStringLiteral("%1-Settings-Backup-%2.zip")
+        .arg(appMarker(), today.toString(QStringLiteral("yyyyMMdd")));
 }
 
 std::expected<int, QString> writeProfileZip(const QString &zipPath, const QVariantMap &settings,
-                                            const QMap<QString, QString> &overrides, const QString &appVersion,
-                                            const QString &sourceMode, const QDateTime &now)
+                                            const QMap<QString, QString> &overrides,
+                                            const QString &appVersion, const QString &sourceMode,
+                                            const QDateTime &now)
 {
     QJsonObject manifest{
         {QStringLiteral("app"), appMarker()},
@@ -137,10 +139,11 @@ std::expected<ProfileContents, QString> readProfileZip(const QString &zipPath)
         return std::unexpected(QStringLiteral("Backup manifest is missing a schema version."));
     const int schema = int(schemaValue.toInteger());
     if (schema > kSchemaVersion)
-        return std::unexpected(QStringLiteral("This backup was made by a newer version (backup schema %1, this build "
-                                              "supports %2). Update, then import again.")
-                                   .arg(schema)
-                                   .arg(kSchemaVersion));
+        return std::unexpected(
+            QStringLiteral("This backup was made by a newer version (backup schema %1, this build "
+                           "supports %2). Update, then import again.")
+                .arg(schema)
+                .arg(kSchemaVersion));
 
     ProfileContents contents;
     contents.schemaVersion = schema;
@@ -180,11 +183,16 @@ std::expected<ProfileContents, QString> readProfileZip(const QString &zipPath)
 bool isProfileExcludedKey(const QString &key, const QVariant &value)
 {
     static const QSet<QString> excluded = {
-        QStringLiteral("user_data_dir"),         QStringLiteral("UserDataDir"),
-        QStringLiteral("cache_dir"),             QStringLiteral("pending_cache_cleanup"),
-        QStringLiteral("window_geometry"),       QStringLiteral("window_state"),
-        QStringLiteral("string_column_widths"),  QStringLiteral("base_global_path"),
-        QStringLiteral("vehicles_path"),         QStringLiteral("last_overrides_path"),
+        QStringLiteral("user_data_dir"),
+        QStringLiteral("UserDataDir"),
+        QStringLiteral("cache_dir"),
+        QStringLiteral("pending_cache_cleanup"),
+        QStringLiteral("window_geometry"),
+        QStringLiteral("window_state"),
+        QStringLiteral("string_column_widths"),
+        QStringLiteral("base_global_path"),
+        QStringLiteral("vehicles_path"),
+        QStringLiteral("last_overrides_path"),
         QStringLiteral("post_import/apply_pending"),
     };
     if (excluded.contains(key) || key.startsWith(u'_'))

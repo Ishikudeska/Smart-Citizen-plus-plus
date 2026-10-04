@@ -13,13 +13,13 @@ using EnhancementFn = std::function<QString(Node root)>;
 
 struct ScanOptions
 {
-    std::function<QString(Node)> locKeyFn;  // default: locKey
+    std::function<QString(Node)> locKeyFn; // default: locKey
     bool generateNameTags = false;
-    NameTagger nameTagger;                  // default: componentNameTag
+    NameTagger nameTagger; // default: componentNameTag
     QString nameTagPlacement = QStringLiteral("prepend");
     QString separator = kEnhancementSeparator;
-    bool captureAll = false;                // keep records without stats (missions)
-    const Loc *tagLoc = nullptr;            // English descriptions for the taggers
+    bool captureAll = false;     // keep records without stats (missions)
+    const Loc *tagLoc = nullptr; // English descriptions for the taggers
     bool prepend = false;
 };
 

@@ -23,8 +23,9 @@ class TestTreeIndex : public QObject
 private slots:
     void buildsSortedTree()
     {
-        const std::vector<std::string> paths = {"Data/b.txt", "Data/Libs/x.xml", "Data/a.TXT", "Data/libs/y.xml",
-                                                "Root.ini", "Data/Objects/", "Data/C/z.dds"};
+        const std::vector<std::string> paths = {"Data/b.txt",      "Data/Libs/x.xml", "Data/a.TXT",
+                                                "Data/libs/y.xml", "Root.ini",        "Data/Objects/",
+                                                "Data/C/z.dds"};
         std::vector<TreeIndex::Item> items;
         for (std::size_t i = 0; i < paths.size(); ++i)
             items.push_back({paths[i], (i + 1) * 10, i + 1});

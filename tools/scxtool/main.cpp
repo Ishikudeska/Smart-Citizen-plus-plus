@@ -106,10 +106,18 @@ int cmdInfo(const char *path)
         const auto &e = archive->entry(i);
         total += e.uncompressedSize;
         switch (e.method) {
-        case 0: ++stored; break;
-        case 8: ++deflated; break;
-        case 100: ++zstd; break;
-        default: ++other; break;
+        case 0:
+            ++stored;
+            break;
+        case 8:
+            ++deflated;
+            break;
+        case 100:
+            ++zstd;
+            break;
+        default:
+            ++other;
+            break;
         }
         encrypted += e.encrypted ? 1 : 0;
     }
@@ -214,7 +222,8 @@ int cmdVerify(const char *path, std::size_t every)
         });
         if (!decoded) {
             ++failures;
-            std::printf("FAIL decode %.*s: %s\n", int(name.size()), name.data(), decoded.error().message.c_str());
+            std::printf("FAIL decode %.*s: %s\n", int(name.size()), name.data(),
+                        decoded.error().message.c_str());
         }
     }
     std::printf("checked %zu entries (%.1f GB decoded) in %.1fs: %zu failures, %zu without a hash\n", checked,
@@ -241,9 +250,12 @@ int cmdExtract(int argc, char **argv)
 
     p4k::ExtractOptions options;
     options.outputDir = toPath(argv[4]);
-    options.progress = [](std::size_t done, std::size_t total) { std::fprintf(stderr, "\r%zu / %zu", done, total); };
+    options.progress = [](std::size_t done, std::size_t total) {
+        std::fprintf(stderr, "\r%zu / %zu", done, total);
+    };
     if (toXml) {
-        options.transform = [](std::string_view, std::vector<std::uint8_t> bytes) -> Result<std::vector<std::uint8_t>> {
+        options.transform = [](std::string_view,
+                               std::vector<std::uint8_t> bytes) -> Result<std::vector<std::uint8_t>> {
             if (!cryxml::isCryXml(bytes))
                 return bytes;
             auto text = cryxml::toXml(bytes);
@@ -260,7 +272,8 @@ int cmdExtract(int argc, char **argv)
         return 1;
     }
     std::printf("extracted %zu files (%.1f MB), skipped %zu, %zu failures, in %.2fs\n", stats->extracted,
-                double(stats->bytes) / 1048576.0, stats->skipped, stats->failures.size(), secondsSince(start));
+                double(stats->bytes) / 1048576.0, stats->skipped, stats->failures.size(),
+                secondsSince(start));
     for (std::size_t i = 0; i < std::min<std::size_t>(stats->failures.size(), 20); ++i)
         std::printf("  %s\n", stats->failures[i].c_str());
     return stats->failures.empty() ? 0 : 1;
@@ -298,7 +311,8 @@ int cmdCryXmlCheck(const char *path, std::size_t every)
         return 1;
     // Extensions CryEngine stores as XML (binary or text).
     static const std::vector<std::string_view> kXmlExtensions = {
-        ".xml", ".mtl", ".chrparams", ".cdf", ".adb", ".bspace", ".comb", ".animevents", ".entxml", ".rmp", ".lyr"};
+        ".xml",  ".mtl",        ".chrparams", ".cdf", ".adb", ".bspace",
+        ".comb", ".animevents", ".entxml",    ".rmp", ".lyr"};
     std::vector<std::size_t> xmlEntries;
     for (std::size_t i = 0; i < archive->entryCount(); ++i) {
         const auto name = archive->name(i);
@@ -426,7 +440,8 @@ std::optional<forge::DataForge> loadForge(const char *source)
         std::fprintf(stderr, "error: %s\n", df.error().message.c_str());
         return std::nullopt;
     }
-    std::fprintf(stderr, "DataForge v%d: %zu structs, %zu properties, %zu records, %zu files; loaded in %.2fs\n",
+    std::fprintf(stderr,
+                 "DataForge v%d: %zu structs, %zu properties, %zu records, %zu files; loaded in %.2fs\n",
                  df->version(), df->structs().size(), df->properties().size(), df->records().size(),
                  df->fileRecords().size(), secondsSince(start));
     return std::move(*df);
@@ -447,7 +462,8 @@ bool underAny(std::string_view path, const std::vector<std::string> &prefixes)
 {
     if (prefixes.empty())
         return true;
-    return std::any_of(prefixes.begin(), prefixes.end(), [path](const std::string &p) { return path.starts_with(p); });
+    return std::any_of(prefixes.begin(), prefixes.end(),
+                       [path](const std::string &p) { return path.starts_with(p); });
 }
 
 int cmdForge(int argc, char **argv)
@@ -469,7 +485,8 @@ int cmdForge(int argc, char **argv)
         return 1;
     }
     std::printf("wrote %zu files (%.1f MB), skipped %zu empty, %zu failures, in %.2fs\n", stats->written,
-                double(stats->bytes) / 1048576.0, stats->skipped, stats->failures.size(), secondsSince(start));
+                double(stats->bytes) / 1048576.0, stats->skipped, stats->failures.size(),
+                secondsSince(start));
     for (std::size_t i = 0; i < std::min<std::size_t>(stats->failures.size(), 20); ++i)
         std::printf("  %s\n", stats->failures[i].c_str());
     return stats->failures.empty() ? 0 : 1;
@@ -479,8 +496,10 @@ int cmdForge(int argc, char **argv)
 // null-pointer error messages; drop it so both forms compare equal.
 void normalizeUnforgeOutput(std::string &text)
 {
-    static constexpr std::string_view kExtraFrame = "&#xD;&#xA;   at unforge.DataForge.ReadDataMappingAtIndex(Int64 index)";
-    for (std::size_t pos = text.find(kExtraFrame); pos != std::string::npos; pos = text.find(kExtraFrame, pos))
+    static constexpr std::string_view kExtraFrame =
+        "&#xD;&#xA;   at unforge.DataForge.ReadDataMappingAtIndex(Int64 index)";
+    for (std::size_t pos = text.find(kExtraFrame); pos != std::string::npos;
+         pos = text.find(kExtraFrame, pos))
         text.erase(pos, kExtraFrame.size());
 }
 
@@ -496,11 +515,12 @@ std::string firstDifference(const std::string &expected, const std::string &actu
     }
     auto lineAt = [lineStart](const std::string &s) {
         const auto end = s.find('\n', lineStart);
-        return s.substr(lineStart, std::min<std::size_t>(end == std::string::npos ? s.size() : end, lineStart + 300) -
-                                       lineStart);
+        return s.substr(lineStart,
+                        std::min<std::size_t>(end == std::string::npos ? s.size() : end, lineStart + 300) -
+                            lineStart);
     };
-    return "line " + std::to_string(line) + "\n      expected: " + lineAt(expected) + "\n      actual:   " +
-           lineAt(actual);
+    return "line " + std::to_string(line) + "\n      expected: " + lineAt(expected) +
+           "\n      actual:   " + lineAt(actual);
 }
 
 int cmdForgeCompare(int argc, char **argv)
@@ -545,8 +565,9 @@ int cmdForgeCompare(int argc, char **argv)
                 notWritten.push_back(path);
                 continue;
             }
-            auto bytes = readWholeFile(root / std::filesystem::path(std::u8string(
-                                                  reinterpret_cast<const char8_t *>(path.data()), path.size())));
+            auto bytes =
+                readWholeFile(root / std::filesystem::path(std::u8string(
+                                         reinterpret_cast<const char8_t *>(path.data()), path.size())));
             std::string expected(bytes ? reinterpret_cast<const char *>(bytes->data()) : "",
                                  bytes ? bytes->size() : 0);
             normalizeUnforgeOutput(expected);
@@ -623,9 +644,8 @@ int cmdGameData(int argc, char **argv)
     if (!df)
         return 1;
     const auto start = Clock::now();
-    const auto json = gamedata::buildGameDataJson(*df, options, [](const std::string &line) {
-        std::fprintf(stderr, "%s\n", line.c_str());
-    });
+    const auto json = gamedata::buildGameDataJson(
+        *df, options, [](const std::string &line) { std::fprintf(stderr, "%s\n", line.c_str()); });
     if (!json) {
         std::fprintf(stderr, "error: %s\n", json.error().message.c_str());
         return 1;

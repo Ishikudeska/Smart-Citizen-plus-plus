@@ -20,7 +20,7 @@ struct ExplorerData
 {
     std::shared_ptr<const engine::p4k::Archive> archive;
     std::shared_ptr<const engine::forge::DataForge> forge;
-    std::string dcbName;                 // "Data/Game2.dcb"
+    std::string dcbName;                  // "Data/Game2.dcb"
     std::vector<std::string> recordPaths; // full virtual paths (the tree views into these)
     std::vector<std::uint32_t> records;   // record index per virtual item
     std::uint32_t archiveItems = 0;

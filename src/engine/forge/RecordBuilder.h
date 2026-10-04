@@ -12,9 +12,9 @@ namespace engine::forge {
 
 struct BuildOptions
 {
-    int maxPointerDepth = 100;  // unforge's MaxPointerDepth
-    int maxReferenceDepth = 1;  // unforge's MaxReferenceDepth: references stay GUID strings
-    int maxNodes = 10000;       // children per struct and elements per array
+    int maxPointerDepth = 100; // unforge's MaxPointerDepth
+    int maxReferenceDepth = 1; // unforge's MaxReferenceDepth: references stay GUID strings
+    int maxNodes = 10000;      // children per struct and elements per array
     // The unforge build Smart Citizen bundles throws on null pointers inside
     // arrays and writes the .NET exception text as an element. On (default)
     // reproduces that, so the cache matches it byte for byte. Off skips null
@@ -51,8 +51,7 @@ private:
     NodeId readRecordByReference(const std::uint8_t *guid);
     NodeId readStructAtIndex(NodeId node, std::uint32_t structIndex, std::uint32_t variant);
     NodeId readStructAs(NodeId node, std::uint32_t structIndex);
-    template <class Consume>
-    void structChildren(NodeId target, std::uint32_t structIndex, Consume &&consume);
+    template <class Consume> void structChildren(NodeId target, std::uint32_t structIndex, Consume &&consume);
     Child readValue(NodeId target, std::uint32_t property);
     void readArray(NodeId array, std::uint32_t property);
     NodeId readArrayValue(std::uint32_t property, std::uint32_t firstIndex, std::uint16_t offset);
@@ -67,8 +66,14 @@ private:
     NodeId withValue(NodeId element, std::string_view value);
     Child appendPropertyAttribute(NodeId target, std::uint32_t property, std::string_view value);
 
-    bool followReferences() const { return options_.maxReferenceDepth > static_cast<int>(structStack_.size()); }
-    bool followStrongPointers() const { return options_.maxPointerDepth > static_cast<int>(recordStack_.size()); }
+    bool followReferences() const
+    {
+        return options_.maxReferenceDepth > static_cast<int>(structStack_.size());
+    }
+    bool followStrongPointers() const
+    {
+        return options_.maxPointerDepth > static_cast<int>(recordStack_.size());
+    }
 
     const DataForge &forge_;
     BuildOptions options_;

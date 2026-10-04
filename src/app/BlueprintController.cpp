@@ -1,7 +1,6 @@
 #include "BlueprintController.h"
 
 #include "AppController.h"
-
 #include "core/blueprints/BlueprintExport.h"
 #include "core/blueprints/LogScanner.h"
 #include "core/blueprints/OwnedItems.h"
@@ -109,11 +108,16 @@ QVariantMap BlueprintController::row(const QString &name) const
             QString listed;
             for (const QString &m : missions)
                 listed += QStringLiteral("\n  • ") + m;
-            bits << text("enhancements.blueprints_tooltip_missions", {{QStringLiteral("missions"), QString()}}).trimmed() + listed;
+            bits << text("enhancements.blueprints_tooltip_missions",
+                         {{QStringLiteral("missions"), QString()}})
+                            .trimmed() +
+                        listed;
         }
         tip = bits.join(u'\n');
     }
-    return {{QStringLiteral("name"), name}, {QStringLiteral("display"), display}, {QStringLiteral("tooltip"), tip}};
+    return {{QStringLiteral("name"), name},
+            {QStringLiteral("display"), display},
+            {QStringLiteral("tooltip"), tip}};
 }
 
 void BlueprintController::rebuild()
@@ -165,12 +169,30 @@ void BlueprintController::setFilter(QString &field, const QString &value)
     rebuild();
 }
 
-void BlueprintController::setSearch(const QString &v) { setFilter(search_, v); }
-void BlueprintController::setMission(const QString &v) { setFilter(mission_, v); }
-void BlueprintController::setType(const QString &v) { setFilter(type_, v); }
-void BlueprintController::setCls(const QString &v) { setFilter(cls_, v); }
-void BlueprintController::setSize(const QString &v) { setFilter(size_, v); }
-void BlueprintController::setGrade(const QString &v) { setFilter(grade_, v); }
+void BlueprintController::setSearch(const QString &v)
+{
+    setFilter(search_, v);
+}
+void BlueprintController::setMission(const QString &v)
+{
+    setFilter(mission_, v);
+}
+void BlueprintController::setType(const QString &v)
+{
+    setFilter(type_, v);
+}
+void BlueprintController::setCls(const QString &v)
+{
+    setFilter(cls_, v);
+}
+void BlueprintController::setSize(const QString &v)
+{
+    setFilter(size_, v);
+}
+void BlueprintController::setGrade(const QString &v)
+{
+    setFilter(grade_, v);
+}
 
 bool BlueprintController::showTags() const
 {
@@ -262,7 +284,8 @@ void BlueprintController::scanNext(QStringList queue, QSet<QString> found)
         [dir, since](TaskRunner::Job &job) {
             job.report(text("enhancements.bp_scan_starting"));
             return scanChannel(dir, since, [&job](int done, int total, const QString &file) {
-                job.report(text("enhancements.bp_scan_progress", {{QStringLiteral("file"), file}}), done, total);
+                job.report(text("enhancements.bp_scan_progress", {{QStringLiteral("file"), file}}), done,
+                           total);
             });
         },
         [this, queue, found, channel](const ScanResult &result) mutable {
@@ -294,7 +317,8 @@ void BlueprintController::scanNext(QStringList queue, QSet<QString> found)
             if (result.latestTimestamp.isValid()) {
                 const QDateTime prev = app().settings().blueprintLogWatermark(channel);
                 app().settings().setBlueprintLogWatermark(
-                    prev.isValid() ? std::max(prev, result.latestTimestamp) : result.latestTimestamp, channel);
+                    prev.isValid() ? std::max(prev, result.latestTimestamp) : result.latestTimestamp,
+                    channel);
             }
             scanNext(queue, found);
         });
@@ -315,8 +339,10 @@ void BlueprintController::finishScan(const QSet<QString> &found)
     QStringList names(found.begin(), found.end());
     names.sort();
     app().prompts()->info(text("enhancements.bp_scan_title"),
-                          names.size() == 1 ? text("blueprint_tracker.owned_added_singular")
-                                            : text("blueprint_tracker.owned_added_plural", {{QStringLiteral("count"), static_cast<int>(names.size())}}),
+                          names.size() == 1
+                              ? text("blueprint_tracker.owned_added_singular")
+                              : text("blueprint_tracker.owned_added_plural",
+                                     {{QStringLiteral("count"), static_cast<int>(names.size())}}),
                           names.join(u'\n'));
 }
 
@@ -325,14 +351,16 @@ void BlueprintController::finishScan(const QSet<QString> &found)
 QString BlueprintController::defaultExportPath(bool csv) const
 {
     const QString docs = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
-    return QDir(docs).filePath(text("blueprint_tracker.export_default_filename") + (csv ? QStringLiteral(".csv") : QStringLiteral(".json")));
+    return QDir(docs).filePath(text("blueprint_tracker.export_default_filename") +
+                               (csv ? QStringLiteral(".csv") : QStringLiteral(".json")));
 }
 
 void BlueprintController::exportOwned(const QUrl &target)
 {
     const QSet<QString> owned = app().settings().ownedItems();
     if (owned.isEmpty()) {
-        app().prompts()->info(text("blueprint_tracker.export_nothing_title"), text("blueprint_tracker.export_nothing_body"));
+        app().prompts()->info(text("blueprint_tracker.export_nothing_title"),
+                              text("blueprint_tracker.export_nothing_body"));
         return;
     }
     const QString path = target.isLocalFile() ? target.toLocalFile() : target.toString();
@@ -342,15 +370,18 @@ void BlueprintController::exportOwned(const QUrl &target)
     QFile f(path);
     if (!f.open(QIODevice::WriteOnly | QIODevice::Truncate) || f.write(body.toUtf8()) < 0) {
         app().prompts()->error(text("blueprint_tracker.export_failed_title"),
-                               text("blueprint_tracker.export_failed_body", {{QStringLiteral("error_type"), QStringLiteral("OSError")},
-                                                                             {QStringLiteral("error"), f.errorString()}}));
+                               text("blueprint_tracker.export_failed_body",
+                                    {{QStringLiteral("error_type"), QStringLiteral("OSError")},
+                                     {QStringLiteral("error"), f.errorString()}}));
         return;
     }
     const QString native = QDir::toNativeSeparators(path);
-    app().prompts()->info(text("blueprint_tracker.export_done_title"),
-                          owned.size() == 1 ? text("blueprint_tracker.export_done_singular", {{QStringLiteral("path"), native}})
-                                            : text("blueprint_tracker.export_done_plural", {{QStringLiteral("count"), static_cast<int>(owned.size())},
-                                                                                            {QStringLiteral("path"), native}}));
+    app().prompts()->info(
+        text("blueprint_tracker.export_done_title"),
+        owned.size() == 1 ? text("blueprint_tracker.export_done_singular", {{QStringLiteral("path"), native}})
+                          : text("blueprint_tracker.export_done_plural",
+                                 {{QStringLiteral("count"), static_cast<int>(owned.size())},
+                                  {QStringLiteral("path"), native}}));
 }
 
 void BlueprintController::importOwned(const QUrl &source)
@@ -359,8 +390,9 @@ void BlueprintController::importOwned(const QUrl &source)
     const Enclosings enc = app().enclosings();
     const auto names = parseImportNames(path, enc);
     if (!names) {
-        app().prompts()->error(text("blueprint_tracker.import_invalid_title"),
-                               text("blueprint_tracker.import_invalid_body", {{QStringLiteral("error"), names.error()}}));
+        app().prompts()->error(
+            text("blueprint_tracker.import_invalid_title"),
+            text("blueprint_tracker.import_invalid_body", {{QStringLiteral("error"), names.error()}}));
         return;
     }
     QSet<QString> known;
@@ -371,7 +403,8 @@ void BlueprintController::importOwned(const QUrl &source)
     sortCaseless(skipped);
     if (match.matched.isEmpty()) {
         app().prompts()->info(text("blueprint_tracker.import_dialog_title"),
-                              text("blueprint_tracker.import_nothing_matched_body", {{QStringLiteral("count"), static_cast<int>(skipped.size())}}),
+                              text("blueprint_tracker.import_nothing_matched_body",
+                                   {{QStringLiteral("count"), static_cast<int>(skipped.size())}}),
                               skipped.join(u'\n'));
         return;
     }
@@ -383,8 +416,11 @@ void BlueprintController::importOwned(const QUrl &source)
         app().recomputeOwned();
     }
     QString body = added.size() == 1 ? text("blueprint_tracker.owned_added_singular")
-                                     : text("blueprint_tracker.owned_added_plural", {{QStringLiteral("count"), static_cast<int>(added.size())}});
+                                     : text("blueprint_tracker.owned_added_plural",
+                                            {{QStringLiteral("count"), static_cast<int>(added.size())}});
     if (!skipped.isEmpty())
-        body += QStringLiteral("\n\n") + text("blueprint_tracker.import_skipped_note", {{QStringLiteral("skipped"), static_cast<int>(skipped.size())}});
+        body +=
+            QStringLiteral("\n\n") + text("blueprint_tracker.import_skipped_note",
+                                          {{QStringLiteral("skipped"), static_cast<int>(skipped.size())}});
     app().prompts()->info(text("blueprint_tracker.import_dialog_title"), body, skipped.join(u'\n'));
 }

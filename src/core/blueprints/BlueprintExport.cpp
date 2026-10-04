@@ -174,7 +174,8 @@ std::expected<QSet<QString>, QString> parseJsonNames(const QString &path, const 
          const QJsonValue &entry : entries) {
         if (!entry.isObject())
             continue;
-        const QString name = normalizeItemName(pyStr(entry.toObject().value(QStringLiteral("name"))), enclosings);
+        const QString name =
+            normalizeItemName(pyStr(entry.toObject().value(QStringLiteral("name"))), enclosings);
         if (!name.isEmpty())
             names.insert(name);
     }
@@ -231,7 +232,8 @@ QString exportOwnedBlueprintsJson(const QSet<QString> &owned, const QMap<QString
     }
     out += QStringLiteral("  \"blueprints\": [\n");
     for (qsizetype i = 0; i < names.size(); ++i) {
-        out += QStringLiteral("    {\n      \"name\": %1,\n      \"completed\": true,\n      \"favorite\": false\n    }")
+        out += QStringLiteral(
+                   "    {\n      \"name\": %1,\n      \"completed\": true,\n      \"favorite\": false\n    }")
                    .arg(py::jsonString(displayName(names[i], meta), false));
         out += i + 1 < names.size() ? QStringLiteral(",\n") : QStringLiteral("\n");
     }
@@ -244,7 +246,8 @@ QString exportOwnedBlueprintsCsv(const QSet<QString> &owned, const QMap<QString,
     QString out = QStringLiteral("name,type\n");
     for (const auto names = sortedCaseInsensitive(owned); const QString &name : names) {
         const auto it = meta.constFind(name);
-        out += csvField(displayName(name, meta)) + u',' + csvField(it != meta.cend() ? it->type : QString()) + u'\n';
+        out += csvField(displayName(name, meta)) + u',' + csvField(it != meta.cend() ? it->type : QString()) +
+               u'\n';
     }
     return out;
 }
@@ -256,16 +259,17 @@ std::expected<QSet<QString>, QString> parseImportNames(const QString &path, cons
         return parseJsonNames(path, enclosings);
     if (suffix == u"csv")
         return parseCsvNames(path, enclosings);
-    return std::unexpected(
-        QStringLiteral("Unsupported file type: %1").arg(suffix.isEmpty() ? QStringLiteral("(none)") : u'.' + suffix));
+    return std::unexpected(QStringLiteral("Unsupported file type: %1")
+                               .arg(suffix.isEmpty() ? QStringLiteral("(none)") : u'.' + suffix));
 }
 
-ImportMatch matchImportNames(const QSet<QString> &imported, const QSet<QString> &known, const QSet<QString> &catalogue,
-                             const Enclosings &enclosings)
+ImportMatch matchImportNames(const QSet<QString> &imported, const QSet<QString> &known,
+                             const QSet<QString> &catalogue, const Enclosings &enclosings)
 {
     // Normalize the known side too, so the comparison stays symmetric.
     QStringList knownSorted(known.cbegin(), known.cend());
-    std::sort(knownSorted.begin(), knownSorted.end(), [](const QString &a, const QString &b) { return py::less(a, b); });
+    std::sort(knownSorted.begin(), knownSorted.end(),
+              [](const QString &a, const QString &b) { return py::less(a, b); });
     QHash<QString, QString> knownByNormalized;
     for (const QString &name : knownSorted) {
         const QString n = normalizeItemName(name, enclosings);

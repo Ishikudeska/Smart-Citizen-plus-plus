@@ -1,5 +1,4 @@
 #include "core/enhancements/Missions.h"
-
 #include "core/enhancements/Stats.h"
 #include "core/text/PyFormat.h"
 #include "core/text/PyText.h"
@@ -197,10 +196,11 @@ QString classifyMissionEngagement(const QString &locKey)
     if (locKey.isEmpty())
         return QStringLiteral("Ship");
     const QString key = locKey.toLower();
-    static const QStringList fps = {QStringLiteral("_fps_"),   QStringLiteral("fps_"),     QStringLiteral("_fps"),
-                                    QStringLiteral("fpsmine"), QStringLiteral("_ugf_"),    QStringLiteral("ugf_"),
-                                    QStringLiteral("_ugf"),    QStringLiteral("_onfoot_"), QStringLiteral("onfoot_"),
-                                    QStringLiteral("_onfoot"), QStringLiteral("_foot_")};
+    static const QStringList fps = {
+        QStringLiteral("_fps_"),   QStringLiteral("fps_"),     QStringLiteral("_fps"),
+        QStringLiteral("fpsmine"), QStringLiteral("_ugf_"),    QStringLiteral("ugf_"),
+        QStringLiteral("_ugf"),    QStringLiteral("_onfoot_"), QStringLiteral("onfoot_"),
+        QStringLiteral("_onfoot"), QStringLiteral("_foot_")};
     static const QStringList transport = {QStringLiteral("recovercargo"), QStringLiteral("cargo_recover"),
                                           QStringLiteral("salvage"), QStringLiteral("hauling"),
                                           QStringLiteral("freight")};
@@ -239,7 +239,8 @@ QString titleRouteToken(const QString &var, const QString &bodyToken, const QStr
     return bodyToken;
 }
 
-std::pair<RouteTokens, RouteTokens> expandNestedRouteVars(const QString &var, const Loc &loc, RouteExpandCache *cache)
+std::pair<RouteTokens, RouteTokens> expandNestedRouteVars(const QString &var, const Loc &loc,
+                                                          RouteExpandCache *cache)
 {
     if (cache)
         if (const auto it = cache->constFind(var); it != cache->cend())
@@ -287,8 +288,8 @@ std::pair<RouteTokens, RouteTokens> expandNestedRouteVars(const QString &var, co
     return result;
 }
 
-QString deriveRouteFragment(const QList<const QString *> &bodies, const tags::TagConfig *config, const Loc &loc,
-                            RouteExpandCache *cache)
+QString deriveRouteFragment(const QList<const QString *> &bodies, const tags::TagConfig *config,
+                            const Loc &loc, RouteExpandCache *cache)
 {
     const QString arrow = config ? config->routeArrow : QStringLiteral("gt");
     const QString detail = config ? config->locationDetail : QStringLiteral("address");
@@ -343,7 +344,8 @@ Loc sizeAbbreviationOverrides(const Loc &loc, const QSet<QString> &shortenedSize
     for (const auto &[word, shortForm] : tags::sizeAbbreviations())
         abbrev.insert(QString::fromUtf8(word), QString::fromUtf8(shortForm));
     for (const auto &[key, value] : loc) {
-        if (!key.startsWith(QStringLiteral("HaulCargo_CargoGrade_")) && !key.startsWith(QStringLiteral("HaulCargo_CargoScale_")))
+        if (!key.startsWith(QStringLiteral("HaulCargo_CargoGrade_")) &&
+            !key.startsWith(QStringLiteral("HaulCargo_CargoScale_")))
             continue;
         if (!shortenedSizes.contains(value))
             continue;
@@ -434,7 +436,8 @@ QStringList formatSpawnLines(const SpawnBreakdown &breakdown)
         QStringList parts;
         for (auto it = items.cbegin(); it != items.cend(); ++it)
             parts << QStringLiteral("%1 x%2").arg(it.key()).arg(it.value());
-        lines << QStringLiteral("<EM4>%1:</EM4> %2").arg(QString::fromLatin1(header), parts.join(QStringLiteral(", ")));
+        lines << QStringLiteral("<EM4>%1:</EM4> %2")
+                     .arg(QString::fromLatin1(header), parts.join(QStringLiteral(", ")));
     }
     return lines;
 }
@@ -509,9 +512,11 @@ QString extractDifficulty(Node element)
     return QString();
 }
 
-QString repRewardLine(const QString &fieldName, const QString &amount, const QString &repXpLabel, const QString &track)
+QString repRewardLine(const QString &fieldName, const QString &amount, const QString &repXpLabel,
+                      const QString &track)
 {
-    const QString suffix = !track.isEmpty() && track != fieldName ? QStringLiteral(" (%1)").arg(track) : QString();
+    const QString suffix =
+        !track.isEmpty() && track != fieldName ? QStringLiteral(" (%1)").arg(track) : QString();
     if (!fieldName.isEmpty() && fieldName != repXpLabel)
         return QStringLiteral("<EM4>%1:</EM4> %2 %3%4").arg(fieldName, amount, repXpLabel, suffix);
     return QStringLiteral("<EM4>%1:</EM4> %2%3").arg(repXpLabel, amount, suffix);
@@ -532,7 +537,8 @@ QStringList extractMissionFlags(Node root)
 qint64 extractMissionXp(Node root, const QHash<QString, qint64> &reputation)
 {
     // The success outcome, primary faction only (as SCMDB shows it).
-    const std::vector<Node> outcomes = findAll(root, ".//missionResultReputationRewards/SReputationAmountListParams");
+    const std::vector<Node> outcomes =
+        findAll(root, ".//missionResultReputationRewards/SReputationAmountListParams");
     if (outcomes.empty())
         return 0;
     const std::vector<Node> amounts = findAll(outcomes.front(), ".//SReputationAmountParams");

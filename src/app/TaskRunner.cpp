@@ -21,7 +21,8 @@ void TaskRunner::Job::report(const QString &message, int completed, int total)
     sink_.flush();
 }
 
-TaskRunner::TaskRunner(QObject *parent) : QObject(parent) {}
+TaskRunner::TaskRunner(QObject *parent) : QObject(parent)
+{}
 
 void TaskRunner::run(const QString &title, bool cancellable, std::function<void(Job &)> work,
                      std::function<void()> done)

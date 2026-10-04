@@ -17,7 +17,8 @@ void handler(QtMsgType type, const QMessageLogContext &context, const QString &m
 {
     if (!t_inHandler) {
         t_inHandler = true;
-        LogHub::instance().record(type, QString::fromUtf8(context.category ? context.category : "default"), message);
+        LogHub::instance().record(type, QString::fromUtf8(context.category ? context.category : "default"),
+                                  message);
         // qFatal aborts once the handler returns.
         if (type == QtFatalMsg)
             crash::reportFatal(QStringLiteral("Fatal error: ") + message);
@@ -62,7 +63,8 @@ LogHub &LogHub::instance()
 
 void LogHub::install(const QString &logFile, bool debug)
 {
-    QLoggingCategory::setFilterRules(debug ? QStringLiteral("*.debug=true") : QStringLiteral("*.debug=false"));
+    QLoggingCategory::setFilterRules(debug ? QStringLiteral("*.debug=true")
+                                           : QStringLiteral("*.debug=false"));
     {
         QMutexLocker lock(&mutex_);
         file_.reset();

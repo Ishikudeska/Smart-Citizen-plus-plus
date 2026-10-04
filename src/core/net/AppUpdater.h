@@ -41,9 +41,9 @@ struct UpdateCheck
 {
     enum class Status { UpToDate, Available, Failed, Disabled };
     Status status = Status::Failed;
-    QString latest;       // without a leading "v"
+    QString latest; // without a leading "v"
     QUrl releasePage;
-    QString notes;        // the release body (Markdown)
+    QString notes; // the release body (Markdown)
     std::optional<InstallerAsset> installer;
     QString error;
 };

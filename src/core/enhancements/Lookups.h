@@ -19,12 +19,13 @@ RecordLookup buildAmmoLookup(const RecordStore &store, const QString &relDir);
 
 struct ScitemLookups
 {
-    MagazineLookup magazines;                     // entity class -> (ammo record, capacity)
-    QHash<QString, QString> entityNames;          // __ref -> display name
+    MagazineLookup magazines;                      // entity class -> (ammo record, capacity)
+    QHash<QString, QString> entityNames;           // __ref -> display name
     QHash<QString, QString> entityNamesByFilename; // lower-cased stem -> display name
-    QHash<QString, QString> entityNameTags;       // __ref -> component tag for blueprint lists
+    QHash<QString, QString> entityNameTags;        // __ref -> component tag for blueprint lists
 };
-ScitemLookups buildScitemLookups(const RecordStore &store, const Loc &loc, const tags::TagConfig *componentsConfig);
+ScitemLookups buildScitemLookups(const RecordStore &store, const Loc &loc,
+                                 const tags::TagConfig *componentsConfig);
 
 // ships/controller/controller_flight_<class>.xml, by lower-cased class.
 RecordLookup buildControllerLookup(const RecordStore &store);

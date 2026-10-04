@@ -20,6 +20,7 @@ namespace {
 const QSet<QString> &collectionItemKeys()
 {
     // Collection-mission objectives (#97).
+    // clang-format off
     static const QSet<QString> keys = {
         QStringLiteral("Mission_Item_0183"), QStringLiteral("Mission_Item_0184"), QStringLiteral("Mission_Item_0186"),
         QStringLiteral("Mission_Item_0191"), QStringLiteral("Mission_Item_0192"), QStringLiteral("Mission_Item_0195"),
@@ -56,6 +57,7 @@ const QSet<QString> &collectionItemKeys()
         QStringLiteral("items_commodities_wuotanseed"), QStringLiteral("items_commodities_yormandi_eye"),
         QStringLiteral("items_commodities_zip"),
     };
+    // clang-format on
     return keys;
 }
 
@@ -73,7 +75,8 @@ QStringList pySorted(QStringList list)
 // sorted(..., key=str.lower), stable.
 void sortCaseless(QStringList &list)
 {
-    std::stable_sort(list.begin(), list.end(), [](const QString &a, const QString &b) { return py::less(a.toLower(), b.toLower()); });
+    std::stable_sort(list.begin(), list.end(),
+                     [](const QString &a, const QString &b) { return py::less(a.toLower(), b.toLower()); });
 }
 
 // Windows Path ordering: lower-cased components, compared as lists.
@@ -109,8 +112,8 @@ QHash<QString, QStringList> parseCompendiumLocations(const QString &content)
     return result;
 }
 
-const QStringList *lookupCommodityLocations(const QHash<QString, QStringList> &locations, const QString &display,
-                                            const QString &internalName)
+const QStringList *lookupCommodityLocations(const QHash<QString, QStringList> &locations,
+                                            const QString &display, const QString &internalName)
 {
     QStringList candidates;
     const QString d = py::strip(display).toLower();
@@ -130,7 +133,8 @@ const QStringList *lookupCommodityLocations(const QHash<QString, QStringList> &l
 
 namespace {
 
-std::vector<std::pair<QString, QString>> discoverCommodityLocPairs(const QString &internalName, const Loc &loc)
+std::vector<std::pair<QString, QString>> discoverCommodityLocPairs(const QString &internalName,
+                                                                   const Loc &loc)
 {
     const QString prefix = QStringLiteral("items_commodities_") + internalName.toLower();
     QStringList nameKeys;
@@ -263,8 +267,10 @@ QString craftUsageLegend(const tags::TagConfig *config)
         else if (const auto it2 = defaults.constFind(name); it2 != defaults.cend())
             variants = *it2;
         else
-            variants = {QString::fromUtf8(c.shortCode), QString::fromUtf8(c.medCode), QString::fromUtf8(c.longCode)};
-        groups[QString::fromUtf8(c.group)] << QStringLiteral("- %1 = %2").arg(variants[std::size_t(idx)], name);
+            variants = {QString::fromUtf8(c.shortCode), QString::fromUtf8(c.medCode),
+                        QString::fromUtf8(c.longCode)};
+        groups[QString::fromUtf8(c.group)]
+            << QStringLiteral("- %1 = %2").arg(variants[std::size_t(idx)], name);
     }
     QStringList parts = {QStringLiteral("<EM3>Crafting Tag Key</EM3>")};
     for (const char *group : {"Ship Components", "FPS Gear", "Other"}) {
@@ -298,9 +304,10 @@ QStringList condenseCraftedItems(const std::vector<std::pair<QString, QString>> 
         byCat[cat] << name;
     static const QRegularExpression quoted = py::re(QStringLiteral(R"re(\s*"[^"]*"\s*)re"));
     static const QRegularExpression spaces = py::re(QStringLiteral(R"(\s+)"));
-    static const QRegularExpression armourSet = py::re(
-        QStringLiteral(R"(^([\w-]+(?:\s[\w-]+)?)\s+(?:Arms|Core|Legs|Helmet|Backpack|Suit|Armor))"));
-    static const QRegularExpression qdSize(QStringLiteral(R"(quantumdrive/size(\d+)$)"), QRegularExpression::CaseInsensitiveOption);
+    static const QRegularExpression armourSet =
+        py::re(QStringLiteral(R"(^([\w-]+(?:\s[\w-]+)?)\s+(?:Arms|Core|Legs|Helmet|Backpack|Suit|Armor))"));
+    static const QRegularExpression qdSize(QStringLiteral(R"(quantumdrive/size(\d+)$)"),
+                                           QRegularExpression::CaseInsensitiveOption);
 
     QStringList lines;
     qsizetype qdCount = 0;
@@ -311,7 +318,8 @@ QStringList condenseCraftedItems(const std::vector<std::pair<QString, QString>> 
         names.erase(std::unique(names.begin(), names.end()), names.end());
         const QStringList parts = cat.split(u'/');
         if (cat.contains(u"ammo")) {
-            lines << (parts.size() > 2 ? py::title(parts.back()) : QStringLiteral("Ammo")) + QStringLiteral(" Ammo");
+            lines << (parts.size() > 2 ? py::title(parts.back()) : QStringLiteral("Ammo")) +
+                         QStringLiteral(" Ammo");
             continue;
         }
         if (cat.contains(u"weapons")) {
@@ -328,7 +336,8 @@ QStringList condenseCraftedItems(const std::vector<std::pair<QString, QString>> 
         }
         if (cat.contains(u"armour")) {
             const QString weight = parts.size() > 2 ? py::title(parts.back()) : QString();
-            const QString armourType = parts.size() > 2 ? py::title(parts[parts.size() - 2]) : QStringLiteral("Armour");
+            const QString armourType =
+                parts.size() > 2 ? py::title(parts[parts.size() - 2]) : QStringLiteral("Armour");
             QSet<QString> sets;
             for (const QString &n : names) {
                 if (const QRegularExpressionMatch m = armourSet.match(n); m.hasMatch())
@@ -336,8 +345,10 @@ QStringList condenseCraftedItems(const std::vector<std::pair<QString, QString>> 
                 else
                     sets.insert(n.isEmpty() ? n : n.split(spaces, Qt::SkipEmptyParts).value(0));
             }
-            const QString label = sets.size() <= 3 ? pySorted(QStringList(sets.cbegin(), sets.cend())).join(QStringLiteral(", "))
-                                                   : QStringLiteral("%1 sets").arg(sets.size());
+            const QString label =
+                sets.size() <= 3
+                    ? pySorted(QStringList(sets.cbegin(), sets.cend())).join(QStringLiteral(", "))
+                    : QStringLiteral("%1 sets").arg(sets.size());
             if (!weight.isEmpty() && armourType != weight)
                 lines << QStringLiteral("%1 (%2 %3)").arg(label, weight, armourType);
             else
@@ -357,7 +368,8 @@ QStringList condenseCraftedItems(const std::vector<std::pair<QString, QString>> 
     return lines;
 }
 
-QString commodityTag(const tags::TagConfig *config, bool crafting, bool collection, const QStringList &usageKeys)
+QString commodityTag(const tags::TagConfig *config, bool crafting, bool collection,
+                     const QStringList &usageKeys)
 {
     QHash<QString, QString> values;
     if (crafting)
@@ -376,7 +388,8 @@ QString commodityTag(const tags::TagConfig *config, bool crafting, bool collecti
         values.insert(QStringLiteral("collection"), QStringLiteral("Collection"));
     if (values.isEmpty())
         return QString();
-    const QString tag = tags::renderTag(config ? *config : defaultTagConfig(QStringLiteral("commodities")), values);
+    const QString tag =
+        tags::renderTag(config ? *config : defaultTagConfig(QStringLiteral("commodities")), values);
     return tag.isEmpty() ? QString() : QStringLiteral("<EM4>%1</EM4>").arg(tag);
 }
 
@@ -419,8 +432,8 @@ std::pair<Loc, Loc> generateCommodityJournal(const Context &ctx)
     // UUID -> commodity, by finding the UUID in carryable records.
     QHash<QString, QString> uuidNames;
     if (store.dirExists(carryables) && !uuids.isEmpty()) {
-        static const QRegularExpression stemRe = py::re(
-            QStringLiteral(R"((?:commodity_(?:metal|mineral|minerals|nonmetal|gas)|harvestable_(?:mineral|metal|ore)_\dh)_(\w+?)(?:_[a-d])?$)"));
+        static const QRegularExpression stemRe = py::re(QStringLiteral(
+            R"((?:commodity_(?:metal|mineral|minerals|nonmetal|gas)|harvestable_(?:mineral|metal|ore)_\dh)_(\w+?)(?:_[a-d])?$)"));
         std::vector<QByteArray> needles;
         for (const QString &u : uuids)
             needles.push_back(u.toUtf8());
@@ -467,7 +480,8 @@ std::pair<Loc, Loc> generateCommodityJournal(const Context &ctx)
         std::set<QString, bool (*)(const QString &, const QString &)> materials(pyLess);
         forEachElement(doc.root(), [&](Node el) {
             const QString uid = materialUuid(el);
-            if (!uid.isEmpty() || polyType(el) == "CraftingCost_Resource" || polyType(el) == "CraftingCost_Item")
+            if (!uid.isEmpty() || polyType(el) == "CraftingCost_Resource" ||
+                polyType(el) == "CraftingCost_Item")
                 if (const auto it = uuidNames.constFind(uid); it != uuidNames.cend())
                     materials.insert(*it);
             return true;
@@ -505,20 +519,23 @@ std::pair<Loc, Loc> generateCommodityJournal(const Context &ctx)
         for (const auto &[nameKey, descKey] : pairs) {
             const QString baseName = loc.value(nameKey);
             if (!baseName.isEmpty() && !out.contains(nameKey)) {
-                const QString tag = commodityTag(&cfg, true, collectionItemKeys().contains(nameKey), usageKeys);
+                const QString tag =
+                    commodityTag(&cfg, true, collectionItemKeys().contains(nameKey), usageKeys);
                 out.insert(nameKey, tag.isEmpty() ? baseName : placeCommodityTag(baseName, tag, cfg));
             }
             const QString baseDesc = loc.value(descKey);
             if (!baseDesc.isEmpty() && !out.contains(descKey)) {
                 QStringList sections;
-                if (const QStringList *locs = lookupCommodityLocations(mineralLocations, baseName, commodity)) {
+                if (const QStringList *locs =
+                        lookupCommodityLocations(mineralLocations, baseName, commodity)) {
                     QStringList lines;
                     for (const QString &l : *locs)
                         lines << QStringLiteral("- ") + l;
                     sections << QStringLiteral("<%1>Locations:</%1>").arg(em) + kNl + lines.join(kNl);
                 }
                 sections << block;
-                out.insert(descKey, baseDesc + QStringLiteral("\\n\\n") + sections.join(QStringLiteral("\\n\\n")));
+                out.insert(descKey,
+                           baseDesc + QStringLiteral("\\n\\n") + sections.join(QStringLiteral("\\n\\n")));
             }
         }
     }
@@ -564,12 +581,14 @@ std::pair<Loc, Loc> generateCommodityJournal(const Context &ctx)
                     mineralCrafting.insert(k, condensed); // first writer wins
         }
 
-        static const QHash<QString, QString> oreAliases = {{QStringLiteral("savrilium"), QStringLiteral("savrillium")}};
+        static const QHash<QString, QString> oreAliases = {
+            {QStringLiteral("savrilium"), QStringLiteral("savrillium")}};
         QStringList augmented;
         for (const auto paras = baseContent.split(QStringLiteral("\\n\\n")); const QString &para : paras) {
             const qsizetype dash = para.indexOf(QStringLiteral(" - "));
             const QString name = dash > 0 ? py::strip(para.first(dash)) : QString();
-            const auto locs = name.isEmpty() ? mineralLocations.cend() : mineralLocations.constFind(name.toLower());
+            const auto locs =
+                name.isEmpty() ? mineralLocations.cend() : mineralLocations.constFind(name.toLower());
             if (locs == mineralLocations.cend()) {
                 augmented << para;
                 continue;
@@ -585,7 +604,8 @@ std::pair<Loc, Loc> generateCommodityJournal(const Context &ctx)
             block << QStringLiteral("<EM4>Locations:</EM4>");
             for (const QString &l : *locs)
                 block << QStringLiteral("- ") + l;
-            if (const auto craft = mineralCrafting.constFind(name.toLower()); craft != mineralCrafting.cend() && !craft->isEmpty()) {
+            if (const auto craft = mineralCrafting.constFind(name.toLower());
+                craft != mineralCrafting.cend() && !craft->isEmpty()) {
                 block << QString() << QStringLiteral("<EM4>Used To Craft:</EM4>");
                 for (const QString &item : *craft)
                     block << QStringLiteral("- ") + item;

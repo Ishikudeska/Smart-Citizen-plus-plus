@@ -31,14 +31,12 @@ public:
     void null();
 
     // Shorthands for "key": value.
-    template <class T>
-    void field(std::string_view name, const T &v)
+    template <class T> void field(std::string_view name, const T &v)
     {
         key(name);
         value(v);
     }
-    template <class T>
-    void field(std::string_view name, const std::optional<T> &v)
+    template <class T> void field(std::string_view name, const std::optional<T> &v)
     {
         if (v) {
             key(name);

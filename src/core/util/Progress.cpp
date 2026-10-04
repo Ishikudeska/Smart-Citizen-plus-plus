@@ -7,9 +7,7 @@ Q_LOGGING_CATEGORY(lcPerf, "scx.perf")
 namespace core {
 
 ProgressSink::ProgressSink(Callback callback, int total, std::chrono::milliseconds minInterval)
-    : callback_(std::move(callback))
-    , total_(total)
-    , minInterval_(minInterval)
+    : callback_(std::move(callback)), total_(total), minInterval_(minInterval)
 {
     clock_.start();
 }
@@ -86,8 +84,7 @@ void ProgressSink::emitProgress(bool force)
     std::apply(callback_, payload);
 }
 
-PerfTimer::PerfTimer(const char *name)
-    : name_(name)
+PerfTimer::PerfTimer(const char *name) : name_(name)
 {
     if (lcPerf().isDebugEnabled())
         timer_.start();

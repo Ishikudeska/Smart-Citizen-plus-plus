@@ -95,8 +95,8 @@ private slots:
     // P1: global.ini equals unp4k's extraction byte for byte.
     void p1BaseIni()
     {
-        const auto expectedPath = envPath(
-            "SCX_BASE_INI", QDir::homePath() + "/Documents/Smart Citizen/LIVE/cache/base.ini");
+        const auto expectedPath =
+            envPath("SCX_BASE_INI", QDir::homePath() + "/Documents/Smart Citizen/LIVE/cache/base.ini");
         const auto expected = readText(expectedPath);
         if (!expected)
             QSKIP("no unp4k base.ini to compare against (SCX_BASE_INI)");
@@ -129,12 +129,14 @@ private slots:
                     const std::size_t i = picked[n];
                     std::string problem;
                     crypto::Sha256 sha;
-                    auto stored = archive_->readStored(i, [&](std::span<const std::uint8_t> b) -> Result<void> {
-                        sha.update(b);
-                        return {};
-                    });
+                    auto stored =
+                        archive_->readStored(i, [&](std::span<const std::uint8_t> b) -> Result<void> {
+                            sha.update(b);
+                            return {};
+                        });
                     auto hash = archive_->storedHash(i);
-                    auto decoded = archive_->read(i, [](std::span<const std::uint8_t>) -> Result<void> { return {}; });
+                    auto decoded =
+                        archive_->read(i, [](std::span<const std::uint8_t>) -> Result<void> { return {}; });
                     if (!stored || !hash || !decoded)
                         problem = (!stored ? stored.error() : !hash ? hash.error() : decoded.error()).message;
                     else if (!*hash || sha.finish() != **hash)
@@ -155,8 +157,8 @@ private slots:
     // P3: every record unforge cached is reproduced byte for byte.
     void p3DataForge()
     {
-        const auto cacheRoot = envPath("SCX_FORGE_CACHE",
-                                       QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) +
+        const auto cacheRoot =
+            envPath("SCX_FORGE_CACHE", QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) +
                                            "/Smart Citizen/LIVE/cache/dataforge/raw");
         if (!io::exists(cacheRoot / "libs"))
             QSKIP("no unforge cache to compare against (SCX_FORGE_CACHE)");
@@ -187,9 +189,9 @@ private slots:
                 return [&, builder = forge::RecordBuilder(*df), tree = xml::XmlTree(),
                         actual = std::string()](std::size_t n) mutable {
                     const std::string &path = cached[n];
-                    auto expected = readText(cacheRoot / std::filesystem::path(std::u8string(
-                                                             reinterpret_cast<const char8_t *>(path.data()),
-                                                             path.size())));
+                    auto expected = readText(
+                        cacheRoot / std::filesystem::path(std::u8string(
+                                        reinterpret_cast<const char8_t *>(path.data()), path.size())));
                     if (expected && expected->starts_with("<?xml")) {
                         patched.fetch_add(1); // rewritten by Smart Citizen's patcher (lxml)
                         return;
@@ -231,7 +233,8 @@ private slots:
                 failures.push_back(path + ": missing from the cache");
         }
 
-        qInfo("compared %zu cached records (%zu patched by Smart Citizen, skipped)", cached.size(), patched.load());
+        qInfo("compared %zu cached records (%zu patched by Smart Citizen, skipped)", cached.size(),
+              patched.load());
         std::sort(failures.begin(), failures.end());
         for (std::size_t i = 0; i < std::min<std::size_t>(failures.size(), 10); ++i)
             qWarning("%s", failures[i].c_str());

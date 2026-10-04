@@ -11,7 +11,8 @@ std::string_view ExplorerData::recordPath(std::uint32_t item) const
     return forge ? forge->recordFileName(recordOf(item)) : std::string_view();
 }
 
-P4kTreeModel::P4kTreeModel(QObject *parent) : QAbstractItemModel(parent) {}
+P4kTreeModel::P4kTreeModel(QObject *parent) : QAbstractItemModel(parent)
+{}
 
 void P4kTreeModel::setExplorerData(std::shared_ptr<const ExplorerData> data)
 {
@@ -22,7 +23,8 @@ void P4kTreeModel::setExplorerData(std::shared_ptr<const ExplorerData> data)
 
 QString P4kTreeModel::formatSize(std::uint64_t bytes)
 {
-    return QLocale::system().formattedDataSize(static_cast<qint64>(bytes), 1, QLocale::DataSizeTraditionalFormat);
+    return QLocale::system().formattedDataSize(static_cast<qint64>(bytes), 1,
+                                               QLocale::DataSizeTraditionalFormat);
 }
 
 QModelIndex P4kTreeModel::index(int row, int column, const QModelIndex &parent) const
@@ -30,7 +32,8 @@ QModelIndex P4kTreeModel::index(int row, int column, const QModelIndex &parent) 
     if (!data_ || row < 0 || column < 0 || column >= ColumnCount)
         return {};
     const TreeIndex &t = data_->index;
-    const TreeIndex::NodeId folder = parent.isValid() ? static_cast<TreeIndex::NodeId>(parent.internalId()) : t.root();
+    const TreeIndex::NodeId folder =
+        parent.isValid() ? static_cast<TreeIndex::NodeId>(parent.internalId()) : t.root();
     if (static_cast<std::uint32_t>(row) >= t.node(folder).childCount)
         return {};
     return createIndex(row, column, static_cast<quintptr>(t.child(folder, static_cast<std::uint32_t>(row))));
@@ -52,7 +55,8 @@ int P4kTreeModel::rowCount(const QModelIndex &parent) const
     if (!data_ || parent.column() > 0)
         return 0;
     const TreeIndex &t = data_->index;
-    const TreeIndex::NodeId n = parent.isValid() ? static_cast<TreeIndex::NodeId>(parent.internalId()) : t.root();
+    const TreeIndex::NodeId n =
+        parent.isValid() ? static_cast<TreeIndex::NodeId>(parent.internalId()) : t.root();
     return static_cast<int>(t.node(n).childCount);
 }
 
@@ -70,14 +74,20 @@ QVariant P4kTreeModel::data(const QModelIndex &index, int role) const
     const TreeIndex::Node &n = t.node(id);
     const bool folder = n.item == TreeIndex::kNone;
     switch (role) {
-    case NodeRole: return static_cast<int>(id);
-    case FolderRole: return folder;
-    case RecordRole: return !folder && data_->isRecord(n.item);
-    case Qt::DisplayRole: break;
-    default: return {};
+    case NodeRole:
+        return static_cast<int>(id);
+    case FolderRole:
+        return folder;
+    case RecordRole:
+        return !folder && data_->isRecord(n.item);
+    case Qt::DisplayRole:
+        break;
+    default:
+        return {};
     }
     switch (index.column()) {
-    case ColName: return QString::fromUtf8(n.name.data(), static_cast<qsizetype>(n.name.size()));
+    case ColName:
+        return QString::fromUtf8(n.name.data(), static_cast<qsizetype>(n.name.size()));
     case ColSize:
     case ColPacked:
         // Records (and folders holding only records) have no stored size.
@@ -86,7 +96,8 @@ QVariant P4kTreeModel::data(const QModelIndex &index, int role) const
         return formatSize(index.column() == ColSize ? n.size : n.packed);
     case ColMethod: {
         if (folder)
-            return core::i18n::tr("scx.explorer_files_count", {{QStringLiteral("count"), QLocale::system().toString(n.files)}});
+            return core::i18n::tr("scx.explorer_files_count",
+                                  {{QStringLiteral("count"), QLocale::system().toString(n.files)}});
         if (data_->isRecord(n.item))
             return core::i18n::tr("scx.explorer_record");
         const engine::p4k::Entry &e = data_->archive->entry(n.item);
@@ -104,10 +115,14 @@ QVariant P4kTreeModel::headerData(int section, Qt::Orientation orientation, int 
     if (orientation != Qt::Horizontal || role != Qt::DisplayRole)
         return {};
     switch (section) {
-    case ColName: return core::i18n::tr("scx.explorer_col_name");
-    case ColSize: return core::i18n::tr("scx.explorer_col_size");
-    case ColPacked: return core::i18n::tr("scx.explorer_col_packed");
-    case ColMethod: return core::i18n::tr("scx.explorer_col_method");
+    case ColName:
+        return core::i18n::tr("scx.explorer_col_name");
+    case ColSize:
+        return core::i18n::tr("scx.explorer_col_size");
+    case ColPacked:
+        return core::i18n::tr("scx.explorer_col_packed");
+    case ColMethod:
+        return core::i18n::tr("scx.explorer_col_method");
     }
     return {};
 }

@@ -27,13 +27,13 @@ QString scLanguageId(const QString &language);
 class Settings;
 
 inline const QStringList kMissionFieldKeys = {
-    QStringLiteral("mission_type"), QStringLiteral("difficulty"), QStringLiteral("spawns"),
-    QStringLiteral("reputation"),   QStringLiteral("blueprints"), QStringLiteral("ace"),
+    QStringLiteral("mission_type"),        QStringLiteral("difficulty"), QStringLiteral("spawns"),
+    QStringLiteral("reputation"),          QStringLiteral("blueprints"), QStringLiteral("ace"),
     QStringLiteral("resource_signatures"),
 };
 inline const QStringList kMissionTitleTagKeys = {
-    QStringLiteral("rep"), QStringLiteral("blueprint"), QStringLiteral("ace"), QStringLiteral("rs"),
-    QStringLiteral("rep_track"),
+    QStringLiteral("rep"), QStringLiteral("blueprint"), QStringLiteral("ace"),
+    QStringLiteral("rs"),  QStringLiteral("rep_track"),
 };
 
 // Where a language's global.ini downloads from: the user's override, else
@@ -48,8 +48,8 @@ QString languageBaseUrl(const Settings &settings, const QString &language, const
 class Settings
 {
 public:
-    Settings();                                 // the app's settings file
-    explicit Settings(const QString &iniPath);  // a specific file (tests, tools)
+    Settings();                                // the app's settings file
+    explicit Settings(const QString &iniPath); // a specific file (tests, tools)
 
     static QString defaultFilePath();
     QString filePath() const;
@@ -142,7 +142,7 @@ public:
     QSet<QString> ownedItems() const;
     void setOwnedItems(const QSet<QString> &names);
     bool toggleOwnedItem(const QString &name); // the new owned state
-    bool blueprintShowTags() const; // default off
+    bool blueprintShowTags() const;            // default off
     void setBlueprintShowTags(bool enabled);
     bool scanOtherChannels() const; // also scan LIVE/HOTFIX's partner; default on
     void setScanOtherChannels(bool enabled);

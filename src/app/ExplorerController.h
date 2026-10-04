@@ -76,10 +76,12 @@ public:
     Q_INVOKABLE int findNode(const QString &path) const;
     // Writes the files at or beneath `nodes` under `outputDir`, keeping
     // their archive paths. CryXML can be converted to text XML on the way.
-    Q_INVOKABLE void extract(const QVariantList &nodes, const QUrl &outputDir, bool convertCryXml, bool skipExisting);
+    Q_INVOKABLE void extract(const QVariantList &nodes, const QUrl &outputDir, bool convertCryXml,
+                             bool skipExisting);
     Q_INVOKABLE QString defaultExtractDir() const;
     Q_INVOKABLE QString defaultGameDataPath() const;
-    Q_INVOKABLE void exportGameData(const QUrl &output, const QString &channel, const QUrl &baseIni, const QUrl &overlay);
+    Q_INVOKABLE void exportGameData(const QUrl &output, const QString &channel, const QUrl &baseIni,
+                                    const QUrl &overlay);
     Q_INVOKABLE void copyPath(int node) const;
 
 signals:
@@ -91,8 +93,8 @@ signals:
 private:
     AppController &app() const;
     void setLoaded(std::shared_ptr<const ExplorerData> data, const QString &path);
-    void setPreview(int node, const QString &title, const QString &info, const QString &text, const QString &kind,
-                    bool busy);
+    void setPreview(int node, const QString &title, const QString &info, const QString &text,
+                    const QString &kind, bool busy);
 
     P4kTreeModel *tree_ = nullptr;
     std::shared_ptr<const ExplorerData> data_;

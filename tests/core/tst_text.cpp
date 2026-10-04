@@ -21,7 +21,8 @@ QByteArray corruptedUtf8()
                           "item_NameSHLD_Aspirum=Aspirum™ Shield — Mk. II\n"
                           "npc_name=Sebastián Muñoz\n")
                .toUtf8() +
-           QByteArray("corrupt_line=before\xA0" "after\n") +
+           QByteArray("corrupt_line=before\xA0"
+                      "after\n") +
            QStringLiteral("key_after_bad_byte=must survive\nlast=entrée\n").toUtf8();
 }
 
@@ -30,7 +31,8 @@ QByteArray cp1252File()
 {
     return QByteArray("vehicle_NameHunter=Drake Cutlass Black\n"
                       "mission_prompt=Continuer\xA0?\n"
-                      "item_NameSHLD_Aspirum=Bouclier \xAB\xA0" "Aspirum\xA0\xBB\n"
+                      "item_NameSHLD_Aspirum=Bouclier \xAB\xA0"
+                      "Aspirum\xA0\xBB\n"
                       "key_after_bad_byte=must survive\n");
 }
 
@@ -53,7 +55,9 @@ private slots:
     void pythonStrip()
     {
         QCOMPARE(py::strip(u"  \t a b \r\n"), QStringLiteral("a b"));
-        QCOMPARE(py::strip(QStringView(u"\x1c" "x\x1f")), QStringLiteral("x")); // Python counts these as whitespace
+        QCOMPARE(py::strip(QStringView(u"\x1c"
+                                       "x\x1f")),
+                 QStringLiteral("x")); // Python counts these as whitespace
         QCOMPARE(py::strip(QString(QChar(0xA0)) + QStringLiteral("x")), QStringLiteral("x"));
         QCOMPARE(py::rstrip(QStringView(u"a=b\r\r"), u'\r').toString(), QStringLiteral("a=b"));
     }
@@ -78,9 +82,11 @@ private slots:
         const IniMap m = parseIni(t.text);
         QCOMPARE(m.size(), 6);
         QCOMPARE(m.value(QStringLiteral("key_after_bad_byte")), QStringLiteral("must survive"));
-        QCOMPARE(m.value(QStringLiteral("item_NameSHLD_Aspirum")), QStringLiteral("Aspirum™ Shield — Mk. II"));
+        QCOMPARE(m.value(QStringLiteral("item_NameSHLD_Aspirum")),
+                 QStringLiteral("Aspirum™ Shield — Mk. II"));
         QCOMPARE(m.value(QStringLiteral("npc_name")), QStringLiteral("Sebastián Muñoz"));
-        QCOMPARE(m.value(QStringLiteral("corrupt_line")), QStringLiteral("before") + QChar(0xFFFD) + QStringLiteral("after"));
+        QCOMPARE(m.value(QStringLiteral("corrupt_line")),
+                 QStringLiteral("before") + QChar(0xFFFD) + QStringLiteral("after"));
     }
 
     void windows1252FileParsesCompletely()
@@ -96,7 +102,8 @@ private slots:
 
     void undefinedCp1252ByteDoesNotCrash()
     {
-        const IniMap m = parseIni(decodeIniText(QByteArray("good_key=ok\nweird=\x81\nlater_key=still here\n")).text);
+        const IniMap m =
+            parseIni(decodeIniText(QByteArray("good_key=ok\nweird=\x81\nlater_key=still here\n")).text);
         QCOMPARE(m.value(QStringLiteral("good_key")), QStringLiteral("ok"));
         QCOMPARE(m.value(QStringLiteral("later_key")), QStringLiteral("still here"));
     }

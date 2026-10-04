@@ -71,7 +71,8 @@ std::optional<TreeIndex> TreeIndex::build(std::span<const Item> items, const std
         while (!p.empty() && p.front() == '/')
             p.remove_prefix(1);
         const std::size_t slash = p.rfind('/');
-        const std::string_view dir = slash == std::string_view::npos ? std::string_view() : p.substr(0, slash);
+        const std::string_view dir =
+            slash == std::string_view::npos ? std::string_view() : p.substr(0, slash);
         const std::string_view name = slash == std::string_view::npos ? p : p.substr(slash + 1);
         const NodeId parent = dir.empty() ? 0 : folderOf(dir, folderOf);
         if (name.empty()) { // a zip folder entry ("a/b/")

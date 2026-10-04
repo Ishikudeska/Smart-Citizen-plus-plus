@@ -3,7 +3,6 @@
 #include "AppController.h"
 #include "PromptService.h"
 #include "TaskRunner.h"
-
 #include "core/AppIdentity.h"
 #include "core/i18n/Translator.h"
 
@@ -28,7 +27,8 @@ QString text(const char *key, const QVariantHash &args = {})
 
 } // namespace
 
-UpdateController::UpdateController(QObject *parent) : QObject(parent) {}
+UpdateController::UpdateController(QObject *parent) : QObject(parent)
+{}
 
 AppController &UpdateController::app() const
 {
@@ -71,8 +71,9 @@ void UpdateController::onCheck(const net::UpdateCheck &check, const QString &cur
         qCWarning(lcApp).noquote() << "App update check failed:" << check.error;
         if (interactive) {
             app().setStatus(text("status_bar.update_check_failed"));
-            app().prompts()->warning(text("dialogs.update_check_failed_title"),
-                                     text("dialogs.update_check_failed_body", {{QStringLiteral("message"), check.error}}));
+            app().prompts()->warning(
+                text("dialogs.update_check_failed_title"),
+                text("dialogs.update_check_failed_body", {{QStringLiteral("message"), check.error}}));
         }
         return;
     }
@@ -113,7 +114,8 @@ void UpdateController::onCheck(const net::UpdateCheck &check, const QString &cur
 void UpdateController::downloadAndInstall(const net::UpdateCheck &check)
 {
     const net::InstallerAsset asset = *check.installer;
-    const QString dest = QDir(QDir::tempPath()).filePath(app().appName().remove(u' ') + QStringLiteral("-Update"));
+    const QString dest =
+        QDir(QDir::tempPath()).filePath(app().appName().remove(u' ') + QStringLiteral("-Update"));
     struct Downloaded
     {
         QString path, error;
@@ -122,7 +124,8 @@ void UpdateController::downloadAndInstall(const net::UpdateCheck &check)
     app().tasks()->run<Downloaded>(
         text("dialogs.update_download_title"), true,
         [asset, dest, latest = check.latest](TaskRunner::Job &job) -> Downloaded {
-            const QString label = i18n::tr("dialogs.update_download_label", {{QStringLiteral("latest"), latest}});
+            const QString label =
+                i18n::tr("dialogs.update_download_label", {{QStringLiteral("latest"), latest}});
             job.report(label);
             Downloaded d;
             d.path = net::downloadInstaller(
@@ -138,8 +141,9 @@ void UpdateController::downloadAndInstall(const net::UpdateCheck &check)
             if (d.cancelled)
                 return;
             if (d.path.isEmpty()) {
-                app().prompts()->warning(text("dialogs.update_download_failed_title"),
-                                         text("dialogs.update_download_failed_body", {{QStringLiteral("message"), d.error}}));
+                app().prompts()->warning(
+                    text("dialogs.update_download_failed_title"),
+                    text("dialogs.update_download_failed_body", {{QStringLiteral("message"), d.error}}));
                 return;
             }
             // /AUTOUPDATE=1 makes the installer relaunch the app when it is done.

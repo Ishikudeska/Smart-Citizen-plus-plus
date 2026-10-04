@@ -43,8 +43,9 @@ QString currentThreadName()
     const QString name = QThread::currentThread() ? QThread::currentThread()->objectName() : QString();
     if (!name.isEmpty())
         return name;
-    return QThread::isMainThread() ? QStringLiteral("MainThread")
-                                   : QStringLiteral("Thread 0x%1").arg(quintptr(QThread::currentThreadId()), 0, 16);
+    return QThread::isMainThread()
+               ? QStringLiteral("MainThread")
+               : QStringLiteral("Thread 0x%1").arg(quintptr(QThread::currentThreadId()), 0, 16);
 }
 
 #ifdef Q_OS_WIN
@@ -55,9 +56,10 @@ void writeMinidump(const QString &path, EXCEPTION_POINTERS *info)
     if (file == INVALID_HANDLE_VALUE)
         return;
     MINIDUMP_EXCEPTION_INFORMATION exception{GetCurrentThreadId(), info, FALSE};
-    MiniDumpWriteDump(GetCurrentProcess(), GetCurrentProcessId(), file,
-                      MINIDUMP_TYPE(MiniDumpNormal | MiniDumpWithThreadInfo | MiniDumpWithIndirectlyReferencedMemory),
-                      info ? &exception : nullptr, nullptr, nullptr);
+    MiniDumpWriteDump(
+        GetCurrentProcess(), GetCurrentProcessId(), file,
+        MINIDUMP_TYPE(MiniDumpNormal | MiniDumpWithThreadInfo | MiniDumpWithIndirectlyReferencedMemory),
+        info ? &exception : nullptr, nullptr, nullptr);
     CloseHandle(file);
 }
 
@@ -131,7 +133,8 @@ QString writeCrashReport(const QString &logsDir, const QString &reason, const QS
     text += QStringLiteral("%1 crash dump - %2\n").arg(QString::fromUtf8(identity::kAppName), when);
     text += QStringLiteral("Version: %1\n").arg(QString::fromUtf8(identity::kVersion));
     text += QStringLiteral("Thread: %1\n").arg(thread.isEmpty() ? currentThreadName() : thread);
-    text += QStringLiteral("Platform: %1 (%2)\n\n").arg(QSysInfo::prettyProductName(), QSysInfo::currentCpuArchitecture());
+    text += QStringLiteral("Platform: %1 (%2)\n\n")
+                .arg(QSysInfo::prettyProductName(), QSysInfo::currentCpuArchitecture());
     text += QStringLiteral("--- What happened ---\n%1\n\n").arg(reason);
     text += QStringLiteral("--- Recent log (%1 lines) ---\n").arg(lines.size());
     for (const QString &line : lines)

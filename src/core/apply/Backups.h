@@ -17,10 +17,7 @@ class GameFileBackups
 public:
     static constexpr int kKeep = 5;
 
-    explicit GameFileBackups(QString backupsDir)
-        : dir_(std::move(backupsDir))
-    {
-    }
+    explicit GameFileBackups(QString backupsDir) : dir_(std::move(backupsDir)) {}
 
     // Backs up `gameFile` if it exists. Returns the backup's path, empty when
     // there was nothing to back up, or an error via `error`.

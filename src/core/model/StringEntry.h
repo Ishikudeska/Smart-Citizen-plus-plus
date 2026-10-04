@@ -46,7 +46,7 @@ bool isShipNameKey(QStringView key);
 struct StringEntry
 {
     QString key;
-    QString sourceFile;    // the base source that supplied the value ("global", "enhancements", "user")
+    QString sourceFile; // the base source that supplied the value ("global", "enhancements", "user")
     QString category;
     QString originalValue; // merged baseline from the sources, before user edits
     QString customValue;   // the user's edit, or empty

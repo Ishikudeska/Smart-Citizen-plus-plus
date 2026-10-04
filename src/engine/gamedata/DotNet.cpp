@@ -33,9 +33,8 @@ std::string_view trimNumberWhite(std::string_view s)
 
 bool equalsIgnoreCase(std::string_view a, std::string_view b)
 {
-    return a.size() == b.size() && std::equal(a.begin(), a.end(), b.begin(), [](char x, char y) {
-               return (x | 0x20) == (y | 0x20);
-           });
+    return a.size() == b.size() &&
+           std::equal(a.begin(), a.end(), b.begin(), [](char x, char y) { return (x | 0x20) == (y | 0x20); });
 }
 
 // Decodes one UTF-8 code point at `s[i]`, advancing `i`; malformed bytes

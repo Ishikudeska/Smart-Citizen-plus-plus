@@ -22,7 +22,7 @@ constexpr QLatin1StringView kTypeOther("Other");
 
 // Armour pieces keyed without an "armor" token (#195). "_core" not "core",
 // which "score" contains; Carnifex's jacket/pants only under "gys_".
-constexpr std::array kArmorExtraWords = {u"backpack", u"undersuit", u"flightsuit", u"torso", u"_legs",
+constexpr std::array kArmorExtraWords = {u"backpack", u"undersuit", u"flightsuit", u"torso",    u"_legs",
                                          u"_arms",    u"_core",     u"gys_jacket", u"gys_pants"};
 
 // Ammo keys end in "_mag" (#249), anchored so "_Mag_Cover" posters miss.
@@ -83,28 +83,29 @@ constexpr std::pair<const char *, const char *> kManualItems[] = {
     {"NDB-30 Repeater", "Ship Weapon"},
 };
 
-template <std::size_t N>
-bool startsWithAny(QStringView s, const std::array<const char16_t *, N> &prefixes)
+template <std::size_t N> bool startsWithAny(QStringView s, const std::array<const char16_t *, N> &prefixes)
 {
-    return std::any_of(prefixes.begin(), prefixes.end(), [&](const char16_t *p) { return s.startsWith(QStringView(p)); });
+    return std::any_of(prefixes.begin(), prefixes.end(),
+                       [&](const char16_t *p) { return s.startsWith(QStringView(p)); });
 }
 
-template <std::size_t N>
-bool endsWithAny(QStringView s, const std::array<const char16_t *, N> &suffixes)
+template <std::size_t N> bool endsWithAny(QStringView s, const std::array<const char16_t *, N> &suffixes)
 {
-    return std::any_of(suffixes.begin(), suffixes.end(), [&](const char16_t *p) { return s.endsWith(QStringView(p)); });
+    return std::any_of(suffixes.begin(), suffixes.end(),
+                       [&](const char16_t *p) { return s.endsWith(QStringView(p)); });
 }
 
-template <std::size_t N>
-bool containsAny(QStringView s, const std::array<const char16_t *, N> &words)
+template <std::size_t N> bool containsAny(QStringView s, const std::array<const char16_t *, N> &words)
 {
-    return std::any_of(words.begin(), words.end(), [&](const char16_t *w) { return s.contains(QStringView(w)); });
+    return std::any_of(words.begin(), words.end(),
+                       [&](const char16_t *w) { return s.contains(QStringView(w)); });
 }
 
 bool isNameKey(const QString &key)
 {
     const QString kl = key.toLower();
-    return kl.startsWith(u"item_name") || kl.startsWith(u"vehicle_name") || startsWithAny(kl, kExtraNameKeyPrefixes);
+    return kl.startsWith(u"item_name") || kl.startsWith(u"vehicle_name") ||
+           startsWithAny(kl, kExtraNameKeyPrefixes);
 }
 
 // "S" plus the digits without zero padding (Python's str(int(...))).
@@ -160,13 +161,15 @@ const ParsePatterns &parsePatterns(const Enclosings &enclosings)
     QStringList alts;
     for (const auto &[open, close] : enclosings)
         if (!open.isEmpty() && !close.isEmpty())
-            alts << QRegularExpression::escape(open) + QStringLiteral("([^") + QRegularExpression::escape(close) +
-                        QStringLiteral("]+)") + QRegularExpression::escape(close);
+            alts << QRegularExpression::escape(open) + QStringLiteral("([^") +
+                        QRegularExpression::escape(close) + QStringLiteral("]+)") +
+                        QRegularExpression::escape(close);
     ParsePatterns patterns;
     if (!alts.isEmpty()) {
         const QString alt = alts.join(u'|');
         const QString ws = py::kReSpace + u'*';
-        patterns.leading = QRegularExpression(QStringLiteral("^") + ws + QStringLiteral("(?:") + alt + u')', kUcp);
+        patterns.leading =
+            QRegularExpression(QStringLiteral("^") + ws + QStringLiteral("(?:") + alt + u')', kUcp);
         patterns.trailing = QRegularExpression(QStringLiteral("(?:") + alt + u')' + ws + u'$', kUcp);
         patterns.valid = true;
     }
@@ -335,7 +338,8 @@ QSet<QString> knownItemNames(const QList<StringEntry> &entries, const Enclosings
     return names;
 }
 
-QMap<QString, BlueprintItem> buildBlueprintMetadata(const QList<StringEntry> &entries, const Enclosings &enclosings,
+QMap<QString, BlueprintItem> buildBlueprintMetadata(const QList<StringEntry> &entries,
+                                                    const Enclosings &enclosings,
                                                     const QHash<QString, QString> &defaultValues,
                                                     const QString &bpHeader)
 {
@@ -347,7 +351,7 @@ QMap<QString, BlueprintItem> buildBlueprintMetadata(const QList<StringEntry> &en
     QHash<QString, QString> nameToKey;
     QHash<QString, QString> nameToValue; // the item's own value, tag intact
     QHash<QString, Attrs> attrs;
-    QHash<QString, QString> titles; // pairKey -> mission name
+    QHash<QString, QString> titles;             // pairKey -> mission name
     QList<std::pair<QString, QString>> bpDescs; // (pairKey or null, value)
     QHash<QString, QString> keySlugToName;
 
@@ -421,7 +425,8 @@ QMap<QString, BlueprintItem> buildBlueprintMetadata(const QList<StringEntry> &en
     const auto makeItem = [&](const QString &name, QSet<QString> missions, const QString &type) {
         const Attrs a = attrs.value(name);
         const QString tagged = nameToValue.value(name);
-        return BlueprintItem{name, std::move(missions), type, a.cls, a.size, a.grade, tagged.isEmpty() ? name : tagged};
+        return BlueprintItem{
+            name, std::move(missions), type, a.cls, a.size, a.grade, tagged.isEmpty() ? name : tagged};
     };
 
     QMap<QString, BlueprintItem> result;
@@ -436,7 +441,8 @@ QMap<QString, BlueprintItem> buildBlueprintMetadata(const QList<StringEntry> &en
         if (name.isEmpty() || result.contains(name))
             continue;
         const QString type = blueprintTypeFromKey(nameToKey.value(name));
-        result.insert(name, makeItem(name, {kManualMissionLabel}, type.isEmpty() ? QString::fromUtf8(manualType) : type));
+        result.insert(name, makeItem(name, {kManualMissionLabel},
+                                     type.isEmpty() ? QString::fromUtf8(manualType) : type));
     }
     return result;
 }

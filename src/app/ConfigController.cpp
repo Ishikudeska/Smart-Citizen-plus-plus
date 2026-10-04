@@ -1,7 +1,6 @@
 #include "ConfigController.h"
 
 #include "AppController.h"
-
 #include "core/i18n/Translator.h"
 #include "core/merge/SourceLoader.h"
 #include "core/net/Downloader.h"
@@ -11,8 +10,6 @@
 #include "core/util/OneDrive.h"
 
 #include <QCoreApplication>
-
-#include <algorithm>
 #include <QDir>
 #include <QFileInfo>
 #include <QJsonDocument>
@@ -22,6 +19,8 @@
 #include <QSaveFile>
 #include <QStandardPaths>
 #include <QTemporaryFile>
+
+#include <algorithm>
 
 Q_DECLARE_LOGGING_CATEGORY(lcApp)
 
@@ -115,8 +114,9 @@ void ConfigController::setDataDir(const QString &path)
     }
     const auto apply = [this, target, old] {
         if (!QDir().mkpath(target)) {
-            app().prompts()->warning(text("config.invalid_data_folder_title"),
-                                     text("config.invalid_data_folder_body", {{QStringLiteral("path"), target}}));
+            app().prompts()->warning(
+                text("config.invalid_data_folder_title"),
+                text("config.invalid_data_folder_body", {{QStringLiteral("path"), target}}));
             return;
         }
         app().saveUserIni();
@@ -126,7 +126,8 @@ void ConfigController::setDataDir(const QString &path)
         const bool isDefault = QDir(app().userDataRoot()) == QDir(target);
         settings.setUserDataDirOverride(isDefault ? QString() : target);
         qCInfo(lcApp) << "data folder changed:" << old << "->" << target;
-        const bool oldHasData = QDir(old).exists() && !QDir(old).isEmpty(QDir::AllEntries | QDir::NoDotAndDotDot);
+        const bool oldHasData =
+            QDir(old).exists() && !QDir(old).isEmpty(QDir::AllEntries | QDir::NoDotAndDotDot);
         const auto finish = [this] {
             app().notifyPathsChanged();
             emit changed();
@@ -139,22 +140,24 @@ void ConfigController::setDataDir(const QString &path)
         PromptService::Prompt p;
         p.kind = PromptService::Kind::Question;
         p.title = text("config.migrate_data_title");
-        p.text = text("config.migrate_data_body", {{QStringLiteral("old_dir"), QDir::toNativeSeparators(old)},
-                                                 {QStringLiteral("new_dir"), QDir::toNativeSeparators(target)}});
+        p.text =
+            text("config.migrate_data_body", {{QStringLiteral("old_dir"), QDir::toNativeSeparators(old)},
+                                              {QStringLiteral("new_dir"), QDir::toNativeSeparators(target)}});
         p.buttons = {text("scx.yes"), text("scx.no")};
         app().prompts()->ask(p, [this, old, target, finish](int button, bool, int) {
             if (button == 0) {
                 const int count = migrateUserDataDir(old, target, true);
-                app().prompts()->info(text("config.migrate_data_done_title"),
-                                      text("config.migrate_data_done_body", {{QStringLiteral("count"), count}}));
+                app().prompts()->info(
+                    text("config.migrate_data_done_title"),
+                    text("config.migrate_data_done_body", {{QStringLiteral("count"), count}}));
             }
             finish();
         });
     };
     if (onedrive::isOneDrivePath(target)) {
         app().prompts()->confirm(text("config.onedrive_folder_title"),
-                                 text("config.onedrive_folder_body", {{QStringLiteral("path"), target}}), apply,
-                                 PromptService::Kind::Warning);
+                                 text("config.onedrive_folder_body", {{QStringLiteral("path"), target}}),
+                                 apply, PromptService::Kind::Warning);
         return;
     }
     apply();
@@ -201,16 +204,19 @@ void ConfigController::resetUserIni()
     const QString channel = app().channel();
     if (!QFileInfo::exists(ini.path())) {
         app().prompts()->info(text("dialogs.nothing_to_reset_title"),
-                              text("dialogs.nothing_to_reset_body", {{QStringLiteral("channel"), channel},
-                                                                   {QStringLiteral("path"), QDir::toNativeSeparators(ini.path())}}));
+                              text("dialogs.nothing_to_reset_body",
+                                   {{QStringLiteral("channel"), channel},
+                                    {QStringLiteral("path"), QDir::toNativeSeparators(ini.path())}}));
         return;
     }
     const QString body =
-        QStringLiteral("This will remove every custom string override for the %1 channel.\n\nFile: %2\nSize: %3 KB\n\n"
-                       "A timestamped backup will be saved next to the original (user.ini.bak-YYYYMMDD-HHMMSS) so you "
-                       "can restore by renaming it back to user.ini.\n\nThis does NOT touch the game's global.ini: to "
-                       "revert what the game shows, apply again after the reset, or use Restore Backup.\n\nProceed?")
-            .arg(channel, QDir::toNativeSeparators(ini.path()), QString::number(QFileInfo(ini.path()).size() / 1024.0, 'f', 1));
+        QStringLiteral(
+            "This will remove every custom string override for the %1 channel.\n\nFile: %2\nSize: %3 KB\n\n"
+            "A timestamped backup will be saved next to the original (user.ini.bak-YYYYMMDD-HHMMSS) so you "
+            "can restore by renaming it back to user.ini.\n\nThis does NOT touch the game's global.ini: to "
+            "revert what the game shows, apply again after the reset, or use Restore Backup.\n\nProceed?")
+            .arg(channel, QDir::toNativeSeparators(ini.path()),
+                 QString::number(QFileInfo(ini.path()).size() / 1024.0, 'f', 1));
     app().prompts()->confirm(
         text("dialogs.reset_user_ini_title"), body,
         [this, channel] {
@@ -218,16 +224,21 @@ void ConfigController::resetUserIni()
             const QString backup = file.reset(true);
             if (QFileInfo::exists(file.path())) {
                 app().prompts()->error(text("dialogs.reset_failed_title"),
-                                       text("dialogs.reset_failed_body", {{QStringLiteral("error"), QStringLiteral("could not rename %1").arg(file.path())}}));
+                                       text("dialogs.reset_failed_body",
+                                            {{QStringLiteral("error"),
+                                              QStringLiteral("could not rename %1").arg(file.path())}}));
                 return;
             }
             app().reloadFromDisk(QStringLiteral("Reloading %1 after user.ini reset...").arg(channel));
-            const QString note =
-                backup.isEmpty() ? QString() : text("user_ini_reset.backup_note", {{QStringLiteral("path"), QDir::toNativeSeparators(backup)}});
+            const QString note = backup.isEmpty()
+                                     ? QString()
+                                     : text("user_ini_reset.backup_note",
+                                            {{QStringLiteral("path"), QDir::toNativeSeparators(backup)}});
             app().setStatus(text("status_bar.user_ini_reset", {{QStringLiteral("channel"), channel}}));
-            app().prompts()->info(text("user_ini_reset.complete_title"),
-                                  text("user_ini_reset.complete_body", {{QStringLiteral("channel"), channel},
-                                                                      {QStringLiteral("backup_note"), note}}));
+            app().prompts()->info(
+                text("user_ini_reset.complete_title"),
+                text("user_ini_reset.complete_body",
+                     {{QStringLiteral("channel"), channel}, {QStringLiteral("backup_note"), note}}));
         },
         PromptService::Kind::Warning);
 }
@@ -238,18 +249,20 @@ void ConfigController::restoreUserIni()
     const QString channel = app().channel();
     const QFileInfoList snapshots = ini.backups();
     if (snapshots.isEmpty()) {
-        app().prompts()->info(text("restore_user_ini.no_snapshots_title"),
-                              text("restore_user_ini.no_snapshots_body", {{QStringLiteral("channel"), channel}}));
+        app().prompts()->info(
+            text("restore_user_ini.no_snapshots_title"),
+            text("restore_user_ini.no_snapshots_body", {{QStringLiteral("channel"), channel}}));
         return;
     }
     QStringList labels;
     for (const QFileInfo &fi : snapshots) {
         QFile f(fi.absoluteFilePath());
         const int lines = f.open(QIODevice::ReadOnly) ? static_cast<int>(f.readAll().count('\n')) : 0;
-        labels << text("restore_user_ini.snapshot_label",
-                     {{QStringLiteral("when"), fi.lastModified().toString(QStringLiteral("yyyy-MM-dd HH:mm:ss"))},
-                      {QStringLiteral("lines"), lines},
-                      {QStringLiteral("size_kb"), QString::number(fi.size() / 1024.0, 'f', 1)}});
+        labels << text(
+            "restore_user_ini.snapshot_label",
+            {{QStringLiteral("when"), fi.lastModified().toString(QStringLiteral("yyyy-MM-dd HH:mm:ss"))},
+             {QStringLiteral("lines"), lines},
+             {QStringLiteral("size_kb"), QString::number(fi.size() / 1024.0, 'f', 1)}});
     }
     PromptService::Prompt p;
     p.kind = PromptService::Kind::Question;
@@ -264,15 +277,18 @@ void ConfigController::restoreUserIni()
         const UserIni file(app().paths().userIni());
         if (!file.restore(chosen.absoluteFilePath())) {
             app().prompts()->error(text("restore_user_ini.restore_failed_title"),
-                                   text("restore_user_ini.restore_failed_body", {{QStringLiteral("error_type"), QStringLiteral("OSError")},
-                                                                               {QStringLiteral("error"), chosen.absoluteFilePath()}}));
+                                   text("restore_user_ini.restore_failed_body",
+                                        {{QStringLiteral("error_type"), QStringLiteral("OSError")},
+                                         {QStringLiteral("error"), chosen.absoluteFilePath()}}));
             return;
         }
-        app().reloadFromDisk(text("progress.reloading_after_user_ini_restore", {{QStringLiteral("channel"), channel}}));
+        app().reloadFromDisk(
+            text("progress.reloading_after_user_ini_restore", {{QStringLiteral("channel"), channel}}));
         app().setStatus(text("status_bar.user_ini_restored", {{QStringLiteral("channel"), channel}}));
-        app().prompts()->info(text("restore_user_ini.restored_title"),
-                              text("restore_user_ini.restored_body", {{QStringLiteral("channel"), channel},
-                                                                    {QStringLiteral("name"), chosen.fileName()}}));
+        app().prompts()->info(
+            text("restore_user_ini.restored_title"),
+            text("restore_user_ini.restored_body",
+                 {{QStringLiteral("channel"), channel}, {QStringLiteral("name"), chosen.fileName()}}));
     });
 }
 
@@ -297,7 +313,8 @@ void ConfigController::previewApply()
         QList<std::pair<QString, int>> v;
         for (auto it = h.cbegin(); it != h.cend(); ++it)
             v.push_back({it.key(), it.value()});
-        std::stable_sort(v.begin(), v.end(), [](const auto &a, const auto &b) { return a.second > b.second; });
+        std::stable_sort(v.begin(), v.end(),
+                         [](const auto &a, const auto &b) { return a.second > b.second; });
         return v;
     };
     QString body = text("config.preview_header");
@@ -308,11 +325,15 @@ void ConfigController::previewApply()
             continue;
         ++shown;
         if (name == kSourceEnhancements) {
-            body += QStringLiteral("  %1. %2 Enhancements (%3 keys total):\n").arg(shown).arg(app().appName(), thousands(count));
+            body += QStringLiteral("  %1. %2 Enhancements (%3 keys total):\n")
+                        .arg(shown)
+                        .arg(app().appName(), thousands(count));
             for (const auto categories = byCount(enhancementCats); const auto &[cat, n] : categories)
                 body += QStringLiteral("       %1: %2\n").arg(cat, thousands(n));
         } else {
-            body += QStringLiteral("  %1. %2 (%3 keys)\n").arg(shown).arg(name.left(1).toUpper() + name.mid(1), thousands(count));
+            body += QStringLiteral("  %1. %2 (%3 keys)\n")
+                        .arg(shown)
+                        .arg(name.left(1).toUpper() + name.mid(1), thousands(count));
         }
     }
     body += text("config.preview_total", {{QStringLiteral("count"), static_cast<int>(entries.size())}});
@@ -332,10 +353,12 @@ void ConfigController::importIni(const QString &sourceText)
         source = QUrl(source).toLocalFile();
     if (source.startsWith(u"http://") || source.startsWith(u"https://")) {
         if (source.startsWith(u"https://github.com/")) {
-            source.replace(QStringLiteral("https://github.com/"), QStringLiteral("https://raw.githubusercontent.com/"));
+            source.replace(QStringLiteral("https://github.com/"),
+                           QStringLiteral("https://raw.githubusercontent.com/"));
             source.replace(QStringLiteral("/blob/"), QStringLiteral("/"));
         }
-        auto temp = std::make_shared<QTemporaryFile>(QDir::tempPath() + QStringLiteral("/scx-import-XXXXXX.ini"));
+        auto temp =
+            std::make_shared<QTemporaryFile>(QDir::tempPath() + QStringLiteral("/scx-import-XXXXXX.ini"));
         temp->setAutoRemove(false);
         if (!temp->open())
             return;
@@ -353,9 +376,10 @@ void ConfigController::importIni(const QString &sourceText)
             },
             [this, source, tempPath](QString error) {
                 if (!error.isEmpty()) {
-                    app().prompts()->error(text("import_flow.download_error_title"),
-                                           text("import_flow.download_error_body", {{QStringLiteral("source"), source},
-                                                                                  {QStringLiteral("error"), error}}));
+                    app().prompts()->error(
+                        text("import_flow.download_error_title"),
+                        text("import_flow.download_error_body",
+                             {{QStringLiteral("source"), source}, {QStringLiteral("error"), error}}));
                     QFile::remove(tempPath);
                     QFile::remove(tempPath + QStringLiteral(".etag"));
                     return;
@@ -385,7 +409,8 @@ void ConfigController::importFromFile(const QString &file, const QString &tempTo
     }
     const IniMap &defaults = app().strings()->defaults();
     if (defaults.isEmpty()) {
-        app().prompts()->warning(text("import_flow.no_base_data_title"), text("import_flow.no_base_data_body"));
+        app().prompts()->warning(text("import_flow.no_base_data_title"),
+                                 text("import_flow.no_base_data_body"));
         return;
     }
     int valid = 0;
@@ -413,18 +438,21 @@ void ConfigController::importFromFile(const QString &file, const QString &tempTo
     }
     if (valid == 0) {
         app().prompts()->warning(text("import_flow.no_valid_keys_title"),
-                                 text("import_flow.no_valid_keys_body", {{QStringLiteral("count"), static_cast<int>(imported.size())}}));
+                                 text("import_flow.no_valid_keys_body",
+                                      {{QStringLiteral("count"), static_cast<int>(imported.size())}}));
         return;
     }
     if (pendingAdd_.isEmpty() && conflicts_.isEmpty()) {
-        app().prompts()->info(text("import_flow.nothing_to_import_title"), text("import_flow.nothing_to_import_body"));
+        app().prompts()->info(text("import_flow.nothing_to_import_title"),
+                              text("import_flow.nothing_to_import_body"));
         return;
     }
     emit importConflictsChanged();
     if (conflicts_.isEmpty()) {
         app().prompts()->confirm(text("import_flow.confirm_title"),
-                                 text("import_flow.confirm_body", {{QStringLiteral("new_count"), static_cast<int>(pendingAdd_.size())},
-                                                                 {QStringLiteral("excluded_count"), excluded_}}),
+                                 text("import_flow.confirm_body",
+                                      {{QStringLiteral("new_count"), static_cast<int>(pendingAdd_.size())},
+                                       {QStringLiteral("excluded_count"), excluded_}}),
                                  [this] { writeImport({}, 0); });
         return;
     }
@@ -472,8 +500,10 @@ void ConfigController::writeImport(const QMap<QString, QString> &resolved, int r
     for (auto it = resolved.cbegin(); it != resolved.cend(); ++it)
         final.insert(it.key(), it.value());
     if (!ini.save(final)) {
-        app().prompts()->error(text("import_flow.error_title"),
-                               text("import_flow.error_body", {{QStringLiteral("error"), QStringLiteral("could not write %1").arg(ini.path())}}));
+        app().prompts()->error(
+            text("import_flow.error_title"),
+            text("import_flow.error_body",
+                 {{QStringLiteral("error"), QStringLiteral("could not write %1").arg(ini.path())}}));
         return;
     }
     const int added = static_cast<int>(pendingAdd_.size());
@@ -482,8 +512,8 @@ void ConfigController::writeImport(const QMap<QString, QString> &resolved, int r
     app().reloadFromDisk(text("import_flow.reload_status"));
     app().prompts()->info(text("import_flow.complete_title"),
                           text("import_flow.complete_body", {{QStringLiteral("added"), added},
-                                                           {QStringLiteral("resolved"), resolvedCount},
-                                                           {QStringLiteral("excluded"), excluded}}));
+                                                             {QStringLiteral("resolved"), resolvedCount},
+                                                             {QStringLiteral("excluded"), excluded}}));
 }
 
 // ── settings backups ──────────────────────────────────────────────────────
@@ -505,21 +535,24 @@ void ConfigController::exportSettings(const QUrl &target)
         if (f.open(QIODevice::ReadOnly))
             overrides.insert(channel, QString::fromUtf8(f.readAll()));
     }
-    const auto written = profile::writeProfileZip(path, values, overrides, app().version(),
-                                                  profile::kSourceInstalled);
+    const auto written =
+        profile::writeProfileZip(path, values, overrides, app().version(), profile::kSourceInstalled);
     if (!written) {
         app().prompts()->error(text("settings_backup.export_failed_title"),
-                               text("settings_backup.export_failed_body", {{QStringLiteral("error_type"), QStringLiteral("OSError")},
-                                                                         {QStringLiteral("error"), written.error()}}));
+                               text("settings_backup.export_failed_body",
+                                    {{QStringLiteral("error_type"), QStringLiteral("OSError")},
+                                     {QStringLiteral("error"), written.error()}}));
         return;
     }
     app().setStatus(text("status_bar.settings_exported"));
     QStringList channels = overrides.keys();
-    app().prompts()->info(text("settings_backup.export_done_title"),
-                          text("settings_backup.export_done_body",
-                             {{QStringLiteral("path"), QDir::toNativeSeparators(path)},
-                              {QStringLiteral("n_settings"), static_cast<int>(values.size())},
-                              {QStringLiteral("channels"), channels.isEmpty() ? text("settings_backup.no_channels") : channels.join(QStringLiteral(", "))}}));
+    app().prompts()->info(
+        text("settings_backup.export_done_title"),
+        text("settings_backup.export_done_body",
+             {{QStringLiteral("path"), QDir::toNativeSeparators(path)},
+              {QStringLiteral("n_settings"), static_cast<int>(values.size())},
+              {QStringLiteral("channels"), channels.isEmpty() ? text("settings_backup.no_channels")
+                                                              : channels.join(QStringLiteral(", "))}}));
 }
 
 void ConfigController::importSettings(const QUrl &source)
@@ -527,20 +560,25 @@ void ConfigController::importSettings(const QUrl &source)
     const QString path = source.isLocalFile() ? source.toLocalFile() : source.toString();
     const auto profile = profile::readProfileZip(path);
     if (!profile) {
-        app().prompts()->error(text("settings_backup.import_invalid_title"),
-                               text("settings_backup.import_invalid_body", {{QStringLiteral("error"), profile.error()}}));
+        app().prompts()->error(
+            text("settings_backup.import_invalid_title"),
+            text("settings_backup.import_invalid_body", {{QStringLiteral("error"), profile.error()}}));
         return;
     }
     const QStringList channelList = profile->overrides.keys();
-    const QString channels = channelList.isEmpty() ? text("settings_backup.no_channels") : channelList.join(QStringLiteral(", "));
-    const QString when = profile->exportedAt.isEmpty() ? QStringLiteral("?") : QString(profile->exportedAt).replace(u'T', u' ');
+    const QString channels =
+        channelList.isEmpty() ? text("settings_backup.no_channels") : channelList.join(QStringLiteral(", "));
+    const QString when = profile->exportedAt.isEmpty() ? QStringLiteral("?")
+                                                       : QString(profile->exportedAt).replace(u'T', u' ');
     const auto contents = *profile;
     app().prompts()->confirm(
         text("settings_backup.import_confirm_title"),
-        text("settings_backup.import_confirm_body", {{QStringLiteral("version"), profile->appVersion.isEmpty() ? QStringLiteral("?") : profile->appVersion},
-                                                   {QStringLiteral("when"), when},
-                                                   {QStringLiteral("n_settings"), static_cast<int>(profile->settings.size())},
-                                                   {QStringLiteral("channels"), channels}}),
+        text("settings_backup.import_confirm_body",
+             {{QStringLiteral("version"),
+               profile->appVersion.isEmpty() ? QStringLiteral("?") : profile->appVersion},
+              {QStringLiteral("when"), when},
+              {QStringLiteral("n_settings"), static_cast<int>(profile->settings.size())},
+              {QStringLiteral("channels"), channels}}),
         [this, contents, channels] {
             const QDir root(app().userDataRoot());
             for (auto it = contents.overrides.cbegin(); it != contents.overrides.cend(); ++it) {
@@ -555,8 +593,9 @@ void ConfigController::importSettings(const QUrl &source)
                 if (!f.open(QIODevice::WriteOnly) || f.write(bytes) != bytes.size() || !f.commit()) {
                     const QString error = QStringLiteral("%1: %2").arg(ini.path(), f.errorString());
                     app().prompts()->error(text("settings_backup.import_failed_title"),
-                                           text("settings_backup.import_failed_body", {{QStringLiteral("error_type"), QStringLiteral("OSError")},
-                                                                                     {QStringLiteral("error"), error}}));
+                                           text("settings_backup.import_failed_body",
+                                                {{QStringLiteral("error_type"), QStringLiteral("OSError")},
+                                                 {QStringLiteral("error"), error}}));
                     return;
                 }
             }
@@ -565,11 +604,18 @@ void ConfigController::importSettings(const QUrl &source)
             const QString rootPath = app().installRoot();
             QString body;
             if (outcome == profile::InstallPathOutcome::Restored)
-                body = text("settings_backup.import_done_body_restored", {{QStringLiteral("applied"), applied}, {QStringLiteral("channels"), channels}, {QStringLiteral("root"), rootPath}});
+                body =
+                    text("settings_backup.import_done_body_restored", {{QStringLiteral("applied"), applied},
+                                                                       {QStringLiteral("channels"), channels},
+                                                                       {QStringLiteral("root"), rootPath}});
             else if (outcome == profile::InstallPathOutcome::Redetected)
-                body = text("settings_backup.import_done_body_detected", {{QStringLiteral("applied"), applied}, {QStringLiteral("channels"), channels}, {QStringLiteral("root"), rootPath}});
+                body =
+                    text("settings_backup.import_done_body_detected", {{QStringLiteral("applied"), applied},
+                                                                       {QStringLiteral("channels"), channels},
+                                                                       {QStringLiteral("root"), rootPath}});
             else
-                body = text("settings_backup.import_done_body_no_install", {{QStringLiteral("applied"), applied}, {QStringLiteral("channels"), channels}});
+                body = text("settings_backup.import_done_body_no_install",
+                            {{QStringLiteral("applied"), applied}, {QStringLiteral("channels"), channels}});
             app().settings().sync();
             app().notifyPathsChanged();
             emit changed();

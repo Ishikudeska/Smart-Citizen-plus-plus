@@ -30,7 +30,7 @@ std::string_view methodName(std::uint16_t method);
 
 // AES-128 key CIG uses for encrypted P4K entries (zero IV, CBC, no padding).
 inline constexpr std::array<std::uint8_t, 16> kCigKey = {0x5E, 0x7A, 0x20, 0x02, 0x30, 0x2E, 0xEB, 0x1A,
-                                                          0x3B, 0xB6, 0x17, 0xC3, 0x0F, 0xDE, 0x1E, 0x47};
+                                                         0x3B, 0xB6, 0x17, 0xC3, 0x0F, 0xDE, 0x1E, 0x47};
 
 struct Entry
 {

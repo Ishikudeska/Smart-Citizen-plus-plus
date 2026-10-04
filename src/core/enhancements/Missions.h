@@ -20,8 +20,7 @@
 namespace core::enh {
 
 // An insertion-ordered map with QString keys (a Python dict).
-template <class V>
-class OrderedMap
+template <class V> class OrderedMap
 {
 public:
     using Entry = std::pair<QString, V>;
@@ -55,17 +54,18 @@ private:
 // ── engagement and routes ──────────────────────────────────────────────
 
 QString classifyMissionEngagement(const QString &locKey); // "Ship", "FPS", "FPS & Ship"
-QString routeTokenRole(const QString &var); // "from", "to" or ""
+QString routeTokenRole(const QString &var);               // "from", "to" or ""
 bool isRouteTitle(const QString &titleKey);
 bool titleHasRouteToken(const QString &title);
 QString titleRouteToken(const QString &var, const QString &bodyToken, const QString &locationDetail);
 
 using RouteTokens = OrderedMap<QString>; // var -> "~mission(Var|Mod)"
 using RouteExpandCache = QHash<QString, std::pair<RouteTokens, RouteTokens>>;
-std::pair<RouteTokens, RouteTokens> expandNestedRouteVars(const QString &var, const Loc &loc, RouteExpandCache *cache);
+std::pair<RouteTokens, RouteTokens> expandNestedRouteVars(const QString &var, const Loc &loc,
+                                                          RouteExpandCache *cache);
 // The route core for a haul title ("A > B"), "" when none applies.
-QString deriveRouteFragment(const QList<const QString *> &bodies, const tags::TagConfig *config, const Loc &loc,
-                            RouteExpandCache *cache);
+QString deriveRouteFragment(const QList<const QString *> &bodies, const tags::TagConfig *config,
+                            const Loc &loc, RouteExpandCache *cache);
 // Cargo-grade words shortened at their loc keys ("Extra Small" -> "XS").
 Loc sizeAbbreviationOverrides(const Loc &loc, const QSet<QString> &shortenedSizes);
 
@@ -111,7 +111,8 @@ struct BlueprintPools
 };
 BlueprintPools buildBlueprintPoolLookup(const RecordStore &store, const QHash<QString, QString> &entityNames,
                                         const QHash<QString, QString> &entityNamesByFilename,
-                                        const QHash<QString, QString> &entityNameTags, const QString &placement,
+                                        const QHash<QString, QString> &entityNameTags,
+                                        const QString &placement,
                                         const QHash<QString, QString> &nameFallbackTags);
 
 // One fingerprint (item list) -> the (system, label) pairs that produced it.

@@ -1,7 +1,6 @@
-#include "core/enhancements/Missions.h"
-
 #include "core/blueprints/BlueprintMeta.h"
 #include "core/enhancements/Categories.h"
+#include "core/enhancements/Missions.h"
 #include "core/enhancements/Stats.h"
 #include "core/text/PyFormat.h"
 #include "core/text/PyText.h"
@@ -48,12 +47,14 @@ QString paramValue(Node contract, std::string_view param)
 const std::vector<std::pair<QSet<QString>, QString>> &poolLabelOverrides()
 {
     static const std::vector<std::pair<QSet<QString>, QString>> table = {
-        {{QStringLiteral("P8-AR Rifle"), QStringLiteral("P8-AR Rifle Magazine (15 Cap)"), QStringLiteral("Palatino Arms"),
-          QStringLiteral("Palatino Arms Moonfall"), QStringLiteral("Palatino Core"), QStringLiteral("Palatino Core Moonfall"),
-          QStringLiteral("Palatino Helmet"), QStringLiteral("Palatino Helmet Moonfall"), QStringLiteral("Palatino Legs"),
-          QStringLiteral("Palatino Legs Moonfall")},
+        {{QStringLiteral("P8-AR Rifle"), QStringLiteral("P8-AR Rifle Magazine (15 Cap)"),
+          QStringLiteral("Palatino Arms"), QStringLiteral("Palatino Arms Moonfall"),
+          QStringLiteral("Palatino Core"), QStringLiteral("Palatino Core Moonfall"),
+          QStringLiteral("Palatino Helmet"), QStringLiteral("Palatino Helmet Moonfall"),
+          QStringLiteral("Palatino Legs"), QStringLiteral("Palatino Legs Moonfall")},
          QStringLiteral("Yormandi Eyes")},
-        {{QStringLiteral("Prism \"Bonedust\" Laser Shotgun"), QStringLiteral("Prism \"Deep Sea\" Laser Shotgun"),
+        {{QStringLiteral("Prism \"Bonedust\" Laser Shotgun"),
+          QStringLiteral("Prism \"Deep Sea\" Laser Shotgun"),
           QStringLiteral("Prism \"Firesteel\" Laser Shotgun"), QStringLiteral("Prism Laser Shotgun"),
           QStringLiteral("Prism Laser Shotgun Battery (20 cap)"), QStringLiteral("Siebe Helmet"),
           QStringLiteral("Stirling Exploration Suit")},
@@ -104,8 +105,10 @@ QString poolRankLabel(const QString &poolName)
 {
     if (poolName.isEmpty())
         return QString();
-    static const QRegularExpression range(QStringLiteral(R"(rank(\d+)to(\d+))"), QRegularExpression::CaseInsensitiveOption);
-    static const QRegularExpression single(QStringLiteral(R"(rank(\d+)(?!\d|to))"), QRegularExpression::CaseInsensitiveOption);
+    static const QRegularExpression range(QStringLiteral(R"(rank(\d+)to(\d+))"),
+                                          QRegularExpression::CaseInsensitiveOption);
+    static const QRegularExpression single(QStringLiteral(R"(rank(\d+)(?!\d|to))"),
+                                           QRegularExpression::CaseInsensitiveOption);
     if (const QRegularExpressionMatch m = range.match(poolName); m.hasMatch())
         return QStringLiteral("Rank %1–%2").arg(m.captured(1), m.captured(2));
     if (const QRegularExpressionMatch m = single.match(poolName); m.hasMatch())
@@ -133,7 +136,8 @@ QString nameFromBlueprintFilename(const QString &path)
 
 BlueprintPools buildBlueprintPoolLookup(const RecordStore &store, const QHash<QString, QString> &entityNames,
                                         const QHash<QString, QString> &entityNamesByFilename,
-                                        const QHash<QString, QString> &entityNameTags, const QString &placement,
+                                        const QHash<QString, QString> &entityNameTags,
+                                        const QString &placement,
                                         const QHash<QString, QString> &nameFallbackTags)
 {
     BlueprintPools out;
@@ -190,7 +194,8 @@ BlueprintPools buildBlueprintPoolLookup(const RecordStore &store, const QHash<QS
             QString name;
             if (const auto it = entityNames.constFind(bp->entityClass); it != entityNames.cend())
                 name = stripCigSizePrefix(*it);
-            else if (const auto it2 = entityNamesByFilename.constFind(bp->stem); it2 != entityNamesByFilename.cend())
+            else if (const auto it2 = entityNamesByFilename.constFind(bp->stem);
+                     it2 != entityNamesByFilename.cend())
                 name = stripCigSizePrefix(*it2);
             else
                 name = bp->fallback;
@@ -204,7 +209,8 @@ BlueprintPools buildBlueprintPoolLookup(const RecordStore &store, const QHash<QS
         }
         if (names.isEmpty())
             continue;
-        std::sort(names.begin(), names.end(), [](const QString &a, const QString &b) { return py::less(a, b); });
+        std::sort(names.begin(), names.end(),
+                  [](const QString &a, const QString &b) { return py::less(a, b); });
         out.items.insert(poolId, names);
         QString stem = fileStem(file).toLower();
         for (const char *prefix : {"bp_rewards_", "bp_"})
@@ -262,8 +268,9 @@ QStringList buildBlueprintBodyParts(const FingerprintMap &uniqueFps, bool allowO
         }
         const QString sys = pySortedUnique(systems).join(QStringLiteral(", "));
         labels = pySortedUnique(labels);
-        entries.push_back({labels.isEmpty() ? sys : sys + QStringLiteral(", ") + labels.join(QStringLiteral(", ")), fp,
-                           sortedKeys});
+        entries.push_back(
+            {labels.isEmpty() ? sys : sys + QStringLiteral(", ") + labels.join(QStringLiteral(", ")), fp,
+             sortedKeys});
     }
     // By (system/label keys, header, fingerprint): deterministic whatever
     // order the contracts were scanned in.
@@ -293,7 +300,8 @@ QStringList buildBlueprintBodyParts(const FingerprintMap &uniqueFps, bool allowO
     for (const Entry &e : entries) {
         QString header = e.header;
         if (headerCounts.value(header) > 1)
-            header = QStringLiteral("%1, %2 Set").arg(header, e.fp.isEmpty() ? QStringLiteral("Unknown") : e.fp.front());
+            header = QStringLiteral("%1, %2 Set")
+                         .arg(header, e.fp.isEmpty() ? QStringLiteral("Unknown") : e.fp.front());
         named.emplace_back(header, e.fp);
     }
     QHash<QString, int> namedCounts, seen;
@@ -319,12 +327,13 @@ const OrderedMap<int> &mineableRsValues()
     static const OrderedMap<int> table = [] {
         OrderedMap<int> t;
         const std::pair<const char *, int> values[] = {
-            {"agricium", 3885}, {"aluminium", 4285},     {"aslarite", 3840},    {"beryl", 3540},     {"bexalite", 3600},
-            {"borase", 3570},   {"copper", 4240},        {"corundum", 4225},    {"gold", 3585},      {"hephaestanite", 4180},
-            {"ice", 4300},      {"iron", 4270},          {"laranite", 3825},    {"lindinium", 3400}, {"ouratite", 3370},
-            {"quantainium", 3170}, {"quartz", 4210},     {"riccite", 3385},     {"savrillium", 3200}, {"silicon", 4255},
-            {"stileron", 3185}, {"taranite", 3555},      {"tin", 4195},         {"titanium", 3855},  {"torite", 3900},
-            {"tungsten", 3870},
+            {"agricium", 3885}, {"aluminium", 4285},     {"aslarite", 3840},   {"beryl", 3540},
+            {"bexalite", 3600}, {"borase", 3570},        {"copper", 4240},     {"corundum", 4225},
+            {"gold", 3585},     {"hephaestanite", 4180}, {"ice", 4300},        {"iron", 4270},
+            {"laranite", 3825}, {"lindinium", 3400},     {"ouratite", 3370},   {"quantainium", 3170},
+            {"quartz", 4210},   {"riccite", 3385},       {"savrillium", 3200}, {"silicon", 4255},
+            {"stileron", 3185}, {"taranite", 3555},      {"tin", 4195},        {"titanium", 3855},
+            {"torite", 3900},   {"tungsten", 3870},
         };
         for (const auto &[ore, value] : values)
             t[QString::fromLatin1(ore)] = value;
@@ -364,7 +373,8 @@ QStringList formatRsDetailsLines(const QStringList &ores, const Loc &loc)
         QStringList values;
         for (const int v : steps)
             values << QString::number(v);
-        lines << QStringLiteral("<EM4>%1</EM4>: %2").arg(label ? *label : py::title(ore), values.join(QStringLiteral(" - ")));
+        lines << QStringLiteral("<EM4>%1</EM4>: %2")
+                     .arg(label ? *label : py::title(ore), values.join(QStringLiteral(" - ")));
     }
     if (lines.isEmpty())
         return {};
@@ -418,7 +428,8 @@ QHash<QString, TemplateKeys> buildTemplateLookup(const RecordStore &store)
         QString title, desc;
         for (const Node lid : findAll(doc.root(), ".//LocID")) {
             const QString val = qs(getOr(lid, "value"));
-            if (val.isEmpty() || !val.startsWith(u'@') || val.contains(u"LOC_EMPTY") || val.contains(u"UNINITIALIZED"))
+            if (val.isEmpty() || !val.startsWith(u'@') || val.contains(u"LOC_EMPTY") ||
+                val.contains(u"UNINITIALIZED"))
                 continue;
             QString key = val;
             while (key.startsWith(u'@'))
@@ -438,7 +449,8 @@ QHash<QString, TemplateKeys> buildTemplateLookup(const RecordStore &store)
 
 QStringList battagliaContractOres(Node contract)
 {
-    static const QRegularExpression token(QRegularExpression::anchoredPattern(QStringLiteral("ResourceType[0-9]*")));
+    static const QRegularExpression token(
+        QRegularExpression::anchoredPattern(QStringLiteral("ResourceType[0-9]*")));
     QStringList ores;
     for (const Node prop : findAll(contract, ".//propertyOverrides/MissionProperty")) {
         if (!token.match(qs(getOr(prop, "extendedTextToken"))).hasMatch())
@@ -470,7 +482,7 @@ std::vector<Node> allContracts(Node root)
 
 struct RsTags
 {
-    QHash<QString, QString> titleTags;   // title key -> "[RS ####/...]"
+    QHash<QString, QString> titleTags;    // title key -> "[RS ####/...]"
     QHash<QString, QStringList> descOres; // desc key -> ores
 };
 
@@ -508,7 +520,8 @@ RsTags buildBattagliaRsTags(const RecordStore &store, const QHash<QString, Templ
             if (needTitle)
                 if (const QString tag = formatRsTag(ores); !tag.isEmpty())
                     out.titleTags.insert(titleKey, tag);
-            if (needDesc && std::any_of(ores.begin(), ores.end(), [](const QString &o) { return !rsValueSteps(o).empty(); }))
+            if (needDesc && std::any_of(ores.begin(), ores.end(),
+                                        [](const QString &o) { return !rsValueSteps(o).empty(); }))
                 out.descOres.insert(descKey, ores);
         }
     }
@@ -520,7 +533,8 @@ QString variantLabelShort(const QString &debugName)
 {
     if (debugName.isEmpty())
         return QString();
-    for (const char *prefix : {"BountyHuntersGuild_Bounties_", "BountyHuntersGuild_Bounty_", "BountyHuntersGuild_"})
+    for (const char *prefix :
+         {"BountyHuntersGuild_Bounties_", "BountyHuntersGuild_Bounty_", "BountyHuntersGuild_"})
         if (debugName.startsWith(QLatin1StringView(prefix)))
             return debugName.sliced(int(std::strlen(prefix))).section(u'_', 0, 0);
     return debugName.section(u'_', -1);
@@ -550,8 +564,9 @@ struct PoolEntry
 };
 using PoolsBySystem = OrderedMap<OrderedMap<PoolEntry>>;
 
-void mergeBlueprintPool(OrderedMap<PoolsBySystem> &missionBlueprints, const QString &titleKey, const QString &system,
-                        const QString &poolKey, const QStringList &items, const QString &label)
+void mergeBlueprintPool(OrderedMap<PoolsBySystem> &missionBlueprints, const QString &titleKey,
+                        const QString &system, const QString &poolKey, const QStringList &items,
+                        const QString &label)
 {
     OrderedMap<PoolEntry> &perPool = missionBlueprints[titleKey][system];
     if (!perPool.contains(poolKey))
@@ -572,8 +587,9 @@ struct ContractScan
 
 QString extractSystem(const QString &name, const QString &fallback)
 {
-    static const QSet<QString> systems = {QStringLiteral("Stanton"), QStringLiteral("Pyro"),    QStringLiteral("Nyx"),
-                                          QStringLiteral("Desert"),  QStringLiteral("ArcCorp"), QStringLiteral("Crusader")};
+    static const QSet<QString> systems = {QStringLiteral("Stanton"), QStringLiteral("Pyro"),
+                                          QStringLiteral("Nyx"),     QStringLiteral("Desert"),
+                                          QStringLiteral("ArcCorp"), QStringLiteral("Crusader")};
     static const QRegularExpression region(QStringLiteral(R"(^Region[A-Z][0-9]*$)"));
     if (name.isEmpty())
         return fallback;
@@ -617,14 +633,15 @@ ContractScan scanContractGenerators(const Context &ctx, const BlueprintPools &po
                     const QString handlerSystem =
                         extractSystem(debugName, debugName.isEmpty() ? QStringLiteral("Unknown") : debugName);
                     QStringList handlerFlags;
-                    if (const Node da = find(handler, ".//defaultAvailability"); da && getOr(da, "onceOnly") == "1")
+                    if (const Node da = find(handler, ".//defaultAvailability");
+                        da && getOr(da, "onceOnly") == "1")
                         handlerFlags << QStringLiteral("Unique");
                     if (!findAll(handler, ".//ContractPrerequisite_CompletedContractTags").empty())
                         handlerFlags << QStringLiteral("Chain");
                     // Handler-scope spawns only, not the union of every
                     // child contract's roster (#186).
-                    const SpawnBreakdown handlerSpawns =
-                        extractSpawnCounts(handler, {QStringLiteral("CareerContract"), QStringLiteral("Contract")});
+                    const SpawnBreakdown handlerSpawns = extractSpawnCounts(
+                        handler, {QStringLiteral("CareerContract"), QStringLiteral("Contract")});
 
                     for (const Node contract : findAll(handler, contractPath)) {
                         try {
@@ -658,7 +675,8 @@ ContractScan scanContractGenerators(const Context &ctx, const BlueprintPools &po
                             bool hasBp = false;
                             double chance = 0;
                             const QString bpVariant = contractName;
-                            OrderedMap<std::pair<QStringList, QStringList>> byLabel; // label -> (uuids, items)
+                            OrderedMap<std::pair<QStringList, QStringList>>
+                                byLabel; // label -> (uuids, items)
                             for (const Node bpElem : iter(contract, "BlueprintRewards")) {
                                 const QString poolId = qs(getOr(bpElem, "blueprintPool"));
                                 if (poolId.isEmpty() || poolId == nullUuid || !pools.items.contains(poolId))
@@ -667,7 +685,8 @@ ContractScan scanContractGenerators(const Context &ctx, const BlueprintPools &po
                                 const QString label = poolRankLabel(pools.names.value(poolId));
                                 auto &[uuids, labelItems] = byLabel[label];
                                 uuids << poolId;
-                                for (const auto items = pools.items.value(poolId); const QString &item : items)
+                                for (const auto items = pools.items.value(poolId);
+                                     const QString &item : items)
                                     if (!labelItems.contains(item))
                                         labelItems << item;
                                 const std::optional<double> c = toFloat(getOr(bpElem, "chance", "1"));
@@ -676,11 +695,13 @@ ContractScan scanContractGenerators(const Context &ctx, const BlueprintPools &po
                                     scan.bpChance.insert(titleKey, chance);
                             }
                             const auto poolKey = [](QStringList uuids) {
-                                std::sort(uuids.begin(), uuids.end(), [](const QString &a, const QString &b) { return py::less(a, b); });
+                                std::sort(uuids.begin(), uuids.end(),
+                                          [](const QString &a, const QString &b) { return py::less(a, b); });
                                 return uuids.join(u'\x1f');
                             };
                             for (const auto &[label, value] : byLabel)
-                                mergeBlueprintPool(scan.blueprints, titleKey, system, poolKey(value.first), value.second, label);
+                                mergeBlueprintPool(scan.blueprints, titleKey, system, poolKey(value.first),
+                                                   value.second, label);
 
                             if (!entityNames.isEmpty()) {
                                 QStringList itemNames;
@@ -689,7 +710,8 @@ ContractScan scanContractGenerators(const Context &ctx, const BlueprintPools &po
                                         const QString ec = qs(getOr(itemElem, "entityClass"));
                                         if (ec.isEmpty() || ec == nullUuid)
                                             continue;
-                                        if (const auto it = entityNames.constFind(ec); it != entityNames.cend())
+                                        if (const auto it = entityNames.constFind(ec);
+                                            it != entityNames.cend())
                                             if (!itemNames.contains(*it))
                                                 itemNames << *it;
                                     }
@@ -700,7 +722,8 @@ ContractScan scanContractGenerators(const Context &ctx, const BlueprintPools &po
                             // XP: the first positive legacy reward is success,
                             // the first negative failure.
                             qint64 successXp = 0, failureXp = 0;
-                            for (const Node legacy : findAll(contract, ".//ContractResult_LegacyReputation")) {
+                            for (const Node legacy :
+                                 findAll(contract, ".//ContractResult_LegacyReputation")) {
                                 const Node amount = find(legacy, "contractResultReputationAmounts");
                                 if (!amount)
                                     continue;
@@ -716,7 +739,8 @@ ContractScan scanContractGenerators(const Context &ctx, const BlueprintPools &po
                                     failureXp = *it;
                             }
                             if (successXp == 0) {
-                                for (const Node sp : findAll(contract, ".//ContractResult_ScenarioProgress")) {
+                                for (const Node sp :
+                                     findAll(contract, ".//ContractResult_ScenarioProgress")) {
                                     const std::string_view points = getOr(sp, "PointsToAward");
                                     if (points.empty())
                                         continue;
@@ -735,18 +759,23 @@ ContractScan scanContractGenerators(const Context &ctx, const BlueprintPools &po
                             }
 
                             QStringList flags = handlerFlags;
-                            if (contractName.contains(QStringLiteral("Intro")) || contractName.contains(QStringLiteral("intro")))
+                            if (contractName.contains(QStringLiteral("Intro")) ||
+                                contractName.contains(QStringLiteral("intro")))
                                 if (!flags.contains(QStringLiteral("Starter")))
                                     flags << QStringLiteral("Starter");
                             const SpawnBreakdown contractSpawns = extractSpawnCounts(contract);
-                            const SpawnBreakdown &spawns = contractSpawns.any() ? contractSpawns : handlerSpawns;
+                            const SpawnBreakdown &spawns =
+                                contractSpawns.any() ? contractSpawns : handlerSpawns;
                             const QString difficulty = extractDifficulty(contract);
                             const QString minStanding = qs(getOr(contract, "minStanding"));
-                            const QString rankName = minStanding.isEmpty() ? QString() : ctx.standings.ranks.value(minStanding);
-                            const QString repTrack = minStanding.isEmpty() ? QString() : ctx.standings.tracks.value(minStanding);
+                            const QString rankName =
+                                minStanding.isEmpty() ? QString() : ctx.standings.ranks.value(minStanding);
+                            const QString repTrack =
+                                minStanding.isEmpty() ? QString() : ctx.standings.tracks.value(minStanding);
 
-                            scan.missions[titleKey].push_back({system, successXp, failureXp, descKey, flags, spawns,
-                                                                difficulty, hasBp, chance, bpVariant, rankName, repTrack});
+                            scan.missions[titleKey].push_back({system, successXp, failureXp, descKey, flags,
+                                                               spawns, difficulty, hasBp, chance, bpVariant,
+                                                               rankName, repTrack});
 
                             // Sub-contracts override title/desc only.
                             for (const Node sub : findAll(contract, ".//subContracts/SubContract")) {
@@ -757,12 +786,13 @@ ContractScan scanContractGenerators(const Context &ctx, const BlueprintPools &po
                                 if (isSentinelKey(subDesc))
                                     subDesc.clear();
                                 scan.missions[subTitle].push_back({system, successXp, failureXp,
-                                                                    subDesc.isEmpty() ? descKey : subDesc, flags, spawns,
-                                                                    difficulty, hasBp, chance, bpVariant, rankName, repTrack});
+                                                                   subDesc.isEmpty() ? descKey : subDesc,
+                                                                   flags, spawns, difficulty, hasBp, chance,
+                                                                   bpVariant, rankName, repTrack});
                                 if (hasBp && subTitle != titleKey) {
                                     for (const auto &[label, value] : byLabel)
-                                        mergeBlueprintPool(scan.blueprints, subTitle, system, poolKey(value.first),
-                                                           value.second, label);
+                                        mergeBlueprintPool(scan.blueprints, subTitle, system,
+                                                           poolKey(value.first), value.second, label);
                                     if (!scan.bpChance.contains(subTitle))
                                         scan.bpChance.insert(subTitle, chance);
                                 }
@@ -780,13 +810,14 @@ ContractScan scanContractGenerators(const Context &ctx, const BlueprintPools &po
 
     // Stanton first, then the rest alphabetically.
     for (auto &[title, variants] : scan.missions)
-        std::stable_sort(variants.begin(), variants.end(), [](const ContractVariant &a, const ContractVariant &b) {
-            const bool aNot = a.systemName != u"Stanton";
-            const bool bNot = b.systemName != u"Stanton";
-            if (aNot != bNot)
-                return !aNot;
-            return py::less(a.systemName, b.systemName);
-        });
+        std::stable_sort(variants.begin(), variants.end(),
+                         [](const ContractVariant &a, const ContractVariant &b) {
+                             const bool aNot = a.systemName != u"Stanton";
+                             const bool bNot = b.systemName != u"Stanton";
+                             if (aNot != bNot)
+                                 return !aNot;
+                             return py::less(a.systemName, b.systemName);
+                         });
     return scan;
 }
 
@@ -811,7 +842,8 @@ Loc generateMissions(const Context &ctx)
     const QString bpHeaderTag = QStringLiteral("<%1>%2</%1>").arg(em, hdrBlueprints);
     const tags::TagConfig &compCfg = ctx.config(QStringLiteral("components"));
     const QHash<QString, QString> noTags;
-    const QHash<QString, QString> &effectiveTags = ctx.annotateMissionDescs ? ctx.scitem.entityNameTags : noTags;
+    const QHash<QString, QString> &effectiveTags =
+        ctx.annotateMissionDescs ? ctx.scitem.entityNameTags : noTags;
     const QHash<QString, QString> nameFallbackTags =
         ctx.annotateMissionDescs ? bareTypeNameTagLookup(loc, &compCfg) : QHash<QString, QString>{};
     const QString missionSep = QStringLiteral("\\n\\n<%1>%2</%1>\\n").arg(em, hdrDetails);
@@ -864,8 +896,9 @@ Loc generateMissions(const Context &ctx)
                 out.insert(k, v);
     }
 
-    const BlueprintPools pools = buildBlueprintPoolLookup(store, ctx.scitem.entityNames, ctx.scitem.entityNamesByFilename,
-                                                          effectiveTags, compCfg.placement, nameFallbackTags);
+    const BlueprintPools pools =
+        buildBlueprintPoolLookup(store, ctx.scitem.entityNames, ctx.scitem.entityNamesByFilename,
+                                 effectiveTags, compCfg.placement, nameFallbackTags);
     const QHash<QString, TemplateKeys> templates = buildTemplateLookup(store);
     ContractScan scan = scanContractGenerators(ctx, pools, templates);
     const RsTags rs = buildBattagliaRsTags(store, templates);
@@ -894,7 +927,8 @@ Loc generateMissions(const Context &ctx)
     // Route bodies in a fixed order: the Python iterates a set here.
     const auto sortedDescs = [](const QSet<QString> &set) {
         QStringList list(set.cbegin(), set.cend());
-        std::sort(list.begin(), list.end(), [](const QString &a, const QString &b) { return py::less(a, b); });
+        std::sort(list.begin(), list.end(),
+                  [](const QString &a, const QString &b) { return py::less(a, b); });
         return list;
     };
     const auto bodies = [&](const QStringList &descKeys) {
@@ -935,11 +969,11 @@ Loc generateMissions(const Context &ctx)
         const QString titleTrack = nonzeroTracks.size() == 1 ? *nonzeroTracks.cbegin() : QString();
 
         const bool hasBlueprints = scan.blueprints.contains(titleKey);
-        const bool allHaveBp =
-            hasBlueprints && std::all_of(variants.begin(), variants.end(), [](const ContractVariant &v) { return v.hasBp; });
-        const bool allGuaranteed = allHaveBp && std::all_of(variants.begin(), variants.end(), [](const ContractVariant &v) {
-                                       return !v.hasBp || v.bpChance >= 1.0;
-                                   });
+        const bool allHaveBp = hasBlueprints && std::all_of(variants.begin(), variants.end(),
+                                                            [](const ContractVariant &v) { return v.hasBp; });
+        const bool allGuaranteed =
+            allHaveBp && std::all_of(variants.begin(), variants.end(),
+                                     [](const ContractVariant &v) { return !v.hasBp || v.bpChance >= 1.0; });
         QSet<QString> cgDescKeys;
         for (const ContractVariant &v : variants)
             if (!v.descKey.isEmpty())
@@ -973,13 +1007,14 @@ Loc generateMissions(const Context &ctx)
         const bool bpPartial = hasBlueprints && anyVariantHasBp && !dominantNoBp;
 
         if (isRouteTitle(titleKey))
-            baseTitle = tags::abbreviateTitle(baseTitle, titlesCfg.abbreviatedPhrases, titlesCfg.rankSeparator,
-                                              titlesCfg.standardizeHaulingNames);
+            baseTitle = tags::abbreviateTitle(baseTitle, titlesCfg.abbreviatedPhrases,
+                                              titlesCfg.rankSeparator, titlesCfg.standardizeHaulingNames);
         QString title = baseTitle;
         if (tags::routeEnabled(&titlesCfg) && isRouteTitle(titleKey) && !titleHasRouteToken(baseTitle)) {
             QSet<QString> routeDescs = puTitleToDescs.value(titleKey);
             routeDescs.unite(cgDescKeys);
-            const QString route = deriveRouteFragment(bodies(sortedDescs(routeDescs)), &titlesCfg, loc, &routeCache);
+            const QString route =
+                deriveRouteFragment(bodies(sortedDescs(routeDescs)), &titlesCfg, loc, &routeCache);
             if (!route.isEmpty())
                 title = tags::applyMissionTitle(baseTitle, route, titlesCfg);
         }
@@ -1007,11 +1042,13 @@ Loc generateMissions(const Context &ctx)
                                         ? QStringLiteral(" (%1)").arg(titleTrack)
                                         : QString();
         if (nonzeroXp.size() == 1)
-            title += QStringLiteral(" <EM4>[%1 %2%3]</EM4>").arg(xpText(nonzeroXp.front()), repLabel, trackSuffix);
+            title +=
+                QStringLiteral(" <EM4>[%1 %2%3]</EM4>").arg(xpText(nonzeroXp.front()), repLabel, trackSuffix);
         else if (nonzeroXp.size() > 1)
             title += QStringLiteral(" <EM4>[%1–%2 %3%4]</EM4>")
                          .arg(xpText(*std::min_element(nonzeroXp.begin(), nonzeroXp.end())),
-                              xpText(*std::max_element(nonzeroXp.begin(), nonzeroXp.end())), repLabel, trackSuffix);
+                              xpText(*std::max_element(nonzeroXp.begin(), nonzeroXp.end())), repLabel,
+                              trackSuffix);
         if (ctx.showTitleTag(QStringLiteral("rs")))
             if (const QString rsTag = rs.titleTags.value(titleKey); !rsTag.isEmpty())
                 title += QStringLiteral(" <EM4>%1</EM4>").arg(rsTag);
@@ -1071,15 +1108,18 @@ Loc generateMissions(const Context &ctx)
             QStringList details;
             if (ctx.showField(QStringLiteral("mission_type")))
                 details << QStringLiteral("<EM4>Mission Type:</EM4> ") +
-                               (allFlags.isEmpty() ? QStringLiteral("Standard") : allFlags.join(QStringLiteral(", ")));
+                               (allFlags.isEmpty() ? QStringLiteral("Standard")
+                                                   : allFlags.join(QStringLiteral(", ")));
             if (ctx.showField(QStringLiteral("difficulty")) && !difficulties.isEmpty())
                 details << QStringLiteral("<EM4>Difficulty (1-7):</EM4> ") + difficulties.front();
             if (ctx.showField(QStringLiteral("resource_signatures")))
-                if (const auto it = rs.descOres.constFind(descKey); it != rs.descOres.cend() && !it->isEmpty())
+                if (const auto it = rs.descOres.constFind(descKey);
+                    it != rs.descOres.cend() && !it->isEmpty())
                     details << formatRsDetailsLines(*it, loc);
             if (ctx.showField(QStringLiteral("spawns")))
                 details << formatSpawnLines(aggSpawns);
-            if (ctx.showField(QStringLiteral("ace")) && aggSpawns[Spawn::Hostile].value(QStringLiteral("Ace Pilots"), 0))
+            if (ctx.showField(QStringLiteral("ace")) &&
+                aggSpawns[Spawn::Hostile].value(QStringLiteral("Ace Pilots"), 0))
                 details << QStringLiteral("<EM4>Ace Pilot:</EM4> Yes");
             std::vector<Tier> nonzeroTiers;
             for (const Tier &t : descTiers)
@@ -1090,15 +1130,17 @@ Loc generateMissions(const Context &ctx)
                     const Tier &t = nonzeroTiers.front();
                     details << repRewardLine(t.rank, xpText(t.success), repLabel, t.track);
                     if (t.failure < 0)
-                        details << repRewardLine(QStringLiteral("Failure Penalty"), xpText(t.failure), repLabel);
+                        details << repRewardLine(QStringLiteral("Failure Penalty"), xpText(t.failure),
+                                                 repLabel);
                 } else if (nonzeroTiers.size() > 1) {
                     std::stable_sort(nonzeroTiers.begin(), nonzeroTiers.end(),
                                      [](const Tier &a, const Tier &b) { return a.success < b.success; });
                     int i = 0;
                     for (const Tier &t : nonzeroTiers) {
                         ++i;
-                        QString line = repRewardLine(t.rank.isEmpty() ? QStringLiteral("Tier %1").arg(i) : t.rank,
-                                                     xpText(t.success), repLabel, t.track);
+                        QString line =
+                            repRewardLine(t.rank.isEmpty() ? QStringLiteral("Tier %1").arg(i) : t.rank,
+                                          xpText(t.success), repLabel, t.track);
                         if (t.failure < 0)
                             line += QStringLiteral(" (Failure: %1)").arg(xpText(t.failure));
                         details << line;
@@ -1133,7 +1175,8 @@ Loc generateMissions(const Context &ctx)
                     if (anyDescSystem && !descSystems.contains(sys))
                         continue;
                     for (const auto &[poolKey, entry] : byPool) {
-                        auto it = std::find_if(fps.begin(), fps.end(), [&](const auto &f) { return f.first == entry.items; });
+                        auto it = std::find_if(fps.begin(), fps.end(),
+                                               [&](const auto &f) { return f.first == entry.items; });
                         if (it == fps.end()) {
                             fps.push_back({entry.items, {}});
                             it = fps.end() - 1;
@@ -1153,12 +1196,15 @@ Loc generateMissions(const Context &ctx)
             }
             if (const QString block = details.join(kNl); !block.isEmpty())
                 sections << QStringLiteral("<%1>%2</%1>").arg(em, hdrDetails) + kNl + block;
-            if (anyHasBp && hasBlueprints && !allVariantsHaveBp && ctx.showField(QStringLiteral("blueprints"))) {
+            if (anyHasBp && hasBlueprints && !allVariantsHaveBp &&
+                ctx.showField(QStringLiteral("blueprints"))) {
                 if (!bpVariantNames.isEmpty()) {
                     const QString quoted = bpVariantNames.join(QStringLiteral(", "));
                     sections << (bpVariantNames.size() == 1
-                                     ? QStringLiteral("<EM4>? = only the %1 variant awards blueprints</EM4>").arg(quoted)
-                                     : QStringLiteral("<EM4>? = only the %1 variants award blueprints</EM4>").arg(quoted));
+                                     ? QStringLiteral("<EM4>? = only the %1 variant awards blueprints</EM4>")
+                                           .arg(quoted)
+                                     : QStringLiteral("<EM4>? = only the %1 variants award blueprints</EM4>")
+                                           .arg(quoted));
                 } else {
                     sections << QStringLiteral("<EM4>? = only some variants award blueprints</EM4>");
                 }
@@ -1225,9 +1271,10 @@ Loc generateMissions(const Context &ctx)
         if (fresh && isRouteTitle(titleKey))
             current = tags::abbreviateTitle(current, titlesCfg.abbreviatedPhrases, titlesCfg.rankSeparator,
                                             titlesCfg.standardizeHaulingNames);
-        if (fresh && tags::routeEnabled(&titlesCfg) && isRouteTitle(titleKey) && !titleHasRouteToken(baseTitle)) {
-            const QString route =
-                deriveRouteFragment(bodies(sortedDescs(puTitleToDescs.value(titleKey))), &titlesCfg, loc, &routeCache);
+        if (fresh && tags::routeEnabled(&titlesCfg) && isRouteTitle(titleKey) &&
+            !titleHasRouteToken(baseTitle)) {
+            const QString route = deriveRouteFragment(bodies(sortedDescs(puTitleToDescs.value(titleKey))),
+                                                      &titlesCfg, loc, &routeCache);
             if (!route.isEmpty())
                 current = tags::applyMissionTitle(current, route, titlesCfg);
         }
@@ -1240,7 +1287,8 @@ Loc generateMissions(const Context &ctx)
         if (unique.size() == 1)
             current += QStringLiteral(" <EM4>[%1 %2]</EM4>").arg(xpText(unique.front()), repLabel);
         else if (unique.size() > 1)
-            current += QStringLiteral(" <EM4>[%1–%2 %3]</EM4>").arg(xpText(unique.front()), xpText(unique.back()), repLabel);
+            current += QStringLiteral(" <EM4>[%1–%2 %3]</EM4>")
+                           .arg(xpText(unique.front()), xpText(unique.back()), repLabel);
         out.insert(titleKey, current);
     }
 

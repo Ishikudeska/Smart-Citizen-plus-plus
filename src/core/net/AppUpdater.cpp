@@ -46,7 +46,8 @@ bool isNewer(const QString &latest, const QString &current)
 std::optional<InstallerAsset> pickInstallerAsset(const QJsonArray &assets, const QString &exeName)
 {
     const QRegularExpression pattern(
-        QRegularExpression::anchoredPattern(QRegularExpression::escape(exeName.toLower()) + QStringLiteral("-.+-setup\\.exe")),
+        QRegularExpression::anchoredPattern(QRegularExpression::escape(exeName.toLower()) +
+                                            QStringLiteral("-.+-setup\\.exe")),
         QRegularExpression::CaseInsensitiveOption);
     static const QRegularExpression digestRe(QStringLiteral("^sha256:([0-9a-f]{64})$"),
                                              QRegularExpression::CaseInsensitiveOption);
@@ -68,7 +69,8 @@ std::optional<InstallerAsset> pickInstallerAsset(const QJsonArray &assets, const
 QUrl latestReleaseApi(const QString &repo)
 {
     const QString r = repo.trimmed();
-    return r.isEmpty() ? QUrl() : QUrl(QStringLiteral("https://api.github.com/repos/%1/releases/latest").arg(r));
+    return r.isEmpty() ? QUrl()
+                       : QUrl(QStringLiteral("https://api.github.com/repos/%1/releases/latest").arg(r));
 }
 
 namespace {
@@ -134,7 +136,8 @@ UpdateCheck checkForUpdate(const QString &repo, const QString &currentVersion, i
     out.notes = payload.value(u"body").toString().trimmed();
     if (isNewer(tag, currentVersion)) {
         out.status = UpdateCheck::Status::Available;
-        out.installer = pickInstallerAsset(payload.value(u"assets").toArray(), QString::fromLatin1(identity::kExeName));
+        out.installer =
+            pickInstallerAsset(payload.value(u"assets").toArray(), QString::fromLatin1(identity::kExeName));
     } else {
         out.status = UpdateCheck::Status::UpToDate;
     }
@@ -181,10 +184,11 @@ QString downloadInstaller(const InstallerAsset &asset, const QString &destDir, Q
         written += chunk.size();
     };
     QObject::connect(reply.get(), &QNetworkReply::readyRead, reply.get(), [&] { store(reply->readAll()); });
-    QObject::connect(reply.get(), &QNetworkReply::downloadProgress, reply.get(), [&](qint64 done, qint64 total) {
-        if (progress)
-            progress(done, total > 0 ? total : asset.size);
-    });
+    QObject::connect(reply.get(), &QNetworkReply::downloadProgress, reply.get(),
+                     [&](qint64 done, qint64 total) {
+                         if (progress)
+                             progress(done, total > 0 ? total : asset.size);
+                     });
     wait(reply.get(), cancel);
     store(reply->readAll());
     file.close();

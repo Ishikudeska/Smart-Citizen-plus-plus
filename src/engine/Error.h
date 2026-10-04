@@ -22,8 +22,7 @@ struct Error
     std::string message;
 };
 
-template <class T>
-using Result = std::expected<T, Error>;
+template <class T> using Result = std::expected<T, Error>;
 
 inline std::unexpected<Error> fail(Errc code, std::string message)
 {

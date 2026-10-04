@@ -23,7 +23,8 @@ namespace {
 QStringList patchFiles(const QString &patchRoot)
 {
     QStringList files;
-    for (QDirIterator it(patchRoot, {QStringLiteral("*.patch.json")}, QDir::Files, QDirIterator::Subdirectories);
+    for (QDirIterator it(patchRoot, {QStringLiteral("*.patch.json")}, QDir::Files,
+                         QDirIterator::Subdirectories);
          it.hasNext();)
         files << it.next();
     std::sort(files.begin(), files.end());
@@ -40,7 +41,8 @@ std::optional<QJsonObject> readJson(const QString &path, QString *error)
     QJsonParseError parseError;
     const QJsonDocument doc = QJsonDocument::fromJson(file.readAll(), &parseError);
     if (!doc.isObject()) {
-        *error = QStringLiteral("%1 is not valid JSON: %2").arg(QFileInfo(path).fileName(), parseError.errorString());
+        *error = QStringLiteral("%1 is not valid JSON: %2")
+                     .arg(QFileInfo(path).fileName(), parseError.errorString());
         return std::nullopt;
     }
     return doc.object();

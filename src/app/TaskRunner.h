@@ -58,14 +58,14 @@ public:
              std::function<void(Result)> done)
     {
         auto result = std::make_shared<Result>();
-        enqueue({title, cancellable,
-                 [work = std::move(work), result](Job &job) { *result = work(job); },
+        enqueue({title, cancellable, [work = std::move(work), result](Job &job) { *result = work(job); },
                  [done = std::move(done), result] {
                      if (done)
                          done(std::move(*result));
                  }});
     }
-    void run(const QString &title, bool cancellable, std::function<void(Job &)> work, std::function<void()> done = {});
+    void run(const QString &title, bool cancellable, std::function<void(Job &)> work,
+             std::function<void()> done = {});
 
     bool running() const { return current_ != nullptr; }
     QString title() const { return title_; }

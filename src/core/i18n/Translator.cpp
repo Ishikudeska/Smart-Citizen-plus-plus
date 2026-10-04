@@ -145,7 +145,8 @@ Catalog Catalog::load(const QString &languagesDir, const QString &language)
     const QDir dir(languagesDir);
     const QString file = QStringLiteral("/ui.json");
     const QJsonObject english = loadTree(dir.filePath(kDefaultLanguage) + file);
-    const QJsonObject overlay = language != kDefaultLanguage ? loadTree(dir.filePath(language) + file) : QJsonObject{};
+    const QJsonObject overlay =
+        language != kDefaultLanguage ? loadTree(dir.filePath(language) + file) : QJsonObject{};
     return fromTrees(language, english, overlay);
 }
 
@@ -174,17 +175,16 @@ void deepMerge(QJsonObject &base, const QJsonObject &overlay)
             base.insert(k, section);
         } else {
             if (base.value(k).isObject() && !v.isObject())
-                qCWarning(lcI18n) << "key" << k << "is a scalar in the overlay but a section in the base; replacing";
+                qCWarning(lcI18n) << "key" << k
+                                  << "is a scalar in the overlay but a section in the base; replacing";
             base.insert(k, v);
         }
     }
 }
 
 JsonTranslator::JsonTranslator(QObject *parent)
-    : QTranslator(parent)
-    , catalog_(std::make_shared<const Catalog>())
-{
-}
+    : QTranslator(parent), catalog_(std::make_shared<const Catalog>())
+{}
 
 void JsonTranslator::setCatalog(std::shared_ptr<const Catalog> catalog)
 {
@@ -259,7 +259,8 @@ QStringList availableLanguages(const QString &languagesDir)
     const QDir dir(languagesDir);
     for (const auto entries = dir.entryList(QDir::Dirs | QDir::NoDotAndDotDot, QDir::Name);
          const QString &name : entries) {
-        if (name == kDefaultLanguage || leafCount(loadTree(dir.filePath(name + QStringLiteral("/ui.json")))) > 0)
+        if (name == kDefaultLanguage ||
+            leafCount(loadTree(dir.filePath(name + QStringLiteral("/ui.json")))) > 0)
             names << name;
     }
     if (!names.contains(kDefaultLanguage))

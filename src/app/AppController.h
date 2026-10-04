@@ -5,10 +5,9 @@
 #include "TaskRunner.h"
 #include "UpdateController.h"
 #include "WindowLayout.h"
-
 #include "core/Paths.h"
-#include "core/blueprints/BlueprintMeta.h"
 #include "core/Settings.h"
+#include "core/blueprints/BlueprintMeta.h"
 #include "core/i18n/Translator.h"
 
 #include <QObject>
@@ -46,7 +45,8 @@ class AppController : public QObject
     Q_PROPERTY(QVariantList languages READ languages CONSTANT)
     Q_PROPERTY(QString theme READ theme WRITE setTheme NOTIFY themeChanged)
     Q_PROPERTY(QString uiMode READ uiMode WRITE setUiMode NOTIFY uiModeChanged)
-    Q_PROPERTY(QString favoritePrefix READ favoritePrefix WRITE setFavoritePrefix NOTIFY favoritePrefixChanged)
+    Q_PROPERTY(
+        QString favoritePrefix READ favoritePrefix WRITE setFavoritePrefix NOTIFY favoritePrefixChanged)
     Q_PROPERTY(QString statusText READ statusText NOTIFY statusTextChanged)
     Q_PROPERTY(bool applyDirty READ applyDirty NOTIFY applyDirtyChanged)
     Q_PROPERTY(bool loaded READ loaded NOTIFY loadedChanged)

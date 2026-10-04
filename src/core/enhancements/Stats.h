@@ -64,7 +64,8 @@ QString enhancementsSalvageTool(Node root);
 // magazine entity class -> (ammoParamsRecord, maxAmmoCount).
 using MagazineLookup = QHash<QString, std::pair<QString, QString>>;
 // `magazines` is non-null on the FPS path only.
-QString enhancementsWeapon(Node root, const RecordLookup &ammo, const Loc *loc, const MagazineLookup *magazines);
+QString enhancementsWeapon(Node root, const RecordLookup &ammo, const Loc *loc,
+                           const MagazineLookup *magazines);
 
 std::pair<QString, QString> loadoutSummary(Node root);
 QString armorStatsBlock(Node armorRoot);

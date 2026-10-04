@@ -56,11 +56,8 @@ PathRoots PathRoots::defaults()
     return r;
 }
 
-Paths::Paths(const Settings &settings, PathRoots roots)
-    : settings_(settings)
-    , roots_(std::move(roots))
-{
-}
+Paths::Paths(const Settings &settings, PathRoots roots) : settings_(settings), roots_(std::move(roots))
+{}
 
 QString Paths::language(const QString &requested) const
 {
@@ -146,7 +143,8 @@ QString Paths::gameGlobalIni(const QString &requested) const
     const QString dir = channelInstallDir();
     if (dir.isEmpty())
         return {};
-    return QDir(dir).filePath(QStringLiteral("data/Localization/%1/global.ini").arg(scLanguageId(language(requested))));
+    return QDir(dir).filePath(
+        QStringLiteral("data/Localization/%1/global.ini").arg(scLanguageId(language(requested))));
 }
 
 } // namespace core

@@ -1,10 +1,10 @@
 #include "core/enhancements/Generator.h"
 
+#include "core/Settings.h"
 #include "core/enhancements/Categories.h"
 #include "core/enhancements/Context.h"
 #include "core/enhancements/Crafting.h"
 #include "core/enhancements/Missions.h"
-#include "core/Settings.h"
 #include "core/pipeline/Patcher.h"
 #include "core/text/IniFile.h"
 #include "core/text/PyText.h"
@@ -112,7 +112,8 @@ GeneratorOptions optionsFromSettings(Settings &settings)
     options.annotateMissionDescs = settings.annotateMissionDescs();
     options.repXpLabel = settings.repXpLabel();
     for (const char *key : {"details", "blueprints", "items", "blueprint_data"})
-        options.missionHeaders.insert(QString::fromLatin1(key), settings.missionHeader(QString::fromLatin1(key)));
+        options.missionHeaders.insert(QString::fromLatin1(key),
+                                      settings.missionHeader(QString::fromLatin1(key)));
     options.missionHeaderEmTag = settings.missionHeaderEmTag();
     for (const QString &field : kMissionFieldKeys)
         options.missionDetailFields.insert(field, settings.missionDetailField(field));
@@ -152,11 +153,12 @@ void applyOptionsJson(GeneratorOptions &options, const QJsonObject &json)
     options.statsPrepend = json.value(u"stats_prepend").toBool(options.statsPrepend);
     options.standardizeEarnableShipNames =
         json.value(u"standardize_earnable_ship_names").toBool(options.standardizeEarnableShipNames);
-    options.rsOreNameAnnotations = json.value(u"rs_ore_name_annotations").toBool(options.rsOreNameAnnotations);
+    options.rsOreNameAnnotations =
+        json.value(u"rs_ore_name_annotations").toBool(options.rsOreNameAnnotations);
 }
 
-std::expected<GeneratorResult, QString> generateEnhancements(const GeneratorOptions &options, ProgressSink *progress,
-                                                             const CancelToken *cancel)
+std::expected<GeneratorResult, QString>
+generateEnhancements(const GeneratorOptions &options, ProgressSink *progress, const CancelToken *cancel)
 {
     const auto want = [&](const char *category) {
         return !options.categories || options.categories->contains(QString::fromLatin1(category));
@@ -183,16 +185,18 @@ std::expected<GeneratorResult, QString> generateEnhancements(const GeneratorOpti
 
     const QString records = QDir(options.forgeDir).filePath(QStringLiteral("raw/libs/foundry/records"));
     if (!QFileInfo(options.forgeDir).isDir() || !QFileInfo(records).isDir())
-        return std::unexpected(QStringLiteral("DataForge cache not found at %1. Extract DataForge first.").arg(options.forgeDir));
+        return std::unexpected(QStringLiteral("DataForge cache not found at %1. Extract DataForge first.")
+                                   .arg(options.forgeDir));
     const std::shared_ptr<const RecordStore> store = RecordStore::scan(records);
     qCInfo(lcEnh) << "XML index:" << store->fileCount() << "files";
 
     const bool needAmmo = want("ship_weapon_descs") || want("fps_weapon_descs");
     const bool needNames = want("mission_rewards") || want("commodity_crafting") || want("journal");
-    const int phases = 1 + (needAmmo ? 1 : 0) + (needAmmo || needNames ? 1 : 0) + (want("component_descs") ? 1 : 0) +
-                       (want("missile_enhancements") ? 1 : 0) + (want("ship_weapon_descs") ? 1 : 0) +
-                       (want("fps_weapon_descs") ? 1 : 0) + (want("ship_descs") ? 2 : 0) +
-                       (want("mission_rewards") ? 4 : 0) + (want("commodity_crafting") || want("journal") ? 1 : 0) +
+    const int phases = 1 + (needAmmo ? 1 : 0) + (needAmmo || needNames ? 1 : 0) +
+                       (want("component_descs") ? 1 : 0) + (want("missile_enhancements") ? 1 : 0) +
+                       (want("ship_weapon_descs") ? 1 : 0) + (want("fps_weapon_descs") ? 1 : 0) +
+                       (want("ship_descs") ? 2 : 0) + (want("mission_rewards") ? 4 : 0) +
+                       (want("commodity_crafting") || want("journal") ? 1 : 0) +
                        (want("medical_consumables") ? 1 : 0) + 1;
     if (progress)
         progress->setTotal(phases);
@@ -209,7 +213,8 @@ std::expected<GeneratorResult, QString> generateEnhancements(const GeneratorOpti
     ctx.annotateMissionDescs = options.annotateMissionDescs;
     ctx.repXpLabel = options.repXpLabel.isEmpty() ? QStringLiteral("Rep") : options.repXpLabel;
     ctx.missionHeaders = options.missionHeaders;
-    ctx.missionHeaderEm = options.missionHeaderEmTag.isEmpty() ? QStringLiteral("EM3") : options.missionHeaderEmTag;
+    ctx.missionHeaderEm =
+        options.missionHeaderEmTag.isEmpty() ? QStringLiteral("EM3") : options.missionHeaderEmTag;
     ctx.missionDetailFields = options.missionDetailFields;
     ctx.missionTitleTags = options.missionTitleTags;
     ctx.statsPrepend = options.statsPrepend;
@@ -219,8 +224,11 @@ std::expected<GeneratorResult, QString> generateEnhancements(const GeneratorOpti
     {
         QList<QFuture<void>> jobs;
         if (needAmmo) {
-            jobs << QtConcurrent::run(&pool, [&] { ctx.vehicleAmmo = buildAmmoLookup(*store, QStringLiteral("ammoparams/vehicle")); });
-            jobs << QtConcurrent::run(&pool, [&] { ctx.fpsAmmo = buildAmmoLookup(*store, QStringLiteral("ammoparams/fps")); });
+            jobs << QtConcurrent::run(&pool, [&] {
+                ctx.vehicleAmmo = buildAmmoLookup(*store, QStringLiteral("ammoparams/vehicle"));
+            });
+            jobs << QtConcurrent::run(
+                &pool, [&] { ctx.fpsAmmo = buildAmmoLookup(*store, QStringLiteral("ammoparams/fps")); });
         }
         if (needAmmo || needNames)
             jobs << QtConcurrent::run(&pool, [&] {
@@ -251,8 +259,8 @@ std::expected<GeneratorResult, QString> generateEnhancements(const GeneratorOpti
         return std::unexpected(QStringLiteral("Cancelled"));
 
     // Wave 2: the categories.
-    Loc outComponents, outMissiles, outShipWeapons, outFpsWeapons, outShips, outMissions, outCommodities, outJournal,
-        outMedical;
+    Loc outComponents, outMissiles, outShipWeapons, outFpsWeapons, outShips, outMissions, outCommodities,
+        outJournal, outMedical;
     {
         struct Job
         {
@@ -274,7 +282,8 @@ std::expected<GeneratorResult, QString> generateEnhancements(const GeneratorOpti
         if (want("mission_rewards"))
             run("missions", [&] { outMissions = generateMissions(ctx); });
         if (want("commodity_crafting") || want("journal"))
-            run("commodity_journal", [&] { std::tie(outCommodities, outJournal) = generateCommodityJournal(ctx); });
+            run("commodity_journal",
+                [&] { std::tie(outCommodities, outJournal) = generateCommodityJournal(ctx); });
         if (want("medical_consumables"))
             run("medical_consumables", [&] { outMedical = generateMedicalConsumables(ctx); });
         for (Job &job : jobs) {
@@ -290,8 +299,8 @@ std::expected<GeneratorResult, QString> generateEnhancements(const GeneratorOpti
         const QList<LocstringWorkaround> workarounds = loadLocstringWorkarounds(options.patchesDir);
         if (!workarounds.isEmpty()) {
             int applied = 0;
-            for (Loc *out : {&outMissions, &outComponents, &outShipWeapons, &outFpsWeapons, &outShips, &outMissiles,
-                             &outCommodities, &outJournal, &outMedical})
+            for (Loc *out : {&outMissions, &outComponents, &outShipWeapons, &outFpsWeapons, &outShips,
+                             &outMissiles, &outCommodities, &outJournal, &outMedical})
                 applied += applyLocstringWorkarounds(*out, workarounds);
             qCInfo(lcEnh) << "Loc-string workarounds:" << applied << "/" << workarounds.size() << "applied";
         }
@@ -304,10 +313,14 @@ std::expected<GeneratorResult, QString> generateEnhancements(const GeneratorOpti
 
     GeneratorResult result;
     const std::pair<const char *, const Loc *> files[] = {
-        {"ship_descs", &outShips},           {"component_descs", &outComponents},
-        {"ship_weapon_descs", &outShipWeapons}, {"fps_weapon_descs", &outFpsWeapons},
-        {"mission_rewards", &outMissions},   {"commodity_crafting", &outCommodities},
-        {"journal", &outJournal},            {"missile_enhancements", &outMissiles},
+        {"ship_descs", &outShips},
+        {"component_descs", &outComponents},
+        {"ship_weapon_descs", &outShipWeapons},
+        {"fps_weapon_descs", &outFpsWeapons},
+        {"mission_rewards", &outMissions},
+        {"commodity_crafting", &outCommodities},
+        {"journal", &outJournal},
+        {"missile_enhancements", &outMissiles},
         {"medical_consumables", &outMedical},
     };
     for (const auto &[category, entries] : files) {

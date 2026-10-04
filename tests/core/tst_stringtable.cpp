@@ -14,8 +14,8 @@ namespace {
 
 const QString kFav = QStringLiteral("*");
 
-StringEntry entry(const QString &key, const QString &category, const QString &original, const QString &custom = {},
-                  EntryStatus status = EntryStatus::Unmodified)
+StringEntry entry(const QString &key, const QString &category, const QString &original,
+                  const QString &custom = {}, EntryStatus status = EntryStatus::Unmodified)
 {
     StringEntry e;
     e.key = key;
@@ -61,7 +61,8 @@ private slots:
     void setsSortOrder()
     {
         const auto set = [](const char *custom, const char *original, const char *order) {
-            return withSortOrder(QString::fromUtf8(custom), QString::fromUtf8(original), kFav, QString::fromUtf8(order));
+            return withSortOrder(QString::fromUtf8(custom), QString::fromUtf8(original), kFav,
+                                 QString::fromUtf8(order));
         };
         QCOMPARE(set("", "Avenger", "05"), QStringLiteral("05-Avenger"));
         QCOMPARE(set("Avenger Titan", "Avenger", "02"), QStringLiteral("02-Avenger Titan"));
@@ -84,7 +85,8 @@ private slots:
 
     void togglesFavorites()
     {
-        StringEntry name = entry(QStringLiteral("vehicle_NameAEGS_Avenger"), category::kShips, QStringLiteral("Avenger"));
+        StringEntry name =
+            entry(QStringLiteral("vehicle_NameAEGS_Avenger"), category::kShips, QStringLiteral("Avenger"));
         QVERIFY(toggleFavorite(name, kFav));
         QCOMPARE(name.customValue, QStringLiteral("*Avenger"));
         QCOMPARE(name.status, EntryStatus::Modified);
@@ -93,7 +95,8 @@ private slots:
         QCOMPARE(name.status, EntryStatus::Unmodified);
 
         // A description can't be starred, but a stranded prefix comes off.
-        StringEntry desc = entry(QStringLiteral("vehicle_DescAEGS_Avenger"), category::kShips, QStringLiteral("Desc"));
+        StringEntry desc =
+            entry(QStringLiteral("vehicle_DescAEGS_Avenger"), category::kShips, QStringLiteral("Desc"));
         QVERIFY(!toggleFavorite(desc, kFav));
         desc.customValue = QStringLiteral("*Desc");
         QVERIFY(toggleFavorite(desc, kFav));
@@ -101,7 +104,8 @@ private slots:
         desc.customValue = QStringLiteral("*Better desc");
         QVERIFY(toggleFavorite(desc, kFav));
         QCOMPARE(desc.customValue, QStringLiteral("Better desc"));
-        StringEntry other = entry(QStringLiteral("ui_x"), category::kOther, QStringLiteral("x"), QStringLiteral("*x"));
+        StringEntry other =
+            entry(QStringLiteral("ui_x"), category::kOther, QStringLiteral("x"), QStringLiteral("*x"));
         QVERIFY(toggleFavorite(other, kFav));
         QCOMPARE(other.customValue, QString());
         // An empty prefix never touches non-name rows.
@@ -192,15 +196,20 @@ private slots:
 
     void groupsKeys()
     {
-        QCOMPARE(groupSortKey(QStringLiteral("item_NameShield")), std::make_pair(QStringLiteral("item_shield"), 0));
-        QCOMPARE(groupSortKey(QStringLiteral("item_DescShield")), std::make_pair(QStringLiteral("item_shield"), 1));
-        QCOMPARE(groupSortKey(QStringLiteral("vehicle_DescX")), std::make_pair(QStringLiteral("vehicle_x"), 1));
+        QCOMPARE(groupSortKey(QStringLiteral("item_NameShield")),
+                 std::make_pair(QStringLiteral("item_shield"), 0));
+        QCOMPARE(groupSortKey(QStringLiteral("item_DescShield")),
+                 std::make_pair(QStringLiteral("item_shield"), 1));
+        QCOMPARE(groupSortKey(QStringLiteral("vehicle_DescX")),
+                 std::make_pair(QStringLiteral("vehicle_x"), 1));
         QCOMPARE(groupSortKey(QStringLiteral("items_commodities_gold")),
                  std::make_pair(QStringLiteral("items_commodities_gold"), 0));
         QCOMPARE(groupSortKey(QStringLiteral("items_commodities_gold_desc")),
                  std::make_pair(QStringLiteral("items_commodities_gold"), 1));
-        QCOMPARE(groupSortKey(QStringLiteral("Bounty_title_001")), std::make_pair(QStringLiteral("bounty_001"), 0));
-        QCOMPARE(groupSortKey(QStringLiteral("Bounty_desc_001")), std::make_pair(QStringLiteral("bounty_001"), 1));
+        QCOMPARE(groupSortKey(QStringLiteral("Bounty_title_001")),
+                 std::make_pair(QStringLiteral("bounty_001"), 0));
+        QCOMPARE(groupSortKey(QStringLiteral("Bounty_desc_001")),
+                 std::make_pair(QStringLiteral("bounty_001"), 1));
         QCOMPARE(groupSortKey(QStringLiteral("ui_Thing")), std::make_pair(QStringLiteral("ui_thing"), 0));
     }
 
@@ -209,7 +218,8 @@ private slots:
         QList<StringEntry> entries = {
             entry(QStringLiteral("b"), category::kOther, QStringLiteral("x")),
             entry(QStringLiteral("A"), category::kOther, QStringLiteral("x")),
-            entry(QStringLiteral("vehicle_NameZ"), category::kShips, QStringLiteral("Z"), QStringLiteral("*01-Z")),
+            entry(QStringLiteral("vehicle_NameZ"), category::kShips, QStringLiteral("Z"),
+                  QStringLiteral("*01-Z")),
         };
         QList<int> rows = {0, 1, 2};
         sortIndices(rows, entries, {}, ColKey, false, false, kFav, {});
@@ -222,14 +232,18 @@ private slots:
 
     void rendersPreview()
     {
-        const QString html = previewHtml(QStringLiteral("k"), QStringLiteral(R"(<EM4>Hi</EM4>\n~mission(Location|Address) & <EM3>u</EM3>)"));
-        QVERIFY(html.contains(QStringLiteral("<span style=\"font-weight:bold;color:#4a9eff;\">Hi</span><br>")));
+        const QString html =
+            previewHtml(QStringLiteral("k"),
+                        QStringLiteral(R"(<EM4>Hi</EM4>\n~mission(Location|Address) & <EM3>u</EM3>)"));
+        QVERIFY(
+            html.contains(QStringLiteral("<span style=\"font-weight:bold;color:#4a9eff;\">Hi</span><br>")));
         QVERIFY(html.contains(QStringLiteral("[Location]")));
         QVERIFY(html.contains(QStringLiteral("&amp;")));
         QVERIFY(html.contains(QStringLiteral("text-decoration:underline;\">u</span>")));
         QVERIFY(previewHtml(QStringLiteral("k"), {}).contains(QStringLiteral("(empty)")));
 
-        StringEntry journal = entry(QStringLiteral("Journal_Thing_Content"), category::kJournal, QStringLiteral("x"));
+        StringEntry journal =
+            entry(QStringLiteral("Journal_Thing_Content"), category::kJournal, QStringLiteral("x"));
         QCOMPARE(journalStampFor(journal, QStringLiteral("SCX"), QStringLiteral("1.0")), QString());
         journal.customValue = QStringLiteral("y");
         QCOMPARE(journalStampFor(journal, QStringLiteral("SCX"), QStringLiteral("1.0")),
@@ -240,7 +254,8 @@ private slots:
 
     void keepsPendingEdits()
     {
-        QList<StringEntry> before = {entry(QStringLiteral("a"), category::kOther, QStringLiteral("x"), QStringLiteral("y"))};
+        QList<StringEntry> before = {
+            entry(QStringLiteral("a"), category::kOther, QStringLiteral("x"), QStringLiteral("y"))};
         QList<StringEntry> after = {entry(QStringLiteral("a"), category::kOther, QStringLiteral("y"))};
         QCOMPARE(restorePendingEdits(after, pendingEdits(before)), 1);
         QCOMPARE(after[0].status, EntryStatus::Unmodified); // the new original already says "y"
@@ -249,7 +264,8 @@ private slots:
     void detectsOneDrive()
     {
         const auto e = env({{"OneDrive", R"(C:\Users\aabou\OneDrive)"}});
-        QVERIFY(onedrive::isOneDrivePath(QStringLiteral(R"(C:\Users\aabou\OneDrive\Documents\Smart Citizen)"), e));
+        QVERIFY(onedrive::isOneDrivePath(QStringLiteral(R"(C:\Users\aabou\OneDrive\Documents\Smart Citizen)"),
+                                         e));
         QVERIFY(onedrive::isOneDrivePath(QStringLiteral(R"(C:\Users\aabou\OneDrive)"), e));
         QVERIFY(!onedrive::isOneDrivePath(QStringLiteral(R"(C:\Users\aabou\Documents\Smart Citizen)"), e));
         QVERIFY(!onedrive::isOneDrivePath(QStringLiteral(R"(C:\SmartCitizenData)"), e));
@@ -261,7 +277,10 @@ private slots:
         QVERIFY(!onedrive::isOneDrivePath(QString(), e));
         QVERIFY(!onedrive::isOneDrivePath(QStringLiteral(R"(C:\Users\bob\OneDriveStuff\x)"),
                                           env({{"OneDrive", R"(C:\Users\bob\OneDrive)"}})));
-        QCOMPARE(onedrive::roots(env({{"OneDrive", "C:\\a\\OneDrive"}, {"OneDriveConsumer", "C:\\a\\OneDrive"}})).size(), 1);
+        QCOMPARE(
+            onedrive::roots(env({{"OneDrive", "C:\\a\\OneDrive"}, {"OneDriveConsumer", "C:\\a\\OneDrive"}}))
+                .size(),
+            1);
         QVERIFY(onedrive::roots({}).isEmpty());
         const auto profile = env({{"USERPROFILE", R"(C:\Users\aabou)"}});
         QCOMPARE(onedrive::suggestLocalDataDir(QStringLiteral("Smart Citizen"), profile),

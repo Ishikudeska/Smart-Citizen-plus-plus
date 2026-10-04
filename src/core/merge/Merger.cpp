@@ -11,11 +11,13 @@ namespace core {
 namespace {
 
 // Order matters: the replacements run in this sequence, as in the Python.
-constexpr std::array kComponentCodes = {u"shld", u"powr", u"cool", u"qdrv", u"jump", u"misl", u"gmisl", u"bomb"};
+constexpr std::array kComponentCodes = {u"shld", u"powr", u"cool",  u"qdrv",
+                                        u"jump", u"misl", u"gmisl", u"bomb"};
 
 bool isItemKey(const QString &key)
 {
-    return key.startsWith(u"item_name", Qt::CaseInsensitive) || key.startsWith(u"item_desc", Qt::CaseInsensitive);
+    return key.startsWith(u"item_name", Qt::CaseInsensitive) ||
+           key.startsWith(u"item_desc", Qt::CaseInsensitive);
 }
 
 } // namespace
@@ -87,7 +89,8 @@ void syncKeyVariants(IniMap &merged, const QSet<QString> &userEditedKeys)
     }
 }
 
-IniMap mergeSourcesByHierarchy(const SourceMap &sources, const QStringList &hierarchy, const IniMap *userOverrides)
+IniMap mergeSourcesByHierarchy(const SourceMap &sources, const QStringList &hierarchy,
+                               const IniMap *userOverrides)
 {
     IniMap result;
     for (const QString &name : hierarchy) {

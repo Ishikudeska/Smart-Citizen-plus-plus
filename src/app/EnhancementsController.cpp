@@ -1,7 +1,6 @@
 #include "EnhancementsController.h"
 
 #include "AppController.h"
-
 #include "core/i18n/Translator.h"
 #include "core/model/Enhancements.h"
 #include "core/pipeline/Extraction.h"
@@ -36,13 +35,20 @@ const QHash<QString, QHash<QString, QString>> &previewValues()
 {
     static const QHash<QString, QHash<QString, QString>> values = {
         {QStringLiteral("components"),
-         {{QStringLiteral("class"), QStringLiteral("Military")}, {QStringLiteral("size"), QStringLiteral("2")},
-          {QStringLiteral("grade"), QStringLiteral("A")}, {QStringLiteral("type"), QStringLiteral("Shield Generator")}}},
-        {QStringLiteral("missiles"), {{QStringLiteral("ordinance"), QStringLiteral("Infrared")}, {QStringLiteral("size"), QStringLiteral("1")}}},
-        {QStringLiteral("ship_weapons"), {{QStringLiteral("damage"), QStringLiteral("Energy")}, {QStringLiteral("size"), QStringLiteral("2")}}},
+         {{QStringLiteral("class"), QStringLiteral("Military")},
+          {QStringLiteral("size"), QStringLiteral("2")},
+          {QStringLiteral("grade"), QStringLiteral("A")},
+          {QStringLiteral("type"), QStringLiteral("Shield Generator")}}},
+        {QStringLiteral("missiles"),
+         {{QStringLiteral("ordinance"), QStringLiteral("Infrared")},
+          {QStringLiteral("size"), QStringLiteral("1")}}},
+        {QStringLiteral("ship_weapons"),
+         {{QStringLiteral("damage"), QStringLiteral("Energy")},
+          {QStringLiteral("size"), QStringLiteral("2")}}},
         {QStringLiteral("commodities"),
          {{QStringLiteral("label"), QStringLiteral("Crafting")},
-          {QStringLiteral("usage"), QStringLiteral("Quantum Drive") + tg::kUsageInputSep + QStringLiteral("Shield")},
+          {QStringLiteral("usage"),
+           QStringLiteral("Quantum Drive") + tg::kUsageInputSep + QStringLiteral("Shield")},
           {QStringLiteral("collection"), QStringLiteral("Collection")}}},
     };
     return values;
@@ -165,9 +171,10 @@ QVariantList EnhancementsController::missionFields() const
         out << QVariantMap{{QStringLiteral("id"), q(field)},
                            {QStringLiteral("label"), label},
                            {QStringLiteral("enabled"), app().settings().missionDetailField(q(field))},
-                           {QStringLiteral("tooltip"), q(field) == u"ace"
-                                                           ? text("enhancements.mission_field_ace_tooltip")
-                                                           : text("enhancements.mission_field_default_tooltip", {{QStringLiteral("label"), label}})}};
+                           {QStringLiteral("tooltip"),
+                            q(field) == u"ace" ? text("enhancements.mission_field_ace_tooltip")
+                                               : text("enhancements.mission_field_default_tooltip",
+                                                      {{QStringLiteral("label"), label}})}};
     }
     return out;
 }
@@ -317,11 +324,16 @@ void EnhancementsController::setAnnotateMissionDescs(bool on)
 QVariantList EnhancementsController::tagCategories() const
 {
     return {
-        QVariantMap{{QStringLiteral("id"), QStringLiteral("components")}, {QStringLiteral("label"), text("scx.tag_cat_components")}},
-        QVariantMap{{QStringLiteral("id"), QStringLiteral("missiles")}, {QStringLiteral("label"), text("scx.tag_cat_missiles")}},
-        QVariantMap{{QStringLiteral("id"), QStringLiteral("ship_weapons")}, {QStringLiteral("label"), text("scx.tag_cat_ship_weapons")}},
-        QVariantMap{{QStringLiteral("id"), QStringLiteral("commodities")}, {QStringLiteral("label"), text("scx.tag_cat_commodities")}},
-        QVariantMap{{QStringLiteral("id"), QStringLiteral("mission_titles")}, {QStringLiteral("label"), text("scx.tag_cat_mission_titles")}},
+        QVariantMap{{QStringLiteral("id"), QStringLiteral("components")},
+                    {QStringLiteral("label"), text("scx.tag_cat_components")}},
+        QVariantMap{{QStringLiteral("id"), QStringLiteral("missiles")},
+                    {QStringLiteral("label"), text("scx.tag_cat_missiles")}},
+        QVariantMap{{QStringLiteral("id"), QStringLiteral("ship_weapons")},
+                    {QStringLiteral("label"), text("scx.tag_cat_ship_weapons")}},
+        QVariantMap{{QStringLiteral("id"), QStringLiteral("commodities")},
+                    {QStringLiteral("label"), text("scx.tag_cat_commodities")}},
+        QVariantMap{{QStringLiteral("id"), QStringLiteral("mission_titles")},
+                    {QStringLiteral("label"), text("scx.tag_cat_mission_titles")}},
     };
 }
 
@@ -376,14 +388,22 @@ void EnhancementsController::moveElement(const QString &category, int index, int
 QString EnhancementsController::option(const QString &category, const QString &field) const
 {
     const tg::TagConfig &c = config(category);
-    if (field == u"separator") return c.separator;
-    if (field == u"enclosing") return c.enclosing;
-    if (field == u"placement") return c.placement;
-    if (field == u"usageSeparator") return c.usageSeparator;
-    if (field == u"routeArrow") return c.routeArrow;
-    if (field == u"titleSeparator") return c.titleSeparator;
-    if (field == u"locationDetail") return c.locationDetail;
-    if (field == u"rankSeparator") return c.rankSeparator;
+    if (field == u"separator")
+        return c.separator;
+    if (field == u"enclosing")
+        return c.enclosing;
+    if (field == u"placement")
+        return c.placement;
+    if (field == u"usageSeparator")
+        return c.usageSeparator;
+    if (field == u"routeArrow")
+        return c.routeArrow;
+    if (field == u"titleSeparator")
+        return c.titleSeparator;
+    if (field == u"locationDetail")
+        return c.locationDetail;
+    if (field == u"rankSeparator")
+        return c.rankSeparator;
     return {};
 }
 
@@ -506,8 +526,9 @@ QString EnhancementsController::preview(const QString &category) const
 {
     const tg::TagConfig &c = config(category);
     if (category == u"mission_titles") {
-        QString sample = tg::abbreviateTitle(QStringLiteral("Master Rank - Direct Medium Cargo Haul"), c.abbreviatedPhrases,
-                                             c.rankSeparator, c.standardizeHaulingNames);
+        QString sample =
+            tg::abbreviateTitle(QStringLiteral("Master Rank - Direct Medium Cargo Haul"),
+                                c.abbreviatedPhrases, c.rankSeparator, c.standardizeHaulingNames);
         for (const auto &[word, abbr] : tg::sizeAbbreviations())
             if (c.shortenedSizes.contains(q(word)))
                 sample.replace(q(word), q(abbr));
@@ -517,9 +538,9 @@ QString EnhancementsController::preview(const QString &category) const
         if (!tg::routeEnabled(&c))
             return text("enhancements.mt_preview_route_off", {{QStringLiteral("display"), display(sample)}});
         const bool address = c.locationDetail == u"address";
-        const QString route = tg::renderRoute(address ? QStringLiteral("Area18, Crusader") : QStringLiteral("Area18"),
-                                              address ? QStringLiteral("Lorville, Hurston") : QStringLiteral("Lorville"),
-                                              c.routeArrow);
+        const QString route = tg::renderRoute(
+            address ? QStringLiteral("Area18, Crusader") : QStringLiteral("Area18"),
+            address ? QStringLiteral("Lorville, Hurston") : QStringLiteral("Lorville"), c.routeArrow);
         return text("enhancements.mt_preview_route_on",
                     {{QStringLiteral("display"), display(tg::applyMissionTitle(sample, route, c))}});
     }
@@ -527,8 +548,9 @@ QString EnhancementsController::preview(const QString &category) const
     const QString name = previewNames().value(category, QStringLiteral("Sample"));
     if (tag.isEmpty())
         return text("enhancements.tag_preview_no_tag", {{QStringLiteral("name"), name}});
-    return text("enhancements.tag_preview",
-                {{QStringLiteral("content"), c.placement == u"append" ? name + u' ' + tag : tag + u' ' + name}});
+    return text(
+        "enhancements.tag_preview",
+        {{QStringLiteral("content"), c.placement == u"append" ? name + u' ' + tag : tag + u' ' + name}});
 }
 
 QStringList EnhancementsController::mappedValues(const QString &category, const QString &kind) const

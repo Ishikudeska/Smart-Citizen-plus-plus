@@ -6,7 +6,6 @@
 #include <QObject>
 #include <QString>
 #include <QStringList>
-
 #include <QtLogging>
 
 #include <deque>

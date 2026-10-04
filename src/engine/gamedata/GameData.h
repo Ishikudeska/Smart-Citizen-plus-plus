@@ -41,6 +41,7 @@ struct RecordSource
     std::function<xml::XmlTree::NodeId(std::size_t, xml::XmlTree &)> build;
     int dcbVersion = 0;
 };
-Result<std::string> buildGameDataJson(const RecordSource &records, const Options &options, const LogSink &log = {});
+Result<std::string> buildGameDataJson(const RecordSource &records, const Options &options,
+                                      const LogSink &log = {});
 
 } // namespace engine::gamedata

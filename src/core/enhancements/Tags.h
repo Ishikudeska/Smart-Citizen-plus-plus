@@ -35,7 +35,8 @@ QString missileNameTag(const QString &desc, Node root, const tags::TagConfig *co
 // Type(+Size) config for mining lasers from the components config; nothing
 // when the Type element is off.
 std::optional<tags::TagConfig> miningLaserTagConfig(const tags::TagConfig *componentsConfig);
-QString miningLaserComponentTag(const QString &desc, Node root, const std::optional<tags::TagConfig> &miningConfig);
+QString miningLaserComponentTag(const QString &desc, Node root,
+                                const std::optional<tags::TagConfig> &miningConfig);
 
 // _ship_weapon_name_tag_factory: damage type of the weapon's ammo plus
 // size; mining lasers get the component Type+Size shape instead.

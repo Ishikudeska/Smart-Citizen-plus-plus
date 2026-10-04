@@ -1,5 +1,4 @@
 #include "AppController.h"
-
 #include "core/AppInfo.h"
 #include "core/log/CrashHandler.h"
 #include "core/log/Log.h"
@@ -61,10 +60,11 @@ int main(int argc, char *argv[])
         if (!ok)
             tourStep = 0;
     }
-    engine.setInitialProperties({{QStringLiteral("autoStart"), !smokeTest && screenshot.isEmpty() && !loadOnly},
-                                 {QStringLiteral("initialPage"), screenshotPage},
-                                 {QStringLiteral("explorerPath"), explorerPath},
-                                 {QStringLiteral("tourStep"), tourStep}});
+    engine.setInitialProperties(
+        {{QStringLiteral("autoStart"), !smokeTest && screenshot.isEmpty() && !loadOnly},
+         {QStringLiteral("initialPage"), screenshotPage},
+         {QStringLiteral("explorerPath"), explorerPath},
+         {QStringLiteral("tourStep"), tourStep}});
     engine.loadFromModule("ScApp", "Main");
     if (engine.rootObjects().isEmpty())
         return EXIT_FAILURE;
@@ -82,16 +82,18 @@ int main(int argc, char *argv[])
         auto *poll = new QTimer(&app);
         auto idleTicks = std::make_shared<int>(0);
         auto elapsed = std::make_shared<int>(0);
-        QObject::connect(poll, &QTimer::timeout, &app, [&controller, window, screenshot, poll, idleTicks, elapsed] {
-            *elapsed += poll->interval();
-            *idleTicks = controller.tasks()->running() || controller.tasks()->queued() ? 0 : *idleTicks + 1;
-            if (*idleTicks < 4 && *elapsed < 120000)
-                return;
-            poll->stop();
-            if (window && !window->grabWindow().save(screenshot))
-                qWarning("could not save %s", qPrintable(screenshot));
-            QCoreApplication::quit();
-        });
+        QObject::connect(
+            poll, &QTimer::timeout, &app, [&controller, window, screenshot, poll, idleTicks, elapsed] {
+                *elapsed += poll->interval();
+                *idleTicks =
+                    controller.tasks()->running() || controller.tasks()->queued() ? 0 : *idleTicks + 1;
+                if (*idleTicks < 4 && *elapsed < 120000)
+                    return;
+                poll->stop();
+                if (window && !window->grabWindow().save(screenshot))
+                    qWarning("could not save %s", qPrintable(screenshot));
+                QCoreApplication::quit();
+            });
         QTimer::singleShot(loadOnly ? 4000 : 1500, poll, [poll] { poll->start(250); });
     }
     return app.exec();

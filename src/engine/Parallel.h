@@ -20,14 +20,15 @@ using ProgressCallback = std::function<void(std::size_t done, std::size_t total)
 // `progress` is called on the calling thread about ten times a second and
 // once at the end. Stops handing out items once `cancel` is set.
 template <class MakeWorker>
-void parallelFor(std::size_t count, unsigned threads, MakeWorker &&makeWorker, const ProgressCallback &progress,
-                 const std::atomic<bool> *cancel)
+void parallelFor(std::size_t count, unsigned threads, MakeWorker &&makeWorker,
+                 const ProgressCallback &progress, const std::atomic<bool> *cancel)
 {
     std::atomic<std::size_t> next{0};
     std::atomic<std::size_t> done{0};
 
     unsigned threadCount = threads ? threads : std::thread::hardware_concurrency();
-    threadCount = std::max(1u, std::min<unsigned>(threadCount, static_cast<unsigned>(std::max<std::size_t>(count, 1))));
+    threadCount =
+        std::max(1u, std::min<unsigned>(threadCount, static_cast<unsigned>(std::max<std::size_t>(count, 1))));
 
     std::mutex mutex;
     std::condition_variable cv;

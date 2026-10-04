@@ -36,8 +36,9 @@ class TestStringTableModel : public QObject
         defaults.insert(QStringLiteral("ui_Zeta"), QStringLiteral("Last"));
         defaults.insert(QStringLiteral("ui_alpha"), QStringLiteral("First Thing"));
         defaults.insert(QStringLiteral("ui_Mid"), QStringLiteral("Middle avenger"));
-        m.setEntries({entry("ui_Zeta", "Last"), entry("ui_alpha", "First Thing"), entry("ui_Mid", "Middle avenger")},
-                     defaults);
+        m.setEntries(
+            {entry("ui_Zeta", "Last"), entry("ui_alpha", "First Thing"), entry("ui_Mid", "Middle avenger")},
+            defaults);
     }
 
 private slots:
@@ -49,12 +50,14 @@ private slots:
         QCOMPARE(reset.size(), 1);
         QCOMPARE(m.totalCount(), 3);
         QCOMPARE(m.visibleCount(), 3);
-        QCOMPARE(keys(m), (QStringList{QStringLiteral("ui_alpha"), QStringLiteral("ui_Mid"), QStringLiteral("ui_Zeta")}));
+        QCOMPARE(keys(m), (QStringList{QStringLiteral("ui_alpha"), QStringLiteral("ui_Mid"),
+                                       QStringLiteral("ui_Zeta")}));
         QCOMPARE(m.data(m.index(0, ColCurrent)).toString(), QStringLiteral("First Thing"));
 
         m.sortBy(ColKey); // same column again: descending
         QVERIFY(m.sortDescending());
-        QCOMPARE(keys(m), (QStringList{QStringLiteral("ui_Zeta"), QStringLiteral("ui_Mid"), QStringLiteral("ui_alpha")}));
+        QCOMPARE(keys(m), (QStringList{QStringLiteral("ui_Zeta"), QStringLiteral("ui_Mid"),
+                                       QStringLiteral("ui_alpha")}));
         m.sortBy(ColCurrent); // a new column starts ascending
         QVERIFY(!m.sortDescending());
         QCOMPARE(m.key(0), QStringLiteral("ui_alpha"));

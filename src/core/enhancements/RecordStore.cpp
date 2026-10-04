@@ -129,7 +129,8 @@ QStringList RecordStore::indexRglob(const QString &relDir) const
             continue;
         QStringList files = dirs_.value(dir).files;
         // The index sorts each directory's path strings.
-        std::sort(files.begin(), files.end(), [](const QString &a, const QString &b) { return py::less(a, b); });
+        std::sort(files.begin(), files.end(),
+                  [](const QString &a, const QString &b) { return py::less(a, b); });
         for (const QString &f : std::as_const(files))
             out << absolute(join(dir, f));
     }
@@ -158,9 +159,10 @@ QStringList RecordStore::rglob(const QString &relDir) const
 
 QStringList RecordStore::glob(const QString &relDir, const QString &pattern) const
 {
-    const QRegularExpression re(QRegularExpression::anchoredPattern(QRegularExpression::wildcardToRegularExpression(
-                                    pattern, QRegularExpression::UnanchoredWildcardConversion)),
-                                QRegularExpression::CaseInsensitiveOption);
+    const QRegularExpression re(
+        QRegularExpression::anchoredPattern(QRegularExpression::wildcardToRegularExpression(
+            pattern, QRegularExpression::UnanchoredWildcardConversion)),
+        QRegularExpression::CaseInsensitiveOption);
     const QString dir = normalizedRel(relDir);
     QStringList out;
     for (const auto files = dirs_.value(dir).files; const QString &f : files)

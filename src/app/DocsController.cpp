@@ -3,7 +3,8 @@
 #include <QCoreApplication>
 #include <QFile>
 
-DocsController::DocsController(QObject *parent) : QObject(parent) {}
+DocsController::DocsController(QObject *parent) : QObject(parent)
+{}
 
 QString DocsController::markdown(const QString &name, const QString &language) const
 {

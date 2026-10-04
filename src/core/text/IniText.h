@@ -8,9 +8,9 @@
 namespace core {
 
 enum class IniEncoding {
-    Utf8,          // clean UTF-8 (a leading BOM is dropped)
-    Utf8Repaired,  // UTF-8 with a few corrupt bytes, each replaced by U+FFFD
-    Windows1252,   // not UTF-8 at all; decoded as ANSI
+    Utf8,         // clean UTF-8 (a leading BOM is dropped)
+    Utf8Repaired, // UTF-8 with a few corrupt bytes, each replaced by U+FFFD
+    Windows1252,  // not UTF-8 at all; decoded as ANSI
 };
 
 struct IniText

@@ -79,7 +79,8 @@ Loc scanEntityDir(const RecordStore &store, const QString &relDir, const Enhance
             QString source = options.tagLoc ? options.tagLoc->value(key) : QString();
             if (source.isEmpty())
                 source = base;
-            const QString tag = options.nameTagger ? options.nameTagger(source, root) : componentNameTag(source, root);
+            const QString tag =
+                options.nameTagger ? options.nameTagger(source, root) : componentNameTag(source, root);
             if (tag.isEmpty())
                 continue;
             out.insert(nameKey, tags::joinTag(name, tag, options.nameTagPlacement));
@@ -88,7 +89,8 @@ Loc scanEntityDir(const RecordStore &store, const QString &relDir, const Enhance
                 out.insert(shortKey, tags::joinTag(shortValue, tag, options.nameTagPlacement));
         }
     }
-    qCInfo(lcEnh).noquote() << QStringLiteral("%1: %2 matched, %3 discovered, %4 no enhancements, %5 no loc key")
+    qCInfo(lcEnh).noquote() << QStringLiteral(
+                                   "%1: %2 matched, %3 discovered, %4 no enhancements, %5 no loc key")
                                    .arg(relDir.section(u'/', -1))
                                    .arg(matched)
                                    .arg(discovered)
@@ -147,7 +149,8 @@ std::pair<int, int> mirrorScitemSiblings(Loc &out, const Loc &loc)
             const QString code = QString::fromLatin1(ct);
             const QString descPrefix = QStringLiteral("item_Desc%1_").arg(code);
             if (baseKey.startsWith(descPrefix)) {
-                const QString sibling = QStringLiteral("item_Desc_%1_%2").arg(code, baseKey.sliced(descPrefix.size()));
+                const QString sibling =
+                    QStringLiteral("item_Desc_%1_%2").arg(code, baseKey.sliced(descPrefix.size()));
                 if (!out.contains(sibling))
                     if (const QString *stock = loc.find(sibling)) {
                         out.insert(sibling, graftStats(*stock, value));
@@ -157,7 +160,8 @@ std::pair<int, int> mirrorScitemSiblings(Loc &out, const Loc &loc)
             }
             const QString namePrefix = QStringLiteral("item_name%1_").arg(code);
             if (baseKey.startsWith(namePrefix)) {
-                const QString sibling = QStringLiteral("item_Name_%1_%2").arg(code, baseKey.sliced(namePrefix.size()));
+                const QString sibling =
+                    QStringLiteral("item_Name_%1_%2").arg(code, baseKey.sliced(namePrefix.size()));
                 if (!out.contains(sibling) && loc.contains(sibling)) {
                     out.insert(sibling, value);
                     ++siblings;
@@ -170,7 +174,8 @@ std::pair<int, int> mirrorScitemSiblings(Loc &out, const Loc &loc)
     int legacy = 0;
     const QList<Loc::Entry> snapshot2 = out.entries();
     for (const auto &[key, value] : snapshot2) {
-        for (const auto &[with, without] : {std::pair{"item_Desc_", "item_Desc"}, {"item_Name_", "item_Name"}}) {
+        for (const auto &[with, without] :
+             {std::pair{"item_Desc_", "item_Desc"}, {"item_Name_", "item_Name"}}) {
             const QString prefixWith = QString::fromLatin1(with);
             if (!key.startsWith(prefixWith))
                 continue;
@@ -178,13 +183,15 @@ std::pair<int, int> mirrorScitemSiblings(Loc &out, const Loc &loc)
             if (rest.isEmpty() || !rest.contains(u'_'))
                 continue;
             const QString head = rest.section(u'_', 0, 0);
-            if (std::none_of(kCompTypes.begin(), kCompTypes.end(), [&](const char *c) { return head == QLatin1StringView(c); }))
+            if (std::none_of(kCompTypes.begin(), kCompTypes.end(),
+                             [&](const char *c) { return head == QLatin1StringView(c); }))
                 continue;
             const QString sibling = QString::fromLatin1(without) + rest;
             const QString *stock = loc.find(sibling);
             if (out.contains(sibling) || !stock)
                 continue;
-            out.insert(sibling, prefixWith == u"item_Desc_" ? graftStats(*stock, value) : graftTag(*stock, value));
+            out.insert(sibling,
+                       prefixWith == u"item_Desc_" ? graftStats(*stock, value) : graftTag(*stock, value));
             ++legacy;
             break;
         }
@@ -196,7 +203,8 @@ Loc generateComponents(const Context &ctx)
 {
     const tags::TagConfig &cfg = ctx.config(QStringLiteral("components"));
     const auto tagger = [&cfg](const QString &type) -> NameTagger {
-        return [&cfg, type](const QString &desc, Node root) { return componentNameTag(desc, root, &cfg, type); };
+        return
+            [&cfg, type](const QString &desc, Node root) { return componentNameTag(desc, root, &cfg, type); };
     };
     ScanOptions options;
     options.generateNameTags = true;
@@ -215,12 +223,14 @@ Loc generateComponents(const Context &ctx)
     }};
     for (const auto &[subdir, type, fn] : passes) {
         options.nameTagger = tagger(QString::fromLatin1(type));
-        for (const auto &[k, v] : scanEntityDir(*ctx.store, ships + QString::fromLatin1(subdir), fn, *ctx.loc, options))
+        for (const auto &[k, v] :
+             scanEntityDir(*ctx.store, ships + QString::fromLatin1(subdir), fn, *ctx.loc, options))
             out.insert(k, v);
     }
     if (ctx.store->dirExists(ships + QStringLiteral("radar"))) {
         options.nameTagger = tagger(QStringLiteral("Radar"));
-        for (const auto &[k, v] : scanEntityDir(*ctx.store, ships + QStringLiteral("radar"), enhancementsRadar, *ctx.loc, options))
+        for (const auto &[k, v] :
+             scanEntityDir(*ctx.store, ships + QStringLiteral("radar"), enhancementsRadar, *ctx.loc, options))
             out.insert(k, v);
     }
     const auto [siblings, legacy] = mirrorScitemSiblings(out, *ctx.loc);
@@ -242,7 +252,8 @@ Loc generateMissiles(const Context &ctx)
     options.tagLoc = ctx.tagLoc;
     options.prepend = ctx.statsPrepend;
     Loc out;
-    for (const char *dir : {"entities/scitem/ships/weapons/missiles", "entities/scitem/ships/weapons/rocket_pods"}) {
+    for (const char *dir :
+         {"entities/scitem/ships/weapons/missiles", "entities/scitem/ships/weapons/rocket_pods"}) {
         const QString rel = QString::fromLatin1(dir);
         if (!ctx.store->dirExists(rel))
             continue;
@@ -260,7 +271,8 @@ Loc generateShipWeapons(const Context &ctx)
     const tags::TagConfig &cfg = ctx.config(QStringLiteral("ship_weapons"));
     ScanOptions options;
     options.generateNameTags = true;
-    options.nameTagger = shipWeaponNameTagger(ctx.vehicleAmmo, &cfg, &ctx.config(QStringLiteral("components")));
+    options.nameTagger =
+        shipWeaponNameTagger(ctx.vehicleAmmo, &cfg, &ctx.config(QStringLiteral("components")));
     options.nameTagPlacement = cfg.placement;
     options.tagLoc = ctx.tagLoc;
     options.prepend = ctx.statsPrepend;
@@ -364,8 +376,8 @@ Loc generateMedicalConsumables(const Context &ctx)
         {"item_Desccrlf_consumable_radiation_01", "Reduces injuries from radiation."},
         {"item_Desccrlf_consumable_overdoseRevival_01",
          "Revives an overdosed person (if not incapacitated), doubles decay rate of Blood Drug Level."},
-        {"item_Desccrlf_consumable_healing_01",
-         "Restores health and stops bleeding. When used on another person recovers from incapacitated state."},
+        {"item_Desccrlf_consumable_healing_01", "Restores health and stops bleeding. When used on another "
+                                                "person recovers from incapacitated state."},
         {"item_Desccrlf_consumable_painkiller_01", "Reduces pain symptoms, normalizes movement ability."},
         {"item_Desccrlf_consumable_oxygen_01", "Recharges Oxygen reserves of a suit."},
     }};
@@ -373,7 +385,8 @@ Loc generateMedicalConsumables(const Context &ctx)
     for (const auto &[key, effect] : effects) {
         const QString k = QString::fromLatin1(key);
         if (const QString *stock = ctx.loc->find(k))
-            out.insert(k, appendEnhancements(*stock, QString::fromUtf8(effect), kEffectSeparator, ctx.statsPrepend));
+            out.insert(
+                k, appendEnhancements(*stock, QString::fromUtf8(effect), kEffectSeparator, ctx.statsPrepend));
     }
     return out;
 }

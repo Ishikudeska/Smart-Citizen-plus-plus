@@ -75,7 +75,8 @@ QStringList findLogFiles(const QString &channelDir, const QDateTime &since)
     QFileInfoList candidates;
     const QDir backups(QDir(channelDir).filePath(kLogBackupsDir));
     if (backups.exists())
-        candidates = backups.entryInfoList({QStringLiteral("*.log")}, QDir::Files | QDir::Hidden | QDir::System);
+        candidates =
+            backups.entryInfoList({QStringLiteral("*.log")}, QDir::Files | QDir::Hidden | QDir::System);
     const QFileInfo live(QDir(channelDir).filePath(kLiveLogName));
     if (live.isFile())
         candidates.append(live);
@@ -121,7 +122,8 @@ ScanResult scanFiles(const QStringList &paths, const QDateTime &since, const Sca
                 continue;
             // Python's text mode also splits on a lone CR.
             for (const auto parts = line.split('\r'); const QByteArray &part : parts) {
-                for (const auto events = parseEvents(QString::fromUtf8(part)); const BlueprintEvent &ev : events) {
+                for (const auto events = parseEvents(QString::fromUtf8(part));
+                     const BlueprintEvent &ev : events) {
                     if (ev.timestamp < epoch)
                         continue;
                     if (!result.latestTimestamp.isValid() || ev.timestamp > result.latestTimestamp)

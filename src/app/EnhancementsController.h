@@ -24,14 +24,16 @@ class EnhancementsController : public QObject
     Q_PROPERTY(bool categoriesDirty READ categoriesDirty NOTIFY changed)
     Q_PROPERTY(QVariantList missionFields READ missionFields NOTIFY changed)
     Q_PROPERTY(bool statsPrepend READ statsPrepend WRITE setStatsPrepend NOTIFY changed)
-    Q_PROPERTY(bool standardizeShipNames READ standardizeShipNames WRITE setStandardizeShipNames NOTIFY changed)
+    Q_PROPERTY(
+        bool standardizeShipNames READ standardizeShipNames WRITE setStandardizeShipNames NOTIFY changed)
     Q_PROPERTY(bool rsOreNames READ rsOreNames WRITE setRsOreNames NOTIFY changed)
     Q_PROPERTY(QString repXpLabel READ repXpLabel WRITE setRepXpLabel NOTIFY changed)
     Q_PROPERTY(QString headerEmTag READ headerEmTag WRITE setHeaderEmTag NOTIFY changed)
     Q_PROPERTY(bool generateDirty READ generateDirty NOTIFY changed)
     Q_PROPERTY(QString forgeStatus READ forgeStatus NOTIFY changed)
     Q_PROPERTY(bool tagDirty READ tagDirty NOTIFY tagChanged)
-    Q_PROPERTY(bool annotateMissionDescs READ annotateMissionDescs WRITE setAnnotateMissionDescs NOTIFY tagChanged)
+    Q_PROPERTY(
+        bool annotateMissionDescs READ annotateMissionDescs WRITE setAnnotateMissionDescs NOTIFY tagChanged)
     Q_PROPERTY(int tagRevision READ tagRevision NOTIFY tagChanged)
 
 public:
@@ -74,7 +76,7 @@ public:
     // routeArrow, titleSeparator, locationDetail, rankSeparator.
     Q_INVOKABLE QString option(const QString &category, const QString &field) const;
     Q_INVOKABLE void setOption(const QString &category, const QString &field, const QString &value);
-    Q_INVOKABLE QVariantList choices(const QString &field) const; // [{key, label}]
+    Q_INVOKABLE QVariantList choices(const QString &field) const;               // [{key, label}]
     Q_INVOKABLE bool flag(const QString &category, const QString &field) const; // standardizeHauling, route
     Q_INVOKABLE void setFlag(const QString &category, const QString &field, bool on);
     Q_INVOKABLE QVariantList phraseOptions() const; // [{key, label}] shorten + remove + underline
@@ -87,7 +89,8 @@ public:
     Q_INVOKABLE QString preview(const QString &category) const;
     // The Short/Medium/Long texts of a mapped element kind.
     Q_INVOKABLE QVariantList mapping(const QString &category, const QString &kind) const;
-    Q_INVOKABLE void setMappingText(const QString &category, const QString &raw, int column, const QString &text);
+    Q_INVOKABLE void setMappingText(const QString &category, const QString &raw, int column,
+                                    const QString &text);
     Q_INVOKABLE void resetMapping(const QString &category, const QString &kind);
     Q_INVOKABLE void resetTagDefaults();
     Q_INVOKABLE void saveTagChanges();

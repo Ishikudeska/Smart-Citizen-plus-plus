@@ -17,18 +17,18 @@ inline const QString kSourceUser = QStringLiteral("user");
 // Where the sources live for the active channel and language.
 struct SourceFiles
 {
-    QString baseIni;         // the "global" source (base.ini)
-    QString enhancementsDir; // folder holding the *_enhancements.ini files
+    QString baseIni;                // the "global" source (base.ini)
+    QString enhancementsDir;        // folder holding the *_enhancements.ini files
     QStringList enhancementFileIds; // enabled files, e.g. "ship_descs" (see enhancements::files())
-    QString userIni;         // the "user" source; may not exist yet
+    QString userIni;                // the "user" source; may not exist yet
 };
 
 struct LoadedSources
 {
     SourceMap sources;
-    QStringList hierarchy;                   // "global", then "enhancements", then "user"
+    QStringList hierarchy;                         // "global", then "enhancements", then "user"
     QHash<QString, QString> enhancementCategories; // enhancement key -> table category
-    QStringList problems;                    // e.g. base.ini missing
+    QStringList problems;                          // e.g. base.ini missing
 };
 
 // Reads base.ini, the enabled enhancement INIs (combined into one

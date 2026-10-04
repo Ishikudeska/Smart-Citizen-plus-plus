@@ -85,7 +85,8 @@ private slots:
         });
         QTRY_COMPARE(ran.size(), 3);
         QTRY_VERIFY(!runner.running());
-        QCOMPARE(ran, (QStringList{QStringLiteral("first"), QStringLiteral("second"), QStringLiteral("third")}));
+        QCOMPARE(ran,
+                 (QStringList{QStringLiteral("first"), QStringLiteral("second"), QStringLiteral("third")}));
         QCOMPARE(peak.load(), 1);
     }
 

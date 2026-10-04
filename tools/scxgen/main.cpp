@@ -41,7 +41,8 @@ int main(int argc, char **argv)
             threads = value.toInt();
     }
     if (baseIni.isEmpty() || forgeDir.isEmpty() || outDir.isEmpty()) {
-        std::fputs("usage: scxgen --base-ini <file> --forge-dir <dir> --out <dir> [--options json] [--patches dir]\n",
+        std::fputs("usage: scxgen --base-ini <file> --forge-dir <dir> --out <dir> [--options json] "
+                   "[--patches dir]\n",
                    stderr);
         return 2;
     }

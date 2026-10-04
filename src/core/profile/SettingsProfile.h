@@ -47,8 +47,8 @@ QString defaultBackupFilename(QDate today = QDate::currentDate());
 
 // Returns the number of zip entries written.
 std::expected<int, QString> writeProfileZip(const QString &zipPath, const QVariantMap &settings,
-                                            const QMap<QString, QString> &overrides, const QString &appVersion,
-                                            const QString &sourceMode,
+                                            const QMap<QString, QString> &overrides,
+                                            const QString &appVersion, const QString &sourceMode,
                                             const QDateTime &now = QDateTime::currentDateTime());
 
 // Validates the manifest (an app marker this build knows, a schema it

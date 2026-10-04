@@ -15,7 +15,8 @@ namespace {
 
 const QRegularExpression &orderRe()
 {
-    static const QRegularExpression re(QStringLiteral(R"(\A(\d{2})-)"), QRegularExpression::UseUnicodePropertiesOption);
+    static const QRegularExpression re(QStringLiteral(R"(\A(\d{2})-)"),
+                                       QRegularExpression::UseUnicodePropertiesOption);
     return re;
 }
 
@@ -45,13 +46,15 @@ QString withSortOrder(const QString &customValue, const QString &originalValue, 
     const QString base = body.isEmpty() ? originalValue : body;
 
     QString normalized = order;
-    static const QRegularExpression twoDigits(QStringLiteral(R"(\A\d{2}\z)"), QRegularExpression::UseUnicodePropertiesOption);
+    static const QRegularExpression twoDigits(QStringLiteral(R"(\A\d{2}\z)"),
+                                              QRegularExpression::UseUnicodePropertiesOption);
     if (!normalized.isEmpty() && !twoDigits.match(normalized).hasMatch()) {
         bool ok = false;
         const int n = py::strip(normalized).toInt(&ok);
         if (!ok)
             return customValue; // int() would raise; the editor rejects it
-        normalized = n < 0 ? QString::number(n) : QStringLiteral("%1").arg(n, 2, 10, QLatin1Char('0')); // {:02d}
+        normalized =
+            n < 0 ? QString::number(n) : QStringLiteral("%1").arg(n, 2, 10, QLatin1Char('0')); // {:02d}
     }
     const QString fav = hasFav ? favoritePrefix : QString();
     const QString result = normalized.isEmpty() ? fav + base : fav + normalized + u'-' + base;
@@ -72,7 +75,8 @@ bool toggleFavorite(StringEntry &entry, const QString &favoritePrefix)
         const QString rest = entry.customValue.sliced(favoritePrefix.size());
         entry.customValue = rest != entry.originalValue ? rest : QString();
     } else {
-        entry.customValue = favoritePrefix + (entry.customValue.isEmpty() ? entry.originalValue : entry.customValue);
+        entry.customValue =
+            favoritePrefix + (entry.customValue.isEmpty() ? entry.originalValue : entry.customValue);
     }
     entry.status = entry.customValue.isEmpty() ? EntryStatus::Unmodified : EntryStatus::Modified;
     return true;
@@ -84,7 +88,8 @@ void setCustomValue(StringEntry &entry, const QString &value)
     entry.status = value != entry.originalValue ? EntryStatus::Modified : EntryStatus::Unmodified;
 }
 
-QList<int> filterEntryIndices(const QList<StringEntry> &entries, const IniMap &defaults, const FilterCriteria &c)
+QList<int> filterEntryIndices(const QList<StringEntry> &entries, const IniMap &defaults,
+                              const FilterCriteria &c)
 {
     const QString star = QStringLiteral("★");
     // Case-insensitive search of the stored text: a refilter runs on the GUI
@@ -92,18 +97,26 @@ QList<int> filterEntryIndices(const QList<StringEntry> &entries, const IniMap &d
     auto columnContains = [&](const StringEntry &e, int column, const QString &needle) {
         const auto has = [&](QStringView text) { return text.contains(needle, Qt::CaseInsensitive); };
         switch (column) {
-        case ColCategory: return has(e.category);
-        case ColKey: return has(e.key);
+        case ColCategory:
+            return has(e.category);
+        case ColKey:
+            return has(e.key);
         case ColDefault: {
             const QString *d = defaults.find(e.key);
             return d && has(*d);
         }
-        case ColCurrent: return has(e.originalValue);
-        case ColStar: return isFavorite(e, c.favoritePrefix) && has(star);
-        case ColOrder: return e.isFavoritableShip() && has(sortOrder(e.customValue, c.favoritePrefix));
-        case ColCustom: return has(e.customValue);
-        case ColStatus: return has(statusName(e.status));
-        default: return false;
+        case ColCurrent:
+            return has(e.originalValue);
+        case ColStar:
+            return isFavorite(e, c.favoritePrefix) && has(star);
+        case ColOrder:
+            return e.isFavoritableShip() && has(sortOrder(e.customValue, c.favoritePrefix));
+        case ColCustom:
+            return has(e.customValue);
+        case ColStatus:
+            return has(statusName(e.status));
+        default:
+            return false;
         }
     };
     QList<std::pair<int, QString>> active;
@@ -128,7 +141,8 @@ QList<int> filterEntryIndices(const QList<StringEntry> &entries, const IniMap &d
         if (c.bpTitlesOnly || c.bpDescsOnly) {
             const QString &val = e.customValue.isEmpty() ? e.originalValue : e.customValue;
             const bool bpTitle = c.bpTitlesOnly && isMission(e) && val.contains(u"[BP");
-            const bool bpDesc = c.bpDescsOnly && isMission(e) && blueprints::hasBpSection(val, c.bpHeader.value_or(QString()));
+            const bool bpDesc = c.bpDescsOnly && isMission(e) &&
+                                blueprints::hasBpSection(val, c.bpHeader.value_or(QString()));
             if (!bpTitle && !bpDesc)
                 continue;
         }
@@ -158,18 +172,20 @@ std::pair<QString, int> groupSortKey(const QString &key)
                                                 QRegularExpression::DotMatchesEverythingOption);
     static const QRegularExpression mission(QStringLiteral(R"(\A(.*?)_(title|desc|content)(_.+)?\z)"),
                                             QRegularExpression::CaseInsensitiveOption);
-    static const QRegularExpression commodity(QStringLiteral(R"(\A(items_commodities_\w+?)(?:_(desc?|description))?\z)"),
-                                              QRegularExpression::CaseInsensitiveOption |
-                                                  QRegularExpression::UseUnicodePropertiesOption);
+    static const QRegularExpression commodity(
+        QStringLiteral(R"(\A(items_commodities_\w+?)(?:_(desc?|description))?\z)"),
+        QRegularExpression::CaseInsensitiveOption | QRegularExpression::UseUnicodePropertiesOption);
     // Each pattern needs a literal its guard tests first: a grouped sort runs
     // this for every row, and most keys match none of them.
     constexpr auto ci = Qt::CaseInsensitive;
     if (key.startsWith(u"item_", ci))
         if (const auto m = item.match(key); m.hasMatch())
-            return {(QStringLiteral("item_") + m.captured(3)).toLower(), m.captured(2).toLower() == u"name" ? 0 : 1};
+            return {(QStringLiteral("item_") + m.captured(3)).toLower(),
+                    m.captured(2).toLower() == u"name" ? 0 : 1};
     if (key.startsWith(u"vehicle_", ci))
         if (const auto m = vehicle.match(key); m.hasMatch())
-            return {(QStringLiteral("vehicle_") + m.captured(3)).toLower(), m.captured(2).toLower() == u"name" ? 0 : 1};
+            return {(QStringLiteral("vehicle_") + m.captured(3)).toLower(),
+                    m.captured(2).toLower() == u"name" ? 0 : 1};
     if (key.startsWith(u"items_commodities_", ci))
         if (const auto m = commodity.match(key); m.hasMatch())
             return {m.captured(1).toLower(), m.hasCaptured(2) ? 1 : 0};
@@ -182,13 +198,15 @@ std::pair<QString, int> groupSortKey(const QString &key)
 QString ownedName(const StringEntry &entry, const IniMap &defaults, const OwnedState &owned)
 {
     const QString *stock = defaults.find(entry.key);
-    return blueprints::normalizeItemName(entry.customValue.isEmpty() ? entry.originalValue : entry.customValue,
+    return blueprints::normalizeItemName(entry.customValue.isEmpty() ? entry.originalValue
+                                                                     : entry.customValue,
                                          owned.enclosings, stock ? *stock : QString());
 }
 
 bool isBlueprintItem(const StringEntry &entry, const IniMap &defaults, const OwnedState &owned)
 {
-    return !owned.blueprintItems.isEmpty() && owned.blueprintItems.contains(ownedName(entry, defaults, owned));
+    return !owned.blueprintItems.isEmpty() &&
+           owned.blueprintItems.contains(ownedName(entry, defaults, owned));
 }
 
 bool isOwned(const StringEntry &entry, const IniMap &defaults, const OwnedState &owned)
@@ -199,8 +217,9 @@ bool isOwned(const StringEntry &entry, const IniMap &defaults, const OwnedState 
     return owned.blueprintItems.contains(name) && owned.owned.contains(name);
 }
 
-void sortIndices(QList<int> &indices, const QList<StringEntry> &entries, const IniMap &defaults, Column column,
-                 bool descending, bool grouped, const QString &favoritePrefix, const OwnedState &owned)
+void sortIndices(QList<int> &indices, const QList<StringEntry> &entries, const IniMap &defaults,
+                 Column column, bool descending, bool grouped, const QString &favoritePrefix,
+                 const OwnedState &owned)
 {
     if (indices.isEmpty())
         return;
@@ -218,23 +237,38 @@ void sortIndices(QList<int> &indices, const QList<StringEntry> &entries, const I
             k = {0, group, QString(), sub};
         } else {
             switch (column) {
-            case ColCategory: k = {0, e.category.toLower(), {}, 0}; break;
+            case ColCategory:
+                k = {0, e.category.toLower(), {}, 0};
+                break;
             case ColDefault: {
                 const QString *d = defaults.find(e.key);
                 k = {0, d ? d->toLower() : QString(), {}, 0};
                 break;
             }
-            case ColCurrent: k = {0, e.originalValue.toLower(), {}, 0}; break;
-            case ColCustom: k = {0, e.customValue.toLower(), {}, 0}; break;
-            case ColStatus: k = {0, statusName(e.status).toLower(), {}, 0}; break;
-            case ColOwned: k = {isOwned(e, defaults, owned) ? 0 : 1, e.key.toLower(), {}, 0}; break;
-            case ColStar: k = {isFavorite(e, favoritePrefix) ? 0 : 1, e.key.toLower(), {}, 0}; break;
+            case ColCurrent:
+                k = {0, e.originalValue.toLower(), {}, 0};
+                break;
+            case ColCustom:
+                k = {0, e.customValue.toLower(), {}, 0};
+                break;
+            case ColStatus:
+                k = {0, statusName(e.status).toLower(), {}, 0};
+                break;
+            case ColOwned:
+                k = {isOwned(e, defaults, owned) ? 0 : 1, e.key.toLower(), {}, 0};
+                break;
+            case ColStar:
+                k = {isFavorite(e, favoritePrefix) ? 0 : 1, e.key.toLower(), {}, 0};
+                break;
             case ColOrder: {
-                const QString order = e.isFavoritableShip() ? sortOrder(e.customValue, favoritePrefix) : QString();
+                const QString order =
+                    e.isFavoritableShip() ? sortOrder(e.customValue, favoritePrefix) : QString();
                 k = {order.isEmpty() ? 1 : 0, order, e.key.toLower(), 0};
                 break;
             }
-            default: k = {0, e.key.toLower(), {}, 0}; break;
+            default:
+                k = {0, e.key.toLower(), {}, 0};
+                break;
             }
         }
         keys.push_back(std::move(k));
@@ -277,15 +311,17 @@ QString filteredAsTsv(const QList<StringEntry> &entries, const QList<int> &rows)
     QStringList lines = {QStringLiteral("Key\tOriginal Value\tCurrent Value\tCustom Value\tStatus")};
     for (const int idx : rows) {
         const StringEntry &e = entries[idx];
-        lines << QStringList{e.key, e.originalValue, e.originalValue, e.customValue, statusName(e.status)}.join(u'\t');
+        lines << QStringList{e.key, e.originalValue, e.originalValue, e.customValue, statusName(e.status)}
+                     .join(u'\t');
     }
     return lines.join(u'\n');
 }
 
 QString journalStampFor(const StringEntry &entry, const QString &appName, const QString &version)
 {
-    static const QRegularExpression titleKey(QStringLiteral(R"(_(?:title|shorttitle|subtitle|subheading|from)(?:,P)?$)"),
-                                             QRegularExpression::CaseInsensitiveOption);
+    static const QRegularExpression titleKey(
+        QStringLiteral(R"(_(?:title|shorttitle|subtitle|subheading|from)(?:,P)?$)"),
+        QRegularExpression::CaseInsensitiveOption);
     if (entry.category != category::kJournal || titleKey.match(entry.key).hasMatch())
         return {};
     if (entry.customValue.isEmpty() && entry.sourceFile != u"enhancements")
@@ -313,9 +349,11 @@ QString previewHtml(const QString &key, const QString &raw, const QString &stamp
         body.replace(em4, QStringLiteral("<span style=\"font-weight:bold;color:#4a9eff;\">\\1</span>"));
         body.replace(token, QStringLiteral("<span style=\"color:#888;font-style:italic;\">[\\1]</span>"));
     }
-    return QStringLiteral("<div style=\"font-family:Segoe UI,sans-serif;font-size:10pt;line-height:1.45;\">"
-                          "<div style=\"color:#888;font-size:8pt;margin-bottom:8px;font-family:Consolas,monospace;\">%1</div>"
-                          "<br>%2</div>")
+    return QStringLiteral(
+               "<div style=\"font-family:Segoe UI,sans-serif;font-size:10pt;line-height:1.45;\">"
+               "<div "
+               "style=\"color:#888;font-size:8pt;margin-bottom:8px;font-family:Consolas,monospace;\">%1</div>"
+               "<br>%2</div>")
         .arg(key.toHtmlEscaped(), body);
 }
 

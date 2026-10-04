@@ -76,8 +76,7 @@ bool matches(Node n, const Step &step)
 }
 
 // Runs the steps from `context`; `visit` returns false to stop early.
-template <class Visit>
-bool select(Node context, const std::vector<Step> &steps, std::size_t i, Visit &visit)
+template <class Visit> bool select(Node context, const std::vector<Step> &steps, std::size_t i, Visit &visit)
 {
     if (i == steps.size())
         return visit(context);

@@ -23,10 +23,8 @@ QByteArray normalizedNewlines(QByteArray bytes)
 
 } // namespace
 
-UserIni::UserIni(QString path)
-    : path_(std::move(path))
-{
-}
+UserIni::UserIni(QString path) : path_(std::move(path))
+{}
 
 QString UserIni::backupsDir() const
 {
@@ -144,7 +142,8 @@ QString UserIni::reset(bool keepBackup, const QDateTime &now) const
 
 int UserIni::generateFromDiff(const QString &referenceBaseIni, const QString &currentGameFile) const
 {
-    if (!QFileInfo::exists(referenceBaseIni) || !QFileInfo::exists(currentGameFile) || QFileInfo::exists(path_))
+    if (!QFileInfo::exists(referenceBaseIni) || !QFileInfo::exists(currentGameFile) ||
+        QFileInfo::exists(path_))
         return 0;
     const IniMap reference = loadIni(referenceBaseIni, false);
     const IniMap current = loadIni(currentGameFile, false);
@@ -177,7 +176,8 @@ int migrateUserDataDir(const QString &oldRoot, const QString &newRoot, bool move
     // Snapshot first: when the new folder sits inside the old one, files
     // copied into it must not be picked up again.
     QStringList files;
-    for (QDirIterator it(oldResolved, QDir::Files | QDir::Hidden, QDirIterator::Subdirectories); it.hasNext();)
+    for (QDirIterator it(oldResolved, QDir::Files | QDir::Hidden, QDirIterator::Subdirectories);
+         it.hasNext();)
         files << it.next();
 
     const QString newPrefix = newResolved + u'/';

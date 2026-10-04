@@ -11,11 +11,12 @@
 #endif
 #include <windows.h>
 #else
-#include <cerrno>
-#include <cstring>
 #include <fcntl.h>
 #include <sys/stat.h>
 #include <unistd.h>
+
+#include <cerrno>
+#include <cstring>
 #endif
 
 namespace engine::io {

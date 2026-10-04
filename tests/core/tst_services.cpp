@@ -15,9 +15,11 @@
 #include "engine/zip/ZipWriter.h"
 
 #include <QDir>
+#include <QElapsedTimer>
 #include <QFile>
 #include <QJsonDocument>
 #include <QJsonObject>
+#include <QRegularExpression>
 #include <QSignalSpy>
 #include <QTcpServer>
 #include <QTcpSocket>
@@ -25,8 +27,6 @@
 #include <QTest>
 #include <QThread>
 #include <QTimer>
-#include <QElapsedTimer>
-#include <QRegularExpression>
 
 using namespace core;
 
@@ -62,7 +62,8 @@ QMap<QString, QByteArray> zipEntries(const QString &path)
     for (std::size_t i = 0; i < (*archive)->entryCount(); ++i) {
         auto bytes = (*archive)->read(i);
         out.insert(QString::fromUtf8((*archive)->name(i)),
-                   bytes ? QByteArray(reinterpret_cast<const char *>(bytes->data()), qsizetype(bytes->size())) : QByteArray());
+                   bytes ? QByteArray(reinterpret_cast<const char *>(bytes->data()), qsizetype(bytes->size()))
+                         : QByteArray());
     }
     return out;
 }
@@ -88,8 +89,7 @@ class TinyHttp : public QObject
 public:
     using Responder = std::function<QByteArray(const QByteArray &request)>;
 
-    explicit TinyHttp(Responder responder)
-        : responder_(std::move(responder))
+    explicit TinyHttp(Responder responder) : responder_(std::move(responder))
     {
         server_.listen(QHostAddress::LocalHost);
         connect(&server_, &QTcpServer::newConnection, this, [this] {
@@ -123,7 +123,8 @@ private:
     QHash<QTcpSocket *, QByteArray> buffers_;
 };
 
-QByteArray response(int status, const QByteArray &body, const QByteArray &headers = "Content-Type: text/plain\r\n")
+QByteArray response(int status, const QByteArray &body,
+                    const QByteArray &headers = "Content-Type: text/plain\r\n")
 {
     return "HTTP/1.1 " + QByteArray::number(status) + " X\r\n" + headers +
            "Content-Length: " + QByteArray::number(body.size()) + "\r\nConnection: close\r\n\r\n" + body;
@@ -145,33 +146,40 @@ private slots:
         const QVariantMap settings = {{s("theme"), s("dark")},
                                       {s("favorite_prefix"), s("★")},
                                       {s("merge_hierarchy"), QStringList{s("global"), s("user")}}};
-        const QMap<QString, QString> overrides = {{s("LIVE"), s("k=Ærøskøbing — ✓\n")}, {s("PTU"), s("a=b\n")}};
-        const auto written = profile::writeProfileZip(zip, settings, overrides, s("0.1.0"), profile::kSourcePortable,
-                                                      QDateTime(QDate(2026, 7, 24), QTime(9, 30)));
+        const QMap<QString, QString> overrides = {{s("LIVE"), s("k=Ærøskøbing — ✓\n")},
+                                                  {s("PTU"), s("a=b\n")}};
+        const auto written =
+            profile::writeProfileZip(zip, settings, overrides, s("0.1.0"), profile::kSourcePortable,
+                                     QDateTime(QDate(2026, 7, 24), QTime(9, 30)));
         QCOMPARE(written.value_or(-1), 4);
         QCOMPARE(QStringList(zipEntries(zip).keys()),
                  (QStringList{s("manifest.json"), s("overrides/LIVE/user.ini"), s("overrides/PTU/user.ini"),
                               s("settings.json")}));
-        const QJsonObject manifest = QJsonDocument::fromJson(zipEntries(zip).value(s("manifest.json"))).object();
-        QCOMPARE(manifest.value(s("channels")).toVariant().toStringList(), (QStringList{s("LIVE"), s("PTU")}));
+        const QJsonObject manifest =
+            QJsonDocument::fromJson(zipEntries(zip).value(s("manifest.json"))).object();
+        QCOMPARE(manifest.value(s("channels")).toVariant().toStringList(),
+                 (QStringList{s("LIVE"), s("PTU")}));
         QCOMPARE(manifest.value(s("exported_at")).toString(), s("2026-07-24T09:30:00"));
 
         const auto read = profile::readProfileZip(zip);
         QVERIFY2(read.has_value(), qPrintable(read ? QString() : read.error()));
         QCOMPARE(read->overrides, overrides);
         QCOMPARE(read->settings.value(s("favorite_prefix")).toString(), s("★"));
-        QCOMPARE(read->settings.value(s("merge_hierarchy")).toStringList(), (QStringList{s("global"), s("user")}));
+        QCOMPARE(read->settings.value(s("merge_hierarchy")).toStringList(),
+                 (QStringList{s("global"), s("user")}));
         QCOMPARE(read->appVersion, s("0.1.0"));
         QCOMPARE(read->sourceMode, profile::kSourcePortable);
         QCOMPARE(read->schemaVersion, profile::kSchemaVersion);
 
-        QVERIFY(profile::writeProfileZip(zip, settings, {}, s("0.1.0"), profile::kSourceInstalled).has_value());
+        QVERIFY(
+            profile::writeProfileZip(zip, settings, {}, s("0.1.0"), profile::kSourceInstalled).has_value());
         QVERIFY(profile::readProfileZip(zip)->overrides.isEmpty());
     }
 
     void readsSmartCitizenBackups()
     {
-        const auto read = profile::readProfileZip(QStringLiteral(SC_SOURCE_DIR "/tests/fixtures/smartcitizen_settings_backup.zip"));
+        const auto read = profile::readProfileZip(
+            QStringLiteral(SC_SOURCE_DIR "/tests/fixtures/smartcitizen_settings_backup.zip"));
         QVERIFY2(read.has_value(), qPrintable(read ? QString() : read.error()));
         QCOMPARE(read->appVersion, s("2.3.1"));
         QCOMPARE(read->sourceMode, s("registry"));
@@ -215,12 +223,14 @@ private slots:
 
     void excludedKeys()
     {
-        for (const char *key : {"user_data_dir", "UserDataDir", "cache_dir", "pending_cache_cleanup", "window_geometry",
-                                "window_state", "string_column_widths", "base_global_path", "vehicles_path",
-                                "last_overrides_path", "post_import/apply_pending", "_channel_layout_migrated"})
+        for (const char *key :
+             {"user_data_dir", "UserDataDir", "cache_dir", "pending_cache_cleanup", "window_geometry",
+              "window_state", "string_column_widths", "base_global_path", "vehicles_path",
+              "last_overrides_path", "post_import/apply_pending", "_channel_layout_migrated"})
             QVERIFY2(profile::isProfileExcludedKey(s(key)), key);
         QVERIFY(profile::isProfileExcludedKey(s("data_sources/global/path"), s("C:\\Users\\x\\base.ini")));
-        QVERIFY(!profile::isProfileExcludedKey(s("data_sources/global/path"), s("https://example.com/global.ini")));
+        QVERIFY(!profile::isProfileExcludedKey(s("data_sources/global/path"),
+                                               s("https://example.com/global.ini")));
         QVERIFY(!profile::isProfileExcludedKey(s("theme"), s("dark")));
         QVERIFY(!profile::isProfileExcludedKey(s("data_sources/global/enabled"), true));
         QVERIFY(!profile::isProfileExcludedKey(s("sc_install_root"), s("C:/Games/StarCitizen")));
@@ -237,8 +247,11 @@ private slots:
 
         Settings target(dir.filePath(s("target.ini")));
         target.setFavoritePrefix(s("*"));
-        QCOMPARE(profile::importSettingsValues(target, {{s("theme"), s("light")}, {s("user_data_dir"), s("X")},
-                                                        {s("_marker"), 1}, {QString(), s("y")}, {s("ok"), 1}}),
+        QCOMPARE(profile::importSettingsValues(target, {{s("theme"), s("light")},
+                                                        {s("user_data_dir"), s("X")},
+                                                        {s("_marker"), 1},
+                                                        {QString(), s("y")},
+                                                        {s("ok"), 1}}),
                  2);
         QCOMPARE(target.value(s("theme")).toString(), s("light"));
         QVERIFY(!target.value(s("user_data_dir")).isValid());
@@ -253,16 +266,19 @@ private slots:
         QDir().mkpath(real + s("/LIVE"));
 
         st.setScInstallRoot(real);
-        QCOMPARE(profile::reconcileImportedInstallPath(st, [] { return QString(); }), profile::InstallPathOutcome::Restored);
+        QCOMPARE(profile::reconcileImportedInstallPath(st, [] { return QString(); }),
+                 profile::InstallPathOutcome::Restored);
         QCOMPARE(st.scInstallRoot(), real);
 
         st.setScInstallRoot(s("Q:/Nowhere/StarCitizen"));
-        QCOMPARE(profile::reconcileImportedInstallPath(st, [&] { return real; }), profile::InstallPathOutcome::Redetected);
+        QCOMPARE(profile::reconcileImportedInstallPath(st, [&] { return real; }),
+                 profile::InstallPathOutcome::Redetected);
         QCOMPARE(st.scInstallRoot(), real);
 
         st.setScInstallRoot(s("Q:/Nowhere/StarCitizen"));
         st.setValue(s("game_install_path"), s("Q:/Nowhere/StarCitizen/LIVE"));
-        QCOMPARE(profile::reconcileImportedInstallPath(st, [] { return QString(); }), profile::InstallPathOutcome::None);
+        QCOMPARE(profile::reconcileImportedInstallPath(st, [] { return QString(); }),
+                 profile::InstallPathOutcome::None);
         QVERIFY(st.scInstallRoot().isEmpty());
         QVERIFY(!st.value(s("game_install_path")).isValid());
     }
@@ -272,7 +288,8 @@ private slots:
         const QString backup = profile::defaultBackupFilename(QDate(2026, 7, 24));
         QVERIFY(backup.endsWith(s("-Settings-Backup-20260724.zip")));
         QVERIFY(!backup.contains(s("0.")));
-        QVERIFY(defaultLocPackFilename(s("LIVE"), QDate(2026, 5, 9)).endsWith(s("-LocPack-LIVE-20260509.zip")));
+        QVERIFY(
+            defaultLocPackFilename(s("LIVE"), QDate(2026, 5, 9)).endsWith(s("-LocPack-LIVE-20260509.zip")));
         QVERIFY(defaultLocPackFilename(s("PTU")) != defaultLocPackFilename(s("LIVE")));
     }
 
@@ -361,7 +378,8 @@ private slots:
         QTimer::singleShot(200, [&] { cancel = true; });
         QElapsedTimer t;
         t.start();
-        const auto r = net::downloadIfChanged(http.url("/slow.ini"), dir.filePath(s("x.ini")), {60'000, &cancel});
+        const auto r =
+            net::downloadIfChanged(http.url("/slow.ini"), dir.filePath(s("x.ini")), {60'000, &cancel});
         QCOMPARE(r.status, net::DownloadResult::Status::Cancelled);
         QVERIFY(t.elapsed() < 5000);
     }
@@ -400,7 +418,8 @@ private slots:
         QTemporaryDir dir;
         log::LogHub::instance().clearRecent();
         log::LogHub::instance().record(QtCriticalMsg, s("scx.test"), s("the last thing that happened"));
-        const QString path = crash::writeCrashReport(dir.filePath(s("logs")), s("Unhandled exception 0xc0000005"), s("Worker"));
+        const QString path = crash::writeCrashReport(dir.filePath(s("logs")),
+                                                     s("Unhandled exception 0xc0000005"), s("Worker"));
         QVERIFY(!path.isEmpty());
         QVERIFY(QFileInfo(path).fileName().startsWith(s("crash_")));
         const QString text = QString::fromUtf8(readFile(path));
@@ -465,7 +484,9 @@ private slots:
         QVERIFY(!copy.isCancelled());
         token.cancel();
         QVERIFY(copy.isCancelled() && copy.flag()->load());
-        { PerfTimer timer("tst"); }
+        {
+            PerfTimer timer("tst");
+        }
     }
 };
 

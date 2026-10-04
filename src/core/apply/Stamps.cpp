@@ -23,8 +23,9 @@ void stampJournalEntries(IniMap &merged, const IniMap &stock, const QString &app
 {
     const QRegularExpression stampRe(
         QStringLiteral(R"((?:\\n)*\[Edited with %1 v[^\]]+\]\s*$)").arg(stampedBy(appName)), kUnicode);
-    static const QRegularExpression titleKeyRe(QStringLiteral(R"(_(?:title|shorttitle|subtitle|subheading|from)(?:,P)?$)"),
-                                               QRegularExpression::CaseInsensitiveOption | kUnicode);
+    static const QRegularExpression titleKeyRe(
+        QStringLiteral(R"(_(?:title|shorttitle|subtitle|subheading|from)(?:,P)?$)"),
+        QRegularExpression::CaseInsensitiveOption | kUnicode);
     const QString newStamp = QStringLiteral(R"(\n\n[Edited with %1 v%2])").arg(appName, version);
 
     IniMap out;
@@ -54,7 +55,8 @@ void stampFrontendVersion(IniMap &merged, const QString &appName, const QString 
     // Matches today's "\n"-separated form, the older " | " form and the
     // legacy phrasings, with or without a "v" before the version.
     const QRegularExpression stampRe(
-        QStringLiteral(R"(\s*(?:\|\s*|(?:\\n)+\s*)(?:Localizations Enhanced (?:with|by)|Enhanced with <3 by)\s+%1\s+v?[^\s|]+\s*$)")
+        QStringLiteral(
+            R"(\s*(?:\|\s*|(?:\\n)+\s*)(?:Localizations Enhanced (?:with|by)|Enhanced with <3 by)\s+%1\s+v?[^\s|]+\s*$)")
             .arg(stampedBy(appName)),
         kUnicode);
     QString base = *current;
