@@ -469,7 +469,6 @@ std::string resolveName(const std::optional<std::string> &locKey, const Loc &loc
 
 // ── the passes ────────────────────────────────────────────────────────────
 
-constexpr std::string_view kRecords = "libs/foundry/records/";
 
 class Extraction
 {

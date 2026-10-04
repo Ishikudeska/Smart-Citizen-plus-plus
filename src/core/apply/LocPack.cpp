@@ -9,7 +9,7 @@
 
 namespace core {
 
-QString defaultLocPackFilename(const QString &channel, const QDate &today)
+QString defaultLocPackFilename(const QString &channel, QDate today)
 {
     return QStringLiteral("%1-LocPack-%2-%3.zip")
         .arg(QString::fromUtf8(identity::kAppName).remove(u' '), channel, today.toString(QStringLiteral("yyyyMMdd")));

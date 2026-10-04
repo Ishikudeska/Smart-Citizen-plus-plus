@@ -46,7 +46,7 @@ public:
 
     explicit P4kTreeModel(QObject *parent = nullptr);
 
-    void setData(std::shared_ptr<const ExplorerData> data);
+    void setExplorerData(std::shared_ptr<const ExplorerData> data);
     const ExplorerData *explorerData() const { return data_.get(); }
 
     QModelIndex index(int row, int column, const QModelIndex &parent = {}) const override;

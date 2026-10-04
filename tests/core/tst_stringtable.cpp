@@ -165,6 +165,8 @@ private slots:
         FilterCriteria search; // key, default, current and custom values
         search.searchText = QStringLiteral("avenger");
         QCOMPARE(filterEntryIndices(entries, defaults, search), (QList<int>{0, 1}));
+        search.searchText = QStringLiteral("AVENGER"); // matching ignores case either way
+        QCOMPARE(filterEntryIndices(entries, defaults, search), (QList<int>{0, 1}));
         search.searchText = QStringLiteral("stock");
         QCOMPARE(filterEntryIndices(entries, defaults, search), QList<int>{2});
         search.searchText = QStringLiteral("*a ship");

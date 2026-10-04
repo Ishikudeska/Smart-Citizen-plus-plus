@@ -205,13 +205,13 @@ private:
             }
             while (true) {
                 skipWhite();
-                std::pair<std::string, Value> member;
-                if (!parseString(member.first))
+                Member member;
+                if (!parseString(member.name))
                     return false;
                 skipWhite();
                 if (pos_ >= s_.size() || s_[pos_++] != ':')
                     return false;
-                if (!parseValue(member.second, depth + 1))
+                if (!parseValue(member.value, depth + 1))
                     return false;
                 v.object.push_back(std::move(member));
                 skipWhite();
@@ -385,8 +385,8 @@ void Writer::null()
 const Value *Value::find(std::string_view name) const
 {
     for (auto it = object.rbegin(); it != object.rend(); ++it)
-        if (it->first == name)
-            return &it->second;
+        if (it->name == name)
+            return &it->value;
     return nullptr;
 }
 

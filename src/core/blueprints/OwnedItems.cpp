@@ -12,8 +12,8 @@ namespace {
 
 constexpr auto kUcp = QRegularExpression::UseUnicodePropertiesOption;
 
-const QString kNl = QStringLiteral("\\n"); // the literal two-character separator
-const QString kOwnedTag = QStringLiteral(" <EM4>[Owned]</EM4>");
+constexpr QLatin1StringView kNl("\\n"); // the literal two-character separator
+constexpr QLatin1StringView kOwnedTag(" <EM4>[Owned]</EM4>");
 
 QString nfkc(const QString &s)
 {
@@ -138,7 +138,7 @@ const QRegularExpression &bpHeaderRe(const QString &customHeader)
             parts << custom;
     }
     QStringList escaped;
-    for (const QString &p : parts)
+    for (const QString &p : std::as_const(parts))
         escaped << QRegularExpression::escape(p);
     // A trailing "(Repeat Only)"-style qualifier is part of the header.
     const QRegularExpression re(
@@ -183,7 +183,7 @@ bool looksLikeNoneStyleTagWord(const QString &word)
     static const QRegularExpression size(QStringLiteral(R"(^S\d{1,2}$)"),
                                          kUcp | QRegularExpression::CaseInsensitiveOption);
     static const QRegularExpression grade(QStringLiteral("^[A-F]$"), QRegularExpression::CaseInsensitiveOption);
-    for (const QString &tok : word.split(nonAlnum, Qt::SkipEmptyParts))
+    for (const auto tokens = word.split(nonAlnum, Qt::SkipEmptyParts); const QString &tok : tokens)
         if (size.match(tok).hasMatch() || grade.match(tok).hasMatch())
             return true;
     return false;
@@ -338,7 +338,7 @@ OwnedRepair repairForeignOwnedNames(const QSet<QString> &owned, const QSet<QStri
         if (!catalogue.contains(name))
             unmatched << name;
     std::sort(unmatched.begin(), unmatched.end(), [](const QString &a, const QString &b) { return py::less(a, b); });
-    for (const QString &name : unmatched) {
+    for (const QString &name : std::as_const(unmatched)) {
         const std::optional<QString> real = resolveAgainstCatalogue(name, catalogue);
         if (!real)
             continue;

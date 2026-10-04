@@ -323,7 +323,7 @@ void ExplorerController::setLoaded(std::shared_ptr<const ExplorerData> data, con
 {
     data_ = std::move(data);
     archivePath_ = path;
-    tree_->setData(data_);
+    tree_->setExplorerData(data_);
     results_.clear();
     resultsNote_.clear();
     ++*searchSerial_;
@@ -689,7 +689,7 @@ void ExplorerController::extract(const QVariantList &nodes, const QUrl &outputDi
             result.cancelled = result.cancelled || job.cancelled();
             return result;
         },
-        [self, out](Extracted r) {
+        [self, out](const Extracted &r) {
             if (!self)
                 return;
             auto &prompts = *self->app().prompts();
@@ -763,7 +763,7 @@ void ExplorerController::exportGameData(const QUrl &output, const QString &chann
                 return {{}, QString::fromStdString(result.error().message)};
             return {*result, {}};
         },
-        [self, out](Exported r) {
+        [self, out](const Exported &r) {
             if (!self)
                 return;
             if (!r.error.isEmpty()) {

@@ -119,7 +119,7 @@ QString PatchReport::summary() const
 PatchReport applyPatches(const QString &patchRoot, const QString &recordsRoot)
 {
     PatchReport report;
-    for (const QString &patchFile : patchFiles(patchRoot)) {
+    for (const auto files = patchFiles(patchRoot); const QString &patchFile : files) {
         ++report.patchesSeen;
         const QString name = QFileInfo(patchFile).fileName();
         QString error;
@@ -191,12 +191,13 @@ PatchReport applyPatches(const QString &patchRoot, const QString &recordsRoot)
 QList<LocstringWorkaround> loadLocstringWorkarounds(const QString &patchRoot)
 {
     QList<LocstringWorkaround> out;
-    for (const QString &patchFile : patchFiles(patchRoot)) {
+    for (const auto files = patchFiles(patchRoot); const QString &patchFile : files) {
         QString error;
         const auto patch = readJson(patchFile, &error);
         if (!patch)
             continue;
-        for (const QJsonValue &v : patch->value(QStringLiteral("locstring_workarounds")).toArray()) {
+        for (const auto workarounds = patch->value(QStringLiteral("locstring_workarounds")).toArray();
+             const QJsonValue &v : workarounds) {
             const QJsonObject o = v.toObject();
             LocstringWorkaround w;
             w.target = o.value(QStringLiteral("target")).toString();

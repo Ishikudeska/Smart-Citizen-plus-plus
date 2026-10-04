@@ -94,8 +94,11 @@ std::string pointerText(const std::string &structName, std::uint16_t variant)
 template <class F>
 struct ScopeExit
 {
-    F f;
+    explicit ScopeExit(F fn) : f(std::move(fn)) {}
+    ScopeExit(const ScopeExit &) = delete;
+    ScopeExit &operator=(const ScopeExit &) = delete;
     ~ScopeExit() { f(); }
+    F f;
 };
 template <class F>
 ScopeExit(F) -> ScopeExit<F>;
@@ -291,7 +294,7 @@ NodeId RecordBuilder::readStructAtIndex(NodeId node, std::uint32_t structIndex, 
 NodeId RecordBuilder::readStructAs(NodeId node, std::uint32_t structIndex)
 {
     int count = 0;
-    structChildren(node, structIndex, [&](const Child &child) {
+    structChildren(node, structIndex, [&](Child child) {
         if (child.kind == ChildKind::None)
             return true;
         if (child.kind == ChildKind::Element)
@@ -337,7 +340,7 @@ RecordBuilder::Child RecordBuilder::readValue(NodeId target, std::uint32_t prope
             if (prop.index >= forge_.structs().size())
                 throwIndexOutOfRange(kValueFrame);
             const NodeId element = newPropertyElement(property);
-            structChildren(element, prop.index, [&](const Child &child) {
+            structChildren(element, prop.index, [&](Child child) {
                 if (child.kind == ChildKind::Element)
                     tree_->appendChild(element, child.element);
                 return true;

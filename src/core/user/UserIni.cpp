@@ -12,7 +12,7 @@ namespace core {
 
 namespace {
 
-const QString kBackupPrefix = QStringLiteral("user.ini.bak_");
+constexpr QLatin1StringView kBackupPrefix("user.ini.bak_");
 
 QByteArray normalizedNewlines(QByteArray bytes)
 {
@@ -183,7 +183,7 @@ int migrateUserDataDir(const QString &oldRoot, const QString &newRoot, bool move
     const QString newPrefix = newResolved + u'/';
     const QDir oldDir(oldResolved);
     int transferred = 0;
-    for (const QString &src : files) {
+    for (const QString &src : std::as_const(files)) {
         if (QDir::cleanPath(src).startsWith(newPrefix, kPathCase))
             continue; // already inside the destination
         const QString dest = QDir(newRoot).filePath(oldDir.relativeFilePath(src));
@@ -205,7 +205,7 @@ int migrateUserDataDir(const QString &oldRoot, const QString &newRoot, bool move
             dirs << it.next();
         std::sort(dirs.begin(), dirs.end(),
                   [](const QString &a, const QString &b) { return a.count(u'/') > b.count(u'/'); });
-        for (const QString &d : dirs)
+        for (const QString &d : std::as_const(dirs))
             QDir().rmdir(d);
         QDir().rmdir(oldResolved);
     }

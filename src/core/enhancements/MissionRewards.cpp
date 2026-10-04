@@ -149,7 +149,7 @@ BlueprintPools buildBlueprintPoolLookup(const RecordStore &store, const QHash<QS
         QString fallback; // filename-derived name
     };
     QHash<QString, Blueprint> byRef;
-    for (const QString &file : store.rglob(bpDir)) {
+    for (const auto files = store.rglob(bpDir); const QString &file : files) {
         const XmlDoc doc = XmlDoc::load(file);
         if (!doc)
             continue;
@@ -172,7 +172,7 @@ BlueprintPools buildBlueprintPoolLookup(const RecordStore &store, const QHash<QS
         byRef.insert(ref, {entityClass, stem.toLower(), nameFromBlueprintFilename(file)});
     }
 
-    for (const QString &file : store.rglob(poolDir)) {
+    for (const auto files = store.rglob(poolDir); const QString &file : files) {
         const XmlDoc doc = XmlDoc::load(file);
         if (!doc)
             continue;
@@ -408,7 +408,7 @@ QHash<QString, TemplateKeys> buildTemplateLookup(const RecordStore &store)
     const QString dir = QStringLiteral("contracts/contracttemplates");
     if (!store.dirExists(dir))
         return lookup;
-    for (const QString &file : store.indexRglob(dir)) {
+    for (const auto files = store.indexRglob(dir); const QString &file : files) {
         const XmlDoc doc = XmlDoc::load(file);
         if (!doc)
             continue;
@@ -423,9 +423,9 @@ QHash<QString, TemplateKeys> buildTemplateLookup(const RecordStore &store)
             QString key = val;
             while (key.startsWith(u'@'))
                 key.remove(0, 1);
-            if (key.toLower().contains(u"_title") && title.isEmpty())
+            if (key.contains(u"_title", Qt::CaseInsensitive) && title.isEmpty())
                 title = key;
-            else if (key.toLower().contains(u"_desc") && desc.isEmpty())
+            else if (key.contains(u"_desc", Qt::CaseInsensitive) && desc.isEmpty())
                 desc = key;
         }
         if (!title.isEmpty())
@@ -480,7 +480,7 @@ RsTags buildBattagliaRsTags(const RecordStore &store, const QHash<QString, Templ
     const QString dir = QStringLiteral("contracts/contractgenerator");
     if (!store.dirExists(dir))
         return out;
-    for (const QString &file : store.indexRglob(dir)) {
+    for (const auto files = store.indexRglob(dir); const QString &file : files) {
         const XmlDoc doc = XmlDoc::load(file);
         if (!doc)
             continue;
@@ -578,7 +578,7 @@ QString extractSystem(const QString &name, const QString &fallback)
     if (name.isEmpty())
         return fallback;
     QString sys, reg;
-    for (const QString &token : name.split(u'_')) {
+    for (const auto tokens = name.split(u'_'); const QString &token : tokens) {
         const QStringList sub = token.split(u'/');
         if (std::all_of(sub.begin(), sub.end(), [](const QString &s) { return systems.contains(s); })) {
             sys = token;
@@ -603,7 +603,7 @@ ContractScan scanContractGenerators(const Context &ctx, const BlueprintPools &po
     const QString nullUuid = qs(kNullUuid);
 
     try {
-        for (const QString &file : ctx.store->indexRglob(dir)) {
+        for (const auto files = ctx.store->indexRglob(dir); const QString &file : files) {
             const XmlDoc doc = XmlDoc::load(file);
             if (!doc)
                 continue;
@@ -667,7 +667,7 @@ ContractScan scanContractGenerators(const Context &ctx, const BlueprintPools &po
                                 const QString label = poolRankLabel(pools.names.value(poolId));
                                 auto &[uuids, labelItems] = byLabel[label];
                                 uuids << poolId;
-                                for (const QString &item : pools.items.value(poolId))
+                                for (const auto items = pools.items.value(poolId); const QString &item : items)
                                     if (!labelItems.contains(item))
                                         labelItems << item;
                                 const std::optional<double> c = toFloat(getOr(bpElem, "chance", "1"));
@@ -944,8 +944,13 @@ Loc generateMissions(const Context &ctx)
         for (const ContractVariant &v : variants)
             if (!v.descKey.isEmpty())
                 cgDescKeys.insert(v.descKey);
-        const bool survivingNoBpCargo =
-            !QSet<QString>(puCargoDeliveryDescs).intersect(puTitleToDescs.value(titleKey)).subtract(cgDescKeys).isEmpty();
+        // Any PU cargo-delivery description of this title outside the CG ones.
+        bool survivingNoBpCargo = false;
+        for (const auto descs = puTitleToDescs.value(titleKey); const QString &d : descs)
+            if (puCargoDeliveryDescs.contains(d) && !cgDescKeys.contains(d)) {
+                survivingNoBpCargo = true;
+                break;
+            }
 
         OrderedMap<bool> bucketHasBp;
         QHash<QString, int> bucketCount;
@@ -957,7 +962,7 @@ Loc generateMissions(const Context &ctx)
             ++bucketCount[v.descKey];
         }
         int totalBucketed = 0;
-        for (const int c : bucketCount)
+        for (const int c : std::as_const(bucketCount))
             totalBucketed += c;
         const bool anyVariantHasBp =
             std::any_of(variants.begin(), variants.end(), [](const ContractVariant &v) { return v.hasBp; });
@@ -1018,7 +1023,7 @@ Loc generateMissions(const Context &ctx)
             if (!v.descKey.isEmpty() && v.descKey != titleKey && !descKeys.contains(v.descKey))
                 descKeys << v.descKey;
 
-        for (const QString &descKey : descKeys) {
+        for (const QString &descKey : std::as_const(descKeys)) {
             std::vector<const ContractVariant *> descVariants;
             for (const ContractVariant &v : variants)
                 if (v.descKey == descKey)

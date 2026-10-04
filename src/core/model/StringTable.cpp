@@ -5,7 +5,9 @@
 #include <QRegularExpression>
 
 #include <algorithm>
+#include <numeric>
 #include <tuple>
+#include <vector>
 
 namespace core::table {
 
@@ -85,20 +87,23 @@ void setCustomValue(StringEntry &entry, const QString &value)
 QList<int> filterEntryIndices(const QList<StringEntry> &entries, const IniMap &defaults, const FilterCriteria &c)
 {
     const QString star = QStringLiteral("★");
-    auto columnValue = [&](const StringEntry &e, int column) -> QString {
+    // Case-insensitive search of the stored text: a refilter runs on the GUI
+    // thread over ~90k rows, too many to lower-case a copy of each value.
+    auto columnContains = [&](const StringEntry &e, int column, const QString &needle) {
+        const auto has = [&](QStringView text) { return text.contains(needle, Qt::CaseInsensitive); };
         switch (column) {
-        case ColCategory: return e.category.toLower();
-        case ColKey: return e.key.toLower();
+        case ColCategory: return has(e.category);
+        case ColKey: return has(e.key);
         case ColDefault: {
             const QString *d = defaults.find(e.key);
-            return d ? d->toLower() : QString();
+            return d && has(*d);
         }
-        case ColCurrent: return e.originalValue.toLower();
-        case ColStar: return isFavorite(e, c.favoritePrefix) ? star : QString();
-        case ColOrder: return e.isFavoritableShip() ? sortOrder(e.customValue, c.favoritePrefix) : QString();
-        case ColCustom: return e.customValue.toLower();
-        case ColStatus: return statusName(e.status).toLower();
-        default: return {};
+        case ColCurrent: return has(e.originalValue);
+        case ColStar: return isFavorite(e, c.favoritePrefix) && has(star);
+        case ColOrder: return e.isFavoritableShip() && has(sortOrder(e.customValue, c.favoritePrefix));
+        case ColCustom: return has(e.customValue);
+        case ColStatus: return has(statusName(e.status));
+        default: return false;
         }
     };
     QList<std::pair<int, QString>> active;
@@ -127,13 +132,13 @@ QList<int> filterEntryIndices(const QList<StringEntry> &entries, const IniMap &d
             if (!bpTitle && !bpDesc)
                 continue;
         }
-        if (!c.searchText.isEmpty() && !columnValue(e, ColKey).contains(c.searchText) &&
-            !columnValue(e, ColCurrent).contains(c.searchText) && !columnValue(e, ColCustom).contains(c.searchText) &&
-            !columnValue(e, ColDefault).contains(c.searchText))
+        if (!c.searchText.isEmpty() && !columnContains(e, ColKey, c.searchText) &&
+            !columnContains(e, ColCurrent, c.searchText) && !columnContains(e, ColCustom, c.searchText) &&
+            !columnContains(e, ColDefault, c.searchText))
             continue;
         bool skip = false;
         for (const auto &[column, text] : active)
-            if (!columnValue(e, column).contains(text)) {
+            if (!columnContains(e, column, text)) {
                 skip = true;
                 break;
             }
@@ -156,14 +161,21 @@ std::pair<QString, int> groupSortKey(const QString &key)
     static const QRegularExpression commodity(QStringLiteral(R"(\A(items_commodities_\w+?)(?:_(desc?|description))?\z)"),
                                               QRegularExpression::CaseInsensitiveOption |
                                                   QRegularExpression::UseUnicodePropertiesOption);
-    if (const auto m = item.match(key); m.hasMatch())
-        return {(QStringLiteral("item_") + m.captured(3)).toLower(), m.captured(2).toLower() == u"name" ? 0 : 1};
-    if (const auto m = vehicle.match(key); m.hasMatch())
-        return {(QStringLiteral("vehicle_") + m.captured(3)).toLower(), m.captured(2).toLower() == u"name" ? 0 : 1};
-    if (const auto m = commodity.match(key); m.hasMatch())
-        return {m.captured(1).toLower(), m.hasCaptured(2) ? 1 : 0};
-    if (const auto m = mission.match(key); m.hasMatch())
-        return {(m.captured(1) + m.captured(3)).toLower(), m.captured(2).toLower() == u"title" ? 0 : 1};
+    // Each pattern needs a literal its guard tests first: a grouped sort runs
+    // this for every row, and most keys match none of them.
+    constexpr auto ci = Qt::CaseInsensitive;
+    if (key.startsWith(u"item_", ci))
+        if (const auto m = item.match(key); m.hasMatch())
+            return {(QStringLiteral("item_") + m.captured(3)).toLower(), m.captured(2).toLower() == u"name" ? 0 : 1};
+    if (key.startsWith(u"vehicle_", ci))
+        if (const auto m = vehicle.match(key); m.hasMatch())
+            return {(QStringLiteral("vehicle_") + m.captured(3)).toLower(), m.captured(2).toLower() == u"name" ? 0 : 1};
+    if (key.startsWith(u"items_commodities_", ci))
+        if (const auto m = commodity.match(key); m.hasMatch())
+            return {m.captured(1).toLower(), m.hasCaptured(2) ? 1 : 0};
+    if (key.contains(u"_title", ci) || key.contains(u"_desc", ci) || key.contains(u"_content", ci))
+        if (const auto m = mission.match(key); m.hasMatch())
+            return {(m.captured(1) + m.captured(3)).toLower(), m.captured(2).toLower() == u"title" ? 0 : 1};
     return {key.toLower(), 0};
 }
 
@@ -192,10 +204,12 @@ void sortIndices(QList<int> &indices, const QList<StringEntry> &entries, const I
 {
     if (indices.isEmpty())
         return;
-    // (int, text, text, int) covers every key shape the Python builds.
+    // (int, text, text, int) covers every key shape the Python builds. Keys
+    // are stored by position and a permutation sorted, so each comparison is
+    // two array reads rather than two hash lookups.
     using Key = std::tuple<int, QString, QString, int>;
-    QHash<int, Key> keys;
-    keys.reserve(indices.size());
+    std::vector<Key> keys;
+    keys.reserve(static_cast<std::size_t>(indices.size()));
     for (const int idx : indices) {
         const StringEntry &e = entries[idx];
         Key k;
@@ -223,7 +237,7 @@ void sortIndices(QList<int> &indices, const QList<StringEntry> &entries, const I
             default: k = {0, e.key.toLower(), {}, 0}; break;
             }
         }
-        keys.insert(idx, std::move(k));
+        keys.push_back(std::move(k));
     }
     const auto less = [](const Key &a, const Key &b) {
         if (std::get<0>(a) != std::get<0>(b))
@@ -234,9 +248,17 @@ void sortIndices(QList<int> &indices, const QList<StringEntry> &entries, const I
             return py::less(std::get<2>(a), std::get<2>(b));
         return std::get<3>(a) < std::get<3>(b);
     };
-    std::stable_sort(indices.begin(), indices.end(), [&](int x, int y) {
-        return descending ? less(keys[y], keys[x]) : less(keys[x], keys[y]);
+    std::vector<qsizetype> order(keys.size());
+    std::iota(order.begin(), order.end(), qsizetype(0));
+    std::stable_sort(order.begin(), order.end(), [&](qsizetype x, qsizetype y) {
+        const Key &a = keys[static_cast<std::size_t>(x)], &b = keys[static_cast<std::size_t>(y)];
+        return descending ? less(b, a) : less(a, b);
     });
+    QList<int> sorted;
+    sorted.reserve(indices.size());
+    for (const qsizetype p : order)
+        sorted.push_back(indices[p]);
+    indices = std::move(sorted);
 }
 
 QStringList filterCategories(const QList<StringEntry> &entries)

@@ -9,8 +9,6 @@
 #include "core/enhancements/Generator.h"
 #include "core/merge/SourceLoader.h"
 #include "core/model/Enhancements.h"
-#include "core/AppIdentity.h"
-#include "core/net/AppUpdater.h"
 #include "core/net/Downloader.h"
 #include "core/pipeline/Extraction.h"
 #include "core/text/IniFile.h"
@@ -23,12 +21,8 @@
 #include <QDir>
 #include <QFileInfo>
 #include <QGuiApplication>
-#include <QJsonArray>
-#include <QJsonDocument>
 #include <QLoggingCategory>
-#include <QPointer>
-#include <QProcess>
-#include <QThreadPool>
+#include <QTimer>
 #include <QStandardPaths>
 
 #include <filesystem>
@@ -74,6 +68,8 @@ AppController::AppController(MainInstance, QObject *parent)
       strings_(new StringTableModel(this)), tasks_(new TaskRunner(this)), prompts_(new PromptService(this))
 {
     g_instance = this;
+    updates_ = new UpdateController(this);
+    windowLayout_ = new WindowLayout(this);
     translator_ = new i18n::JsonTranslator(this);
     installTranslator(language());
     QCoreApplication::installTranslator(translator_);
@@ -88,6 +84,9 @@ AppController::AppController(MainInstance, QObject *parent)
             unappliedEdit_ = true;
     });
     connect(tasks_, &TaskRunner::runningChanged, this, &AppController::busyChanged);
+    connect(tasks_, &TaskRunner::runningChanged, this, &AppController::onTasksRunningChanged);
+    connect(tasks_, &TaskRunner::failed, this,
+            [this](const QString &title, const QString &message) { prompts_->error(title, message); });
 }
 
 AppController::~AppController()
@@ -154,7 +153,7 @@ QString AppController::language() const
 QVariantList AppController::languages() const
 {
     QVariantList out;
-    for (const QString &lang : i18n::availableLanguages(languagesDir())) {
+    for (const auto langs = i18n::availableLanguages(languagesDir()); const QString &lang : langs) {
         QString name = lang;
         name.replace(u'_', u' ');
         QStringList words = name.split(u' ');
@@ -355,7 +354,7 @@ void AppController::setInstallRoot(const QString &root)
 void AppController::detectInstall()
 {
     tasks_->run<QString>(text("scx.detecting_install"), false, [](TaskRunner::Job &) { return locateScInstall(); },
-                         [this](QString found) {
+                         [this](const QString &found) {
                              if (found.isEmpty()) {
                                  prompts_->info(text("extract.path_required_title"), text("scx.no_install_found"));
                                  return;
@@ -443,8 +442,8 @@ void AppController::startup()
         return;
     startupDone_ = true;
     qCInfo(lcApp).noquote() << buildInfo();
-    if (updateCheckEnabled())
-        checkForUpdates(false);
+    if (updates_->enabled())
+        updates_->check(false);
     warnIfOneDrive();
     if (installRoot().isEmpty()) {
         const QString found = locateScInstall();
@@ -532,7 +531,7 @@ void AppController::checkEnhancementsFreshness()
         return;
     const QString dir = paths_->enhancementsDir();
     QStringList missing;
-    for (const QString &id : settings_->enabledEnhancementFileIds())
+    for (const auto ids = settings_->enabledEnhancementFileIds(); const QString &id : ids)
         if (!QFileInfo::exists(QDir(dir).filePath(enhancements::fileNameFor(id))))
             missing << id;
     if (missing.isEmpty() || p4kStatus() == u"noarchive")
@@ -599,7 +598,7 @@ void AppController::loadEntries(const QString &message, std::function<void()> th
             const int restored = table::restorePendingEdits(r.entries, pending);
             if (restored)
                 qCInfo(lcApp) << "restored" << restored << "in-memory edits not yet in user.ini";
-            for (const QString &p : r.problems)
+            for (const QString &p : std::as_const(r.problems))
                 qCWarning(lcApp).noquote() << p;
             qCInfo(lcApp) << "loaded" << r.entries.size() << "strings";
             blueprintMeta_ = std::move(r.blueprintMeta);
@@ -789,7 +788,7 @@ void AppController::applyToGame()
 QVariantList AppController::backups() const
 {
     QVariantList out;
-    for (const QFileInfo &fi : GameFileBackups(paths_->backupsDir()).list())
+    for (const auto backups = GameFileBackups(paths_->backupsDir()).list(); const QFileInfo &fi : backups)
         out << QVariantMap{{QStringLiteral("path"), fi.absoluteFilePath()},
                            {QStringLiteral("name"), fi.fileName()},
                            {QStringLiteral("time"), fi.lastModified()}};
@@ -973,7 +972,7 @@ void AppController::extractFromP4k(bool thenGenerate)
                 return QString::fromStdString(r.error().message);
             return {};
         },
-        [this, thenGenerate](QString error) {
+        [this, thenGenerate](const QString &error) {
             emit pathsChanged();
             if (!error.isEmpty()) {
                 simpleRunActive_ = false;
@@ -1016,7 +1015,7 @@ void AppController::extractDataForge(bool thenGenerate)
                                     << result->patches.summary();
             return {};
         },
-        [this, thenGenerate](QString error) {
+        [this, thenGenerate](const QString &error) {
             emit pathsChanged();
             if (!error.isEmpty()) {
                 simpleRunActive_ = false;
@@ -1083,7 +1082,7 @@ void AppController::generateEnhancements()
             qCInfo(lcApp) << "generated" << result->entries << "enhancement entries";
             return {};
         },
-        [this](QString error) {
+        [this](const QString &error) {
             if (!error.isEmpty()) {
                 simpleRunActive_ = false;
                 setStatus(text("status_bar.enhancement_generation_failed"));
@@ -1129,200 +1128,21 @@ void AppController::simpleApply()
                       });
 }
 
-// ── app updates ───────────────────────────────────────────────────────────
-
-bool AppController::updateCheckEnabled() const
-{
-    return !QString::fromLatin1(identity::kUpdateRepo).isEmpty();
-}
-
-void AppController::checkForUpdates(bool interactive)
-{
-    const QString repo = QString::fromLatin1(identity::kUpdateRepo);
-    if (repo.isEmpty()) {
-        if (interactive)
-            prompts_->info(text("config.check_updates_btn"), text("scx.update_check_disabled"));
-        return;
-    }
-    if (interactive)
-        setStatus(text("status_bar.update_checking"));
-    QPointer<AppController> self(this);
-    const QString current = version();
-    QThreadPool::globalInstance()->start([self, repo, current, interactive] {
-        net::UpdateCheck check = net::checkForUpdate(repo, current);
-        QMetaObject::invokeMethod(
-            QCoreApplication::instance(),
-            [self, check = std::move(check), current, interactive] {
-                if (self)
-                    self->onUpdateCheck(check, current, interactive);
-            },
-            Qt::QueuedConnection);
-    });
-}
-
-void AppController::onUpdateCheck(const net::UpdateCheck &check, const QString &current, bool interactive)
-{
-    using Status = net::UpdateCheck::Status;
-    if (check.status == Status::Failed) {
-        qCWarning(lcApp).noquote() << "App update check failed:" << check.error;
-        if (interactive) {
-            setStatus(text("status_bar.update_check_failed"));
-            prompts_->warning(text("dialogs.update_check_failed_title"),
-                              text("dialogs.update_check_failed_body", {{QStringLiteral("message"), check.error}}));
-        }
-        return;
-    }
-    if (check.status != Status::Available) {
-        qCInfo(lcApp).noquote() << "App is up to date at" << current;
-        if (interactive) {
-            setStatus(text("status_bar.update_up_to_date", {{QStringLiteral("version"), current}}));
-            prompts_->info(text("dialogs.up_to_date_title"),
-                           text("dialogs.up_to_date_body", {{QStringLiteral("current"), current}}));
-        }
-        return;
-    }
-    qCInfo(lcApp).noquote() << "App update available:" << check.latest << "(current" << current
-                            << (check.installer ? "with installer)" : "without installer)");
-    setStatus(text("status_bar.update_available", {{QStringLiteral("version"), check.latest}}));
-    // Installers are for installed builds; a portable build updates by hand.
-    const bool canInstall = check.installer.has_value() && !identity::kPortable;
-    PromptService::Prompt p;
-    p.kind = PromptService::Kind::Info;
-    p.title = text("dialogs.update_available_title");
-    p.text = text("dialogs.update_available_body",
-                  {{QStringLiteral("latest"), check.latest}, {QStringLiteral("current"), current}});
-    if (canInstall)
-        p.text += QStringLiteral("\n\n") + text("dialogs.update_auto_note");
-    p.detail = check.notes;
-    if (canInstall)
-        p.buttons << text("dialogs.update_now");
-    p.buttons << text("dialogs.update_open_release") << text("dialogs.update_later");
-    prompts_->ask(p, [this, check, canInstall](int button, bool, int) {
-        const int open = canInstall ? 1 : 0;
-        if (canInstall && button == 0)
-            downloadAndInstallUpdate(check);
-        else if (button == open)
-            QDesktopServices::openUrl(check.releasePage);
-    });
-}
-
-void AppController::downloadAndInstallUpdate(const net::UpdateCheck &check)
-{
-    const net::InstallerAsset asset = *check.installer;
-    const QString dest = QDir(QDir::tempPath()).filePath(appName().remove(u' ') + QStringLiteral("-Update"));
-    struct Downloaded
-    {
-        QString path, error;
-    };
-    tasks_->run<Downloaded>(
-        text("dialogs.update_download_title"), true,
-        [asset, dest, latest = check.latest](TaskRunner::Job &job) -> Downloaded {
-            const QString label = i18n::tr("dialogs.update_download_label", {{QStringLiteral("latest"), latest}});
-            job.report(label);
-            Downloaded d;
-            d.path = net::downloadInstaller(
-                asset, dest, &d.error,
-                [&job, &label](qint64 done, qint64 total) {
-                    job.report(label, static_cast<int>(done >> 10), static_cast<int>(total >> 10));
-                },
-                job.cancelFlag());
-            return d;
-        },
-        [this](Downloaded d) {
-            if (d.path.isEmpty()) {
-                if (d.error != u"Download cancelled")
-                    prompts_->warning(text("dialogs.update_download_failed_title"),
-                                      text("dialogs.update_download_failed_body", {{QStringLiteral("message"), d.error}}));
-                return;
-            }
-            // /AUTOUPDATE=1 makes the installer relaunch the app when it is done.
-            const QStringList args{QStringLiteral("/SILENT"), QStringLiteral("/NORESTART"),
-                                   QStringLiteral("/SUPPRESSMSGBOXES"), QStringLiteral("/AUTOUPDATE=1")};
-            if (!QProcess::startDetached(d.path, args)) {
-                qCWarning(lcApp).noquote() << "Update installer failed to start:" << d.path;
-                prompts_->warning(text("dialogs.update_launch_failed_title"),
-                                  text("dialogs.update_launch_failed_body",
-                                       {{QStringLiteral("path"), QDir::toNativeSeparators(d.path)}}));
-                return;
-            }
-            qCInfo(lcApp).noquote() << "Update installer launched:" << d.path << "- exiting to install";
-            quit();
-        });
-}
-
-// ── window sizes ──────────────────────────────────────────────────────────
-
-namespace {
-const QString kWindowGeometryKey = QStringLiteral("window_geometry");
-const QString kColumnWidthsKey = QStringLiteral("string_column_widths");
-} // namespace
-
-QVariantMap AppController::windowGeometry() const
-{
-    // "x,y,width,height,maximized"; anything else (e.g. Smart Citizen's
-    // saveGeometry() bytes) reads as never saved.
-    const QStringList parts = settings_->value(kWindowGeometryKey).toString().split(u',');
-    if (parts.size() != 5)
-        return {};
-    int v[4];
-    for (int i = 0; i < 4; ++i) {
-        bool ok = false;
-        v[i] = parts[i].toInt(&ok);
-        if (!ok)
-            return {};
-    }
-    if (v[2] < 200 || v[3] < 150)
-        return {};
-    return {{QStringLiteral("x"), v[0]}, {QStringLiteral("y"), v[1]}, {QStringLiteral("width"), v[2]},
-            {QStringLiteral("height"), v[3]}, {QStringLiteral("maximized"), parts[4] == u"1"}};
-}
-
-void AppController::saveWindowGeometry(const QVariantMap &g)
-{
-    settings_->setValue(kWindowGeometryKey, QStringLiteral("%1,%2,%3,%4,%5")
-                                                .arg(g.value(QStringLiteral("x")).toInt())
-                                                .arg(g.value(QStringLiteral("y")).toInt())
-                                                .arg(g.value(QStringLiteral("width")).toInt())
-                                                .arg(g.value(QStringLiteral("height")).toInt())
-                                                .arg(g.value(QStringLiteral("maximized")).toBool() ? 1 : 0));
-}
-
-QVariantList AppController::columnWidths() const
-{
-    // A JSON list, as Smart Citizen stores it; malformed reads as never set.
-    const QJsonDocument doc = QJsonDocument::fromJson(settings_->value(kColumnWidthsKey).toString().toUtf8());
-    QVariantList out;
-    for (const QJsonValue &v : doc.array()) {
-        if (!v.isDouble())
-            return {};
-        out << v.toInt();
-    }
-    return out;
-}
-
-void AppController::saveColumnWidths(const QVariantList &widths)
-{
-    QJsonArray array;
-    for (const QVariant &w : widths)
-        array.append(w.toInt());
-    settings_->setValue(kColumnWidthsKey, QString::fromUtf8(QJsonDocument(array).toJson(QJsonDocument::Compact)));
-}
-
-void AppController::resetWindowProportions()
-{
-    prompts_->confirm(text("dialogs.reset_proportions_title"), text("dialogs.reset_proportions_body"), [this] {
-        settings_->remove(kWindowGeometryKey);
-        settings_->remove(QStringLiteral("window_state"));
-        settings_->remove(kColumnWidthsKey);
-        settings_->sync();
-        emit windowProportionsReset();
-    });
-}
-
 // ── closing ───────────────────────────────────────────────────────────────
 
 bool AppController::requestClose()
 {
+    // Quitting mid-job would hide the window but keep the process alive
+    // until the job ended (Qt waits for the thread pool on exit). Cancel it
+    // instead and close once idle; a job that cannot be cancelled (applying)
+    // finishes its writes first.
+    if (tasks_->running()) {
+        if (!closeWhenIdle_) {
+            closeWhenIdle_ = true;
+            tasks_->cancelAll();
+        }
+        return false;
+    }
     if (unappliedEdit_) {
         PromptService::Prompt p;
         p.kind = PromptService::Kind::Warning;
@@ -1342,6 +1162,24 @@ bool AppController::requestClose()
     }
     quit();
     return true;
+}
+
+void AppController::onTasksRunningChanged()
+{
+    if (!closeWhenIdle_)
+        return;
+    if (tasks_->running()) {
+        tasks_->cancel(); // a job chained by the cancelled one's `done`
+        return;
+    }
+    // Deferred so the finished job's `done`, which runs after this signal,
+    // can chain another job first.
+    QTimer::singleShot(0, this, [this] {
+        if (!closeWhenIdle_ || tasks_->running())
+            return;
+        closeWhenIdle_ = false;
+        requestClose();
+    });
 }
 
 void AppController::quit()

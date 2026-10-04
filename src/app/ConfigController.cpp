@@ -19,6 +19,7 @@
 #include <QJsonObject>
 #include <QLocale>
 #include <QLoggingCategory>
+#include <QSaveFile>
 #include <QStandardPaths>
 #include <QTemporaryFile>
 
@@ -308,14 +309,14 @@ void ConfigController::previewApply()
         ++shown;
         if (name == kSourceEnhancements) {
             body += QStringLiteral("  %1. %2 Enhancements (%3 keys total):\n").arg(shown).arg(app().appName(), thousands(count));
-            for (const auto &[cat, n] : byCount(enhancementCats))
+            for (const auto categories = byCount(enhancementCats); const auto &[cat, n] : categories)
                 body += QStringLiteral("       %1: %2\n").arg(cat, thousands(n));
         } else {
             body += QStringLiteral("  %1. %2 (%3 keys)\n").arg(shown).arg(name.left(1).toUpper() + name.mid(1), thousands(count));
         }
     }
     body += text("config.preview_total", {{QStringLiteral("count"), static_cast<int>(entries.size())}});
-    for (const auto &[status, n] : byCount(statusCounts))
+    for (const auto statuses = byCount(statusCounts); const auto &[status, n] : statuses)
         body += QStringLiteral("  %1: %2\n").arg(status, thousands(n));
     app().prompts()->info(text("config.preview_title"), body);
 }
@@ -499,7 +500,7 @@ void ConfigController::exportSettings(const QUrl &target)
     app().saveUserIni();
     const QVariantMap values = profile::exportSettingsValues(app().settings());
     QMap<QString, QString> overrides;
-    for (const QString &channel : app().channels()) {
+    for (const auto channelList = app().channels(); const QString &channel : channelList) {
         QFile f(QDir(app().userDataRoot()).filePath(channel + QStringLiteral("/user.ini")));
         if (f.open(QIODevice::ReadOnly))
             overrides.insert(channel, QString::fromUtf8(f.readAll()));
@@ -547,14 +548,17 @@ void ConfigController::importSettings(const QUrl &source)
                 QDir().mkpath(QFileInfo(ini.path()).absolutePath());
                 if (QFileInfo::exists(ini.path()))
                     ini.backup();
-                QFile f(ini.path());
-                if (!f.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
+                // Written as-is (no newline conversion) and replaced only once
+                // complete, so a failed write never leaves a truncated file.
+                QSaveFile f(ini.path());
+                const QByteArray bytes = it.value().toUtf8();
+                if (!f.open(QIODevice::WriteOnly) || f.write(bytes) != bytes.size() || !f.commit()) {
+                    const QString error = QStringLiteral("%1: %2").arg(ini.path(), f.errorString());
                     app().prompts()->error(text("settings_backup.import_failed_title"),
                                            text("settings_backup.import_failed_body", {{QStringLiteral("error_type"), QStringLiteral("OSError")},
-                                                                                     {QStringLiteral("error"), ini.path()}}));
+                                                                                     {QStringLiteral("error"), error}}));
                     return;
                 }
-                f.write(it.value().toUtf8());
             }
             const int applied = profile::importSettingsValues(app().settings(), contents.settings);
             const auto outcome = profile::reconcileImportedInstallPath(app().settings());
@@ -583,7 +587,7 @@ QVariantList ConfigController::languageSources() const
     if (f.open(QIODevice::ReadOnly))
         bundled = QJsonDocument::fromJson(f.readAll()).object();
     QVariantList out;
-    for (const QVariant &v : app().languages()) {
+    for (const auto languageList = app().languages(); const QVariant &v : languageList) {
         const QVariantMap lang = v.toMap();
         const QString id = lang.value(QStringLiteral("id")).toString();
         if (id == kDefaultLanguage)

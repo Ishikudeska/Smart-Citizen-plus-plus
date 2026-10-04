@@ -12,7 +12,7 @@ namespace core::enh {
 
 namespace {
 
-const QString kPipe = QStringLiteral("  |  ");
+constexpr QLatin1StringView kPipe("  |  ");
 
 QString joinLines(const QStringList &lines)
 {
@@ -129,10 +129,10 @@ void addDamage(DamageBreakdown &b, Node info)
 double requireFloat(const std::optional<std::string_view> &value)
 {
     if (!value)
-        throw PyError("float() argument must be a string or a real number, not 'NoneType'");
+        PyError::raise("float() argument must be a string or a real number, not 'NoneType'");
     const std::optional<double> v = toFloat(*value);
     if (!v)
-        throw PyError("could not convert string to float");
+        PyError::raise("could not convert string to float");
     return *v;
 }
 
@@ -192,7 +192,7 @@ std::optional<double> fireRate(Node root)
     });
     if (rates.empty())
         return std::nullopt;
-    std::stable_sort(rates.begin(), rates.end(), [](const Rate &a, const Rate &b) {
+    std::stable_sort(rates.begin(), rates.end(), [](Rate a, Rate b) {
         if (a.primary != b.primary)
             return a.primary;
         return a.value > b.value;
@@ -348,7 +348,7 @@ QString enhancementsMissile(Node root)
                 guidance = qs(*g);
             else
                 guidance = qs(tag(el)).replace(QStringLiteral("Guidance"), QString()).replace(QStringLiteral("Tracking"), QString());
-            if (!guidance.isEmpty() && !guidance.toLower().contains(u"none"))
+            if (!guidance.isEmpty() && !guidance.contains(u"none", Qt::CaseInsensitive))
                 lines << QStringLiteral("Guidance: ") + guidance;
             if (const auto seeker = firstSet(el, {"seekerType", "seekerMode"}); noNone(seeker))
                 lines << QStringLiteral("Seeker: ") + qs(*seeker);
@@ -781,7 +781,7 @@ QString enhancementsWeapon(Node root, const RecordLookup &ammo, const Loc *loc, 
         forEachElement(root, [&](Node el) {
             const QString port = qs(getOr(el, "itemPortName"));
             const QString entityClass = qs(getOr(el, "entityClassName"));
-            if (!port.toLower().contains(u"magazine") || entityClass.isEmpty())
+            if (!port.contains(u"magazine", Qt::CaseInsensitive) || entityClass.isEmpty())
                 return true;
             if (const auto it = magazines->constFind(entityClass); it != magazines->cend()) {
                 ammoId = it->first;

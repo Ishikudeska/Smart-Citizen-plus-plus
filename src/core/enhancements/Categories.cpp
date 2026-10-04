@@ -34,7 +34,7 @@ Loc scanEntityDir(const RecordStore &store, const QString &relDir, const Enhance
     Loc out;
     int matched = 0, missed = 0, skipped = 0, discovered = 0;
     const auto keyFn = options.locKeyFn ? options.locKeyFn : locKey;
-    for (const QString &file : store.indexRglob(relDir)) {
+    for (const auto files = store.indexRglob(relDir); const QString &file : files) {
         const XmlDoc doc = XmlDoc::load(file);
         if (!doc)
             continue;
@@ -131,7 +131,7 @@ std::pair<int, int> mirrorScitemSiblings(Loc &out, const Loc &loc)
             targets << QStringLiteral("item_Name") + baseKey.sliced(9);
         else if (baseKey.startsWith(QStringLiteral("item_desc")))
             targets << QStringLiteral("item_Desc") + baseKey.sliced(9);
-        for (const QString &target : targets) {
+        for (const QString &target : std::as_const(targets)) {
             const QString *stock = loc.find(target);
             if (!stock || out.contains(target))
                 continue;
@@ -299,7 +299,7 @@ Loc generateShips(const Context &ctx)
     });
     Loc out;
     int matched = 0, missed = 0, skipped = 0, discovered = 0;
-    for (const QString &file : files) {
+    for (const QString &file : std::as_const(files)) {
         const QString stem = fileStem(file).toLower();
         if (stem.contains(u"_pu_ai_") || stem.contains(u"_ai_template") || stem.contains(u"_unmanned_")) {
             ++skipped;

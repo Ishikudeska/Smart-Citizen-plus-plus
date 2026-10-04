@@ -23,13 +23,13 @@ namespace core {
 namespace {
 
 namespace key {
-const QString kScInstallRoot = QStringLiteral("sc_install_root");
-const QString kActiveChannel = QStringLiteral("active_channel");
-const QString kSelectedLanguage = QStringLiteral("selected_language");
-const QString kUserDataDir = QStringLiteral("user_data_dir");
-const QString kCacheDir = QStringLiteral("cache_dir");
-const QString kFavoritePrefix = QStringLiteral("favorite_prefix");
-const QString kOwnedItems = QStringLiteral("owned_items");
+constexpr QLatin1StringView kScInstallRoot("sc_install_root");
+constexpr QLatin1StringView kActiveChannel("active_channel");
+constexpr QLatin1StringView kSelectedLanguage("selected_language");
+constexpr QLatin1StringView kUserDataDir("user_data_dir");
+constexpr QLatin1StringView kCacheDir("cache_dir");
+constexpr QLatin1StringView kFavoritePrefix("favorite_prefix");
+constexpr QLatin1StringView kOwnedItems("owned_items");
 QString watermark(const QString &channel)
 {
     return QStringLiteral("blueprint_log_watermark/") + channel;
@@ -450,7 +450,7 @@ QSet<QString> Settings::ownedItems() const
 {
     const QByteArray raw = settings_->value(key::kOwnedItems).toString().toUtf8();
     QSet<QString> names;
-    for (const QJsonValue &v : QJsonDocument::fromJson(raw).array())
+    for (const auto values = QJsonDocument::fromJson(raw).array(); const QJsonValue &v : values)
         if (v.isString())
             names.insert(v.toString());
     return names;

@@ -170,7 +170,8 @@ std::expected<QSet<QString>, QString> parseJsonNames(const QString &path, const 
         return std::unexpected(QStringLiteral("JSON file has no \"blueprints\" array"));
 
     QSet<QString> names;
-    for (const QJsonValue &entry : doc.object().value(QStringLiteral("blueprints")).toArray()) {
+    for (const auto entries = doc.object().value(QStringLiteral("blueprints")).toArray();
+         const QJsonValue &entry : entries) {
         if (!entry.isObject())
             continue;
         const QString name = normalizeItemName(pyStr(entry.toObject().value(QStringLiteral("name"))), enclosings);
@@ -241,7 +242,7 @@ QString exportOwnedBlueprintsJson(const QSet<QString> &owned, const QMap<QString
 QString exportOwnedBlueprintsCsv(const QSet<QString> &owned, const QMap<QString, BlueprintItem> &meta)
 {
     QString out = QStringLiteral("name,type\n");
-    for (const QString &name : sortedCaseInsensitive(owned)) {
+    for (const auto names = sortedCaseInsensitive(owned); const QString &name : names) {
         const auto it = meta.constFind(name);
         out += csvField(displayName(name, meta)) + u',' + csvField(it != meta.cend() ? it->type : QString()) + u'\n';
     }

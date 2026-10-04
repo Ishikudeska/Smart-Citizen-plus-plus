@@ -124,6 +124,7 @@ public slots:
 
 private:
     const core::StringEntry *entryAt(int row) const;
+    void setBoolFilter(bool core::table::FilterCriteria::*field, bool v);
     void refilter();
     void resort();
     void recount();

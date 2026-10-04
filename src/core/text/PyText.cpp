@@ -140,7 +140,7 @@ QString title(QStringView s)
 {
     QString out;
     bool previousCased = false;
-    for (const uint c : s.toUcs4()) {
+    for (const auto ucs = s.toUcs4(); const uint c : ucs) {
         if (previousCased)
             out += one(c).toLower();
         else

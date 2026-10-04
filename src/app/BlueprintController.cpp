@@ -72,7 +72,7 @@ int BlueprintController::totalCount() const
 
 bool BlueprintController::visible(const QString &name) const
 {
-    if (!search_.trimmed().isEmpty() && !name.toLower().contains(search_.trimmed().toLower()))
+    if (!search_.trimmed().isEmpty() && !name.contains(search_.trimmed(), Qt::CaseInsensitive))
         return false;
     const auto &meta = app().blueprintMeta();
     const auto it = meta.constFind(name);
@@ -147,10 +147,10 @@ void BlueprintController::rebuild()
     sortCaseless(ownedList);
     available_.clear();
     owned_.clear();
-    for (const QString &n : available)
+    for (const QString &n : std::as_const(available))
         if (visible(n))
             available_ << row(n);
-    for (const QString &n : ownedList)
+    for (const QString &n : std::as_const(ownedList))
         if (visible(n))
             owned_ << row(n);
     emit listsChanged();
@@ -265,7 +265,7 @@ void BlueprintController::scanNext(QStringList queue, QSet<QString> found)
                 job.report(text("enhancements.bp_scan_progress", {{QStringLiteral("file"), file}}), done, total);
             });
         },
-        [this, queue, found, channel](ScanResult result) mutable {
+        [this, queue, found, channel](const ScanResult &result) mutable {
             const Enclosings enc = app().enclosings();
             QSet<QString> scanned;
             for (const QString &n : result.names)
@@ -279,7 +279,7 @@ void BlueprintController::scanNext(QStringList queue, QSet<QString> found)
                     if (!catalogue.contains(n))
                         unknown << n;
                 unknown.sort();
-                for (const QString &n : unknown)
+                for (const QString &n : std::as_const(unknown))
                     if (const auto real = resolveAgainstCatalogue(n, catalogue)) {
                         qCInfo(lcApp) << "BP scan: recovered" << *real << "from" << n;
                         scanned.remove(n);

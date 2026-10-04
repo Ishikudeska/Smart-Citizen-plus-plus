@@ -13,7 +13,7 @@ std::string_view ExplorerData::recordPath(std::uint32_t item) const
 
 P4kTreeModel::P4kTreeModel(QObject *parent) : QAbstractItemModel(parent) {}
 
-void P4kTreeModel::setData(std::shared_ptr<const ExplorerData> data)
+void P4kTreeModel::setExplorerData(std::shared_ptr<const ExplorerData> data)
 {
     beginResetModel();
     data_ = std::move(data);

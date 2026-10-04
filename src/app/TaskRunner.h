@@ -77,11 +77,15 @@ public:
     int queued() const { return static_cast<int>(pending_.size()); }
 
     Q_INVOKABLE void cancel();
+    // Drops the queued jobs and cancels the current one (if it can be).
+    void cancelAll();
 
 signals:
     void runningChanged();
     void changed();
     void finished(const QString &title);
+    // The job threw; `done` still ran, with a default-constructed result.
+    void failed(const QString &title, const QString &message);
 
 private:
     struct Pending

@@ -420,7 +420,7 @@ QString TagConfig::toJson() const
 TagConfig TagConfig::fromObject(const QJsonObject &d)
 {
     TagConfig c;
-    for (const QJsonValue &v : d.value(QStringLiteral("elements")).toArray()) {
+    for (const auto specs = d.value(QStringLiteral("elements")).toArray(); const QJsonValue &v : specs) {
         const QJsonObject e = v.toObject();
         const QString kind = e.value(QStringLiteral("kind")).toString();
         if (!v.isObject() || kind.isEmpty())
@@ -450,7 +450,7 @@ TagConfig TagConfig::fromObject(const QJsonObject &d)
             c.abbreviatedPhrases = legacyMigrationKeys();
     } else {
         const QSet<QString> valid = abbreviationKeys();
-        for (const QJsonValue &k : phrases.toArray())
+        for (const auto phraseList = phrases.toArray(); const QJsonValue &k : phraseList)
             if (valid.contains(k.toString()))
                 c.abbreviatedPhrases.insert(k.toString());
     }
@@ -465,7 +465,7 @@ TagConfig TagConfig::fromObject(const QJsonObject &d)
             c.shortenedSizes = sizeWords();
     } else {
         const QSet<QString> words = sizeWords();
-        for (const QJsonValue &w : sizes.toArray())
+        for (const auto sizeList = sizes.toArray(); const QJsonValue &w : sizeList)
             if (words.contains(w.toString()))
                 c.shortenedSizes.insert(w.toString());
     }
@@ -508,7 +508,7 @@ void backfillNewElements(const QString &category, TagConfig &config)
 {
     const QStringList expected = elementKinds(category);
     QSet<QString> existing;
-    for (const ElementSpec &e : config.elements)
+    for (const ElementSpec &e : std::as_const(config.elements))
         existing.insert(e.kind);
     const TagConfig defaults = defaultConfig(category);
 
@@ -550,7 +550,8 @@ QString renderTag(const TagConfig &config, const QHash<QString, QString> &values
         const QString raw = values.value(el.kind);
         if (el.kind == u"usage") {
             QStringList styled;
-            for (const QString &name : raw.split(kUsageInputSep, Qt::SkipEmptyParts))
+            for (const auto usageNames = raw.split(kUsageInputSep, Qt::SkipEmptyParts);
+                 const QString &name : usageNames)
                 if (const QString v = styleValue(el.kind, el.style, name, config.classMapping); !v.isEmpty())
                     styled << v;
             if (!styled.isEmpty())

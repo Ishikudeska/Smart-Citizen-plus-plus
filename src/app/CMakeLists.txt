@@ -37,6 +37,8 @@ qt_add_qml_module(scapp
         StringTableModel.h StringTableModel.cpp
         TaskRunner.h TaskRunner.cpp
         TutorialController.h TutorialController.cpp
+        UpdateController.h UpdateController.cpp
+        WindowLayout.h WindowLayout.cpp
     QML_FILES
         qml/Main.qml
         ${SC_QML_SINGLETONS}

@@ -92,7 +92,7 @@ EnhancementsController::EnhancementsController(QObject *parent) : QObject(parent
     generateDirty_ = app().dataForgeStatus() != u"fresh";
     if (!generateDirty_) {
         const QString dir = app().paths().enhancementsDir();
-        for (const QString &id : app().settings().enabledEnhancementFileIds())
+        for (const auto ids = app().settings().enabledEnhancementFileIds(); const QString &id : ids)
             if (!QFileInfo::exists(QDir(dir).filePath(enhancements::fileNameFor(id))))
                 generateDirty_ = true;
     }
@@ -541,7 +541,7 @@ QVariantList EnhancementsController::mapping(const QString &category, const QStr
 {
     QVariantList out;
     const tg::TagConfig &c = config(category);
-    for (const QString &raw : mappedValues(category, kind)) {
+    for (const auto values = mappedValues(category, kind); const QString &raw : values) {
         const tg::Variants v = c.classMapping.value(raw, tg::defaultKindMappings().value(kind).value(raw));
         out << QVariantMap{{QStringLiteral("value"), raw},
                            {QStringLiteral("short"), v[0]},

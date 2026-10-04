@@ -3,6 +3,7 @@
 #include "core/AppIdentity.h"
 #include "core/net/Downloader.h"
 
+#include <QCryptographicHash>
 #include <QDir>
 #include <QEventLoop>
 #include <QFile>
@@ -47,12 +48,19 @@ std::optional<InstallerAsset> pickInstallerAsset(const QJsonArray &assets, const
     const QRegularExpression pattern(
         QRegularExpression::anchoredPattern(QRegularExpression::escape(exeName.toLower()) + QStringLiteral("-.+-setup\\.exe")),
         QRegularExpression::CaseInsensitiveOption);
+    static const QRegularExpression digestRe(QStringLiteral("^sha256:([0-9a-f]{64})$"),
+                                             QRegularExpression::CaseInsensitiveOption);
     for (const QJsonValue &v : assets) {
         const QJsonObject a = v.toObject();
         const QString name = a.value(u"name").toString().trimmed();
-        const QString url = a.value(u"browser_download_url").toString().trimmed();
-        if (!url.isEmpty() && pattern.match(name).hasMatch())
-            return InstallerAsset{QUrl(url), static_cast<qint64>(a.value(u"size").toDouble())};
+        const QUrl url(a.value(u"browser_download_url").toString().trimmed());
+        if (!pattern.match(name).hasMatch() || url.scheme() != u"https")
+            continue;
+        const QRegularExpressionMatch digest = digestRe.match(a.value(u"digest").toString().trimmed());
+        if (!digest.hasMatch())
+            continue;
+        return InstallerAsset{url, static_cast<qint64>(a.value(u"size").toDouble()),
+                              digest.captured(1).toLower().toLatin1()};
     }
     return std::nullopt;
 }
@@ -136,6 +144,10 @@ UpdateCheck checkForUpdate(const QString &repo, const QString &currentVersion, i
 QString downloadInstaller(const InstallerAsset &asset, const QString &destDir, QString *error,
                           const DownloadProgress &progress, const std::atomic<bool> *cancel)
 {
+    if (asset.sha256.isEmpty()) {
+        *error = QStringLiteral("The installer has no SHA-256 digest to verify");
+        return {};
+    }
     QDir().mkpath(destDir);
     QString name = QFileInfo(asset.url.path()).fileName();
     if (!name.endsWith(u".exe", Qt::CaseInsensitive))
@@ -155,19 +167,26 @@ QString downloadInstaller(const InstallerAsset &asset, const QString &destDir, Q
     QNetworkAccessManager nam;
     std::unique_ptr<QNetworkReply> reply(nam.get(request));
     bool writeFailed = false;
-    QObject::connect(reply.get(), &QNetworkReply::readyRead, reply.get(), [&] {
-        const QByteArray chunk = reply->readAll();
-        if (file.write(chunk) != chunk.size() && !writeFailed) {
+    QCryptographicHash sha(QCryptographicHash::Sha256);
+    qint64 written = 0;
+    const auto store = [&](const QByteArray &chunk) {
+        if (writeFailed)
+            return;
+        if (file.write(chunk) != chunk.size()) {
             writeFailed = true;
             reply->abort();
+            return;
         }
-    });
+        sha.addData(chunk);
+        written += chunk.size();
+    };
+    QObject::connect(reply.get(), &QNetworkReply::readyRead, reply.get(), [&] { store(reply->readAll()); });
     QObject::connect(reply.get(), &QNetworkReply::downloadProgress, reply.get(), [&](qint64 done, qint64 total) {
         if (progress)
             progress(done, total > 0 ? total : asset.size);
     });
     wait(reply.get(), cancel);
-    file.write(reply->readAll());
+    store(reply->readAll());
     file.close();
 
     const auto fail = [&](const QString &message) {
@@ -181,6 +200,12 @@ QString downloadInstaller(const InstallerAsset &asset, const QString &destDir, Q
         return fail(file.errorString());
     if (reply->error() != QNetworkReply::NoError)
         return fail(reply->errorString());
+    if (asset.size > 0 && written != asset.size)
+        return fail(QStringLiteral("The installer download is %1 bytes; the release lists %2")
+                        .arg(written)
+                        .arg(asset.size));
+    if (sha.result().toHex() != asset.sha256)
+        return fail(QStringLiteral("The installer download does not match the release's SHA-256 digest"));
     QFile::remove(target);
     if (!QFile::rename(part, target))
         return fail(QStringLiteral("Could not move the installer into place: %1").arg(target));

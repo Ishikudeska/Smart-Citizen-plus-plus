@@ -477,6 +477,25 @@ private slots:
         for (auto it = calls.begin(); it != calls.end(); ++it)
             QVERIFY2(replays().contains(it.key()), qPrintable(it.key()));
     }
+
+    // PyError is raised like Python's exception, caught by reference, and
+    // still a std::exception for the task runner's last-resort handler.
+    void raisesPyErrors()
+    {
+        QCOMPARE(requireFloat(std::string_view("2.5")), 2.5);
+        try {
+            requireFloat(std::nullopt);
+            QFAIL("float(None) did not raise");
+        } catch (const PyError &e) {
+            QVERIFY(QByteArray(e.what()).contains("NoneType"));
+        }
+        try {
+            requireFloat(std::string_view("abc"));
+            QFAIL("float('abc') did not raise");
+        } catch (const std::exception &e) {
+            QCOMPARE(QByteArray(e.what()), QByteArray("could not convert string to float"));
+        }
+    }
 };
 
 QTEST_GUILESS_MAIN(TestGenerator)

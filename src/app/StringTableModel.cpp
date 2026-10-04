@@ -279,21 +279,20 @@ void StringTableModel::setSearchText(const QString &v)
     refilter();
 }
 
-#define SC_BOOL_FILTER(setter, field)                                                                                  \
-    void StringTableModel::setter(bool v)                                                                              \
-    {                                                                                                                  \
-        if (criteria_.field == v)                                                                                      \
-            return;                                                                                                    \
-        criteria_.field = v;                                                                                           \
-        emit filtersChanged();                                                                                         \
-        refilter();                                                                                                    \
-    }
-SC_BOOL_FILTER(setHideUnmodified, hideUnmodified)
-SC_BOOL_FILTER(setFavoritesOnly, favoritesOnly)
-SC_BOOL_FILTER(setShipNamesOnly, shipVehicleNamesOnly)
-SC_BOOL_FILTER(setBpTitlesOnly, bpTitlesOnly)
-SC_BOOL_FILTER(setBpDescsOnly, bpDescsOnly)
-#undef SC_BOOL_FILTER
+void StringTableModel::setBoolFilter(bool FilterCriteria::*field, bool v)
+{
+    if (criteria_.*field == v)
+        return;
+    criteria_.*field = v;
+    emit filtersChanged();
+    refilter();
+}
+
+void StringTableModel::setHideUnmodified(bool v) { setBoolFilter(&FilterCriteria::hideUnmodified, v); }
+void StringTableModel::setFavoritesOnly(bool v) { setBoolFilter(&FilterCriteria::favoritesOnly, v); }
+void StringTableModel::setShipNamesOnly(bool v) { setBoolFilter(&FilterCriteria::shipVehicleNamesOnly, v); }
+void StringTableModel::setBpTitlesOnly(bool v) { setBoolFilter(&FilterCriteria::bpTitlesOnly, v); }
+void StringTableModel::setBpDescsOnly(bool v) { setBoolFilter(&FilterCriteria::bpDescsOnly, v); }
 
 void StringTableModel::setColumnFilter(int column, const QString &text)
 {
@@ -445,7 +444,7 @@ void StringTableModel::resort()
 void StringTableModel::recount()
 {
     int modified = 0, enhanced = 0;
-    for (const StringEntry &e : entries_) {
+    for (const StringEntry &e : std::as_const(entries_)) {
         modified += e.status == EntryStatus::Modified;
         enhanced += e.status == EntryStatus::Enhanced;
     }

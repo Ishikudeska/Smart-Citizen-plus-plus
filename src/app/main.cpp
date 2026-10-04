@@ -72,7 +72,7 @@ int main(int argc, char *argv[])
     if (smokeTest)
         QTimer::singleShot(500, &app, &QCoreApplication::quit);
     if (!screenshot.isEmpty()) {
-        auto *window = qobject_cast<QQuickWindow *>(engine.rootObjects().front());
+        auto *window = qobject_cast<QQuickWindow *>(engine.rootObjects().constFirst());
         if (const qsizetype i = args.indexOf(QStringLiteral("--size")); i >= 0 && i + 1 < args.size()) {
             const QStringList wh = args[i + 1].split(u'x');
             if (wh.size() == 2 && window)

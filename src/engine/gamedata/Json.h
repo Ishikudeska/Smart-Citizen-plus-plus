@@ -57,6 +57,8 @@ private:
     bool afterKey_ = false;
 };
 
+struct Member;
+
 // A parsed JSON value, enough for reading an overlay game_data.json.
 struct Value
 {
@@ -66,9 +68,18 @@ struct Value
     std::string numberText; // as written, for Int32 checks
     std::string string;
     std::vector<Value> array;
-    std::vector<std::pair<std::string, Value>> object; // in document order
+    // In document order. A forward-declared Member, not std::pair<string,
+    // Value>: a pair of the still-incomplete Value is undefined behaviour
+    // (GCC accepts it; clang, and so clangd and clang-tidy, reject it).
+    std::vector<Member> object;
 
     const Value *find(std::string_view name) const; // the last property with that name
+};
+
+struct Member
+{
+    std::string name;
+    Value value;
 };
 
 std::optional<Value> parse(std::string_view text);

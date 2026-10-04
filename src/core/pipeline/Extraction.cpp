@@ -155,7 +155,7 @@ engine::Result<DataForgeExtraction> extractDataForge(const engine::p4k::Archive 
     for (const QString &sub : dataForgeKeepSubpaths())
         prefixes << QStringLiteral("libs/foundry/records/") + sub + u'/';
     std::vector<std::string> stdPrefixes;
-    for (const QString &p : prefixes)
+    for (const QString &p : std::as_const(prefixes))
         stdPrefixes.push_back(p.toStdString());
 
     engine::forge::ExportOptions options;

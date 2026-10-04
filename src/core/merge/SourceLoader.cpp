@@ -88,7 +88,7 @@ QList<StringEntry> buildEntries(const LoadedSources &loaded, const IniMap *userO
     // The last base source holding each key.
     QHash<QString, QString> origin;
     origin.reserve(baseMerged.size());
-    for (const QString &name : baseHierarchy)
+    for (const QString &name : std::as_const(baseHierarchy))
         for (const auto &[key, value] : loaded.sources.at(name))
             origin.insert(key, name);
 

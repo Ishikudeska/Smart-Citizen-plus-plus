@@ -148,6 +148,9 @@ std::vector<std::uint8_t> &outputBuffer()
 class Decoder
 {
 public:
+    Decoder() = default;
+    Decoder(const Decoder &) = delete;
+    Decoder &operator=(const Decoder &) = delete;
     virtual ~Decoder() = default;
     virtual Result<void> push(std::span<const std::uint8_t> in) = 0;
     virtual Result<void> finish() = 0;
@@ -263,8 +266,11 @@ ZSTD_DCtx *zstdContext()
 {
     struct Holder
     {
-        ZSTD_DCtx *ctx = ZSTD_createDCtx();
+        Holder() = default;
+        Holder(const Holder &) = delete;
+        Holder &operator=(const Holder &) = delete;
         ~Holder() { ZSTD_freeDCtx(ctx); }
+        ZSTD_DCtx *ctx = ZSTD_createDCtx();
     };
     thread_local Holder holder;
     ZSTD_DCtx_reset(holder.ctx, ZSTD_reset_session_only);

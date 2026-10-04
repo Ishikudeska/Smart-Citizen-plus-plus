@@ -19,7 +19,7 @@ QSet<QString> relativeParts(const RecordStore &store, const QString &path)
     while (rel.startsWith(u'/'))
         rel.remove(0, 1);
     QSet<QString> parts;
-    for (const QString &p : rel.split(u'/', Qt::SkipEmptyParts))
+    for (const auto segments = rel.split(u'/', Qt::SkipEmptyParts); const QString &p : segments)
         parts.insert(p.toLower());
     return parts;
 }
@@ -38,7 +38,7 @@ RecordLookup buildAmmoLookup(const RecordStore &store, const QString &relDir)
     RecordLookup lookup;
     if (!store.dirExists(relDir))
         return lookup;
-    for (const QString &file : store.indexRglob(relDir)) {
+    for (const auto files = store.indexRglob(relDir); const QString &file : files) {
         XmlDoc doc = XmlDoc::load(file);
         if (!doc)
             continue;
@@ -67,7 +67,7 @@ ScitemLookups buildScitemLookups(const RecordStore &store, const Loc &loc, const
     }};
     static const QRegularExpression typeless(QStringLiteral(R"(^\[S\d)"));
 
-    for (const QString &file : store.indexRglob(scitem)) {
+    for (const auto files = store.indexRglob(scitem); const QString &file : files) {
         const XmlDoc doc = XmlDoc::load(file);
         if (!doc)
             continue;
@@ -145,7 +145,8 @@ RecordLookup buildControllerLookup(const RecordStore &store)
 {
     RecordLookup lookup;
     const QString dir = QStringLiteral("entities/scitem/ships/controller");
-    for (const QString &file : store.glob(dir, QStringLiteral("controller_flight_*.xml"))) {
+    for (const auto files = store.glob(dir, QStringLiteral("controller_flight_*.xml"));
+         const QString &file : files) {
         XmlDoc doc = XmlDoc::load(file);
         if (!doc)
             continue;
@@ -159,7 +160,8 @@ RecordLookup buildControllerLookup(const RecordStore &store)
 RecordLookup buildArmorLookup(const RecordStore &store)
 {
     RecordLookup lookup;
-    for (const QString &file : store.glob(QStringLiteral("entities/scitem/ships/armor"), QStringLiteral("*.xml"))) {
+    for (const auto files = store.glob(QStringLiteral("entities/scitem/ships/armor"), QStringLiteral("*.xml"));
+         const QString &file : files) {
         XmlDoc doc = XmlDoc::load(file);
         if (!doc)
             continue;
@@ -172,7 +174,8 @@ RecordLookup buildArmorLookup(const RecordStore &store)
 QHash<QString, qint64> buildReputationLookup(const RecordStore &store)
 {
     QHash<QString, qint64> out;
-    for (const QString &file : store.rglob(QStringLiteral("reputation/rewards/missionrewards_reputation"))) {
+    for (const auto files = store.rglob(QStringLiteral("reputation/rewards/missionrewards_reputation"));
+         const QString &file : files) {
         const XmlDoc doc = XmlDoc::load(file);
         if (!doc)
             continue;
@@ -190,7 +193,7 @@ Standings buildStandings(const RecordStore &store, const Loc &englishLoc)
 {
     Standings out;
     static const QRegularExpression trackRe(QStringLiteral(R"(^Rep(?:Standing|Scope)_([A-Za-z]+)_)"));
-    for (const QString &file : store.rglob(QStringLiteral("reputation/standings"))) {
+    for (const auto files = store.rglob(QStringLiteral("reputation/standings")); const QString &file : files) {
         const XmlDoc doc = XmlDoc::load(file);
         if (!doc)
             continue;

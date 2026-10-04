@@ -24,7 +24,13 @@ namespace {
 
 std::atomic<bool> g_installed = false;
 std::atomic<bool> g_reporting = false; // one report per crash, even if the report itself faults
-QString g_logsDir;
+// Set once by install(), read by the handlers. A function-local static, so
+// it is built on first use instead of during static initialization.
+QString &crashLogsDir()
+{
+    static QString dir;
+    return dir;
+}
 std::terminate_handler g_previousTerminate = nullptr;
 
 QString stamp()
@@ -61,7 +67,7 @@ LONG WINAPI unhandledException(EXCEPTION_POINTERS *info)
         const QString reason = QStringLiteral("Unhandled exception 0x%1 at 0x%2")
                                    .arg(info->ExceptionRecord->ExceptionCode, 8, 16, QChar(u'0'))
                                    .arg(quintptr(info->ExceptionRecord->ExceptionAddress), 0, 16);
-        const QString report = writeCrashReport(g_logsDir, reason, currentThreadName());
+        const QString report = writeCrashReport(crashLogsDir(), reason, currentThreadName());
         if (!report.isEmpty())
             writeMinidump(report.chopped(4) + QStringLiteral(".dmp"), info);
     }
@@ -82,7 +88,7 @@ void onTerminate()
                 reason += QStringLiteral(": uncaught non-standard exception");
             }
         }
-        const QString report = writeCrashReport(g_logsDir, reason, currentThreadName());
+        const QString report = writeCrashReport(crashLogsDir(), reason, currentThreadName());
 #ifdef Q_OS_WIN
         if (!report.isEmpty())
             writeMinidump(report.chopped(4) + QStringLiteral(".dmp"), nullptr);
@@ -99,7 +105,7 @@ void install(const QString &logsDir)
 {
     if (g_installed.exchange(true))
         return;
-    g_logsDir = logsDir;
+    crashLogsDir() = logsDir;
 #ifdef Q_OS_WIN
     SetUnhandledExceptionFilter(unhandledException);
 #endif
@@ -137,7 +143,7 @@ QString writeCrashReport(const QString &logsDir, const QString &reason, const QS
 void reportFatal(const QString &reason)
 {
     if (g_installed && !g_reporting.exchange(true))
-        writeCrashReport(g_logsDir, reason);
+        writeCrashReport(crashLogsDir(), reason);
 }
 
 } // namespace core::crash

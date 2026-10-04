@@ -50,7 +50,7 @@ signals:
     void lineLogged(const QString &line, int type);
 
 private:
-    LogHub() = default;
+    explicit LogHub(QObject *parent = nullptr) : QObject(parent) {}
 
     mutable QMutex mutex_;
     std::deque<QString> ring_;

@@ -14,13 +14,13 @@ namespace core::profile {
 
 namespace {
 
-const QString kManifestName = QStringLiteral("manifest.json");
-const QString kSettingsName = QStringLiteral("settings.json");
-const QString kOverridesPrefix = QStringLiteral("overrides/");
-const QString kUserIniSuffix = QStringLiteral("/user.ini");
-const QString kKind = QStringLiteral("settings-backup");
+constexpr QLatin1StringView kManifestName("manifest.json");
+constexpr QLatin1StringView kSettingsName("settings.json");
+constexpr QLatin1StringView kOverridesPrefix("overrides/");
+constexpr QLatin1StringView kUserIniSuffix("/user.ini");
+constexpr QLatin1StringView kKind("settings-backup");
 // Backups made by Smart Citizen carry this marker; they share our keys.
-const QString kSmartCitizenMarker = QStringLiteral("SmartCitizen");
+constexpr QLatin1StringView kSmartCitizenMarker("SmartCitizen");
 
 QString appMarker()
 {
@@ -54,7 +54,7 @@ QJsonDocument parseJson(const std::vector<std::uint8_t> &bytes, QString *error)
 
 } // namespace
 
-QString defaultBackupFilename(const QDate &today)
+QString defaultBackupFilename(QDate today)
 {
     return QStringLiteral("%1-Settings-Backup-%2.zip").arg(appMarker(), today.toString(QStringLiteral("yyyyMMdd")));
 }
@@ -199,7 +199,7 @@ bool isProfileExcludedKey(const QString &key, const QVariant &value)
 QVariantMap exportSettingsValues(const Settings &settings)
 {
     QVariantMap out;
-    for (const QString &key : settings.allKeys()) {
+    for (const auto keys = settings.allKeys(); const QString &key : keys) {
         const QVariant value = settings.value(key);
         if (!isProfileExcludedKey(key, value))
             out.insert(key, value);

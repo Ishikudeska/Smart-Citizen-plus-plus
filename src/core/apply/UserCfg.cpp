@@ -74,7 +74,7 @@ UserCfgResult ensureUserCfgLanguage(const QString &channelDir, const QString &sc
     file.close();
 
     QStringList lines = splitLines(content);
-    for (const QString &line : lines) {
+    for (const QString &line : std::as_const(lines)) {
         if (!keyRe().match(line).hasMatch())
             continue;
         const auto m = valueRe().match(line);

@@ -15,8 +15,8 @@ namespace core::i18n {
 
 namespace {
 
-const QString kHuman = QStringLiteral("ht");
-const QString kAi = QStringLiteral("at");
+constexpr QLatin1StringView kHuman("ht");
+constexpr QLatin1StringView kAi("at");
 
 QJsonObject loadTree(const QString &path)
 {
@@ -257,7 +257,8 @@ QStringList availableLanguages(const QString &languagesDir)
 {
     QStringList names;
     const QDir dir(languagesDir);
-    for (const QString &name : dir.entryList(QDir::Dirs | QDir::NoDotAndDotDot, QDir::Name)) {
+    for (const auto entries = dir.entryList(QDir::Dirs | QDir::NoDotAndDotDot, QDir::Name);
+         const QString &name : entries) {
         if (name == kDefaultLanguage || leafCount(loadTree(dir.filePath(name + QStringLiteral("/ui.json")))) > 0)
             names << name;
     }

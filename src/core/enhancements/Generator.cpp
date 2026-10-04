@@ -15,7 +15,7 @@
 #include <QJsonArray>
 #include <QLoggingCategory>
 #include <QThreadPool>
-#include <QtConcurrent>
+#include <QtConcurrentRun>
 
 #include <algorithm>
 
@@ -105,7 +105,7 @@ GeneratorOptions optionsFromSettings(Settings &settings)
 {
     GeneratorOptions options;
     QSet<QString> categories;
-    for (const QString &id : settings.enabledEnhancementFileIds())
+    for (const auto ids = settings.enabledEnhancementFileIds(); const QString &id : ids)
         categories.insert(id);
     options.categories = categories;
     options.tagConfigs = settings.allTagConfigs();

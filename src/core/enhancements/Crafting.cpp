@@ -91,7 +91,7 @@ QHash<QString, QStringList> parseCompendiumLocations(const QString &content)
     QHash<QString, QStringList> result;
     if (content.isEmpty())
         return result;
-    for (const QString &para : content.split(QStringLiteral("\\n\\n"))) {
+    for (const auto paras = content.split(QStringLiteral("\\n\\n")); const QString &para : paras) {
         const qsizetype dash = para.indexOf(QStringLiteral(" - "));
         if (dash <= 0)
             continue;
@@ -99,7 +99,7 @@ QHash<QString, QStringList> parseCompendiumLocations(const QString &content)
         if (py::len(name) > 40 || para.first(dash).contains(QStringLiteral("\\n")))
             continue;
         QStringList locs;
-        for (const QString &part : para.sliced(dash + 3).split(u','))
+        for (const auto parts = para.sliced(dash + 3).split(u','); const QString &part : parts)
             if (const QString l = py::strip(part); !l.isEmpty())
                 locs << l;
         sortCaseless(locs);
@@ -122,7 +122,7 @@ const QStringList *lookupCommodityLocations(const QHash<QString, QStringList> &l
     }
     if (!internalName.isEmpty())
         candidates << internalName.toLower();
-    for (const QString &k : candidates)
+    for (const QString &k : std::as_const(candidates))
         if (const auto it = locations.constFind(k); it != locations.cend())
             return &*it;
     return nullptr;
@@ -149,7 +149,7 @@ std::vector<std::pair<QString, QString>> discoverCommodityLocPairs(const QString
         }
     }
     std::vector<std::pair<QString, QString>> pairs;
-    for (const QString &nameKey : nameKeys)
+    for (const QString &nameKey : std::as_const(nameKeys))
         if (const QString desc = descByBase.value(nameKey.toLower()); !desc.isEmpty())
             pairs.emplace_back(nameKey, desc);
     return pairs;
@@ -189,7 +189,7 @@ QString humanizeCraftCategory(const QString &category)
         {QStringLiteral("qed"), QStringLiteral("Quantum Enforcement Devices")},
     };
     QStringList parts;
-    for (const QString &p : category.split(u'/'))
+    for (const auto segments = category.split(u'/'); const QString &p : segments)
         if (!p.isEmpty() && p != u"vehiclegear")
             parts << p;
     if (parts.isEmpty())
@@ -404,7 +404,7 @@ std::pair<Loc, Loc> generateCommodityJournal(const Context &ctx)
         return uid;
     };
     QSet<QString> uuids;
-    for (const QString &file : store.indexRglob(bpDir)) {
+    for (const auto files = store.indexRglob(bpDir); const QString &file : files) {
         const XmlDoc doc = XmlDoc::load(file);
         if (!doc)
             continue;
@@ -424,7 +424,7 @@ std::pair<Loc, Loc> generateCommodityJournal(const Context &ctx)
         std::vector<QByteArray> needles;
         for (const QString &u : uuids)
             needles.push_back(u.toUtf8());
-        for (const QString &file : store.indexRglob(carryables)) {
+        for (const auto files = store.indexRglob(carryables); const QString &file : files) {
             QFile f(file);
             if (!f.open(QIODevice::ReadOnly))
                 continue;
@@ -437,7 +437,7 @@ std::pair<Loc, Loc> generateCommodityJournal(const Context &ctx)
                 continue;
             if (const QRegularExpressionMatch m = stemRe.match(fileStem(file)); m.hasMatch()) {
                 const QString commodity = normalizeCommodityName(m.captured(1));
-                for (const QString &u : matched)
+                for (const QString &u : std::as_const(matched))
                     uuidNames.insert(u, commodity);
             }
         }
@@ -448,7 +448,7 @@ std::pair<Loc, Loc> generateCommodityJournal(const Context &ctx)
     QStringList bpFiles = store.indexRglob(bpDir);
     std::stable_sort(bpFiles.begin(), bpFiles.end(), pathLess);
     const QString bpRoot = store.absolute(bpDir) + u'/';
-    for (const QString &file : bpFiles) {
+    for (const QString &file : std::as_const(bpFiles)) {
         const XmlDoc doc = XmlDoc::load(file);
         if (!doc)
             continue;
@@ -485,7 +485,7 @@ std::pair<Loc, Loc> generateCommodityJournal(const Context &ctx)
         commodities << commodity;
     std::sort(commodities.begin(), commodities.end(), pyLess);
     QStringList skipped;
-    for (const QString &commodity : commodities) {
+    for (const QString &commodity : std::as_const(commodities)) {
         const auto pairs = discoverCommodityLocPairs(commodity, loc);
         if (pairs.empty()) {
             skipped << commodity;
@@ -493,7 +493,7 @@ std::pair<Loc, Loc> generateCommodityJournal(const Context &ctx)
         }
         const auto &items = *commodityItems.find(commodity);
         QStringList bullets;
-        for (const QString &line : condenseCraftedItems(items))
+        for (const auto lines = condenseCraftedItems(items); const QString &line : lines)
             bullets << QStringLiteral("- ") + line;
         const QString block = QStringLiteral("<%1>%2</%1>").arg(em, header) + kNl + bullets.join(kNl);
         QSet<QString> usage;
@@ -566,7 +566,7 @@ std::pair<Loc, Loc> generateCommodityJournal(const Context &ctx)
 
         static const QHash<QString, QString> oreAliases = {{QStringLiteral("savrilium"), QStringLiteral("savrillium")}};
         QStringList augmented;
-        for (const QString &para : baseContent.split(QStringLiteral("\\n\\n"))) {
+        for (const auto paras = baseContent.split(QStringLiteral("\\n\\n")); const QString &para : paras) {
             const qsizetype dash = para.indexOf(QStringLiteral(" - "));
             const QString name = dash > 0 ? py::strip(para.first(dash)) : QString();
             const auto locs = name.isEmpty() ? mineralLocations.cend() : mineralLocations.constFind(name.toLower());

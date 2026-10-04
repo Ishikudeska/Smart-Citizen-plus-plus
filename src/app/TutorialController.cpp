@@ -28,7 +28,8 @@ void TutorialController::load()
         const QString t = core::i18n::tr(key.toUtf8().constData());
         return t == key || t.isEmpty() ? fallback : t;
     };
-    for (const QJsonValue &v : QJsonDocument::fromJson(f.readAll()).object().value(u"steps").toArray()) {
+    for (const auto steps = QJsonDocument::fromJson(f.readAll()).object().value(u"steps").toArray();
+         const QJsonValue &v : steps) {
         const QJsonObject o = v.toObject();
         const QString id = o.value(u"id").toString();
         QString title = o.value(u"title").toString();

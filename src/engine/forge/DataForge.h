@@ -108,7 +108,7 @@ enum class Pool : std::uint8_t {
 
 struct GuidHash
 {
-    std::size_t operator()(const GuidBytes &g) const noexcept;
+    std::size_t operator()(GuidBytes g) const noexcept;
 };
 
 // A DataForge database (Game2.dcb), held in memory and read in place.
@@ -160,7 +160,7 @@ public:
 
     // unforge's maps: the last record with a given path or GUID wins.
     std::optional<std::uint32_t> recordByPath(std::string_view path) const;
-    std::optional<std::uint32_t> recordByGuid(const GuidBytes &id) const;
+    std::optional<std::uint32_t> recordByGuid(GuidBytes id) const;
 
     // The record unforge writes for each distinct file path, in order of the
     // path's first appearance.

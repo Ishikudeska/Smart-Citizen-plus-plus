@@ -38,6 +38,6 @@ bool looksLikeHtml(const QByteArray &contentType, QByteArrayView body);
 
 // Blocking: runs its own event loop, so call it from a worker thread (any
 // thread works). `dest`'s ETag is kept in "<dest>.etag".
-DownloadResult downloadIfChanged(const QUrl &url, const QString &dest, const DownloadOptions &options = {});
+DownloadResult downloadIfChanged(const QUrl &url, const QString &dest, DownloadOptions options = {});
 
 } // namespace core::net

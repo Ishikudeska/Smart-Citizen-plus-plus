@@ -14,11 +14,11 @@ namespace {
 constexpr auto kUcp = QRegularExpression::UseUnicodePropertiesOption;
 constexpr auto kCi = QRegularExpression::CaseInsensitiveOption;
 
-const QString kTypeFpsWeapon = QStringLiteral("FPS Weapon");
-const QString kTypeShipWeapon = QStringLiteral("Ship Weapon");
-const QString kTypeArmor = QStringLiteral("Armor");
-const QString kTypeAmmo = QStringLiteral("Ammo");
-const QString kTypeOther = QStringLiteral("Other");
+constexpr QLatin1StringView kTypeFpsWeapon("FPS Weapon");
+constexpr QLatin1StringView kTypeShipWeapon("Ship Weapon");
+constexpr QLatin1StringView kTypeArmor("Armor");
+constexpr QLatin1StringView kTypeAmmo("Ammo");
+constexpr QLatin1StringView kTypeOther("Other");
 
 // Armour pieces keyed without an "armor" token (#195). "_core" not "core",
 // which "score" contains; Carnifex's jacket/pants only under "gys_".
@@ -256,7 +256,7 @@ ComponentTag parseComponentTag(const QString &value, const Enclosings &enclosing
         return tag;
     static const QRegularExpression nonAlnum(QStringLiteral("[^A-Za-z0-9]+"));
     static const QRegularExpression sizeToken_(QStringLiteral(R"(^S?(\d+)$)"), kUcp | kCi);
-    for (const QString &tok : inner->split(nonAlnum, Qt::SkipEmptyParts)) {
+    for (const auto tokens = inner->split(nonAlnum, Qt::SkipEmptyParts); const QString &tok : tokens) {
         const QRegularExpressionMatch sm = sizeToken_.match(tok);
         if (sm.hasMatch() && tag.size.isEmpty())
             tag.size = sizeToken(sm.capturedView(1));
@@ -400,7 +400,7 @@ QMap<QString, BlueprintItem> buildBlueprintMetadata(const QList<StringEntry> &en
     const QHash<QString, QString> &aliases = bulletNameAliases();
     for (const auto &[pair, val] : std::as_const(bpDescs)) {
         const QString title = pair.isNull() ? QString() : titles.value(pair);
-        for (const QString &raw : extractBpItemNames(val, enclosings, bpHeader)) {
+        for (const auto names = extractBpItemNames(val, enclosings, bpHeader); const QString &raw : names) {
             QString name;
             if (nameToValue.contains(raw)) {
                 name = raw;

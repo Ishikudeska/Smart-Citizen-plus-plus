@@ -56,7 +56,7 @@ qint64 requireInt(std::string_view text)
 {
     const std::optional<qint64> v = py::toInt(qs(text));
     if (!v)
-        throw PyError("invalid literal for int()");
+        PyError::raise("invalid literal for int()");
     return *v;
 }
 
@@ -245,7 +245,7 @@ std::pair<RouteTokens, RouteTokens> expandNestedRouteVars(const QString &var, co
         if (const auto it = cache->constFind(var); it != cache->cend())
             return *it;
     RouteTokens fromTokens, toTokens;
-    if (!loc.isEmpty() && var.toLower().endsWith(u"token")) {
+    if (!loc.isEmpty() && var.endsWith(u"token", Qt::CaseInsensitive)) {
         const QString suffix = u'_' + var;
         std::vector<RouteTokens> perFrom, perTo;
         for (const auto &[key, text] : loc) {
@@ -383,7 +383,7 @@ SpawnBreakdown extractSpawnCounts(Node element, const QStringList &excludeWithin
         if (total <= 0)
             continue;
         // Turrets are reported on their own line.
-        if (name.toLower().contains(u"turret"))
+        if (name.contains(u"turret", Qt::CaseInsensitive))
             continue;
         auto [bucket, label] = classifySpawnGroup(name, QStringLiteral("ship"));
         if (bucket == Spawn::Unknown)

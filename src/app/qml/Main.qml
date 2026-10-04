@@ -76,7 +76,7 @@ ApplicationWindow {
         if (!autoStart)
             return
         const maximized = visibility === Window.Maximized
-        App.saveWindowGeometry({ x: x, y: y, width: width, height: height, maximized: maximized })
+        App.windowLayout.saveWindowGeometry({ x: x, y: y, width: width, height: height, maximized: maximized })
     }
     function sizeForMode() {
         if (simple) {
@@ -88,7 +88,7 @@ ApplicationWindow {
         }
     }
     function restoreGeometry() {
-        const g = App.windowGeometry()
+        const g = App.windowLayout.windowGeometry()
         if (g.width === undefined) {
             sizeForMode()
             return
@@ -102,7 +102,7 @@ ApplicationWindow {
     minimumHeight: simple ? 320 : 600
 
     Connections {
-        target: App
+        target: App.windowLayout
         function onWindowProportionsReset() { window.sizeForMode() }
     }
 

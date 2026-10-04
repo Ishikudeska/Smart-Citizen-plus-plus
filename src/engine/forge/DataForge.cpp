@@ -46,7 +46,7 @@ inline std::uint32_t u32(const std::uint8_t *p)
            (std::uint32_t(p[3]) << 24);
 }
 
-std::optional<std::string_view> cString(std::span<const std::uint8_t> data, std::uint64_t tableOffset,
+std::optional<std::string_view> cStringAt(std::span<const std::uint8_t> data, std::uint64_t tableOffset,
                                         std::uint64_t tableLength, std::uint64_t offset)
 {
     if (offset > tableLength)
@@ -94,7 +94,7 @@ std::string dataTypeName(std::uint16_t type)
     return std::to_string(type);
 }
 
-std::size_t GuidHash::operator()(const GuidBytes &g) const noexcept
+std::size_t GuidHash::operator()(GuidBytes g) const noexcept
 {
     std::uint64_t a = 0, b = 0;
     std::memcpy(&a, g.data(), 8);
@@ -270,14 +270,14 @@ Result<DataForge> DataForge::load(std::vector<std::uint8_t> bytes)
 
 std::optional<std::string_view> DataForge::text(std::uint64_t offset) const
 {
-    return cString(data_, textOffset_, textLength_, offset);
+    return cStringAt(data_, textOffset_, textLength_, offset);
 }
 
 std::optional<std::string_view> DataForge::blob(std::uint64_t offset) const
 {
     if (version_ < 6)
         return text(offset);
-    return cString(data_, blobOffset_, blobLength_, offset);
+    return cStringAt(data_, blobOffset_, blobLength_, offset);
 }
 
 std::string_view DataForge::recordName(std::uint32_t index) const
@@ -318,7 +318,7 @@ std::optional<std::uint32_t> DataForge::recordByPath(std::string_view path) cons
     return std::nullopt;
 }
 
-std::optional<std::uint32_t> DataForge::recordByGuid(const GuidBytes &id) const
+std::optional<std::uint32_t> DataForge::recordByGuid(GuidBytes id) const
 {
     if (auto it = byGuid_.find(id); it != byGuid_.end())
         return it->second;

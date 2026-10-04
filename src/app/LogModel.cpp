@@ -30,7 +30,7 @@ int levelForType(int type)
 LogModel::LogModel(QObject *parent) : QAbstractListModel(parent)
 {
     auto &hub = core::log::LogHub::instance();
-    for (const QString &line : hub.recentLines())
+    for (const auto recent = hub.recentLines(); const QString &line : recent)
         all_.push_back({line, levelOf(line)});
     while (all_.size() > kMaxLines)
         all_.removeFirst();
@@ -109,7 +109,7 @@ void LogModel::rebuild()
 {
     beginResetModel();
     visible_.clear();
-    for (const Line &l : all_)
+    for (const Line &l : std::as_const(all_))
         if (l.level >= minLevel_)
             visible_.push_back(l);
     endResetModel();
