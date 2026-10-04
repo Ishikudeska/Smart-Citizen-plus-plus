@@ -10,6 +10,16 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  format:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      # Pinned to the clang-format that ships with Qt Creator (LLVM 22.1.8), which
+      # is what formats the code locally; other versions lay some code out differently.
+      - name: Check C++ formatting
+        run: git ls-files -z '*.cpp' '*.h' | xargs -0 pipx run --spec clang-format==22.1.8 clang-format --dry-run -Werror
+
   build-and-test:
     runs-on: windows-latest
     steps:
