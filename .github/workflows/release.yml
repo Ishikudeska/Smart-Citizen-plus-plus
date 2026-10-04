@@ -1,6 +1,6 @@
 # Builds the installer and the portable zip with packaging/package.ps1.
-# Runs on a version tag (v1.2.3), which also publishes a GitHub release, or by
-# hand from the Actions tab (artifacts only).
+# Runs on a version tag (v1.2.3), which also publishes a GitHub release, on
+# pull requests, or by hand from the Actions tab (artifacts only).
 #
 # Qt is installed to C:\Qt so the paths in CMakePresets.json hold.
 
@@ -9,10 +9,17 @@ name: Release
 on:
   push:
     tags: ["v*"]
+  pull_request:
   workflow_dispatch:
 
 permissions:
   contents: write
+
+# A new push to a pull request supersedes its earlier package build; tag builds
+# always finish.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
   package:
