@@ -31,7 +31,8 @@ std::string toHex(std::span<const std::uint8_t> bytes)
 
 std::string sha256Hex(std::string_view text)
 {
-    return Sha256::toHex(Sha256::hash(std::span(reinterpret_cast<const std::uint8_t *>(text.data()), text.size())));
+    return Sha256::toHex(
+        Sha256::hash(std::span(reinterpret_cast<const std::uint8_t *>(text.data()), text.size())));
 }
 
 } // namespace
@@ -81,8 +82,10 @@ private slots:
     // FIPS 180-4 examples.
     void sha256Vectors()
     {
-        QCOMPARE(sha256Hex(""), std::string("e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"));
-        QCOMPARE(sha256Hex("abc"), std::string("ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad"));
+        QCOMPARE(sha256Hex(""),
+                 std::string("e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"));
+        QCOMPARE(sha256Hex("abc"),
+                 std::string("ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad"));
         QCOMPARE(sha256Hex("abcdbcdecdefdefgefghfghighijhijkijkljklmklmnlmnomnopnopq"),
                  std::string("248d6a61d20638b8e5c026930c3e6039a33ce45964ff2167f6ecedd419db06c1"));
     }

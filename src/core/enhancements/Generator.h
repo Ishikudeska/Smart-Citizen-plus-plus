@@ -25,20 +25,24 @@ namespace core::enh {
 
 // Category ids, as Smart Citizen names them.
 inline const QStringList kGeneratorCategories = {
-    QStringLiteral("ship_descs"),         QStringLiteral("component_descs"),
-    QStringLiteral("ship_weapon_descs"),  QStringLiteral("fps_weapon_descs"),
-    QStringLiteral("mission_rewards"),    QStringLiteral("commodity_crafting"),
-    QStringLiteral("journal"),            QStringLiteral("missile_enhancements"),
+    QStringLiteral("ship_descs"),
+    QStringLiteral("component_descs"),
+    QStringLiteral("ship_weapon_descs"),
+    QStringLiteral("fps_weapon_descs"),
+    QStringLiteral("mission_rewards"),
+    QStringLiteral("commodity_crafting"),
+    QStringLiteral("journal"),
+    QStringLiteral("missile_enhancements"),
     QStringLiteral("medical_consumables"),
 };
 
 struct GeneratorOptions
 {
-    QString baseIni;        // output goes beside it
-    QString englishBaseIni; // annotation source on a non-English run; empty: baseIni
-    QString forgeDir;       // contains raw/libs/foundry/records
+    QString baseIni;                         // output goes beside it
+    QString englishBaseIni;                  // annotation source on a non-English run; empty: baseIni
+    QString forgeDir;                        // contains raw/libs/foundry/records
     std::optional<QSet<QString>> categories; // nothing: all
-    QString patchesDir;     // loc-string workarounds; empty: none
+    QString patchesDir;                      // loc-string workarounds; empty: none
 
     QMap<QString, tags::TagConfig> tagConfigs; // missing categories use defaults
     bool annotateMissionDescs = true;

@@ -85,7 +85,7 @@ std::shared_ptr<const RecordStore> RecordStore::scan(const QString &recordsDir)
         std::sort(d.subdirs.begin(), d.subdirs.end(), ntfsLess);
         std::sort(d.files.begin(), d.files.end(), ntfsLess);
     }
-    for (const QString &dir : store->walkOrder(QString()))
+    for (const auto walked = store->walkOrder(QString()); const QString &dir : walked)
         if (!dirs.value(dir).files.isEmpty())
             store->indexOrder_ << dir;
     return store;
@@ -111,7 +111,7 @@ QStringList RecordStore::walkOrder(const QString &rel) const
     QStringList stack{rel};
     while (!stack.isEmpty()) {
         const QString path = stack.takeLast();
-        for (const QString &name : dirs_.value(path).subdirs) {
+        for (const auto names = dirs_.value(path).subdirs; const QString &name : names) {
             const QString child = join(path, name);
             order << child;
             stack << child;
@@ -129,8 +129,9 @@ QStringList RecordStore::indexRglob(const QString &relDir) const
             continue;
         QStringList files = dirs_.value(dir).files;
         // The index sorts each directory's path strings.
-        std::sort(files.begin(), files.end(), [](const QString &a, const QString &b) { return py::less(a, b); });
-        for (const QString &f : files)
+        std::sort(files.begin(), files.end(),
+                  [](const QString &a, const QString &b) { return py::less(a, b); });
+        for (const QString &f : std::as_const(files))
             out << absolute(join(dir, f));
     }
     return out;
@@ -142,7 +143,7 @@ QStringList RecordStore::filesIn(const QString &relDir) const
     QStringList files = dirs_.value(dir).files;
     std::sort(files.begin(), files.end(), [](const QString &a, const QString &b) { return py::less(a, b); });
     QStringList out;
-    for (const QString &f : files)
+    for (const QString &f : std::as_const(files))
         out << absolute(join(dir, f));
     return out;
 }
@@ -150,20 +151,21 @@ QStringList RecordStore::filesIn(const QString &relDir) const
 QStringList RecordStore::rglob(const QString &relDir) const
 {
     QStringList out;
-    for (const QString &dir : walkOrder(normalizedRel(relDir)))
-        for (const QString &f : dirs_.value(dir).files)
+    for (const auto dirs = walkOrder(normalizedRel(relDir)); const QString &dir : dirs)
+        for (const auto files = dirs_.value(dir).files; const QString &f : files)
             out << absolute(join(dir, f));
     return out;
 }
 
 QStringList RecordStore::glob(const QString &relDir, const QString &pattern) const
 {
-    const QRegularExpression re(QRegularExpression::anchoredPattern(QRegularExpression::wildcardToRegularExpression(
-                                    pattern, QRegularExpression::UnanchoredWildcardConversion)),
-                                QRegularExpression::CaseInsensitiveOption);
+    const QRegularExpression re(
+        QRegularExpression::anchoredPattern(QRegularExpression::wildcardToRegularExpression(
+            pattern, QRegularExpression::UnanchoredWildcardConversion)),
+        QRegularExpression::CaseInsensitiveOption);
     const QString dir = normalizedRel(relDir);
     QStringList out;
-    for (const QString &f : dirs_.value(dir).files)
+    for (const auto files = dirs_.value(dir).files; const QString &f : files)
         if (re.match(f).hasMatch())
             out << absolute(join(dir, f));
     return out;

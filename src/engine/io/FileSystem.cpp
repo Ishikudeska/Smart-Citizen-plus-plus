@@ -11,11 +11,12 @@
 #endif
 #include <windows.h>
 #else
-#include <cerrno>
-#include <cstring>
 #include <fcntl.h>
 #include <sys/stat.h>
 #include <unistd.h>
+
+#include <cerrno>
+#include <cstring>
 #endif
 
 namespace engine::io {
@@ -71,8 +72,8 @@ std::string toUtf8(std::wstring_view text)
 {
     if (text.empty())
         return {};
-    const int bytes =
-        WideCharToMultiByte(CP_UTF8, 0, text.data(), static_cast<int>(text.size()), nullptr, 0, nullptr, nullptr);
+    const int bytes = WideCharToMultiByte(CP_UTF8, 0, text.data(), static_cast<int>(text.size()), nullptr, 0,
+                                          nullptr, nullptr);
     std::string out(static_cast<std::size_t>(bytes), '\0');
     WideCharToMultiByte(CP_UTF8, 0, text.data(), static_cast<int>(text.size()), out.data(), bytes, nullptr,
                         nullptr);
@@ -257,7 +258,8 @@ Result<void> OutputFile::commit()
         return fail(Errc::Io, "cannot close " + target_.string() + ": " + systemErrorMessage(err));
     }
     if (writingTo_ != target_) {
-        if (!MoveFileExW(longPath(writingTo_).c_str(), longPath(target_).c_str(), MOVEFILE_REPLACE_EXISTING)) {
+        if (!MoveFileExW(longPath(writingTo_).c_str(), longPath(target_).c_str(),
+                         MOVEFILE_REPLACE_EXISTING)) {
             const DWORD err = GetLastError();
             DeleteFileW(longPath(writingTo_).c_str());
             return fail(Errc::Io, "cannot replace " + target_.string() + ": " + systemErrorMessage(err));

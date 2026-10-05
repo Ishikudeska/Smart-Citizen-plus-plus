@@ -31,7 +31,8 @@ public:
     // or malformed file contributes nothing.
     static Catalog load(const QString &languagesDir, const QString &language);
     // From already-parsed trees (tests).
-    static Catalog fromTrees(const QString &language, const QJsonObject &english, const QJsonObject &overlay = {});
+    static Catalog fromTrees(const QString &language, const QJsonObject &english,
+                             const QJsonObject &overlay = {});
 
     const QString &language() const { return language_; }
     bool isEmpty() const { return strings_.isEmpty(); }

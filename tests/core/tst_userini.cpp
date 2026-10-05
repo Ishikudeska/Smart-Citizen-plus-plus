@@ -53,8 +53,8 @@ private slots:
         const UserIni ini(dir.filePath(QStringLiteral("LIVE/user.ini")));
         const QList<StringEntry> entries = {
             entry("b_key", "Orig", "Edited"),
-            entry("same", "Same", "Same"),          // not an edit
-            entry("none", "Value", ""),             // not an edit
+            entry("same", "Same", "Same"),                 // not an edit
+            entry("none", "Value", ""),                    // not an edit
             entry("vehicle_NameX", "Cutlass", " Cutlass"), // space favourite prefix (#100)
         };
         QCOMPARE(ini.save(entries).value_or(-1), 2);
@@ -178,13 +178,16 @@ private slots:
     {
         QTemporaryDir dir;
         writeFile(dir.filePath(QStringLiteral("base.ini")), "a=1\r\nb=2\r\nc=3\r\n");
-        writeFile(dir.filePath(QStringLiteral("global.ini")), "\xEF\xBB\xBF" "a=1\r\nb= *Two\r\nnew=x\r\n");
+        writeFile(dir.filePath(QStringLiteral("global.ini")), "\xEF\xBB\xBF"
+                                                              "a=1\r\nb= *Two\r\nnew=x\r\n");
         const UserIni ini(dir.filePath(QStringLiteral("user.ini")));
-        QCOMPARE(ini.generateFromDiff(dir.filePath(QStringLiteral("base.ini")), dir.filePath(QStringLiteral("global.ini"))),
+        QCOMPARE(ini.generateFromDiff(dir.filePath(QStringLiteral("base.ini")),
+                                      dir.filePath(QStringLiteral("global.ini"))),
                  2);
         QCOMPARE(readAll(ini.path()), QByteArray("b= *Two\r\nnew=x\r\n"));
         // Never over an existing user.ini.
-        QCOMPARE(ini.generateFromDiff(dir.filePath(QStringLiteral("base.ini")), dir.filePath(QStringLiteral("global.ini"))),
+        QCOMPARE(ini.generateFromDiff(dir.filePath(QStringLiteral("base.ini")),
+                                      dir.filePath(QStringLiteral("global.ini"))),
                  0);
     }
 
@@ -217,7 +220,8 @@ private slots:
 
         QCOMPARE(migrateUserDataDir(oldRoot, newRoot, true), 1);
         QVERIFY(!QFileInfo::exists(oldRoot + QStringLiteral("/LIVE/cache"))); // emptied dir pruned
-        QCOMPARE(readAll(oldRoot + QStringLiteral("/LIVE/user.ini")), QByteArray("old")); // conflict left in place
+        QCOMPARE(readAll(oldRoot + QStringLiteral("/LIVE/user.ini")),
+                 QByteArray("old")); // conflict left in place
         QCOMPARE(readAll(newRoot + QStringLiteral("/LIVE/cache/base.ini")), QByteArray("base"));
     }
 

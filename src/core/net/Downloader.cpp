@@ -53,7 +53,7 @@ bool looksLikeHtml(const QByteArray &contentType, QByteArrayView body)
     return lower.startsWith("<!doctype html") || lower.startsWith("<html");
 }
 
-DownloadResult downloadIfChanged(const QUrl &url, const QString &dest, const DownloadOptions &options)
+DownloadResult downloadIfChanged(const QUrl &url, const QString &dest, DownloadOptions options)
 {
     if (!url.isValid() || (url.scheme() != u"http" && url.scheme() != u"https"))
         return failed(0, QStringLiteral("Not a web address: %1").arg(url.toString()));

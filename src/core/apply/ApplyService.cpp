@@ -4,8 +4,8 @@
 #include "core/apply/GameFile.h"
 #include "core/apply/Stamps.h"
 
-#include <QFile>
 #include <QDir>
+#include <QFile>
 #include <QFileInfo>
 
 namespace core {
@@ -71,7 +71,8 @@ ApplyOutcome applyToGame(const ApplyInputs &in)
         return out;
     }
 
-    if (!in.languagesIniSource.isEmpty() && !in.languagesIniDest.isEmpty() && QFileInfo::exists(in.languagesIniSource)) {
+    if (!in.languagesIniSource.isEmpty() && !in.languagesIniDest.isEmpty() &&
+        QFileInfo::exists(in.languagesIniSource)) {
         QDir().mkpath(QFileInfo(in.languagesIniDest).absolutePath());
         QFile::remove(in.languagesIniDest);
         if (!QFile::copy(in.languagesIniSource, in.languagesIniDest))

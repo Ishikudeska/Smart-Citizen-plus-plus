@@ -1,7 +1,6 @@
 #include "ExplorerController.h"
 
 #include "AppController.h"
-
 #include "core/EnginePaths.h"
 #include "core/i18n/Translator.h"
 #include "core/pipeline/Extraction.h"
@@ -159,7 +158,8 @@ bool looksLikeText(std::span<const std::uint8_t> bytes)
     if (control * 50 > static_cast<int>(n))
         return false;
     QStringDecoder decoder(QStringDecoder::Utf8);
-    (void)decoder.decode(QByteArrayView(reinterpret_cast<const char *>(bytes.data()), static_cast<qsizetype>(n)));
+    (void)decoder.decode(
+        QByteArrayView(reinterpret_cast<const char *>(bytes.data()), static_cast<qsizetype>(n)));
     // A cut multi-byte sequence at the end of the sample is not an error.
     return !decoder.hasError() || n < bytes.size();
 }
@@ -175,7 +175,8 @@ Preview truncated(QString body, const QString &kind)
     p.kind = kind;
     if (body.size() > kMaxPreviewChars) {
         body.truncate(kMaxPreviewChars);
-        p.info = text("scx.explorer_preview_truncated", {{QStringLiteral("count"), number(kMaxPreviewChars)}});
+        p.info =
+            text("scx.explorer_preview_truncated", {{QStringLiteral("count"), number(kMaxPreviewChars)}});
     }
     p.text = std::move(body);
     return p;
@@ -207,13 +208,15 @@ Preview previewEntry(const ExplorerData &d, std::uint32_t item)
         auto xml = engine::cryxml::toXml(bytes);
         if (xml) {
             Preview p = truncated(QString::fromStdString(*xml), QStringLiteral("xml"));
-            p.info = text("scx.explorer_preview_cryxml") + (p.info.isEmpty() ? QString() : QStringLiteral(" · ") + p.info);
+            p.info = text("scx.explorer_preview_cryxml") +
+                     (p.info.isEmpty() ? QString() : QStringLiteral(" · ") + p.info);
             return p;
         }
         qCWarning(lcApp).noquote() << "CryXML preview failed:" << QString::fromStdString(xml.error().message);
     }
     if (!partial && (engine::cryxml::isPlainXml(bytes) || looksLikeText(bytes))) {
-        std::size_t skip = bytes.size() >= 3 && bytes[0] == 0xEF && bytes[1] == 0xBB && bytes[2] == 0xBF ? 3 : 0;
+        std::size_t skip =
+            bytes.size() >= 3 && bytes[0] == 0xEF && bytes[1] == 0xBB && bytes[2] == 0xBF ? 3 : 0;
         return truncated(QString::fromUtf8(reinterpret_cast<const char *>(bytes.data() + skip),
                                            static_cast<qsizetype>(bytes.size() - skip)),
                          engine::cryxml::isPlainXml(bytes) ? QStringLiteral("xml") : QStringLiteral("text"));
@@ -244,13 +247,14 @@ QString entryInfo(const ExplorerData &d, std::uint32_t item)
         engine::xml::appendLatin1AsUtf8(s, forge.recordName(r));
         QStringList bits{text("scx.explorer_record_info",
                               {{QStringLiteral("name"), QString::fromStdString(s)},
-                               {QStringLiteral("type"), QString::fromStdString(forge.structName(forge.records()[r].structIndex))}})};
+                               {QStringLiteral("type"),
+                                QString::fromStdString(forge.structName(forge.records()[r].structIndex))}})};
         return bits.join(u' ');
     }
     const engine::p4k::Entry &e = d.archive->entry(item);
     QStringList bits;
     bits << text("scx.explorer_info_size", {{QStringLiteral("size"), size(e.uncompressedSize)},
-                                             {QStringLiteral("bytes"), number(e.uncompressedSize)}});
+                                            {QStringLiteral("bytes"), number(e.uncompressedSize)}});
     bits << text("scx.explorer_info_packed", {{QStringLiteral("size"), size(e.compressedSize)}});
     bits << QString::fromLatin1(engine::p4k::methodName(e.method));
     if (e.encrypted)
@@ -269,7 +273,8 @@ QString folderInfo(const TreeIndex::Node &n)
 
 } // namespace
 
-ExplorerController::ExplorerController(QObject *parent) : QObject(parent), tree_(new P4kTreeModel(this)) {}
+ExplorerController::ExplorerController(QObject *parent) : QObject(parent), tree_(new P4kTreeModel(this))
+{}
 
 ExplorerController::~ExplorerController() = default;
 
@@ -285,7 +290,8 @@ QString ExplorerController::summary() const
     QString s = text("scx.explorer_summary", {{QStringLiteral("entries"), number(data_->archiveItems)},
                                               {QStringLiteral("size"), size(data_->archive->fileSize())}});
     if (data_->forge)
-        s += QStringLiteral(" · ") + text("scx.explorer_summary_records", {{QStringLiteral("count"), number(data_->records.size())}});
+        s += QStringLiteral(" · ") +
+             text("scx.explorer_summary_records", {{QStringLiteral("count"), number(data_->records.size())}});
     return s;
 }
 
@@ -323,7 +329,7 @@ void ExplorerController::setLoaded(std::shared_ptr<const ExplorerData> data, con
 {
     data_ = std::move(data);
     archivePath_ = path;
-    tree_->setData(data_);
+    tree_->setExplorerData(data_);
     results_.clear();
     resultsNote_.clear();
     ++*searchSerial_;
@@ -356,7 +362,9 @@ void ExplorerController::open(const QString &requested)
 {
     const QString path = requested.isEmpty() ? app().p4kPath() : requested;
     if (path.isEmpty() || !QFileInfo(path).isFile()) {
-        app().prompts()->warning(text("scx.explorer_title"), text("scx.explorer_no_archive", {{QStringLiteral("path"), QDir::toNativeSeparators(path)}}));
+        app().prompts()->warning(
+            text("scx.explorer_title"),
+            text("scx.explorer_no_archive", {{QStringLiteral("path"), QDir::toNativeSeparators(path)}}));
         return;
     }
     struct Opened
@@ -376,7 +384,9 @@ void ExplorerController::open(const QString &requested)
             options.cancel = job.cancelFlag();
             auto archive = engine::p4k::Archive::open(core::fsPath(path), options);
             if (!archive)
-                return {nullptr, archive.error().code == engine::Errc::Cancelled ? QString() : QString::fromStdString(archive.error().message)};
+                return {nullptr, archive.error().code == engine::Errc::Cancelled
+                                     ? QString()
+                                     : QString::fromStdString(archive.error().message)};
             job.report(text("scx.explorer_building_tree"));
             auto data = buildData(*archive, nullptr, {}, job.cancelFlag());
             return {std::move(data), {}};
@@ -390,8 +400,8 @@ void ExplorerController::open(const QString &requested)
             }
             if (!result.data)
                 return; // cancelled
-            qCInfo(lcApp).noquote() << "Explorer: opened" << path << "-" << result.data->archiveItems << "entries,"
-                                    << result.data->index.nodeCount() << "nodes";
+            qCInfo(lcApp).noquote() << "Explorer: opened" << path << "-" << result.data->archiveItems
+                                    << "entries," << result.data->index.nodeCount() << "nodes";
             self->setLoaded(std::move(result.data), path);
         });
 }
@@ -489,9 +499,10 @@ void ExplorerController::search(const QString &pattern)
         for (const std::uint32_t item : hits) {
             const TreeIndex::NodeId node = data->index.nodeOfItem(item);
             const TreeIndex::Node &n = data->index.node(node);
-            rows.push_back(QVariantMap{{QStringLiteral("node"), static_cast<int>(node)},
-                                       {QStringLiteral("path"), str(itemPath(*data, item))},
-                                       {QStringLiteral("size"), data->isRecord(item) ? QString() : size(n.size)}});
+            rows.push_back(
+                QVariantMap{{QStringLiteral("node"), static_cast<int>(node)},
+                            {QStringLiteral("path"), str(itemPath(*data, item))},
+                            {QStringLiteral("size"), data->isRecord(item) ? QString() : size(n.size)}});
         }
         QMetaObject::invokeMethod(
             QCoreApplication::instance(),
@@ -500,9 +511,10 @@ void ExplorerController::search(const QString &pattern)
                     return;
                 self->results_ = rows;
                 self->resultsNote_ =
-                    total == shown ? text("scx.explorer_results", {{QStringLiteral("count"), number(total)}})
-                                   : text("scx.explorer_results_capped", {{QStringLiteral("count"), number(total)},
-                                                                          {QStringLiteral("shown"), number(shown)}});
+                    total == shown
+                        ? text("scx.explorer_results", {{QStringLiteral("count"), number(total)}})
+                        : text("scx.explorer_results_capped", {{QStringLiteral("count"), number(total)},
+                                                               {QStringLiteral("shown"), number(shown)}});
                 self->searching_ = false;
                 emit self->resultsChanged();
             },
@@ -573,8 +585,8 @@ void ExplorerController::select(int node)
             [self, serial, node, title, info, p = std::move(p)] {
                 if (!self || self->previewSerial_ != serial)
                     return;
-                self->setPreview(node, title, p.info.isEmpty() ? info : info + QStringLiteral(" · ") + p.info, p.text,
-                                 p.kind, false);
+                self->setPreview(node, title, p.info.isEmpty() ? info : info + QStringLiteral(" · ") + p.info,
+                                 p.text, p.kind, false);
             },
             Qt::QueuedConnection);
     });
@@ -587,7 +599,8 @@ QString ExplorerController::defaultExtractDir() const
     return QDir(app().userDataRoot()).filePath(QStringLiteral("extracted"));
 }
 
-void ExplorerController::extract(const QVariantList &nodes, const QUrl &outputDir, bool convertCryXml, bool skipExisting)
+void ExplorerController::extract(const QVariantList &nodes, const QUrl &outputDir, bool convertCryXml,
+                                 bool skipExisting)
 {
     if (!data_)
         return;
@@ -628,7 +641,8 @@ void ExplorerController::extract(const QVariantList &nodes, const QUrl &outputDi
     build.maxReferenceDepth = maxReferenceDepth_;
     app().tasks()->run<Extracted>(
         text("scx.explorer_extract_title"), true,
-        [data, entries, recordItems, out, convertCryXml, skipExisting, build](TaskRunner::Job &job) -> Extracted {
+        [data, entries, recordItems, out, convertCryXml, skipExisting,
+         build](TaskRunner::Job &job) -> Extracted {
             Extracted result;
             const auto outRoot = core::fsPath(out);
             if (!entries.empty()) {
@@ -641,8 +655,9 @@ void ExplorerController::extract(const QVariantList &nodes, const QUrl &outputDi
                     job.report(message, static_cast<int>(done), static_cast<int>(total));
                 };
                 if (convertCryXml)
-                    options.transform = [](std::string_view, std::vector<std::uint8_t> bytes)
-                        -> engine::Result<std::vector<std::uint8_t>> {
+                    options.transform =
+                        [](std::string_view,
+                           std::vector<std::uint8_t> bytes) -> engine::Result<std::vector<std::uint8_t>> {
                         if (!engine::cryxml::isCryXml(bytes))
                             return bytes;
                         auto xml = engine::cryxml::toXml(bytes);
@@ -689,7 +704,7 @@ void ExplorerController::extract(const QVariantList &nodes, const QUrl &outputDi
             result.cancelled = result.cancelled || job.cancelled();
             return result;
         },
-        [self, out](Extracted r) {
+        [self, out](const Extracted &r) {
             if (!self)
                 return;
             auto &prompts = *self->app().prompts();
@@ -701,15 +716,18 @@ void ExplorerController::extract(const QVariantList &nodes, const QUrl &outputDi
                 prompts.error(text("scx.explorer_extract_title"), r.error);
                 return;
             }
-            qCInfo(lcApp).noquote() << "Explorer: extracted" << r.files << "files," << r.bytes << "bytes to" << out
-                                    << "(" << r.failures.size() << "failures)";
-            QString body = text("scx.explorer_extract_done", {{QStringLiteral("count"), number(r.files)},
-                                                              {QStringLiteral("size"), size(r.bytes)},
-                                                              {QStringLiteral("path"), QDir::toNativeSeparators(out)}});
+            qCInfo(lcApp).noquote() << "Explorer: extracted" << r.files << "files," << r.bytes << "bytes to"
+                                    << out << "(" << r.failures.size() << "failures)";
+            QString body =
+                text("scx.explorer_extract_done", {{QStringLiteral("count"), number(r.files)},
+                                                   {QStringLiteral("size"), size(r.bytes)},
+                                                   {QStringLiteral("path"), QDir::toNativeSeparators(out)}});
             if (r.skipped)
-                body += QStringLiteral("\n") + text("scx.explorer_extract_skipped", {{QStringLiteral("count"), number(r.skipped)}});
+                body += QStringLiteral("\n") +
+                        text("scx.explorer_extract_skipped", {{QStringLiteral("count"), number(r.skipped)}});
             if (!r.failures.isEmpty()) {
-                body += QStringLiteral("\n") + text("scx.explorer_extract_failures", {{QStringLiteral("count"), number(r.failures.size())}});
+                body += QStringLiteral("\n") + text("scx.explorer_extract_failures",
+                                                    {{QStringLiteral("count"), number(r.failures.size())}});
                 prompts.warning(text("scx.explorer_extract_title"), body, r.failures.join(u'\n'));
                 return;
             }
@@ -724,7 +742,8 @@ QString ExplorerController::defaultGameDataPath() const
     return QDir(app().userDataRoot()).filePath(QStringLiteral("game_data.json"));
 }
 
-void ExplorerController::exportGameData(const QUrl &output, const QString &channel, const QUrl &baseIni, const QUrl &overlay)
+void ExplorerController::exportGameData(const QUrl &output, const QString &channel, const QUrl &baseIni,
+                                        const QUrl &overlay)
 {
     const QString out = localPath(output);
     if (out.isEmpty())
@@ -734,8 +753,9 @@ void ExplorerController::exportGameData(const QUrl &output, const QString &chann
     std::shared_ptr<const engine::p4k::Archive> archive = data_ ? data_->archive : nullptr;
     const QString p4k = app().p4kPath();
     if (!archive && (p4k.isEmpty() || !QFileInfo(p4k).isFile())) {
-        app().prompts()->warning(text("scx.explorer_gamedata_title"),
-                                 text("scx.explorer_no_archive", {{QStringLiteral("path"), QDir::toNativeSeparators(p4k)}}));
+        app().prompts()->warning(
+            text("scx.explorer_gamedata_title"),
+            text("scx.explorer_no_archive", {{QStringLiteral("path"), QDir::toNativeSeparators(p4k)}}));
         return;
     }
     struct Exported
@@ -755,23 +775,24 @@ void ExplorerController::exportGameData(const QUrl &output, const QString &chann
                     return {{}, QString::fromStdString(opened.error().message)};
                 a = *opened;
             }
-            auto result = core::exportGameData(*a, out, base, over, channel,
-                                               [&job](const QString &step, qint64 done, qint64 total) {
-                                                   job.report(step, static_cast<int>(done), static_cast<int>(total));
-                                               });
+            auto result = core::exportGameData(
+                *a, out, base, over, channel, [&job](const QString &step, qint64 done, qint64 total) {
+                    job.report(step, static_cast<int>(done), static_cast<int>(total));
+                });
             if (!result)
                 return {{}, QString::fromStdString(result.error().message)};
             return {*result, {}};
         },
-        [self, out](Exported r) {
+        [self, out](const Exported &r) {
             if (!self)
                 return;
             if (!r.error.isEmpty()) {
                 self->app().prompts()->error(text("scx.explorer_gamedata_title"), r.error);
                 return;
             }
-            self->app().prompts()->info(text("scx.explorer_gamedata_title"),
-                                        text("scx.explorer_gamedata_done", {{QStringLiteral("path"), QDir::toNativeSeparators(out)}}),
-                                        r.summary.join(u'\n'));
+            self->app().prompts()->info(
+                text("scx.explorer_gamedata_title"),
+                text("scx.explorer_gamedata_done", {{QStringLiteral("path"), QDir::toNativeSeparators(out)}}),
+                r.summary.join(u'\n'));
         });
 }

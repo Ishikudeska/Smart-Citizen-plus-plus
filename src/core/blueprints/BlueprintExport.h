@@ -36,6 +36,7 @@ struct ImportMatch
 // Splits `imported` (already normalized) against the tracker's names;
 // with a `catalogue`, foreign-editor names are recovered first (#372).
 ImportMatch matchImportNames(const QSet<QString> &imported, const QSet<QString> &known,
-                             const QSet<QString> &catalogue = {}, const Enclosings &enclosings = defaultEnclosings());
+                             const QSet<QString> &catalogue = {},
+                             const Enclosings &enclosings = defaultEnclosings());
 
 } // namespace core::blueprints

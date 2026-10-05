@@ -44,7 +44,8 @@ LoadedSources loadSources(const SourceFiles &files)
     }
 
     if (!files.userIni.isEmpty() && QFileInfo::exists(files.userIni)) {
-        IniMap user = loadIni(files.userIni, /*stripValues=*/false); // a space favourite prefix must survive (#100)
+        IniMap user =
+            loadIni(files.userIni, /*stripValues=*/false); // a space favourite prefix must survive (#100)
         if (!user.isEmpty())
             out.sources[kSourceUser] = std::move(user);
     }
@@ -52,7 +53,8 @@ LoadedSources loadSources(const SourceFiles &files)
     return out;
 }
 
-EntryStatus statusFromSource(const QString &source, const QString &baseSource, bool keyInBase, bool inGlobalSource)
+EntryStatus statusFromSource(const QString &source, const QString &baseSource, bool keyInBase,
+                             bool inGlobalSource)
 {
     if (!keyInBase)
         return EntryStatus::New; // only the user has it
@@ -88,7 +90,7 @@ QList<StringEntry> buildEntries(const LoadedSources &loaded, const IniMap *userO
     // The last base source holding each key.
     QHash<QString, QString> origin;
     origin.reserve(baseMerged.size());
-    for (const QString &name : baseHierarchy)
+    for (const QString &name : std::as_const(baseHierarchy))
         for (const auto &[key, value] : loaded.sources.at(name))
             origin.insert(key, name);
 
@@ -116,7 +118,8 @@ QList<StringEntry> buildEntries(const LoadedSources &loaded, const IniMap *userO
 
         if (key.contains(u"journal", Qt::CaseInsensitive))
             e.category = category::kJournal;
-        else if (const auto it = loaded.enhancementCategories.constFind(key); it != loaded.enhancementCategories.cend())
+        else if (const auto it = loaded.enhancementCategories.constFind(key);
+                 it != loaded.enhancementCategories.cend())
             e.category = *it;
         else
             e.category = extractCategory(key);

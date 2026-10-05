@@ -116,7 +116,7 @@ signals:
     void filtersChanged();
     void sortChanged();
     void countsChanged();
-    void edited(); // a user change: the Apply button lights up
+    void edited();                // a user change: the Apply button lights up
     void rowsRelaid(int keepRow); // after a filter/sort; keepRow is the selected key's new row or -1
 
 public slots:
@@ -124,6 +124,7 @@ public slots:
 
 private:
     const core::StringEntry *entryAt(int row) const;
+    void setBoolFilter(bool core::table::FilterCriteria::*field, bool v);
     void refilter();
     void resort();
     void recount();
@@ -131,7 +132,7 @@ private:
 
     QList<core::StringEntry> entries_;
     core::IniMap defaults_;
-    QList<int> rows_;    // entry indices, in display order
+    QList<int> rows_;       // entry indices, in display order
     QHash<int, int> rowOf_; // entry index -> row
     core::table::FilterCriteria criteria_;
     core::table::OwnedState owned_;

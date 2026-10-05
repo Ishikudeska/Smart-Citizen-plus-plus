@@ -90,7 +90,8 @@ std::vector<std::size_t> selectEntries(const Archive &archive,
 
 std::filesystem::path entryOutputPath(const std::filesystem::path &outputDir, std::string_view name)
 {
-    std::filesystem::path relative(std::u8string(reinterpret_cast<const char8_t *>(name.data()), name.size()));
+    std::filesystem::path relative(
+        std::u8string(reinterpret_cast<const char8_t *>(name.data()), name.size()));
     return outputDir / relative.make_preferred();
 }
 

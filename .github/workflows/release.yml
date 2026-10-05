@@ -1,6 +1,6 @@
 # Builds the installer and the portable zip with packaging/package.ps1.
-# Runs on a version tag (v1.2.3), which also publishes a GitHub release, or by
-# hand from the Actions tab (artifacts only).
+# Runs on a version tag (v1.2.3), which also publishes a GitHub release, on
+# pull requests, or by hand from the Actions tab (artifacts only).
 #
 # Qt is installed to C:\Qt so the paths in CMakePresets.json hold.
 
@@ -9,10 +9,17 @@ name: Release
 on:
   push:
     tags: ["v*"]
+  pull_request:
   workflow_dispatch:
 
 permissions:
   contents: write
+
+# A new push to a pull request supersedes its earlier package build; tag builds
+# always finish.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
   package:
@@ -54,18 +61,28 @@ jobs:
           $env:PATH = "C:\Qt\Tools\mingw1310_64\bin;C:\Qt\6.12.0\mingw_64\bin;C:\Qt\Tools\Ninja;C:\Qt\Tools\CMake_64\bin;$env:PATH"
           ./packaging/package.ps1
 
-      - uses: actions/upload-artifact@v7
+      # One artifact per package, each required: package.ps1 only warns when it
+      # cannot find Inno Setup, and the in-app updater needs the Setup.exe.
+      - name: Upload the installer
+        uses: actions/upload-artifact@v7
         with:
-          name: packages
-          path: |
-            dist/*-Setup.exe
-            dist/*-Portable-*.zip
+          name: installer
+          path: dist/*-Setup.exe
+          if-no-files-found: error
+
+      - name: Upload the portable zip
+        uses: actions/upload-artifact@v7
+        with:
+          name: portable
+          path: dist/*-Portable-*.zip
+          if-no-files-found: error
 
       - name: Publish the release
         if: startsWith(github.ref, 'refs/tags/v')
         uses: softprops/action-gh-release@v3
         with:
           draft: true
+          fail_on_unmatched_files: true
           files: |
             dist/*-Setup.exe
             dist/*-Portable-*.zip

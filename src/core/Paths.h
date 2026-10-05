@@ -11,9 +11,9 @@ class Settings;
 struct PathRoots
 {
     bool portable = false;
-    QString portableRoot;  // <exe dir>/data
-    QString documentsDir;  // shell Documents (honours OneDrive redirection)
-    QString localAppData;  // %LOCALAPPDATA%
+    QString portableRoot; // <exe dir>/data
+    QString documentsDir; // shell Documents (honours OneDrive redirection)
+    QString localAppData; // %LOCALAPPDATA%
 
     static PathRoots defaults();
 };

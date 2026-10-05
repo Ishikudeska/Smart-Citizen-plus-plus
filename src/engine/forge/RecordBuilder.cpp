@@ -38,13 +38,14 @@ struct DotNetException
 // so this text is what lands in the cache. In 69 of ~27k cases the JIT had
 // not yet inlined ReadDataMappingAtIndex and an extra frame appears; that is
 // nondeterministic, so the single-frame form is the one reproduced.
-constexpr const char *kArrayFrame =
-    "   at unforge.DataForgeStructDefinition.ReadArrayValueAsXml(XmlNode parentNode, DataForgePropertyDefinition "
-    "propertyDefinition, UInt32 firstIndex, UInt16 offset)";
-constexpr const char *kValueFrame = "   at unforge.DataForgeStructDefinition.ReadValueAsXml(XmlNode parentNode, "
-                                    "DataForgePropertyDefinition propertyDefinition, String nameOverride)";
-constexpr const char *kStructFrame =
-    "   at unforge.DataForge.ReadStructAtIndexAsXml(XmlElement xmlNode, UInt32 structIndex, UInt32 variantIndex)";
+constexpr const char *kArrayFrame = "   at unforge.DataForgeStructDefinition.ReadArrayValueAsXml(XmlNode "
+                                    "parentNode, DataForgePropertyDefinition "
+                                    "propertyDefinition, UInt32 firstIndex, UInt16 offset)";
+constexpr const char *kValueFrame =
+    "   at unforge.DataForgeStructDefinition.ReadValueAsXml(XmlNode parentNode, "
+    "DataForgePropertyDefinition propertyDefinition, String nameOverride)";
+constexpr const char *kStructFrame = "   at unforge.DataForge.ReadStructAtIndexAsXml(XmlElement xmlNode, "
+                                     "UInt32 structIndex, UInt32 variantIndex)";
 
 [[noreturn]] void throwIndexOutOfRange(const char *frame,
                                        std::string message = "Index was outside the bounds of the array.")
@@ -91,22 +92,20 @@ std::string pointerText(const std::string &structName, std::uint16_t variant)
     return structName + "[" + hex + "]";
 }
 
-template <class F>
-struct ScopeExit
+template <class F> struct ScopeExit
 {
-    F f;
+    explicit ScopeExit(F fn) : f(std::move(fn)) {}
+    ScopeExit(const ScopeExit &) = delete;
+    ScopeExit &operator=(const ScopeExit &) = delete;
     ~ScopeExit() { f(); }
+    F f;
 };
-template <class F>
-ScopeExit(F) -> ScopeExit<F>;
+template <class F> ScopeExit(F) -> ScopeExit<F>;
 
 } // namespace
 
-RecordBuilder::RecordBuilder(const DataForge &forge, BuildOptions options)
-    : forge_(forge)
-    , options_(options)
-{
-}
+RecordBuilder::RecordBuilder(const DataForge &forge, BuildOptions options) : forge_(forge), options_(options)
+{}
 
 NodeId RecordBuilder::build(std::uint32_t index, xml::XmlTree &tree)
 {
@@ -124,7 +123,8 @@ const std::uint8_t *RecordBuilder::take(std::size_t n)
 {
     const auto bytes = forge_.bytes();
     if (pos_ > bytes.size() || n > bytes.size() - pos_)
-        throw DotNetException{"System.IO.EndOfStreamException", "Unable to read beyond the end of the stream.", ""};
+        throw DotNetException{"System.IO.EndOfStreamException",
+                              "Unable to read beyond the end of the stream.", ""};
     const std::uint8_t *p = bytes.data() + pos_;
     pos_ += n;
     return p;
@@ -143,9 +143,10 @@ std::string_view RecordBuilder::textAt(std::uint32_t offset) const
     const auto text = forge_.text(offset);
     if (!text) {
         // ReadTextAtOffset's own message; its stack can't be reproduced.
-        throwIndexOutOfRange("   at unforge.DataForge.ReadTextAtOffset(Int64 offset)",
-                             "Offset " + std::to_string(offset) + " is out of range for Text values (length: " +
-                                 std::to_string(forge_.textLength()) + ")");
+        throwIndexOutOfRange(
+            "   at unforge.DataForge.ReadTextAtOffset(Int64 offset)",
+            "Offset " + std::to_string(offset) +
+                " is out of range for Text values (length: " + std::to_string(forge_.textLength()) + ")");
     }
     return *text;
 }
@@ -275,8 +276,9 @@ NodeId RecordBuilder::readStructAtIndex(NodeId node, std::uint32_t structIndex, 
     const DataMapping &mapping = forge_.mappings()[structIndex];
     if (mapping.structCount < variant)
         throwIndexOutOfRange(kStructFrame, "Variant Index " + std::to_string(variant) +
-                                               " is out of range for struct " + forge_.structName(structIndex) +
-                                               " with count " + std::to_string(mapping.structCount));
+                                               " is out of range for struct " +
+                                               forge_.structName(structIndex) + " with count " +
+                                               std::to_string(mapping.structCount));
     const auto offset = forge_.instanceOffset(structIndex, variant);
     if (!offset)
         throw DotNetException{"System.Collections.Generic.KeyNotFoundException",
@@ -291,7 +293,7 @@ NodeId RecordBuilder::readStructAtIndex(NodeId node, std::uint32_t structIndex, 
 NodeId RecordBuilder::readStructAs(NodeId node, std::uint32_t structIndex)
 {
     int count = 0;
-    structChildren(node, structIndex, [&](const Child &child) {
+    structChildren(node, structIndex, [&](Child child) {
         if (child.kind == ChildKind::None)
             return true;
         if (child.kind == ChildKind::Element)
@@ -337,7 +339,7 @@ RecordBuilder::Child RecordBuilder::readValue(NodeId target, std::uint32_t prope
             if (prop.index >= forge_.structs().size())
                 throwIndexOutOfRange(kValueFrame);
             const NodeId element = newPropertyElement(property);
-            structChildren(element, prop.index, [&](const Child &child) {
+            structChildren(element, prop.index, [&](Child child) {
                 if (child.kind == ChildKind::Element)
                     tree_->appendChild(element, child.element);
                 return true;
@@ -525,17 +527,20 @@ NodeId RecordBuilder::readArrayValue(std::uint32_t property, std::uint32_t first
         case DataType::Int8:
             return simple("Int8", std::to_string(static_cast<std::int8_t>(*poolEntry(Pool::Int8, index))));
         case DataType::Int16:
-            return simple("Int16", std::to_string(static_cast<std::int16_t>(u16(poolEntry(Pool::Int16, index)))));
+            return simple("Int16",
+                          std::to_string(static_cast<std::int16_t>(u16(poolEntry(Pool::Int16, index)))));
         case DataType::Int32:
-            return simple("Int32", std::to_string(static_cast<std::int32_t>(u32(poolEntry(Pool::Int32, index)))));
+            return simple("Int32",
+                          std::to_string(static_cast<std::int32_t>(u32(poolEntry(Pool::Int32, index)))));
         case DataType::Int64:
-            return simple("Int64", std::to_string(static_cast<std::int64_t>(u64(poolEntry(Pool::Int64, index)))));
+            return simple("Int64",
+                          std::to_string(static_cast<std::int64_t>(u64(poolEntry(Pool::Int64, index)))));
         case DataType::String:
         case DataType::Locale:
         case DataType::Enum: {
             const Pool pool = prop.dataType == static_cast<std::uint16_t>(DataType::String)   ? Pool::String
                               : prop.dataType == static_cast<std::uint16_t>(DataType::Locale) ? Pool::Locale
-                                                                                               : Pool::Enum;
+                                                                                              : Pool::Enum;
             const char *name = pool == Pool::String ? "String" : pool == Pool::Locale ? "LocID" : "Enum";
             std::string value;
             xml::appendLatin1AsUtf8(value, textAt(u32(poolEntry(pool, index))));
@@ -543,8 +548,9 @@ NodeId RecordBuilder::readArrayValue(std::uint32_t property, std::uint32_t first
         }
         case DataType::WeakPointer:
         case DataType::StrongPointer: {
-            const Pool pool = prop.dataType == static_cast<std::uint16_t>(DataType::WeakPointer) ? Pool::WeakPointer
-                                                                                                 : Pool::StrongPointer;
+            const Pool pool = prop.dataType == static_cast<std::uint16_t>(DataType::WeakPointer)
+                                  ? Pool::WeakPointer
+                                  : Pool::StrongPointer;
             const std::uint8_t *ptr = poolEntry(pool, index);
             const std::uint32_t structIndex = u32(ptr);
             const std::uint16_t variant = u16(ptr + 4);
@@ -570,8 +576,8 @@ NodeId RecordBuilder::readArrayValue(std::uint32_t property, std::uint32_t first
             break;
         }
     } catch (const DotNetException &ex) {
-        const std::string text = "Error reading array property " + forge_.propertyName(property) + " of type " +
-                                 dataTypeName(prop.dataType) + ": " + ex.toString();
+        const std::string text = "Error reading array property " + forge_.propertyName(property) +
+                                 " of type " + dataTypeName(prop.dataType) + ": " + ex.toString();
         return withValue(newPropertyElement(property), text);
     }
     return withValue(newPropertyElement(property), "TBC");

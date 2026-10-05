@@ -22,8 +22,7 @@ struct Inst
 {
     std::vector<std::uint8_t> b;
 
-    template <class T>
-    Inst &raw(T v)
+    template <class T> Inst &raw(T v)
     {
         const auto *p = reinterpret_cast<const std::uint8_t *>(&v);
         b.insert(b.end(), p, p + sizeof v);
@@ -43,7 +42,10 @@ struct Inst
         b.insert(b.end(), g.begin(), g.end());
         return *this;
     }
-    Inst &ptr(std::uint32_t structIndex, std::uint16_t variant) { return u32(structIndex).u16(variant).u16(0); }
+    Inst &ptr(std::uint32_t structIndex, std::uint16_t variant)
+    {
+        return u32(structIndex).u16(variant).u16(0);
+    }
     Inst &nullPtr() { return ptr(0xFFFFFFFFu, 0xFFFF); }
     Inst &ref(const GuidBytes &g) { return u32(0).guid(g); }
     Inst &array(std::uint32_t count, std::uint32_t first) { return u32(count).u32(first); }
@@ -76,8 +78,8 @@ public:
     void addProperty(std::uint32_t owner, const std::string &name, DataType type,
                      Conversion conversion = Conversion::Attribute, std::uint16_t index = 0)
     {
-        structs_[owner].properties.push_back({name, static_cast<std::uint16_t>(type),
-                                              static_cast<std::uint8_t>(conversion), index});
+        structs_[owner].properties.push_back(
+            {name, static_cast<std::uint16_t>(type), static_cast<std::uint8_t>(conversion), index});
     }
 
     // Returns the instance's variant index.
@@ -160,15 +162,30 @@ public:
         for (int i = 0; i < 4; ++i)
             put16(0);
         const auto poolCount = [&](Pool p) { return pools_[static_cast<int>(p)].count; };
-        const std::uint32_t counts[24] = {
-            static_cast<std::uint32_t>(structs_.size()), static_cast<std::uint32_t>(props.size()), 0,
-            static_cast<std::uint32_t>(structs_.size()), static_cast<std::uint32_t>(records_.size()),
-            poolCount(Pool::Boolean), poolCount(Pool::Int8), poolCount(Pool::Int16), poolCount(Pool::Int32),
-            poolCount(Pool::Int64), poolCount(Pool::UInt8), poolCount(Pool::UInt16), poolCount(Pool::UInt32),
-            poolCount(Pool::UInt64), poolCount(Pool::Single), poolCount(Pool::Double), poolCount(Pool::Guid),
-            poolCount(Pool::String), poolCount(Pool::Locale), poolCount(Pool::Enum),
-            poolCount(Pool::StrongPointer), poolCount(Pool::WeakPointer), poolCount(Pool::Reference),
-            poolCount(Pool::EnumOption)};
+        const std::uint32_t counts[24] = {static_cast<std::uint32_t>(structs_.size()),
+                                          static_cast<std::uint32_t>(props.size()),
+                                          0,
+                                          static_cast<std::uint32_t>(structs_.size()),
+                                          static_cast<std::uint32_t>(records_.size()),
+                                          poolCount(Pool::Boolean),
+                                          poolCount(Pool::Int8),
+                                          poolCount(Pool::Int16),
+                                          poolCount(Pool::Int32),
+                                          poolCount(Pool::Int64),
+                                          poolCount(Pool::UInt8),
+                                          poolCount(Pool::UInt16),
+                                          poolCount(Pool::UInt32),
+                                          poolCount(Pool::UInt64),
+                                          poolCount(Pool::Single),
+                                          poolCount(Pool::Double),
+                                          poolCount(Pool::Guid),
+                                          poolCount(Pool::String),
+                                          poolCount(Pool::Locale),
+                                          poolCount(Pool::Enum),
+                                          poolCount(Pool::StrongPointer),
+                                          poolCount(Pool::WeakPointer),
+                                          poolCount(Pool::Reference),
+                                          poolCount(Pool::EnumOption)};
         for (std::uint32_t c : counts)
             put32(c);
         put32(static_cast<std::uint32_t>(text.size()));
@@ -229,23 +246,37 @@ public:
             switch (static_cast<DataType>(p.type)) {
             case DataType::Boolean:
             case DataType::Int8:
-            case DataType::UInt8: size += 1; break;
+            case DataType::UInt8:
+                size += 1;
+                break;
             case DataType::Int16:
-            case DataType::UInt16: size += 2; break;
+            case DataType::UInt16:
+                size += 2;
+                break;
             case DataType::Int32:
             case DataType::UInt32:
             case DataType::Single:
             case DataType::String:
             case DataType::Locale:
-            case DataType::Enum: size += 4; break;
+            case DataType::Enum:
+                size += 4;
+                break;
             case DataType::Int64:
             case DataType::UInt64:
             case DataType::Double:
             case DataType::StrongPointer:
-            case DataType::WeakPointer: size += 8; break;
-            case DataType::Guid: size += 16; break;
-            case DataType::Reference: size += 20; break;
-            case DataType::Class: size += recordSize(p.index); break;
+            case DataType::WeakPointer:
+                size += 8;
+                break;
+            case DataType::Guid:
+                size += 16;
+                break;
+            case DataType::Reference:
+                size += 20;
+                break;
+            case DataType::Class:
+                size += recordSize(p.index);
+                break;
             }
         }
         return size;

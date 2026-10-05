@@ -39,13 +39,15 @@ IniText decodeIniText(const QByteArray &bytes)
 {
     const QByteArrayView body = withoutBom(bytes);
     {
-        QStringDecoder strict(QStringConverter::Utf8, QStringConverter::Flag::Stateless | QStringConverter::Flag::ConvertInitialBom);
+        QStringDecoder strict(QStringConverter::Utf8,
+                              QStringConverter::Flag::Stateless | QStringConverter::Flag::ConvertInitialBom);
         QString text = strict.decode(body);
         if (!strict.hasError())
             return {std::move(text), IniEncoding::Utf8, 0};
     }
 
-    QStringDecoder lenient(QStringConverter::Utf8, QStringConverter::Flag::Stateless | QStringConverter::Flag::ConvertInitialBom);
+    QStringDecoder lenient(QStringConverter::Utf8,
+                           QStringConverter::Flag::Stateless | QStringConverter::Flag::ConvertInitialBom);
     QString repaired = lenient.decode(body);
     const int bad = static_cast<int>(repaired.count(QChar(0xFFFD)));
     qsizetype high = 0;

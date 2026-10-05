@@ -9,6 +9,16 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  format:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      # Pinned to the clang-format that ships with Qt Creator (LLVM 22.1.8), which
+      # is what formats the code locally; other versions lay some code out differently.
+      - name: Check C++ formatting
+        run: git ls-files -z '*.cpp' '*.h' | xargs -0 pipx run --spec clang-format==22.1.8 clang-format --dry-run -Werror
+
   build-and-test:
     runs-on: windows-latest
     steps:
@@ -29,11 +39,21 @@ jobs:
           # Qt uses from 6.11, so use a master commit with that support until 3.4.0.
           aqtsource: 'git+https://github.com/miurahr/aqtinstall.git@076e1659807d0b362a3ed684d54c2e9c775eb9c7'
 
+      # The code builds warning-free; keep it that way.
       - name: Configure
-        run: cmake --preset mingw-debug
+        run: cmake --preset mingw-debug -DSC_WARNINGS_AS_ERRORS=ON
 
       - name: Build
         run: cmake --build --preset mingw-debug
 
+      - name: Lint QML
+        run: cmake --build --preset mingw-debug --target all_qmllint
+
       - name: Test
         run: ctest --preset mingw-debug -LE parity
+
+      # The optimized build is what ships, and -O2 enables warnings -O0 does not.
+      - name: Build release
+        run: |
+          cmake --preset mingw-release -DSC_WARNINGS_AS_ERRORS=ON
+          cmake --build --preset mingw-release

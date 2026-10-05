@@ -1,7 +1,6 @@
 #include "TutorialController.h"
 
 #include "AppController.h"
-
 #include "core/i18n/Translator.h"
 
 #include <QCoreApplication>
@@ -13,7 +12,8 @@
 
 Q_DECLARE_LOGGING_CATEGORY(lcApp)
 
-TutorialController::TutorialController(QObject *parent) : QObject(parent) {}
+TutorialController::TutorialController(QObject *parent) : QObject(parent)
+{}
 
 void TutorialController::load()
 {
@@ -28,7 +28,8 @@ void TutorialController::load()
         const QString t = core::i18n::tr(key.toUtf8().constData());
         return t == key || t.isEmpty() ? fallback : t;
     };
-    for (const QJsonValue &v : QJsonDocument::fromJson(f.readAll()).object().value(u"steps").toArray()) {
+    for (const auto steps = QJsonDocument::fromJson(f.readAll()).object().value(u"steps").toArray();
+         const QJsonValue &v : steps) {
         const QJsonObject o = v.toObject();
         const QString id = o.value(u"id").toString();
         QString title = o.value(u"title").toString();
@@ -39,12 +40,13 @@ void TutorialController::load()
         description = translated(QStringLiteral("tutorial.%1.description").arg(id), description);
         title.replace(QStringLiteral("{app}"), app);
         description.replace(QStringLiteral("{app}"), app);
-        steps_.push_back(QVariantMap{{QStringLiteral("id"), id},
-                                     {QStringLiteral("page"), o.value(u"page").toString()},
-                                     {QStringLiteral("target"), o.value(u"target").toString()},
-                                     {QStringLiteral("side"), o.value(u"side").toString(QStringLiteral("auto"))},
-                                     {QStringLiteral("title"), title},
-                                     {QStringLiteral("description"), description}});
+        steps_.push_back(
+            QVariantMap{{QStringLiteral("id"), id},
+                        {QStringLiteral("page"), o.value(u"page").toString()},
+                        {QStringLiteral("target"), o.value(u"target").toString()},
+                        {QStringLiteral("side"), o.value(u"side").toString(QStringLiteral("auto"))},
+                        {QStringLiteral("title"), title},
+                        {QStringLiteral("description"), description}});
     }
 }
 

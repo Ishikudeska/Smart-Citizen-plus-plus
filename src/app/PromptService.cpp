@@ -6,7 +6,8 @@
 
 using core::i18n::tr;
 
-PromptService::PromptService(QObject *parent) : QObject(parent) {}
+PromptService::PromptService(QObject *parent) : QObject(parent)
+{}
 
 void PromptService::ask(Prompt prompt, Answer answer)
 {

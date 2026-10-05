@@ -51,7 +51,8 @@ private slots:
         XmlTree t;
         const auto root = t.createElement("R");
         t.appendAttribute(root, "v", "a&b<c>d\"e'f\tg\r\nh\x01i");
-        QCOMPARE(write(t, root), std::string("<R v=\"a&amp;b&lt;c&gt;d&quot;e'f&#x9;g&#xD;&#xA;h&#x1;i\" />"));
+        QCOMPARE(write(t, root),
+                 std::string("<R v=\"a&amp;b&lt;c&gt;d&quot;e'f&#x9;g&#xD;&#xA;h&#x1;i\" />"));
     }
 
     void nonAsciiStaysUtf8()
@@ -91,9 +92,10 @@ private slots:
         t.appendAttribute(b, "x", "1");
         t.appendChild(a, b);
         t.appendChild(root, a);
-        QCOMPARE(write(t, root), std::string("<R>\r\n"
-                                             "  <A><![CDATA[text\r\nmore ]]]]><![CDATA[> end]]><B x=\"1\" /></A>\r\n"
-                                             "</R>"));
+        QCOMPARE(write(t, root),
+                 std::string("<R>\r\n"
+                             "  <A><![CDATA[text\r\nmore ]]]]><![CDATA[> end]]><B x=\"1\" /></A>\r\n"
+                             "</R>"));
     }
 
     void copiesToPugi()
@@ -119,16 +121,20 @@ private slots:
         QTest::newRow("prefix") << QByteArray("ss:ID") << QString();
         QTest::newRow("space") << QByteArray("bar stools")
                                << "The ' ' character, hexadecimal value 0x20, cannot be included in a name.";
-        QTest::newRow("ampersand") << QByteArray("Tram&Myers")
-                                   << "The '&' character, hexadecimal value 0x26, cannot be included in a name.";
-        QTest::newRow("leading colon") << QByteArray(":a")
-                                       << "The ':' character, hexadecimal value 0x3A, cannot be included in a name.";
+        QTest::newRow("ampersand")
+            << QByteArray("Tram&Myers")
+            << "The '&' character, hexadecimal value 0x26, cannot be included in a name.";
+        QTest::newRow("leading colon")
+            << QByteArray(":a") << "The ':' character, hexadecimal value 0x3A, cannot be included in a name.";
         QTest::newRow("latin1 letter") << QByteArray("caf\xE9") << QString();
-        QTest::newRow("multiply sign") << QByteArray("a\xD7" "b")
-                                       << QString::fromUtf8("The '\xC3\x97' character, hexadecimal value 0xD7, cannot "
-                                                            "be included in a name.");
-        QTest::newRow("empty") << QByteArray("")
-                               << "The local name for elements or attributes cannot be null or an empty string.";
+        QTest::newRow("multiply sign")
+            << QByteArray("a\xD7"
+                          "b")
+            << QString::fromUtf8("The '\xC3\x97' character, hexadecimal value 0xD7, cannot "
+                                 "be included in a name.");
+        QTest::newRow("empty")
+            << QByteArray("")
+            << "The local name for elements or attributes cannot be null or an empty string.";
     }
 
     void dotNetNameErrors()

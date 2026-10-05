@@ -1,5 +1,6 @@
 #pragma once
 
+#include <QByteArray>
 #include <QJsonArray>
 #include <QString>
 #include <QUrl>
@@ -27,19 +28,22 @@ struct InstallerAsset
 {
     QUrl url;
     qint64 size = 0;
+    QByteArray sha256; // lower-case hex, from the asset's "digest"
 };
 
 // The release asset named "<exe>-<anything>-Setup.exe" (case-insensitive,
-// whole name), so portable zips and checksums are never picked.
+// whole name), so portable zips and checksums are never picked. Only an
+// https asset carrying GitHub's "sha256:<hex>" digest qualifies: the
+// installer runs silently, so it is never run unverified.
 std::optional<InstallerAsset> pickInstallerAsset(const QJsonArray &assets, const QString &exeName);
 
 struct UpdateCheck
 {
     enum class Status { UpToDate, Available, Failed, Disabled };
     Status status = Status::Failed;
-    QString latest;       // without a leading "v"
+    QString latest; // without a leading "v"
     QUrl releasePage;
-    QString notes;        // the release body (Markdown)
+    QString notes; // the release body (Markdown)
     std::optional<InstallerAsset> installer;
     QString error;
 };
@@ -52,8 +56,9 @@ QUrl latestReleaseApi(const QString &repo);
 UpdateCheck checkForUpdate(const QString &repo, const QString &currentVersion, int timeoutMs = 10'000);
 
 // Streams the installer into `destDir` through a ".part" file renamed on
-// completion, so a half download is never mistaken for an installer.
-// Returns the installer's path, or an error message in `error`.
+// completion, so a half download is never mistaken for an installer. The
+// file must match the asset's size (when known) and SHA-256, or it is
+// deleted. Returns the installer's path, or an error message in `error`.
 using DownloadProgress = std::function<void(qint64 done, qint64 total)>;
 QString downloadInstaller(const InstallerAsset &asset, const QString &destDir, QString *error,
                           const DownloadProgress &progress = {}, const std::atomic<bool> *cancel = nullptr);

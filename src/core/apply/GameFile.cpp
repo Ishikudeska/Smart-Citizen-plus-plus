@@ -14,7 +14,7 @@ namespace core {
 
 namespace {
 
-const QByteArray kUtf8Bom("\xEF\xBB\xBF");
+constexpr QByteArrayView kUtf8Bom("\xEF\xBB\xBF");
 
 QStringList sortedSample(const QSet<QString> &keys, qsizetype limit)
 {
@@ -61,7 +61,7 @@ QByteArray renderGameFile(const QString &baseIniText, const IniMap &merged)
             out += QStringView(line).sliced(eq + 1);
         out += ending;
     }
-    return kUtf8Bom + toCrlfUtf8(out);
+    return toCrlfUtf8(out).prepend(kUtf8Bom);
 }
 
 QString writeGameFile(const QString &baseIniPath, const IniMap &merged, const QString &outputPath)
@@ -106,7 +106,7 @@ QString validateGameFile(const QString &writtenPath, const QSet<QString> &stockK
 
     auto list = [&lines](const QSet<QString> &keys, const QString &heading) {
         lines << heading.arg(keys.size());
-        for (const QString &k : sortedSample(keys, 20))
+        for (const auto sample = sortedSample(keys, 20); const QString &k : sample)
             lines << QStringLiteral("  ") + k;
         if (keys.size() > 20)
             lines << QStringLiteral("  ... and %1 more").arg(keys.size() - 20);

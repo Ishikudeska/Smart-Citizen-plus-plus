@@ -15,10 +15,10 @@ namespace core {
 
 struct ApplyInputs
 {
-    LoadedSources sources;  // reloaded from disk just before applying
-    IniMap userOverrides;   // see userOverridesFrom()
-    QString baseIniPath;    // stock base.ini: line structure and validation keys
-    QString gameFile;       // <channel>\data\Localization\<lang>\global.ini
+    LoadedSources sources; // reloaded from disk just before applying
+    IniMap userOverrides;  // see userOverridesFrom()
+    QString baseIniPath;   // stock base.ini: line structure and validation keys
+    QString gameFile;      // <channel>\data\Localization\<lang>\global.ini
     QString backupsDir;
     QString channelInstallDir; // for user.cfg; empty skips it
     QString scLanguageId;

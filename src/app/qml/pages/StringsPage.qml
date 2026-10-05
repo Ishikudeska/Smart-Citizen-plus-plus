@@ -97,7 +97,7 @@ Item {
                     }
                     MenuItem { text: qsTr("toolbar.open_loc_dir_btn"); onTriggered: App.openLocalizationDir() }
                     MenuSeparator {}
-                    MenuItem { text: qsTr("toolbar.menu_reset_window_proportions"); onTriggered: App.resetWindowProportions() }
+                    MenuItem { text: qsTr("toolbar.menu_reset_window_proportions"); onTriggered: App.windowLayout.resetWindowProportions() }
                     MenuItem { text: qsTr("toolbar.menu_switch_to_simple"); onTriggered: App.uiMode = "simple" }
                 }
             }
@@ -359,7 +359,7 @@ Item {
                             saveWidths.restart()
                     }
                     Component.onCompleted: {
-                        const saved = App.columnWidths()
+                        const saved = App.windowLayout.columnWidths()
                         for (let c = 0; c < saved.length && c < columns; ++c)
                             if (saved[c] >= 0)
                                 setColumnWidth(c, saved[c])
@@ -378,11 +378,11 @@ Item {
                                 any = any || w >= 0
                             }
                             if (any)
-                                App.saveColumnWidths(widths)
+                                App.windowLayout.saveColumnWidths(widths)
                         }
                     }
                     Connections {
-                        target: App
+                        target: App.windowLayout
                         function onWindowProportionsReset() { table.clearColumnWidths(); table.forceLayout() }
                     }
                     ScrollBar.horizontal: ScrollBar { policy: ScrollBar.AsNeeded }

@@ -1,5 +1,6 @@
 #include "TaskRunner.h"
 
+#include <QCoreApplication>
 #include <QLoggingCategory>
 #include <QThreadPool>
 
@@ -20,7 +21,8 @@ void TaskRunner::Job::report(const QString &message, int completed, int total)
     sink_.flush();
 }
 
-TaskRunner::TaskRunner(QObject *parent) : QObject(parent) {}
+TaskRunner::TaskRunner(QObject *parent) : QObject(parent)
+{}
 
 void TaskRunner::run(const QString &title, bool cancellable, std::function<void(Job &)> work,
                      std::function<void()> done)
@@ -38,6 +40,16 @@ void TaskRunner::cancel()
     }
 }
 
+void TaskRunner::cancelAll()
+{
+    if (!pending_.empty()) {
+        qCInfo(lcTasks) << "dropping" << pending_.size() << "queued task(s)";
+        pending_.clear();
+        emit changed();
+    }
+    cancel();
+}
+
 void TaskRunner::enqueue(Pending task)
 {
     pending_.push_back(std::move(task));
@@ -49,15 +61,19 @@ void TaskRunner::enqueue(Pending task)
 
 void TaskRunner::startNext()
 {
-    if (pending_.empty())
+    // A `done` that queues two jobs starts the first itself; the call after
+    // `done` must not start the second alongside it.
+    if (current_ || pending_.empty())
         return;
     Pending task = std::move(pending_.front());
     pending_.pop_front();
 
+    // Results are posted to the application object, not to `self`: reading a
+    // QPointer on the worker races this object's destruction.
     QPointer<TaskRunner> self(this);
     current_ = std::shared_ptr<Job>(new Job([self](int completed, int total, const QString &message) {
         QMetaObject::invokeMethod(
-            self.data(),
+            QCoreApplication::instance(),
             [self, completed, total, message] {
                 if (self)
                     self->onProgress(completed, total, message);
@@ -77,14 +93,16 @@ void TaskRunner::startNext()
     auto work = std::make_shared<std::function<void(Job &)>>(std::move(task.work));
     auto done = std::make_shared<std::function<void()>>(std::move(task.done));
     QThreadPool::globalInstance()->start([self, job, work, done] {
+        QString error;
         try {
             (*work)(*job);
         } catch (const std::exception &e) {
+            error = QString::fromLocal8Bit(e.what());
             qCCritical(lcTasks) << "task failed:" << e.what();
         }
         QMetaObject::invokeMethod(
-            self.data(),
-            [self, job, done] {
+            QCoreApplication::instance(),
+            [self, job, done, error] {
                 if (!self)
                     return;
                 const QString title = self->title_;
@@ -96,6 +114,8 @@ void TaskRunner::startNext()
                 qCInfo(lcTasks) << "done:" << title;
                 if (*done)
                     (*done)();
+                if (!error.isEmpty())
+                    emit self->failed(title, error);
                 emit self->finished(title);
                 self->startNext();
             },

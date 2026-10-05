@@ -22,9 +22,10 @@ QString qdSizeRange(std::vector<int> sizes);
 QStringList condenseCraftedItems(const std::vector<std::pair<QString, QString>> &items); // (category, name)
 // Mining Compendium "Mineral - loc, loc" paragraphs: lower-cased mineral -> sorted locations.
 QHash<QString, QStringList> parseCompendiumLocations(const QString &content);
-const QStringList *lookupCommodityLocations(const QHash<QString, QStringList> &locations, const QString &display,
-                                            const QString &internalName);
-QString commodityTag(const tags::TagConfig *config, bool crafting, bool collection, const QStringList &usageKeys = {});
+const QStringList *lookupCommodityLocations(const QHash<QString, QStringList> &locations,
+                                            const QString &display, const QString &internalName);
+QString commodityTag(const tags::TagConfig *config, bool crafting, bool collection,
+                     const QStringList &usageKeys = {});
 
 // (commodity output, journal output).
 std::pair<Loc, Loc> generateCommodityJournal(const Context &ctx);

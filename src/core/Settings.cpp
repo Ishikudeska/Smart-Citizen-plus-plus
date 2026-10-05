@@ -23,13 +23,13 @@ namespace core {
 namespace {
 
 namespace key {
-const QString kScInstallRoot = QStringLiteral("sc_install_root");
-const QString kActiveChannel = QStringLiteral("active_channel");
-const QString kSelectedLanguage = QStringLiteral("selected_language");
-const QString kUserDataDir = QStringLiteral("user_data_dir");
-const QString kCacheDir = QStringLiteral("cache_dir");
-const QString kFavoritePrefix = QStringLiteral("favorite_prefix");
-const QString kOwnedItems = QStringLiteral("owned_items");
+constexpr QLatin1StringView kScInstallRoot("sc_install_root");
+constexpr QLatin1StringView kActiveChannel("active_channel");
+constexpr QLatin1StringView kSelectedLanguage("selected_language");
+constexpr QLatin1StringView kUserDataDir("user_data_dir");
+constexpr QLatin1StringView kCacheDir("cache_dir");
+constexpr QLatin1StringView kFavoritePrefix("favorite_prefix");
+constexpr QLatin1StringView kOwnedItems("owned_items");
 QString watermark(const QString &channel)
 {
     return QStringLiteral("blueprint_log_watermark/") + channel;
@@ -73,21 +73,19 @@ QString Settings::defaultFilePath()
 #ifdef Q_OS_WIN
     const QString roaming = qEnvironmentVariable("APPDATA");
     if (!roaming.isEmpty())
-        return QDir(roaming).filePath(QString::fromLatin1(identity::kOrgName) + QStringLiteral("/settings.ini"));
+        return QDir(roaming).filePath(QString::fromLatin1(identity::kOrgName) +
+                                      QStringLiteral("/settings.ini"));
 #endif
     return QDir(QStandardPaths::writableLocation(QStandardPaths::AppConfigLocation))
         .filePath(QStringLiteral("settings.ini"));
 }
 
-Settings::Settings()
-    : Settings(defaultFilePath())
-{
-}
+Settings::Settings() : Settings(defaultFilePath())
+{}
 
 Settings::Settings(const QString &iniPath)
     : settings_(std::make_unique<QSettings>(iniPath, QSettings::IniFormat))
-{
-}
+{}
 
 QString Settings::filePath() const
 {
@@ -331,7 +329,8 @@ bool Settings::missionTitleTagDefault(const QString &field)
 
 bool Settings::missionTitleTag(const QString &field) const
 {
-    return settings_->value(QStringLiteral("mission_title_tag/") + field, missionTitleTagDefault(field)).toBool();
+    return settings_->value(QStringLiteral("mission_title_tag/") + field, missionTitleTagDefault(field))
+        .toBool();
 }
 
 void Settings::setMissionTitleTag(const QString &field, bool enabled)
@@ -398,7 +397,7 @@ void Settings::setTheme(const QString &theme)
 QString Settings::uiMode() const
 {
     return settings_->value(QStringLiteral("ui_mode")).toString() == u"simple" ? QStringLiteral("simple")
-                                                                              : QStringLiteral("advanced");
+                                                                               : QStringLiteral("advanced");
 }
 
 void Settings::setUiMode(const QString &mode)
@@ -450,7 +449,7 @@ QSet<QString> Settings::ownedItems() const
 {
     const QByteArray raw = settings_->value(key::kOwnedItems).toString().toUtf8();
     QSet<QString> names;
-    for (const QJsonValue &v : QJsonDocument::fromJson(raw).array())
+    for (const auto values = QJsonDocument::fromJson(raw).array(); const QJsonValue &v : values)
         if (v.isString())
             names.insert(v.toString());
     return names;
@@ -460,7 +459,8 @@ void Settings::setOwnedItems(const QSet<QString> &names)
 {
     // json.dumps(sorted(names)), so the stored text matches Smart Citizen's.
     QStringList sorted(names.cbegin(), names.cend());
-    std::sort(sorted.begin(), sorted.end(), [](const QString &a, const QString &b) { return py::less(a, b); });
+    std::sort(sorted.begin(), sorted.end(),
+              [](const QString &a, const QString &b) { return py::less(a, b); });
     QStringList items;
     for (const QString &name : sorted)
         items << py::jsonString(name, true);
@@ -501,7 +501,8 @@ void Settings::setScanOtherChannels(bool enabled)
 
 QDateTime Settings::blueprintLogWatermark(const QString &channel) const
 {
-    const QString raw = settings_->value(key::watermark(channel.isEmpty() ? activeChannel() : channel)).toString();
+    const QString raw =
+        settings_->value(key::watermark(channel.isEmpty() ? activeChannel() : channel)).toString();
     // datetime.isoformat(): "2026-03-26T17:15:41.684000+00:00".
     static const QRegularExpression iso(QStringLiteral(
         R"(^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})(?:\.(\d{1,6}))?(Z|[+-]\d{2}:\d{2})?$)"));
@@ -526,7 +527,8 @@ void Settings::setBlueprintLogWatermark(const QDateTime &when, const QString &ch
     QString text = utc.toString(QStringLiteral("yyyy-MM-ddTHH:mm:ss"));
     if (const int ms = utc.time().msec(); ms != 0)
         text += u'.' + QStringLiteral("%1").arg(ms, 3, 10, QChar(u'0')) + QStringLiteral("000");
-    settings_->setValue(key::watermark(channel.isEmpty() ? activeChannel() : channel), text + QStringLiteral("+00:00"));
+    settings_->setValue(key::watermark(channel.isEmpty() ? activeChannel() : channel),
+                        text + QStringLiteral("+00:00"));
 }
 
 QStringList Settings::enabledEnhancementFileIds() const

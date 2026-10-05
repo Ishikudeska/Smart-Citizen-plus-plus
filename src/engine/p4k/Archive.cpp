@@ -148,6 +148,9 @@ std::vector<std::uint8_t> &outputBuffer()
 class Decoder
 {
 public:
+    Decoder() = default;
+    Decoder(const Decoder &) = delete;
+    Decoder &operator=(const Decoder &) = delete;
     virtual ~Decoder() = default;
     virtual Result<void> push(std::span<const std::uint8_t> in) = 0;
     virtual Result<void> finish() = 0;
@@ -158,11 +161,7 @@ public:
 class StoredDecoder final : public Decoder
 {
 public:
-    StoredDecoder(const Sink &out, bool stripTrailingZeros)
-        : out_(out)
-        , strip_(stripTrailingZeros)
-    {
-    }
+    StoredDecoder(const Sink &out, bool stripTrailingZeros) : out_(out), strip_(stripTrailingZeros) {}
 
     Result<void> push(std::span<const std::uint8_t> in) override
     {
@@ -204,11 +203,7 @@ private:
 class InflateDecoder final : public Decoder
 {
 public:
-    explicit InflateDecoder(const Sink &out)
-        : out_(out)
-    {
-        ok_ = inflateInit2(&zs_, -MAX_WBITS) == Z_OK;
-    }
+    explicit InflateDecoder(const Sink &out) : out_(out) { ok_ = inflateInit2(&zs_, -MAX_WBITS) == Z_OK; }
 
     ~InflateDecoder() override
     {
@@ -263,8 +258,11 @@ ZSTD_DCtx *zstdContext()
 {
     struct Holder
     {
-        ZSTD_DCtx *ctx = ZSTD_createDCtx();
+        Holder() = default;
+        Holder(const Holder &) = delete;
+        Holder &operator=(const Holder &) = delete;
         ~Holder() { ZSTD_freeDCtx(ctx); }
+        ZSTD_DCtx *ctx = ZSTD_createDCtx();
     };
     thread_local Holder holder;
     ZSTD_DCtx_reset(holder.ctx, ZSTD_reset_session_only);
@@ -277,11 +275,7 @@ ZSTD_DCtx *zstdContext()
 class ZstdDecoder final : public Decoder
 {
 public:
-    ZstdDecoder(const Sink &out, bool encrypted)
-        : out_(out)
-        , passthrough_(out, encrypted)
-    {
-    }
+    ZstdDecoder(const Sink &out, bool encrypted) : out_(out), passthrough_(out, encrypted) {}
 
     Result<void> push(std::span<const std::uint8_t> in) override
     {
@@ -383,7 +377,7 @@ std::string_view methodName(std::uint16_t method)
 }
 
 Result<std::shared_ptr<const Archive>> Archive::open(const std::filesystem::path &path,
-                                                    const OpenOptions &options)
+                                                     const OpenOptions &options)
 {
     auto file = io::RandomAccessFile::open(path);
     if (!file)
@@ -418,7 +412,8 @@ Result<void> Archive::parseDirectory(const OpenOptions &options)
 
     std::optional<std::size_t> eocd;
     for (std::size_t i = tailSize - kEndOfCentralDirSize + 1; i-- > 0;) {
-        if (u32(&tail[i]) == kEndOfCentralDirSig && i + kEndOfCentralDirSize + u16(&tail[i + 20]) <= tailSize) {
+        if (u32(&tail[i]) == kEndOfCentralDirSig &&
+            i + kEndOfCentralDirSize + u16(&tail[i + 20]) <= tailSize) {
             eocd = i;
             break;
         }
@@ -624,7 +619,8 @@ Result<void> Archive::readStored(std::size_t index, const Sink &sink) const
     buf.resize(static_cast<std::size_t>(std::min<std::uint64_t>(e.compressedSize, kReadChunk)));
     std::uint64_t done = 0;
     while (done < e.compressedSize) {
-        const std::size_t n = static_cast<std::size_t>(std::min<std::uint64_t>(e.compressedSize - done, kReadChunk));
+        const std::size_t n =
+            static_cast<std::size_t>(std::min<std::uint64_t>(e.compressedSize - done, kReadChunk));
         SC_TRY(file_.readAt(*offset + done, std::span(buf.data(), n)));
         SC_TRY(sink(std::span<const std::uint8_t>(buf.data(), n)));
         done += n;
@@ -678,7 +674,8 @@ Result<void> Archive::read(std::size_t index, const Sink &sink) const
     buf.resize(static_cast<std::size_t>(std::min<std::uint64_t>(e.compressedSize, kReadChunk)));
     std::uint64_t done = 0;
     while (done < e.compressedSize) {
-        const std::size_t n = static_cast<std::size_t>(std::min<std::uint64_t>(e.compressedSize - done, kReadChunk));
+        const std::size_t n =
+            static_cast<std::size_t>(std::min<std::uint64_t>(e.compressedSize - done, kReadChunk));
         SC_TRY(file_.readAt(*offset + done, std::span(buf.data(), n)));
         if (aes)
             crypto::cbcDecrypt(*aes, iv, std::span(buf.data(), n));

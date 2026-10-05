@@ -24,7 +24,13 @@ namespace {
 
 std::atomic<bool> g_installed = false;
 std::atomic<bool> g_reporting = false; // one report per crash, even if the report itself faults
-QString g_logsDir;
+// Set once by install(), read by the handlers. A function-local static, so
+// it is built on first use instead of during static initialization.
+QString &crashLogsDir()
+{
+    static QString dir;
+    return dir;
+}
 std::terminate_handler g_previousTerminate = nullptr;
 
 QString stamp()
@@ -37,8 +43,9 @@ QString currentThreadName()
     const QString name = QThread::currentThread() ? QThread::currentThread()->objectName() : QString();
     if (!name.isEmpty())
         return name;
-    return QThread::isMainThread() ? QStringLiteral("MainThread")
-                                   : QStringLiteral("Thread 0x%1").arg(quintptr(QThread::currentThreadId()), 0, 16);
+    return QThread::isMainThread()
+               ? QStringLiteral("MainThread")
+               : QStringLiteral("Thread 0x%1").arg(quintptr(QThread::currentThreadId()), 0, 16);
 }
 
 #ifdef Q_OS_WIN
@@ -49,9 +56,10 @@ void writeMinidump(const QString &path, EXCEPTION_POINTERS *info)
     if (file == INVALID_HANDLE_VALUE)
         return;
     MINIDUMP_EXCEPTION_INFORMATION exception{GetCurrentThreadId(), info, FALSE};
-    MiniDumpWriteDump(GetCurrentProcess(), GetCurrentProcessId(), file,
-                      MINIDUMP_TYPE(MiniDumpNormal | MiniDumpWithThreadInfo | MiniDumpWithIndirectlyReferencedMemory),
-                      info ? &exception : nullptr, nullptr, nullptr);
+    MiniDumpWriteDump(
+        GetCurrentProcess(), GetCurrentProcessId(), file,
+        MINIDUMP_TYPE(MiniDumpNormal | MiniDumpWithThreadInfo | MiniDumpWithIndirectlyReferencedMemory),
+        info ? &exception : nullptr, nullptr, nullptr);
     CloseHandle(file);
 }
 
@@ -61,7 +69,7 @@ LONG WINAPI unhandledException(EXCEPTION_POINTERS *info)
         const QString reason = QStringLiteral("Unhandled exception 0x%1 at 0x%2")
                                    .arg(info->ExceptionRecord->ExceptionCode, 8, 16, QChar(u'0'))
                                    .arg(quintptr(info->ExceptionRecord->ExceptionAddress), 0, 16);
-        const QString report = writeCrashReport(g_logsDir, reason, currentThreadName());
+        const QString report = writeCrashReport(crashLogsDir(), reason, currentThreadName());
         if (!report.isEmpty())
             writeMinidump(report.chopped(4) + QStringLiteral(".dmp"), info);
     }
@@ -82,7 +90,7 @@ void onTerminate()
                 reason += QStringLiteral(": uncaught non-standard exception");
             }
         }
-        const QString report = writeCrashReport(g_logsDir, reason, currentThreadName());
+        const QString report = writeCrashReport(crashLogsDir(), reason, currentThreadName());
 #ifdef Q_OS_WIN
         if (!report.isEmpty())
             writeMinidump(report.chopped(4) + QStringLiteral(".dmp"), nullptr);
@@ -99,7 +107,7 @@ void install(const QString &logsDir)
 {
     if (g_installed.exchange(true))
         return;
-    g_logsDir = logsDir;
+    crashLogsDir() = logsDir;
 #ifdef Q_OS_WIN
     SetUnhandledExceptionFilter(unhandledException);
 #endif
@@ -125,7 +133,8 @@ QString writeCrashReport(const QString &logsDir, const QString &reason, const QS
     text += QStringLiteral("%1 crash dump - %2\n").arg(QString::fromUtf8(identity::kAppName), when);
     text += QStringLiteral("Version: %1\n").arg(QString::fromUtf8(identity::kVersion));
     text += QStringLiteral("Thread: %1\n").arg(thread.isEmpty() ? currentThreadName() : thread);
-    text += QStringLiteral("Platform: %1 (%2)\n\n").arg(QSysInfo::prettyProductName(), QSysInfo::currentCpuArchitecture());
+    text += QStringLiteral("Platform: %1 (%2)\n\n")
+                .arg(QSysInfo::prettyProductName(), QSysInfo::currentCpuArchitecture());
     text += QStringLiteral("--- What happened ---\n%1\n\n").arg(reason);
     text += QStringLiteral("--- Recent log (%1 lines) ---\n").arg(lines.size());
     for (const QString &line : lines)
@@ -137,7 +146,7 @@ QString writeCrashReport(const QString &logsDir, const QString &reason, const QS
 void reportFatal(const QString &reason)
 {
     if (g_installed && !g_reporting.exchange(true))
-        writeCrashReport(g_logsDir, reason);
+        writeCrashReport(crashLogsDir(), reason);
 }
 
 } // namespace core::crash

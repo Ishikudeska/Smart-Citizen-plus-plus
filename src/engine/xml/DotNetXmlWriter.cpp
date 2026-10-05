@@ -26,13 +26,27 @@ void appendAttributeValue(std::string &out, std::string_view value)
     for (const char ch : value) {
         const auto c = static_cast<unsigned char>(ch);
         switch (c) {
-        case '&': out += "&amp;"; break;
-        case '<': out += "&lt;"; break;
-        case '>': out += "&gt;"; break;
-        case '"': out += "&quot;"; break;
-        case '\t': out += "&#x9;"; break;
-        case '\n': out += "&#xA;"; break;
-        case '\r': out += "&#xD;"; break;
+        case '&':
+            out += "&amp;";
+            break;
+        case '<':
+            out += "&lt;";
+            break;
+        case '>':
+            out += "&gt;";
+            break;
+        case '"':
+            out += "&quot;";
+            break;
+        case '\t':
+            out += "&#x9;";
+            break;
+        case '\n':
+            out += "&#xA;";
+            break;
+        case '\r':
+            out += "&#xD;";
+            break;
         default:
             if (c < 0x20)
                 appendCharRef(out, c);

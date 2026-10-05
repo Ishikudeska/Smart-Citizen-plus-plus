@@ -16,18 +16,22 @@ const QColor kGrey(0x66, 0x66, 0x66);
 QColor statusColor(EntryStatus status)
 {
     switch (status) {
-    case EntryStatus::Modified: return QColor(0x4C, 0xAF, 0x50);
-    case EntryStatus::Enhanced: return QColor(0x21, 0x96, 0xF3);
-    case EntryStatus::Unmodified: return QColor(0x99, 0x99, 0x99);
-    case EntryStatus::New: return QColor(0xFF, 0x98, 0x00);
+    case EntryStatus::Modified:
+        return QColor(0x4C, 0xAF, 0x50);
+    case EntryStatus::Enhanced:
+        return QColor(0x21, 0x96, 0xF3);
+    case EntryStatus::Unmodified:
+        return QColor(0x99, 0x99, 0x99);
+    case EntryStatus::New:
+        return QColor(0xFF, 0x98, 0x00);
     }
     return {};
 }
 
 const char *const kHeaderKeys[] = {
-    "strings_tab.col_category", "strings_tab.col_key",    "strings_tab.col_default_value",
-    "strings_tab.col_current_value", "strings_tab.col_star", "strings_tab.col_order",
-    "strings_tab.col_custom_value", "strings_tab.col_status", "strings_tab.col_owned",
+    "strings_tab.col_category",      "strings_tab.col_key",    "strings_tab.col_default_value",
+    "strings_tab.col_current_value", "strings_tab.col_star",   "strings_tab.col_order",
+    "strings_tab.col_custom_value",  "strings_tab.col_status", "strings_tab.col_owned",
 };
 
 } // namespace
@@ -127,19 +131,26 @@ QVariant StringTableModel::data(const QModelIndex &index, int role) const
     switch (role) {
     case Qt::DisplayRole:
         switch (col) {
-        case ColCategory: return e->category;
-        case ColKey: return e->key;
+        case ColCategory:
+            return e->category;
+        case ColKey:
+            return e->key;
         case ColDefault: {
             const QString *d = defaults_.find(e->key);
             return d ? *d : QString();
         }
-        case ColCurrent: return e->originalValue;
+        case ColCurrent:
+            return e->originalValue;
         case ColStar:
-            return favoritable ? (e->customValue.startsWith(prefix) ? QStringLiteral("★") : QStringLiteral("☆"))
-                               : QString();
-        case ColOrder: return favoritable ? sortOrder(e->customValue, prefix) : QString();
-        case ColCustom: return e->customValue;
-        case ColStatus: return statusName(e->status);
+            return favoritable
+                       ? (e->customValue.startsWith(prefix) ? QStringLiteral("★") : QStringLiteral("☆"))
+                       : QString();
+        case ColOrder:
+            return favoritable ? sortOrder(e->customValue, prefix) : QString();
+        case ColCustom:
+            return e->customValue;
+        case ColStatus:
+            return statusName(e->status);
         case ColOwned:
             if (!isBlueprintItem(*e, defaults_, owned_))
                 return QString();
@@ -168,11 +179,16 @@ QVariant StringTableModel::data(const QModelIndex &index, int role) const
         return col == ColStar || col == ColOrder || col == ColOwned;
     case KindRole:
         switch (col) {
-        case ColStar: return QStringLiteral("star");
-        case ColOrder: return QStringLiteral("order");
-        case ColOwned: return QStringLiteral("owned");
-        case ColStatus: return QStringLiteral("status");
-        default: return QStringLiteral("text");
+        case ColStar:
+            return QStringLiteral("star");
+        case ColOrder:
+            return QStringLiteral("order");
+        case ColOwned:
+            return QStringLiteral("owned");
+        case ColStatus:
+            return QStringLiteral("status");
+        default:
+            return QStringLiteral("text");
         }
     case TooltipRole:
         if (col == ColStar)
@@ -234,10 +250,14 @@ Qt::ItemFlags StringTableModel::flags(const QModelIndex &index) const
     const Qt::ItemFlags base = Qt::ItemIsEnabled | Qt::ItemIsSelectable;
     const StringEntry *e = entryAt(index.row());
     switch (index.column()) {
-    case ColCustom: return base | Qt::ItemIsEditable;
-    case ColStar: return e && !e->isFavoritableShip() ? Qt::ItemIsEnabled : base;
-    case ColOrder: return e && e->isFavoritableShip() ? base | Qt::ItemIsEditable : Qt::ItemIsEnabled;
-    case ColOwned: return Qt::ItemIsEnabled;
+    case ColCustom:
+        return base | Qt::ItemIsEditable;
+    case ColStar:
+        return e && !e->isFavoritableShip() ? Qt::ItemIsEnabled : base;
+    case ColOrder:
+        return e && e->isFavoritableShip() ? base | Qt::ItemIsEditable : Qt::ItemIsEnabled;
+    case ColOwned:
+        return Qt::ItemIsEnabled;
     }
     return base;
 }
@@ -245,9 +265,9 @@ Qt::ItemFlags StringTableModel::flags(const QModelIndex &index) const
 QHash<int, QByteArray> StringTableModel::roleNames() const
 {
     return {
-        {Qt::DisplayRole, "display"},       {EditRole, "edit"},         {ForegroundRole, "foreground"},
-        {BackgroundRole, "favoriteRow"},    {EditableRole, "editable"}, {CenteredRole, "centered"},
-        {TooltipRole, "tooltip"},           {KindRole, "kind"},
+        {Qt::DisplayRole, "display"},    {EditRole, "edit"},         {ForegroundRole, "foreground"},
+        {BackgroundRole, "favoriteRow"}, {EditableRole, "editable"}, {CenteredRole, "centered"},
+        {TooltipRole, "tooltip"},        {KindRole, "kind"},
     };
 }
 
@@ -279,21 +299,35 @@ void StringTableModel::setSearchText(const QString &v)
     refilter();
 }
 
-#define SC_BOOL_FILTER(setter, field)                                                                                  \
-    void StringTableModel::setter(bool v)                                                                              \
-    {                                                                                                                  \
-        if (criteria_.field == v)                                                                                      \
-            return;                                                                                                    \
-        criteria_.field = v;                                                                                           \
-        emit filtersChanged();                                                                                         \
-        refilter();                                                                                                    \
-    }
-SC_BOOL_FILTER(setHideUnmodified, hideUnmodified)
-SC_BOOL_FILTER(setFavoritesOnly, favoritesOnly)
-SC_BOOL_FILTER(setShipNamesOnly, shipVehicleNamesOnly)
-SC_BOOL_FILTER(setBpTitlesOnly, bpTitlesOnly)
-SC_BOOL_FILTER(setBpDescsOnly, bpDescsOnly)
-#undef SC_BOOL_FILTER
+void StringTableModel::setBoolFilter(bool FilterCriteria::*field, bool v)
+{
+    if (criteria_.*field == v)
+        return;
+    criteria_.*field = v;
+    emit filtersChanged();
+    refilter();
+}
+
+void StringTableModel::setHideUnmodified(bool v)
+{
+    setBoolFilter(&FilterCriteria::hideUnmodified, v);
+}
+void StringTableModel::setFavoritesOnly(bool v)
+{
+    setBoolFilter(&FilterCriteria::favoritesOnly, v);
+}
+void StringTableModel::setShipNamesOnly(bool v)
+{
+    setBoolFilter(&FilterCriteria::shipVehicleNamesOnly, v);
+}
+void StringTableModel::setBpTitlesOnly(bool v)
+{
+    setBoolFilter(&FilterCriteria::bpTitlesOnly, v);
+}
+void StringTableModel::setBpDescsOnly(bool v)
+{
+    setBoolFilter(&FilterCriteria::bpDescsOnly, v);
+}
 
 void StringTableModel::setColumnFilter(int column, const QString &text)
 {
@@ -380,8 +414,8 @@ QString StringTableModel::previewHtml(int row) const
 bool StringTableModel::isFavoritable(int row) const
 {
     const StringEntry *e = entryAt(row);
-    return e && (e->isFavoritableShip() ||
-                 (!criteria_.favoritePrefix.isEmpty() && e->customValue.startsWith(criteria_.favoritePrefix)));
+    return e && (e->isFavoritableShip() || (!criteria_.favoritePrefix.isEmpty() &&
+                                            e->customValue.startsWith(criteria_.favoritePrefix)));
 }
 
 void StringTableModel::toggleFavorite(int row)
@@ -445,7 +479,7 @@ void StringTableModel::resort()
 void StringTableModel::recount()
 {
     int modified = 0, enhanced = 0;
-    for (const StringEntry &e : entries_) {
+    for (const StringEntry &e : std::as_const(entries_)) {
         modified += e.status == EntryStatus::Modified;
         enhanced += e.status == EntryStatus::Enhanced;
     }

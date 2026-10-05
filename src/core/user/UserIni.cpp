@@ -12,7 +12,7 @@ namespace core {
 
 namespace {
 
-const QString kBackupPrefix = QStringLiteral("user.ini.bak_");
+constexpr QLatin1StringView kBackupPrefix("user.ini.bak_");
 
 QByteArray normalizedNewlines(QByteArray bytes)
 {
@@ -23,10 +23,8 @@ QByteArray normalizedNewlines(QByteArray bytes)
 
 } // namespace
 
-UserIni::UserIni(QString path)
-    : path_(std::move(path))
-{
-}
+UserIni::UserIni(QString path) : path_(std::move(path))
+{}
 
 QString UserIni::backupsDir() const
 {
@@ -144,7 +142,8 @@ QString UserIni::reset(bool keepBackup, const QDateTime &now) const
 
 int UserIni::generateFromDiff(const QString &referenceBaseIni, const QString &currentGameFile) const
 {
-    if (!QFileInfo::exists(referenceBaseIni) || !QFileInfo::exists(currentGameFile) || QFileInfo::exists(path_))
+    if (!QFileInfo::exists(referenceBaseIni) || !QFileInfo::exists(currentGameFile) ||
+        QFileInfo::exists(path_))
         return 0;
     const IniMap reference = loadIni(referenceBaseIni, false);
     const IniMap current = loadIni(currentGameFile, false);
@@ -177,13 +176,14 @@ int migrateUserDataDir(const QString &oldRoot, const QString &newRoot, bool move
     // Snapshot first: when the new folder sits inside the old one, files
     // copied into it must not be picked up again.
     QStringList files;
-    for (QDirIterator it(oldResolved, QDir::Files | QDir::Hidden, QDirIterator::Subdirectories); it.hasNext();)
+    for (QDirIterator it(oldResolved, QDir::Files | QDir::Hidden, QDirIterator::Subdirectories);
+         it.hasNext();)
         files << it.next();
 
     const QString newPrefix = newResolved + u'/';
     const QDir oldDir(oldResolved);
     int transferred = 0;
-    for (const QString &src : files) {
+    for (const QString &src : std::as_const(files)) {
         if (QDir::cleanPath(src).startsWith(newPrefix, kPathCase))
             continue; // already inside the destination
         const QString dest = QDir(newRoot).filePath(oldDir.relativeFilePath(src));
@@ -205,7 +205,7 @@ int migrateUserDataDir(const QString &oldRoot, const QString &newRoot, bool move
             dirs << it.next();
         std::sort(dirs.begin(), dirs.end(),
                   [](const QString &a, const QString &b) { return a.count(u'/') > b.count(u'/'); });
-        for (const QString &d : dirs)
+        for (const QString &d : std::as_const(dirs))
             QDir().rmdir(d);
         QDir().rmdir(oldResolved);
     }

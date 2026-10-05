@@ -9,18 +9,20 @@
 
 namespace core {
 
-QString defaultLocPackFilename(const QString &channel, const QDate &today)
+QString defaultLocPackFilename(const QString &channel, QDate today)
 {
     return QStringLiteral("%1-LocPack-%2-%3.zip")
-        .arg(QString::fromUtf8(identity::kAppName).remove(u' '), channel, today.toString(QStringLiteral("yyyyMMdd")));
+        .arg(QString::fromUtf8(identity::kAppName).remove(u' '), channel,
+             today.toString(QStringLiteral("yyyyMMdd")));
 }
 
 std::expected<qint64, QString> writeLocPackZip(const QString &sourceGlobalIni, const QString &outputZip)
 {
     QFile source(sourceGlobalIni);
     if (!source.exists())
-        return std::unexpected(QStringLiteral("Applied global.ini not found at %1. Apply to the game first, then export.")
-                                   .arg(sourceGlobalIni));
+        return std::unexpected(
+            QStringLiteral("Applied global.ini not found at %1. Apply to the game first, then export.")
+                .arg(sourceGlobalIni));
     if (!source.open(QIODevice::ReadOnly))
         return std::unexpected(source.errorString());
     const QByteArray bytes = source.readAll();

@@ -8,7 +8,7 @@ namespace core {
 
 namespace {
 
-const QString kPrefix = QStringLiteral("global.ini.bak_");
+constexpr QLatin1StringView kPrefix("global.ini.bak_");
 
 QFileInfoList byAge(const QString &dir)
 {

@@ -292,8 +292,8 @@ Item {
                     AppButton {
                         text: qsTr("config.check_updates_btn")
                         tip: qsTr("config.check_updates_tooltip")
-                        visible: App.updateCheckEnabled
-                        onClicked: App.checkForUpdates(true)
+                        visible: App.updates.enabled
+                        onClicked: App.updates.check(true)
                     }
                 }
             }

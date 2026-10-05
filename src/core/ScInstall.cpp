@@ -13,17 +13,17 @@ namespace core {
 
 namespace {
 
-const QStringList kCommonSubpaths = {
-    QStringLiteral("Program Files/Roberts Space Industries/StarCitizen"),
-    QStringLiteral("Program Files (x86)/Roberts Space Industries/StarCitizen"),
-    QStringLiteral("Roberts Space Industries/StarCitizen"),
-    QStringLiteral("Games/Roberts Space Industries/StarCitizen"),
+constexpr QLatin1StringView kCommonSubpaths[] = {
+    QLatin1StringView("Program Files/Roberts Space Industries/StarCitizen"),
+    QLatin1StringView("Program Files (x86)/Roberts Space Industries/StarCitizen"),
+    QLatin1StringView("Roberts Space Industries/StarCitizen"),
+    QLatin1StringView("Games/Roberts Space Industries/StarCitizen"),
 };
 
 qint64 newestP4kMtime(const QString &root)
 {
     qint64 newest = 0;
-    for (const QString &channel : channels()) {
+    for (const auto channelList = channels(); const QString &channel : channelList) {
         const QFileInfo p4k(QDir(root).filePath(channel + QStringLiteral("/Data.p4k")));
         if (p4k.exists())
             newest = std::max(newest, p4k.lastModified().toMSecsSinceEpoch());
@@ -70,7 +70,7 @@ QStringList installedChannels(const QString &root)
     QStringList out;
     if (root.isEmpty())
         return out;
-    for (const QString &channel : channels())
+    for (const auto channelList = channels(); const QString &channel : channelList)
         if (QFileInfo::exists(QDir(root).filePath(channel + QStringLiteral("/Data.p4k"))))
             out << channel;
     return out;
@@ -79,10 +79,10 @@ QStringList installedChannels(const QString &root)
 QStringList scanCommonInstallLocations()
 {
     QStringList found;
-    for (const QStorageInfo &volume : QStorageInfo::mountedVolumes()) {
+    for (const auto volumes = QStorageInfo::mountedVolumes(); const QStorageInfo &volume : volumes) {
         if (!volume.isValid() || !volume.isReady())
             continue;
-        for (const QString &sub : kCommonSubpaths) {
+        for (const QLatin1StringView sub : kCommonSubpaths) {
             const QString candidate = QDir(volume.rootPath()).filePath(sub);
             if (isScInstallRoot(candidate))
                 found << QDir::cleanPath(candidate);

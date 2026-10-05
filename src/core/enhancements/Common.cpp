@@ -14,8 +14,9 @@ namespace core::enh {
 namespace {
 
 constexpr std::array kSentinelKeys = {
-    std::string_view("LOC_BADSTRING"), std::string_view("LOC_BADTOKEN"),      std::string_view("LOC_DEBUG"),
-    std::string_view("LOC_EMPTY"),     std::string_view("LOC_INVALID"),       std::string_view("LOC_NOINNERTHOUGHT"),
+    std::string_view("LOC_BADSTRING"),   std::string_view("LOC_BADTOKEN"),
+    std::string_view("LOC_DEBUG"),       std::string_view("LOC_EMPTY"),
+    std::string_view("LOC_INVALID"),     std::string_view("LOC_NOINNERTHOUGHT"),
     std::string_view("LOC_PLACEHOLDER"), std::string_view("LOC_UNINITIALIZED"),
 };
 
@@ -55,7 +56,8 @@ QString humanizeKey(QStringView key)
     return py::strip(key.toString().replace(u'_', u' '));
 }
 
-QString appendEnhancements(const QString &existing, const QString &block, const QString &separator, bool prepend)
+QString appendEnhancements(const QString &existing, const QString &block, const QString &separator,
+                           bool prepend)
 {
     if (block.isEmpty())
         return existing;
@@ -135,8 +137,9 @@ bool isSentinelKey(QStringView key)
 bool isPlaceholderText(QStringView s)
 {
     static const QSet<QString> texts = {
-        QStringLiteral("<= PLACEHOLDER =>"), QStringLiteral("<= UNINITIALIZED =>"), QStringLiteral("<= BADSTRING =>"),
-        QStringLiteral("<= BADTOKEN =>"),    QStringLiteral("<= DEBUG =>"),         QStringLiteral("<= EMPTY =>"),
+        QStringLiteral("<= PLACEHOLDER =>"), QStringLiteral("<= UNINITIALIZED =>"),
+        QStringLiteral("<= BADSTRING =>"),   QStringLiteral("<= BADTOKEN =>"),
+        QStringLiteral("<= DEBUG =>"),       QStringLiteral("<= EMPTY =>"),
         QStringLiteral("<= INVALID =>"),     QStringLiteral("<= NOINNERTHOUGHT =>"),
     };
     return texts.contains(py::strip(s));

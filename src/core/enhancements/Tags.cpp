@@ -113,7 +113,8 @@ const tags::TagConfig &defaultTagConfig(const QString &category)
     return *it;
 }
 
-QString componentNameTag(const QString &desc, Node root, const tags::TagConfig *config, const QString &componentType)
+QString componentNameTag(const QString &desc, Node root, const tags::TagConfig *config,
+                         const QString &componentType)
 {
     Node attachDef;
     if (root) {
@@ -244,7 +245,8 @@ QString missileNameTag(const QString &desc, Node root, const tags::TagConfig *co
     if (!haveSize)
         return QString();
     if (seeker.isEmpty() && !isBomb) {
-        static const QRegularExpression re = py::re(QStringLiteral(R"(Tracking Signal:\s*([A-Za-z ]+?)(?:\\n|\n|$))"));
+        static const QRegularExpression re =
+            py::re(QStringLiteral(R"(Tracking Signal:\s*([A-Za-z ]+?)(?:\\n|\n|$))"));
         if (const QRegularExpressionMatch m = re.match(desc); m.hasMatch()) {
             const QString normalized = m.captured(1).remove(u' ');
             for (const QString &raw : trackingRaw)
@@ -275,10 +277,12 @@ std::optional<tags::TagConfig> miningLaserTagConfig(const tags::TagConfig *compo
     if (!typeEl || !typeEl->enabled)
         return std::nullopt;
     tags::TagConfig cfg;
-    cfg.elements = {{QStringLiteral("type"), true, typeEl->style.isEmpty() ? QStringLiteral("med") : typeEl->style}};
+    cfg.elements = {
+        {QStringLiteral("type"), true, typeEl->style.isEmpty() ? QStringLiteral("med") : typeEl->style}};
     const tags::ElementSpec *sizeEl = componentElement(*componentsConfig, QStringLiteral("size"));
     if (sizeEl && sizeEl->enabled)
-        cfg.elements.append({QStringLiteral("size"), true, sizeEl->style.isEmpty() ? QStringLiteral("sn") : sizeEl->style});
+        cfg.elements.append(
+            {QStringLiteral("size"), true, sizeEl->style.isEmpty() ? QStringLiteral("sn") : sizeEl->style});
     cfg.separator = componentsConfig->separator;
     cfg.enclosing = componentsConfig->enclosing;
     cfg.placement = componentsConfig->placement;
@@ -286,7 +290,8 @@ std::optional<tags::TagConfig> miningLaserTagConfig(const tags::TagConfig *compo
     return cfg;
 }
 
-QString miningLaserComponentTag(const QString &desc, Node root, const std::optional<tags::TagConfig> &miningConfig)
+QString miningLaserComponentTag(const QString &desc, Node root,
+                                const std::optional<tags::TagConfig> &miningConfig)
 {
     if (!miningConfig || !root)
         return QString();
@@ -348,7 +353,8 @@ QString bareTypeTagFromDesc(const QString &desc, const tags::TagConfig *componen
     if (typeName != u"Fuel Nozzle")
         return QString();
     tags::TagConfig cfg;
-    cfg.elements = {{QStringLiteral("type"), true, typeEl->style.isEmpty() ? QStringLiteral("med") : typeEl->style}};
+    cfg.elements = {
+        {QStringLiteral("type"), true, typeEl->style.isEmpty() ? QStringLiteral("med") : typeEl->style}};
     cfg.separator = componentsConfig->separator;
     cfg.enclosing = componentsConfig->enclosing;
     cfg.placement = componentsConfig->placement;

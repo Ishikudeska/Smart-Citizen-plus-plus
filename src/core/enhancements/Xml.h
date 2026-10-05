@@ -55,8 +55,7 @@ std::vector<Node> findAll(Node n, std::string_view path);
 
 // el.iter(tag) / el.iter(): the element and its descendants, document order.
 std::vector<Node> iter(Node n, std::string_view tag = {});
-template <class Visit>
-void forEachElement(Node n, Visit &&visit) // visit(Node) -> bool: false stops
+template <class Visit> void forEachElement(Node n, Visit &&visit) // visit(Node) -> bool: false stops
 {
     if (!n)
         return;
@@ -80,8 +79,8 @@ void forEachElement(Node n, Visit &&visit) // visit(Node) -> bool: false stops
 std::vector<Node> children(Node n);
 
 // The generator's helpers.
-Node findDescendant(Node root, std::string_view tagName);                      // _find: ".//tag"
-Node findByType(Node root, std::string_view typeName);                         // _find_by_type
+Node findDescendant(Node root, std::string_view tagName); // _find: ".//tag"
+Node findByType(Node root, std::string_view typeName);    // _find_by_type
 std::optional<std::string_view> attrOf(Node root, std::string_view tagName, const char *attr); // _attr
 
 } // namespace core::enh

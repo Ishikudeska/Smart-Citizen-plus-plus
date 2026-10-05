@@ -36,8 +36,7 @@ int compareCulture(std::string_view a, std::string_view b);
 
 // List<T>.Sort(Comparison<T>): ArraySortHelper's introspective sort, whose
 // order for equal elements the output depends on.
-template <class T, class Cmp>
-void introSort(std::vector<T> &items, Cmp cmp);
+template <class T, class Cmp> void introSort(std::vector<T> &items, Cmp cmp);
 
 // DateTime.UtcNow.ToString("o").
 std::string utcNowRoundTrip();
@@ -46,15 +45,13 @@ std::string utcNowRoundTrip();
 
 namespace detail {
 
-template <class T, class Cmp>
-void swapIfGreater(std::vector<T> &k, Cmp &cmp, std::size_t i, std::size_t j)
+template <class T, class Cmp> void swapIfGreater(std::vector<T> &k, Cmp &cmp, std::size_t i, std::size_t j)
 {
     if (cmp(k[i], k[j]) > 0)
         std::swap(k[i], k[j]);
 }
 
-template <class T, class Cmp>
-void insertionSort(std::vector<T> &k, Cmp &cmp, std::size_t lo, std::size_t n)
+template <class T, class Cmp> void insertionSort(std::vector<T> &k, Cmp &cmp, std::size_t lo, std::size_t n)
 {
     for (std::size_t i = 0; i + 1 < n; ++i) {
         T t = std::move(k[lo + i + 1]);
@@ -83,8 +80,7 @@ void downHeap(std::vector<T> &k, Cmp &cmp, std::size_t lo, std::size_t i, std::s
     k[lo + i - 1] = std::move(d);
 }
 
-template <class T, class Cmp>
-void heapSort(std::vector<T> &k, Cmp &cmp, std::size_t lo, std::size_t n)
+template <class T, class Cmp> void heapSort(std::vector<T> &k, Cmp &cmp, std::size_t lo, std::size_t n)
 {
     for (std::size_t i = n / 2; i >= 1; --i)
         downHeap(k, cmp, lo, i, n);
@@ -151,8 +147,7 @@ void introSortRange(std::vector<T> &k, Cmp &cmp, std::size_t lo, std::size_t n, 
 
 } // namespace detail
 
-template <class T, class Cmp>
-void introSort(std::vector<T> &items, Cmp cmp)
+template <class T, class Cmp> void introSort(std::vector<T> &items, Cmp cmp)
 {
     if (items.size() < 2)
         return;

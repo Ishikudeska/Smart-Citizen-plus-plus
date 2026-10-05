@@ -61,10 +61,10 @@ void setCustomValue(StringEntry &entry, const QString &value);
 
 struct FilterCriteria
 {
-    std::array<QString, ColumnCount> columnText; // lower-cased substrings; empty = no filter
-    QString searchText; // lower-cased substring of the key or any value; empty = no filter
+    std::array<QString, ColumnCount> columnText; // case-insensitive substrings; empty = no filter
+    QString searchText; // case-insensitive substring of the key or any value; empty = no filter
     QString category = QStringLiteral("All");
-    QString status = QStringLiteral("All");      // statusName() or "All"
+    QString status = QStringLiteral("All"); // statusName() or "All"
     bool hideUnmodified = false;
     bool favoritesOnly = false;
     bool shipVehicleNamesOnly = false;
@@ -98,8 +98,9 @@ bool isOwned(const StringEntry &entry, const IniMap &defaults, const OwnedState 
 
 // Sorts `indices` by `column` like the Python's sorted(key=...), stable.
 // `grouped` (Group Sort) only applies to the key column.
-void sortIndices(QList<int> &indices, const QList<StringEntry> &entries, const IniMap &defaults, Column column,
-                 bool descending, bool grouped, const QString &favoritePrefix, const OwnedState &owned);
+void sortIndices(QList<int> &indices, const QList<StringEntry> &entries, const IniMap &defaults,
+                 Column column, bool descending, bool grouped, const QString &favoritePrefix,
+                 const OwnedState &owned);
 
 // The categories offered in the filter: the standard ones plus any in use,
 // sorted.

@@ -94,7 +94,8 @@ private slots:
         QVERIFY(s.tagConfig(QStringLiteral("components")) == c);
 
         s.setValue(QStringLiteral("tag_builder/ship_weapons/config"), QStringLiteral("{broken"));
-        QVERIFY(s.tagConfig(QStringLiteral("ship_weapons")) == tags::defaultConfig(QStringLiteral("ship_weapons")));
+        QVERIFY(s.tagConfig(QStringLiteral("ship_weapons")) ==
+                tags::defaultConfig(QStringLiteral("ship_weapons")));
 
         // Commodities' "none" separator is upgraded once, then left alone.
         tags::TagConfig com = tags::defaultConfig(QStringLiteral("commodities"));
@@ -167,7 +168,8 @@ private slots:
         QVERIFY(languageBaseUrl(s, QStringLiteral("french"), shipped).startsWith(QStringLiteral("https://")));
         QVERIFY(languageBaseUrl(s, QStringLiteral("english"), shipped).isEmpty());
         s.setLanguageSourceOverride(QStringLiteral("french"), QStringLiteral("https://example.com/fr.ini"));
-        QCOMPARE(languageBaseUrl(s, QStringLiteral("french"), shipped), QStringLiteral("https://example.com/fr.ini"));
+        QCOMPARE(languageBaseUrl(s, QStringLiteral("french"), shipped),
+                 QStringLiteral("https://example.com/fr.ini"));
         s.setLanguageSourceOverride(QStringLiteral("french"), QString());
         QVERIFY(s.languageSourceOverride(QStringLiteral("french")).isEmpty());
         QVERIFY(languageBaseUrl(s, QStringLiteral("french"), dir.filePath(QStringLiteral("none"))).isEmpty());
@@ -204,18 +206,22 @@ private slots:
         QCOMPARE(p.logsDir(), user + QStringLiteral("/logs"));
         QCOMPARE(p.baseIni(), user + QStringLiteral("/LIVE/cache/base.ini"));
         QCOMPARE(p.enhancementsDir(), user + QStringLiteral("/LIVE/cache"));
-        QCOMPARE(p.baseIni(QStringLiteral("german")), user + QStringLiteral("/LIVE/cache/lang/german/base.ini"));
-        QCOMPARE(p.enhancementsDir(QStringLiteral("german")), user + QStringLiteral("/LIVE/cache/lang/german"));
-        QCOMPARE(p.dataForgeCacheDir(), dir.filePath(QStringLiteral("Local/") + app + QStringLiteral("/LIVE/cache/dataforge")));
+        QCOMPARE(p.baseIni(QStringLiteral("german")),
+                 user + QStringLiteral("/LIVE/cache/lang/german/base.ini"));
+        QCOMPARE(p.enhancementsDir(QStringLiteral("german")),
+                 user + QStringLiteral("/LIVE/cache/lang/german"));
+        QCOMPARE(p.dataForgeCacheDir(),
+                 dir.filePath(QStringLiteral("Local/") + app + QStringLiteral("/LIVE/cache/dataforge")));
         QCOMPARE(p.p4kPath(), dir.filePath(QStringLiteral("RSI/StarCitizen/LIVE/Data.p4k")));
         QCOMPARE(p.gameGlobalIni(QStringLiteral("portuguese_br")),
-                 dir.filePath(QStringLiteral("RSI/StarCitizen/LIVE/data/Localization/portuguese_(brazil)/global.ini")));
+                 dir.filePath(QStringLiteral(
+                     "RSI/StarCitizen/LIVE/data/Localization/portuguese_(brazil)/global.ini")));
 
         s.setActiveChannel(QStringLiteral("PTU"));
         s.setSelectedLanguage(QStringLiteral("french"));
         QCOMPARE(p.baseIni(), user + QStringLiteral("/PTU/cache/lang/french/base.ini"));
-        QCOMPARE(p.gameGlobalIni(),
-                 dir.filePath(QStringLiteral("RSI/StarCitizen/PTU/data/Localization/french_(france)/global.ini")));
+        QCOMPARE(p.gameGlobalIni(), dir.filePath(QStringLiteral(
+                                        "RSI/StarCitizen/PTU/data/Localization/french_(france)/global.ini")));
     }
 
     void overridesAndPortable()

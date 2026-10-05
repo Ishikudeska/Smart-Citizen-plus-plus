@@ -18,8 +18,8 @@ struct File
 // One user-facing toggle on the Enhancements page and the files it controls.
 struct Category
 {
-    const char *id;           // "ship_items"
-    QString label;            // table category, e.g. "Ship Items"
+    const char *id; // "ship_items"
+    QString label;  // table category, e.g. "Ship Items"
     QStringList fileIds;
 };
 

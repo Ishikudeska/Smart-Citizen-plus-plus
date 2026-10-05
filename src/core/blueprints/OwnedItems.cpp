@@ -12,8 +12,8 @@ namespace {
 
 constexpr auto kUcp = QRegularExpression::UseUnicodePropertiesOption;
 
-const QString kNl = QStringLiteral("\\n"); // the literal two-character separator
-const QString kOwnedTag = QStringLiteral(" <EM4>[Owned]</EM4>");
+constexpr QLatin1StringView kNl("\\n"); // the literal two-character separator
+constexpr QLatin1StringView kOwnedTag(" <EM4>[Owned]</EM4>");
 
 QString nfkc(const QString &s)
 {
@@ -80,8 +80,8 @@ const QRegularExpression &awardedFromRe()
 
 const QRegularExpression &poolLabelRe()
 {
-    static const QRegularExpression re = pyRe(QStringLiteral(R"(^pool \d+$)"),
-                                              QRegularExpression::CaseInsensitiveOption);
+    static const QRegularExpression re =
+        pyRe(QStringLiteral(R"(^pool \d+$)"), QRegularExpression::CaseInsensitiveOption);
     return re;
 }
 
@@ -112,8 +112,9 @@ const TagPatterns &tagPatterns(const Enclosings &enclosings)
     QStringList alts;
     for (const auto &[open, close] : enclosings)
         if (!open.isEmpty() && !close.isEmpty())
-            alts << QRegularExpression::escape(open) + QStringLiteral("[^") + QRegularExpression::escape(close) +
-                        QStringLiteral("]*") + QRegularExpression::escape(close);
+            alts << QRegularExpression::escape(open) + QStringLiteral("[^") +
+                        QRegularExpression::escape(close) + QStringLiteral("]*") +
+                        QRegularExpression::escape(close);
     TagPatterns patterns;
     if (!alts.isEmpty()) {
         const QString alt = alts.join(u'|');
@@ -134,16 +135,17 @@ const QRegularExpression &bpHeaderRe(const QString &customHeader)
     const QString custom = py::strip(customHeader);
     if (!custom.isEmpty()) {
         const QString upper = custom.toUpper();
-        if (std::none_of(parts.cbegin(), parts.cend(), [&](const QString &p) { return p.toUpper() == upper; }))
+        if (std::none_of(parts.cbegin(), parts.cend(),
+                         [&](const QString &p) { return p.toUpper() == upper; }))
             parts << custom;
     }
     QStringList escaped;
-    for (const QString &p : parts)
+    for (const QString &p : std::as_const(parts))
         escaped << QRegularExpression::escape(p);
     // A trailing "(Repeat Only)"-style qualifier is part of the header.
-    const QRegularExpression re(
-        pyPattern(QStringLiteral(R"(<EM([34])>\s*(?:%1)(?:\s*\([^)]*\))?\s*</EM\1>)")).arg(escaped.join(u'|')),
-        kUcp | QRegularExpression::CaseInsensitiveOption);
+    const QRegularExpression re(pyPattern(QStringLiteral(R"(<EM([34])>\s*(?:%1)(?:\s*\([^)]*\))?\s*</EM\1>)"))
+                                    .arg(escaped.join(u'|')),
+                                kUcp | QRegularExpression::CaseInsensitiveOption);
     return *cache.insert(customHeader, re);
 }
 
@@ -158,7 +160,8 @@ std::optional<std::pair<qsizetype, qsizetype>> bpSectionSpan(const QString &valu
     qsizetype end = value.size();
     for (const QRegularExpressionMatch &hm : sectionHeaderRe().globalMatch(value, start)) {
         const QString text = py::strip(hm.capturedView(2));
-        if (text.startsWith(u'[') || awardedFromRe().match(text).hasMatch() || poolLabelRe().match(text).hasMatch())
+        if (text.startsWith(u'[') || awardedFromRe().match(text).hasMatch() ||
+            poolLabelRe().match(text).hasMatch())
             continue;
         end = hm.capturedStart();
         break;
@@ -175,15 +178,17 @@ bool looksLikeNoneStyleTagWord(const QString &word)
 {
     static const QString separators = QStringLiteral("-_./|");
     static const QString brackets = QStringLiteral("[](){}<>");
-    if (word.isEmpty() || std::none_of(word.cbegin(), word.cend(), [](QChar c) { return separators.contains(c); }))
+    if (word.isEmpty() ||
+        std::none_of(word.cbegin(), word.cend(), [](QChar c) { return separators.contains(c); }))
         return false;
     if (brackets.contains(word.front()) || brackets.contains(word.back()))
         return false;
     static const QRegularExpression nonAlnum(QStringLiteral("[^A-Za-z0-9]+"));
     static const QRegularExpression size(QStringLiteral(R"(^S\d{1,2}$)"),
                                          kUcp | QRegularExpression::CaseInsensitiveOption);
-    static const QRegularExpression grade(QStringLiteral("^[A-F]$"), QRegularExpression::CaseInsensitiveOption);
-    for (const QString &tok : word.split(nonAlnum, Qt::SkipEmptyParts))
+    static const QRegularExpression grade(QStringLiteral("^[A-F]$"),
+                                          QRegularExpression::CaseInsensitiveOption);
+    for (const auto tokens = word.split(nonAlnum, Qt::SkipEmptyParts); const QString &tok : tokens)
         if (size.match(tok).hasMatch() || grade.match(tok).hasMatch())
             return true;
     return false;
@@ -260,7 +265,8 @@ QString stripNoneStyleTagHeuristic(const QString &s)
     return found ? found->second : s;
 }
 
-Enclosings enclosingsFromTagConfigs(const QMap<QString, tags::TagConfig> &configs, const QStringList &categories)
+Enclosings enclosingsFromTagConfigs(const QMap<QString, tags::TagConfig> &configs,
+                                    const QStringList &categories)
 {
     Enclosings pairs = defaultEnclosings();
     for (const QString &category : categories) {
@@ -337,8 +343,9 @@ OwnedRepair repairForeignOwnedNames(const QSet<QString> &owned, const QSet<QStri
     for (const QString &name : owned)
         if (!catalogue.contains(name))
             unmatched << name;
-    std::sort(unmatched.begin(), unmatched.end(), [](const QString &a, const QString &b) { return py::less(a, b); });
-    for (const QString &name : unmatched) {
+    std::sort(unmatched.begin(), unmatched.end(),
+              [](const QString &a, const QString &b) { return py::less(a, b); });
+    for (const QString &name : std::as_const(unmatched)) {
         const std::optional<QString> real = resolveAgainstCatalogue(name, catalogue);
         if (!real)
             continue;

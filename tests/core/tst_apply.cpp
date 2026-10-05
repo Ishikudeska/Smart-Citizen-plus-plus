@@ -63,7 +63,8 @@ private slots:
 
     void gameFileKeepsStructureAddsBomAndCrlf()
     {
-        const QByteArray out = renderGameFile(QStringLiteral("a=1\nb=2\n; a comment\n\nc=3\n"), ini({{"b", "overridden"}}));
+        const QByteArray out =
+            renderGameFile(QStringLiteral("a=1\nb=2\n; a comment\n\nc=3\n"), ini({{"b", "overridden"}}));
         QCOMPARE(out, kBom + QByteArray("a=1\r\nb=overridden\r\n; a comment\r\n\r\nc=3\r\n"));
     }
 
@@ -77,8 +78,8 @@ private slots:
     void gameFileStripsKeyMetadataAndKeepsRawValues()
     {
         // Keys lose ",P" and their padding; unmatched values stay byte-for-byte.
-        const QByteArray out =
-            renderGameFile(QStringLiteral(" key,P =  value with spaces  \nother,P=x\nno equals\n"), ini({{"other", "y"}}));
+        const QByteArray out = renderGameFile(
+            QStringLiteral(" key,P =  value with spaces  \nother,P=x\nno equals\n"), ini({{"other", "y"}}));
         QCOMPARE(out, kBom + QByteArray("key=  value with spaces  \r\nother=y\r\nno equals\r\n"));
     }
 
@@ -106,11 +107,15 @@ private slots:
         IniMap m = ini({{"Frontend_PU_Version", "Star Citizen Alpha 4.8.0 PTU"}});
         stampFrontendVersion(m, kApp, QStringLiteral("1.3.1"));
         const QString once = frontend(m);
-        QCOMPARE(once, QStringLiteral(R"(Star Citizen Alpha 4.8.0 PTU\nLocalizations Enhanced with Smart Citizen v1.3.1)"));
+        QCOMPARE(once,
+                 QStringLiteral(
+                     R"(Star Citizen Alpha 4.8.0 PTU\nLocalizations Enhanced with Smart Citizen v1.3.1)"));
         stampFrontendVersion(m, kApp, QStringLiteral("1.3.1"));
         QCOMPARE(frontend(m), once); // idempotent
         stampFrontendVersion(m, kApp, QStringLiteral("2.0.0"));
-        QCOMPARE(frontend(m), QStringLiteral(R"(Star Citizen Alpha 4.8.0 PTU\nLocalizations Enhanced with Smart Citizen v2.0.0)"));
+        QCOMPARE(frontend(m),
+                 QStringLiteral(
+                     R"(Star Citizen Alpha 4.8.0 PTU\nLocalizations Enhanced with Smart Citizen v2.0.0)"));
 
         IniMap missing = ini({{"Other", "x"}});
         stampFrontendVersion(missing, kApp, QStringLiteral("1"));
@@ -136,25 +141,30 @@ private slots:
         IniMap m;
         m.insert(kFrontendVersionKey, QStringLiteral("Star Citizen Alpha 4.8.0 PTU ") + suffix);
         stampFrontendVersion(m, QStringLiteral("Smart Citizen++"), QStringLiteral("0.1.0"));
-        QCOMPARE(frontend(m), QStringLiteral(R"(Star Citizen Alpha 4.8.0 PTU\nLocalizations Enhanced with Smart Citizen++ v0.1.0)"));
+        QCOMPARE(frontend(m),
+                 QStringLiteral(
+                     R"(Star Citizen Alpha 4.8.0 PTU\nLocalizations Enhanced with Smart Citizen++ v0.1.0)"));
     }
 
     void frontendStampKeepsOrdinaryPipes()
     {
         IniMap m = ini({{"Frontend_PU_Version", "Star Citizen | Build A"}});
         stampFrontendVersion(m, kApp, QStringLiteral("1.3.1"));
-        QCOMPARE(frontend(m), QStringLiteral(R"(Star Citizen | Build A\nLocalizations Enhanced with Smart Citizen v1.3.1)"));
+        QCOMPARE(
+            frontend(m),
+            QStringLiteral(R"(Star Citizen | Build A\nLocalizations Enhanced with Smart Citizen v1.3.1)"));
     }
 
     void journalStamp()
     {
-        const IniMap stock = ini({{"Journal_A_Content", "Stock text"}, {"Journal_B_Content", "Stock B"},
+        const IniMap stock = ini({{"Journal_A_Content", "Stock text"},
+                                  {"Journal_B_Content", "Stock B"},
                                   {"Journal_A_Title", "Title"}});
-        IniMap m = ini({{"Journal_A_Content", "Stock text"},     // unchanged: no stamp
-                        {"Journal_B_Content", "Edited B"},       // changed: stamped
-                        {"Journal_New_Content", "Added"},        // not in stock: stamped
-                        {"Journal_A_Title", "Edited title"},     // title keys never stamped
-                        {"Journal_C_From,P", "Sender"},          // nor "From" lines
+        IniMap m = ini({{"Journal_A_Content", "Stock text"}, // unchanged: no stamp
+                        {"Journal_B_Content", "Edited B"},   // changed: stamped
+                        {"Journal_New_Content", "Added"},    // not in stock: stamped
+                        {"Journal_A_Title", "Edited title"}, // title keys never stamped
+                        {"Journal_C_From,P", "Sender"},      // nor "From" lines
                         {"ui_Thing", "Not a journal"}});
         stampJournalEntries(m, stock, kApp, QStringLiteral("2.3.1"));
         const QString stamp = QStringLiteral(R"(\n\n[Edited with Smart Citizen v2.3.1])");
@@ -287,7 +297,8 @@ private slots:
     {
         QTemporaryDir dir;
         writeFile(dir.filePath(QStringLiteral("user.cfg")), "a = 1\nG_LANGUAGE = english\nb = 2\n");
-        QCOMPARE(ensureUserCfgLanguage(dir.path(), QStringLiteral("portuguese_(brazil)")), UserCfgResult::Updated);
+        QCOMPARE(ensureUserCfgLanguage(dir.path(), QStringLiteral("portuguese_(brazil)")),
+                 UserCfgResult::Updated);
         QCOMPARE(readAll(dir.filePath(QStringLiteral("user.cfg"))),
                  QByteArray("a = 1\r\ng_language = portuguese_(brazil)\r\nb = 2\r\n"));
         QCOMPARE(ensureUserCfgLanguage(dir.filePath(QStringLiteral("nope")), QStringLiteral("english")),
@@ -330,12 +341,14 @@ private slots:
         QVERIFY(hookRan);
         QCOMPARE(readAll(out.backupPath), QByteArray("old=content\r\n"));
         QCOMPARE(out.userCfg, UserCfgResult::Created);
-        QCOMPARE(readAll(game),
-                 kBom + QByteArray("Frontend_PU_Version=Star Citizen 4.9\\nLocalizations Enhanced with SCX v0.1.0\r\n"
-                                   "ui_Button=Okay\r\n"
-                                   "item_Name_SHLD_A=[SHLD-S1] Shield\r\n"
-                                   "item_NameSHLDa=[SHLD-S1] Shield\r\n"
-                                   "Journal_X_Content=Mine\\n\\n[Edited with SCX v0.1.0]\r\n"));
+        QCOMPARE(
+            readAll(game),
+            kBom +
+                QByteArray("Frontend_PU_Version=Star Citizen 4.9\\nLocalizations Enhanced with SCX v0.1.0\r\n"
+                           "ui_Button=Okay\r\n"
+                           "item_Name_SHLD_A=[SHLD-S1] Shield\r\n"
+                           "item_NameSHLDa=[SHLD-S1] Shield\r\n"
+                           "Journal_X_Content=Mine\\n\\n[Edited with SCX v0.1.0]\r\n"));
     }
 
     void rejectedFileRollsBack()

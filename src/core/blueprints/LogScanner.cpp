@@ -14,8 +14,8 @@ namespace core::blueprints {
 
 namespace {
 
-const QString kLiveLogName = QStringLiteral("Game.log");
-const QString kLogBackupsDir = QStringLiteral("logbackups");
+constexpr QLatin1StringView kLiveLogName("Game.log");
+constexpr QLatin1StringView kLogBackupsDir("logbackups");
 constexpr QByteArrayView kCheapMarker = "Received Blueprint:";
 
 // The name is captured lazily up to the trailing `: "`, so names with their
@@ -75,7 +75,8 @@ QStringList findLogFiles(const QString &channelDir, const QDateTime &since)
     QFileInfoList candidates;
     const QDir backups(QDir(channelDir).filePath(kLogBackupsDir));
     if (backups.exists())
-        candidates = backups.entryInfoList({QStringLiteral("*.log")}, QDir::Files | QDir::Hidden | QDir::System);
+        candidates =
+            backups.entryInfoList({QStringLiteral("*.log")}, QDir::Files | QDir::Hidden | QDir::System);
     const QFileInfo live(QDir(channelDir).filePath(kLiveLogName));
     if (live.isFile())
         candidates.append(live);
@@ -86,7 +87,7 @@ QStringList findLogFiles(const QString &channelDir, const QDateTime &since)
         QString path;
     };
     QList<Kept> kept;
-    for (const QFileInfo &info : candidates) {
+    for (const QFileInfo &info : std::as_const(candidates)) {
         const QDateTime mtime = info.lastModified(QTimeZone::UTC);
         if (!mtime.isValid() || mtime.toMSecsSinceEpoch() < floor)
             continue;
@@ -120,8 +121,9 @@ ScanResult scanFiles(const QStringList &paths, const QDateTime &since, const Sca
             if (!line.contains(kCheapMarker))
                 continue;
             // Python's text mode also splits on a lone CR.
-            for (const QByteArray &part : line.split('\r')) {
-                for (const BlueprintEvent &ev : parseEvents(QString::fromUtf8(part))) {
+            for (const auto parts = line.split('\r'); const QByteArray &part : parts) {
+                for (const auto events = parseEvents(QString::fromUtf8(part));
+                     const BlueprintEvent &ev : events) {
                     if (ev.timestamp < epoch)
                         continue;
                     if (!result.latestTimestamp.isValid() || ev.timestamp > result.latestTimestamp)

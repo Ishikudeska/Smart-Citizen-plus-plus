@@ -91,7 +91,7 @@ private slots:
     void ordersLikeTheInvariantCulture()
     {
         QVERIFY(dotnet::compareCulture("apple", "Banana") < 0); // case-insensitive first
-        QVERIFY(dotnet::compareCulture("a", "A") < 0);           // then lower case first
+        QVERIFY(dotnet::compareCulture("a", "A") < 0);          // then lower case first
         QVERIFY(dotnet::compareCulture("'Arrow'", "9-Series") < 0);
         QVERIFY(dotnet::compareCulture("Gladius", "Gladius") == 0);
         QVERIFY(dotnet::compareOrdinal("B", "a") < 0);
@@ -222,7 +222,8 @@ private slots:
                    <SItemPortLoadoutEntryParams itemPortName="hardpoint_thruster_main" entityClassName="THRM_TEST"/>
                    <SItemPortLoadoutEntryParams itemPortName="hardpoint_thruster_vtol" entityClassName="THRV_TEST"/>
                    <SItemPortLoadoutEntryParams itemPortName="hardpoint_weapon_gun_class1_nose" entityClassReference="w1"/>
-                   <SItemPortLoadoutEntryParams itemPortName="hardpoint_missilerack_left" entityClassReference=")" + rackGuid + R"(">
+                   <SItemPortLoadoutEntryParams itemPortName="hardpoint_missilerack_left" entityClassReference=")" +
+                 rackGuid + R"(">
                      <loadout><SItemPortLoadoutManualParams><entries>
                        <SItemPortLoadoutEntryParams itemPortName="missile_01_attach" entityClassName="MISL_S02_IR_TEST_Spark"/>
                        <SItemPortLoadoutEntryParams itemPortName="missile_02_attach" entityClassName="MISL_S02_IR_TEST_Spark"/>
@@ -231,7 +232,8 @@ private slots:
                  </entries></SItemPortLoadoutManualParams></loadout></SEntityComponentDefaultLoadoutParams>
                  <Vehicle><Parts><Part mass="1000"><Parts><Part mass="250"/></Parts></Part></Parts></Vehicle>
                  </Components></EntityClassDefinition.TEST_Ship>)"},
-            {path("entities/spaceships/test_ship_pu_pirate.xml"), "<EntityClassDefinition.TEST_Ship_PU_Pirate/>"},
+            {path("entities/spaceships/test_ship_pu_pirate.xml"),
+             "<EntityClassDefinition.TEST_Ship_PU_Pirate/>"},
         });
 
         QTemporaryDir dir;
@@ -324,8 +326,10 @@ private slots:
         options.overlayPath = overlay.toStdString();
         const auto again = buildGameDataJson(source, options);
         QVERIFY(again);
-        const QJsonObject ship2 =
-            QJsonDocument::fromJson(QByteArray::fromStdString(*again)).object()[u"vehicles"].toArray()[0].toObject();
+        const QJsonObject ship2 = QJsonDocument::fromJson(QByteArray::fromStdString(*again))
+                                      .object()[u"vehicles"]
+                                      .toArray()[0]
+                                      .toObject();
         QCOMPARE(ship2[u"mass"].toDouble(), 1250.0);
         QCOMPARE(ship2[u"scm_speed"].toDouble(), 200.0);
     }

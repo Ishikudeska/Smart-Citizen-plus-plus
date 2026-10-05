@@ -1,5 +1,4 @@
 #include "P4kBuilder.h"
-
 #include "engine/cryxml/CryXml.h"
 #include "engine/p4k/Archive.h"
 #include "engine/p4k/Extractor.h"
@@ -38,7 +37,8 @@ std::filesystem::path toPath(const QString &s)
     return std::filesystem::path(s.toStdWString());
 }
 
-std::filesystem::path writeFile(const QTemporaryDir &dir, const QString &name, const std::vector<std::uint8_t> &bytes)
+std::filesystem::path writeFile(const QTemporaryDir &dir, const QString &name,
+                                const std::vector<std::uint8_t> &bytes)
 {
     QFile f(dir.filePath(name));
     if (!f.open(QIODevice::WriteOnly))
@@ -208,8 +208,8 @@ private slots:
     // The RSI Launcher holds Data.p4k open for writing while it patches.
     void lockedArchiveReportsLocked()
     {
-        HANDLE writer = CreateFileW(archivePath_.c_str(), GENERIC_WRITE, FILE_SHARE_READ, nullptr, OPEN_EXISTING,
-                                    FILE_ATTRIBUTE_NORMAL, nullptr);
+        HANDLE writer = CreateFileW(archivePath_.c_str(), GENERIC_WRITE, FILE_SHARE_READ, nullptr,
+                                    OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
         QVERIFY(writer != INVALID_HANDLE_VALUE);
         auto archive = p4k::Archive::open(archivePath_);
         CloseHandle(writer);
@@ -251,8 +251,8 @@ private slots:
         QTest::newRow("deep star") << "Data/*.xml" << "Data/Scripts/a/b.xml" << true;
         QTest::newRow("question") << "Data/Game?.dcb" << "Data/Game2.dcb" << true;
         QTest::newRow("question needs one") << "Data/Game?.dcb" << "Data/Game.dcb" << false;
-        QTest::newRow("exact") << "Data/Localization/english/global.ini" << "Data/Localization/english/global.ini"
-                               << true;
+        QTest::newRow("exact") << "Data/Localization/english/global.ini"
+                               << "Data/Localization/english/global.ini" << true;
         QTest::newRow("anchored") << "Data/Localization/english/global.ini"
                                   << "Data/Localization/english/global.ini.bak" << false;
         QTest::newRow("backslash") << R"(Data\Game*.dcb)" << "Data/Game2.dcb" << true;
@@ -302,7 +302,8 @@ private slots:
         QCOMPARE(entries.size(), std::size_t(1));
         p4k::ExtractOptions options;
         options.outputDir = toPath(out.path());
-        options.transform = [](std::string_view, std::vector<std::uint8_t> bytes) -> Result<std::vector<std::uint8_t>> {
+        options.transform = [](std::string_view,
+                               std::vector<std::uint8_t> bytes) -> Result<std::vector<std::uint8_t>> {
             bytes.insert(bytes.begin(), {'#', ' '});
             return bytes;
         };

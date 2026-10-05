@@ -10,12 +10,16 @@ namespace core {
 
 namespace {
 
-constexpr std::array kFpsWeaponWords = {u"_rifle_", u"_pistol_", u"_smg_",  u"_shotgun_", u"_sniper_",  u"_launcher_",
-                                        u"_lmg_",   u"_hmg_",    u"_knife_", u"_multi_",  u"_crossbow_"};
-constexpr std::array kArmorGearWords = {u"armor", u"helmet", u"suit", u"vest", u"glasses", u"_optics_", u"_barrel_"};
-constexpr std::array kComponentCodes = {u"shld", u"powr", u"cool", u"qdrv", u"jump", u"misl", u"gmisl", u"bomb"};
+constexpr std::array kFpsWeaponWords = {u"_rifle_",  u"_pistol_",   u"_smg_",     u"_shotgun_",
+                                        u"_sniper_", u"_launcher_", u"_lmg_",     u"_hmg_",
+                                        u"_knife_",  u"_multi_",    u"_crossbow_"};
+constexpr std::array kArmorGearWords = {u"armor",   u"helmet",   u"suit",    u"vest",
+                                        u"glasses", u"_optics_", u"_barrel_"};
+constexpr std::array kComponentCodes = {u"shld", u"powr", u"cool",  u"qdrv",
+                                        u"jump", u"misl", u"gmisl", u"bomb"};
 
 // Mission-source prefixes, compared against the lower-cased key.
+// clang-format off
 constexpr std::array kMissionPrefixes = {
     u"adagio_", u"assassin", u"basesweep_", u"bbt_", u"bhg_", u"bitzero", u"blackbox", u"blacjac",
     u"blockaderunner", u"bounty_", u"cdf_", u"cfp", u"civilian_", u"claimsweep_", u"cleanair_", u"clovis_",
@@ -36,9 +40,9 @@ constexpr std::array kMissionPrefixes = {
     u"thecollector_", u"timesensitive_", u"tutorial", u"udm_", u"uwc_", u"vaughn_", u"vendingmachine_",
     u"wantedlevel", u"wstr_", u"xenothreat_",
 };
+// clang-format on
 
-template <std::size_t N>
-bool startsWithAny(QStringView s, const std::array<const char16_t *, N> &prefixes)
+template <std::size_t N> bool startsWithAny(QStringView s, const std::array<const char16_t *, N> &prefixes)
 {
     for (const char16_t *p : prefixes)
         if (s.startsWith(QStringView(p)))
@@ -46,8 +50,7 @@ bool startsWithAny(QStringView s, const std::array<const char16_t *, N> &prefixe
     return false;
 }
 
-template <std::size_t N>
-bool containsAny(QStringView s, const std::array<const char16_t *, N> &words)
+template <std::size_t N> bool containsAny(QStringView s, const std::array<const char16_t *, N> &words)
 {
     for (const char16_t *w : words)
         if (s.contains(QStringView(w)))
@@ -61,10 +64,10 @@ bool hasComponentPrefix(QStringView lower)
     for (QStringView field : {QStringView(u"item_name"), QStringView(u"item_desc")}) {
         if (!lower.startsWith(field))
             continue;
-        for (QStringView rest : {lower.sliced(field.size()),
-                                 lower.size() > field.size() && lower[field.size()] == u'_'
-                                     ? lower.sliced(field.size() + 1)
-                                     : QStringView()}) {
+        for (QStringView rest :
+             {lower.sliced(field.size()), lower.size() > field.size() && lower[field.size()] == u'_'
+                                              ? lower.sliced(field.size() + 1)
+                                              : QStringView()}) {
             for (const char16_t *code : kComponentCodes) {
                 const QStringView c(code);
                 if (rest.size() > c.size() && rest.startsWith(c) && rest[c.size()] == u'_')
@@ -124,10 +127,14 @@ QString computeCategory(const QString &key)
 QString statusName(EntryStatus status)
 {
     switch (status) {
-    case EntryStatus::Unmodified: return QStringLiteral("Unmodified");
-    case EntryStatus::Modified: return QStringLiteral("Modified");
-    case EntryStatus::Enhanced: return QStringLiteral("Enhanced");
-    case EntryStatus::New: return QStringLiteral("New");
+    case EntryStatus::Unmodified:
+        return QStringLiteral("Unmodified");
+    case EntryStatus::Modified:
+        return QStringLiteral("Modified");
+    case EntryStatus::Enhanced:
+        return QStringLiteral("Enhanced");
+    case EntryStatus::New:
+        return QStringLiteral("New");
     }
     return {};
 }

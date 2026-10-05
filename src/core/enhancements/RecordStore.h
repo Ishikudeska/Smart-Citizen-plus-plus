@@ -50,8 +50,8 @@ private:
     QStringList walkOrder(const QString &rel) const;
 
     QString root_;
-    QHash<QString, Dir> dirs_;          // "" is the records root; '/'-separated
-    QStringList indexOrder_;            // directories with files, in the index's key order
+    QHash<QString, Dir> dirs_; // "" is the records root; '/'-separated
+    QStringList indexOrder_;   // directories with files, in the index's key order
     qsizetype fileCount_ = 0;
 };
 

@@ -46,10 +46,14 @@ private slots:
 
         QProcess py;
         QStringList args = {QStringLiteral(SC_SOURCE_DIR "/tools/parity/apply_python.py"),
-                            QStringLiteral("--reference"), reference,
-                            QStringLiteral("--cache"), cache,
-                            QStringLiteral("--version"), version,
-                            QStringLiteral("--out"), out.filePath(QStringLiteral("python.ini"))};
+                            QStringLiteral("--reference"),
+                            reference,
+                            QStringLiteral("--cache"),
+                            cache,
+                            QStringLiteral("--version"),
+                            version,
+                            QStringLiteral("--out"),
+                            out.filePath(QStringLiteral("python.ini"))};
         if (QFileInfo::exists(userIni))
             args << QStringLiteral("--user-ini") << userIni;
         py.start(python, args);
@@ -85,8 +89,8 @@ private slots:
             const QList<QByteArray> el = expected.split('\n'), al = actual.split('\n');
             for (qsizetype i = 0; i < std::min(el.size(), al.size()); ++i)
                 if (el[i] != al[i]) {
-                    qWarning("line %lld differs:\n  python: %s\n  c++:    %s", i + 1, el[i].left(300).constData(),
-                             al[i].left(300).constData());
+                    qWarning("line %lld differs:\n  python: %s\n  c++:    %s", i + 1,
+                             el[i].left(300).constData(), al[i].left(300).constData());
                     break;
                 }
         }

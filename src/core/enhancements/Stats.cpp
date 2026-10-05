@@ -12,7 +12,7 @@ namespace core::enh {
 
 namespace {
 
-const QString kPipe = QStringLiteral("  |  ");
+constexpr QLatin1StringView kPipe("  |  ");
 
 QString joinLines(const QStringList &lines)
 {
@@ -48,7 +48,8 @@ QString f0(double v)
 
 QString rangeM(double v)
 {
-    return v >= 1000 ? py::fixed(v / 1000, 1, true) + QStringLiteral(" km") : py::fixed(v, 0, true) + QStringLiteral(" m");
+    return v >= 1000 ? py::fixed(v / 1000, 1, true) + QStringLiteral(" km")
+                     : py::fixed(v, 0, true) + QStringLiteral(" m");
 }
 
 void addSignatures(QStringList &lines, const std::optional<std::string_view> &em,
@@ -116,7 +117,8 @@ void addDamage(DamageBreakdown &b, Node info)
         if (!v || *v == 0)
             continue;
         const QString label = damageLabel(attr);
-        auto it = std::find_if(b.parts.begin(), b.parts.end(), [&](const auto &p) { return p.first == label; });
+        auto it =
+            std::find_if(b.parts.begin(), b.parts.end(), [&](const auto &p) { return p.first == label; });
         if (it == b.parts.end())
             b.parts.emplace_back(label, *v);
         else
@@ -129,10 +131,10 @@ void addDamage(DamageBreakdown &b, Node info)
 double requireFloat(const std::optional<std::string_view> &value)
 {
     if (!value)
-        throw PyError("float() argument must be a string or a real number, not 'NoneType'");
+        PyError::raise("float() argument must be a string or a real number, not 'NoneType'");
     const std::optional<double> v = toFloat(*value);
     if (!v)
-        throw PyError("could not convert string to float");
+        PyError::raise("could not convert string to float");
     return *v;
 }
 
@@ -192,7 +194,7 @@ std::optional<double> fireRate(Node root)
     });
     if (rates.empty())
         return std::nullopt;
-    std::stable_sort(rates.begin(), rates.end(), [](const Rate &a, const Rate &b) {
+    std::stable_sort(rates.begin(), rates.end(), [](Rate a, Rate b) {
         if (a.primary != b.primary)
             return a.primary;
         return a.value > b.value;
@@ -203,8 +205,10 @@ std::optional<double> fireRate(Node root)
 QStringList fireModes(Node root, const Loc *loc)
 {
     static const QHash<QString, QString> labels = {
-        {QStringLiteral("rapid"), QStringLiteral("Auto")},       {QStringLiteral("single"), QStringLiteral("Semi-Auto")},
-        {QStringLiteral("burst"), QStringLiteral("Burst")},      {QStringLiteral("charge"), QStringLiteral("Charge")},
+        {QStringLiteral("rapid"), QStringLiteral("Auto")},
+        {QStringLiteral("single"), QStringLiteral("Semi-Auto")},
+        {QStringLiteral("burst"), QStringLiteral("Burst")},
+        {QStringLiteral("charge"), QStringLiteral("Charge")},
         {QStringLiteral("shotgun"), QStringLiteral("Shotgun")},
     };
     const auto stripBrackets = [](QString s) {
@@ -347,8 +351,10 @@ QString enhancementsMissile(Node root)
             if (const auto g = firstSet(el, {"guidanceType", "type"}))
                 guidance = qs(*g);
             else
-                guidance = qs(tag(el)).replace(QStringLiteral("Guidance"), QString()).replace(QStringLiteral("Tracking"), QString());
-            if (!guidance.isEmpty() && !guidance.toLower().contains(u"none"))
+                guidance = qs(tag(el))
+                               .replace(QStringLiteral("Guidance"), QString())
+                               .replace(QStringLiteral("Tracking"), QString());
+            if (!guidance.isEmpty() && !guidance.contains(u"none", Qt::CaseInsensitive))
                 lines << QStringLiteral("Guidance: ") + guidance;
             if (const auto seeker = firstSet(el, {"seekerType", "seekerMode"}); noNone(seeker))
                 lines << QStringLiteral("Seeker: ") + qs(*seeker);
@@ -357,10 +363,12 @@ QString enhancementsMissile(Node root)
             if (const auto raw = firstSet(el, {"minLockRange", "minimumLockRange"}); raw && *raw != "0")
                 if (const auto v = toFloat(*raw); v && *v / 1000 > 0)
                     lines << QStringLiteral("Min Lock Range: %1 km").arg(py::fixed(*v / 1000, 1, true));
-            if (const auto raw = firstSet(el, {"maxLockRange", "lockOnRange", "launchRange"}); raw && *raw != "0")
+            if (const auto raw = firstSet(el, {"maxLockRange", "lockOnRange", "launchRange"});
+                raw && *raw != "0")
                 if (const auto v = toFloat(*raw); v && *v / 1000 > 0)
                     lines << QStringLiteral("Max Lock Range: %1 km").arg(py::fixed(*v / 1000, 1, true));
-            if (const auto raw = firstSet(el, {"trackingRange", "engagementRange", "maxEngagementRange"}); raw && *raw != "0")
+            if (const auto raw = firstSet(el, {"trackingRange", "engagementRange", "maxEngagementRange"});
+                raw && *raw != "0")
                 if (const auto v = toFloat(*raw); v && *v / 1000 > 0)
                     lines << QStringLiteral("Tracking Range: %1 km").arg(py::fixed(*v / 1000, 1, true));
             if (const auto v = positive(firstSet(el, {"proximityFuseRange", "detonationRange", "fuseRange"})))
@@ -397,7 +405,8 @@ QString enhancementsMissile(Node root)
         lines << QStringLiteral("Max Lock Range: ") + rangeM(*lmx);
 
     const std::optional<double> armT = optFloat(attrIn(root, "SCItemMissileParams", "armTime"));
-    const std::optional<double> safety = optFloat(attrIn(root, "SCItemMissileParams", "explosionSafetyDistance"));
+    const std::optional<double> safety =
+        optFloat(attrIn(root, "SCItemMissileParams", "explosionSafetyDistance"));
     const std::optional<double> speed = optFloat(attrIn(root, "GCSParams", "linearSpeed"));
     QStringList arm;
     if (armT && *armT != 0 && *armT > 0)
@@ -426,7 +435,8 @@ QString enhancementsMissile(Node root)
         if (const auto v = toFloat(*blast); v && *v > 0)
             lines << QStringLiteral("Blast Radius: %1 m").arg(f0(*v));
 
-    if (const auto eff = attrIn(root, "ProjectileParams", "effectiveRange"); eff && !eff->empty() && *eff != "0")
+    if (const auto eff = attrIn(root, "ProjectileParams", "effectiveRange");
+        eff && !eff->empty() && *eff != "0")
         if (const auto v = toFloat(*eff); v && *v / 1000 > 0)
             lines << QStringLiteral("Effective Range: %1 km").arg(py::fixed(*v / 1000, 1, true));
     if (const auto em = attrIn(root, "EMSignature", "nominalSignature"); em && !em->empty() && *em != "0")
@@ -593,7 +603,8 @@ QString enhancementsQuantumDrive(Node root)
         lines << QStringLiteral("Accel:  ") + parts.join(kPipe);
     }
     if (calRate)
-        lines << QStringLiteral("Cal Rate: %1  |  Required: %2–%3").arg(fmt(calRate), fmt(calMin), fmt(calMax));
+        lines
+            << QStringLiteral("Cal Rate: %1  |  Required: %2–%3").arg(fmt(calRate), fmt(calMin), fmt(calMax));
     if (pwr)
         lines << QStringLiteral("Power Draw: ") + fmt(pwr, u" PU/s");
     if (hp)
@@ -744,7 +755,8 @@ QString enhancementsSalvageTool(Node root)
     return joinLines(lines);
 }
 
-QString enhancementsWeapon(Node root, const RecordLookup &ammo, const Loc *loc, const MagazineLookup *magazines)
+QString enhancementsWeapon(Node root, const RecordLookup &ammo, const Loc *loc,
+                           const MagazineLookup *magazines)
 {
     const std::optional<double> fr = fireRate(root);
     const QStringList modes = fireModes(root, loc);
@@ -757,7 +769,8 @@ QString enhancementsWeapon(Node root, const RecordLookup &ammo, const Loc *loc, 
     std::optional<double> weight;
     forEachElement(root, [&](Node el) {
         const std::string_view pt = polyType(el);
-        if (pt.find("RigidPhysics") == std::string_view::npos && pt.find("StaticPhysics") == std::string_view::npos)
+        if (pt.find("RigidPhysics") == std::string_view::npos &&
+            pt.find("StaticPhysics") == std::string_view::npos)
             return true;
         if (const std::string_view mass = getOr(el, "Mass"); !mass.empty())
             weight = toFloat(mass);
@@ -781,7 +794,7 @@ QString enhancementsWeapon(Node root, const RecordLookup &ammo, const Loc *loc, 
         forEachElement(root, [&](Node el) {
             const QString port = qs(getOr(el, "itemPortName"));
             const QString entityClass = qs(getOr(el, "entityClassName"));
-            if (!port.toLower().contains(u"magazine") || entityClass.isEmpty())
+            if (!port.contains(u"magazine", Qt::CaseInsensitive) || entityClass.isEmpty())
                 return true;
             if (const auto it = magazines->constFind(entityClass); it != magazines->cend()) {
                 ammoId = it->first;
@@ -861,7 +874,8 @@ QString enhancementsWeapon(Node root, const RecordLookup &ammo, const Loc *loc, 
         lines << QStringLiteral("Fire Modes: ") + modes.join(QStringLiteral(" / "));
     if (totalDmg && *totalDmg > 0) {
         const QString pelletStr = pellets > 1 ? QStringLiteral(" x%1").arg(pellets) : QString();
-        QStringList parts = {QStringLiteral("Alpha Dmg: ") + fmt(totalDmg, {}, 1) + pelletStr + damageTypeSuffix(breakdown)};
+        QStringList parts = {QStringLiteral("Alpha Dmg: ") + fmt(totalDmg, {}, 1) + pelletStr +
+                             damageTypeSuffix(breakdown)};
         if (dps && *dps != 0)
             parts << QStringLiteral("DPS: ") + fmt(dps, {}, 1);
         lines << parts.join(kPipe);
@@ -956,7 +970,8 @@ std::pair<QString, QString> loadoutSummary(Node root)
     }
 
     const auto summarizeSlots = [](const std::vector<Slot> &slotList) {
-        std::map<std::pair<QString, bool>, int, bool (*)(const std::pair<QString, bool> &, const std::pair<QString, bool> &)>
+        std::map<std::pair<QString, bool>, int,
+                 bool (*)(const std::pair<QString, bool> &, const std::pair<QString, bool> &)>
             counts([](const std::pair<QString, bool> &a, const std::pair<QString, bool> &b) {
                 if (a.first != b.first)
                     return py::less(a.first, b.first);
@@ -1019,7 +1034,8 @@ QString armorStatsBlock(Node armorRoot)
             const auto v = four(di);
             if (v[0] || v[1] || v[2] || v[3])
                 lines << QStringLiteral("Dmg Mult: P %1  |  E %2  |  D %3  |  T %4")
-                             .arg(fmt(v[0], u"x", 2), fmt(v[1], u"x", 2), fmt(v[2], u"x", 2), fmt(v[3], u"x", 2));
+                             .arg(fmt(v[0], u"x", 2), fmt(v[1], u"x", 2), fmt(v[2], u"x", 2),
+                                  fmt(v[3], u"x", 2));
         }
     if (const Node ad = findDescendant(armorRoot, "armorDeflection"))
         if (const Node dv = find(ad, "deflectionValue")) {
@@ -1111,7 +1127,8 @@ QString enhancementsShip(Node root, Node controllerRoot, const Loc *loc, const R
     if (!armorBlock.isEmpty())
         lines << armorBlock;
     if (insBase)
-        lines << QStringLiteral("Insurance: %1 base  |  %2 express").arg(fmt(insBase, u" min", 2), fmt(insExpress, u" min", 2));
+        lines << QStringLiteral("Insurance: %1 base  |  %2 express")
+                     .arg(fmt(insBase, u" min", 2), fmt(insExpress, u" min", 2));
     return joinLines(lines);
 }
 

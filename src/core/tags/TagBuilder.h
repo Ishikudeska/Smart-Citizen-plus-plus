@@ -156,7 +156,8 @@ QString applyMissionTitle(const QString &original, const QString &route, const T
 // Shortens a stock mission title per the enabled option keys; game tokens
 // (~mission(...)) are never touched.
 QString abbreviateTitle(const QString &title, const QSet<QString> &enabled = {},
-                        const QString &rankSeparator = QStringLiteral("dash"), bool standardizeHauling = false);
+                        const QString &rankSeparator = QStringLiteral("dash"),
+                        bool standardizeHauling = false);
 
 // 12 hex characters identifying the whole Tag Builder state.
 QString fingerprint(const QMap<QString, TagConfig> &configs, bool annotateMissionDescs);

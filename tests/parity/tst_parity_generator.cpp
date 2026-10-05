@@ -88,10 +88,9 @@ private slots:
     {
         const QString cache = qEnvironmentVariable(
             "SCX_SC_CACHE", QDir::homePath() + QStringLiteral("/Documents/Smart Citizen/LIVE/cache"));
-        forgeDir_ = qEnvironmentVariable(
-            "SCX_FORGE_CACHE",
-            QDir::fromNativeSeparators(qEnvironmentVariable("LOCALAPPDATA")) +
-                QStringLiteral("/Smart Citizen/LIVE/cache/dataforge"));
+        forgeDir_ = qEnvironmentVariable("SCX_FORGE_CACHE",
+                                         QDir::fromNativeSeparators(qEnvironmentVariable("LOCALAPPDATA")) +
+                                             QStringLiteral("/Smart Citizen/LIVE/cache/dataforge"));
         baseIni_ = cache + QStringLiteral("/base.ini");
         python_ = QStandardPaths::findExecutable(QStringLiteral("python"));
         if (!QFileInfo::exists(kReference + QStringLiteral("/scripts/generate_enhancements_ini.py")))
@@ -156,11 +155,9 @@ private slots:
         QProcess py;
         py.setProcessChannelMode(QProcess::ForwardedErrorChannel);
         py.start(python_, {QStringLiteral(SC_SOURCE_DIR "/tools/parity/run_python_generator.py"),
-                           QStringLiteral("--reference"), kReference,
-                           QStringLiteral("--base-ini"), baseIni_,
-                           QStringLiteral("--forge-dir"), forgeDir_,
-                           QStringLiteral("--out"), dir.filePath(QStringLiteral("python")),
-                           QStringLiteral("--options"), optionsPath});
+                           QStringLiteral("--reference"), kReference, QStringLiteral("--base-ini"), baseIni_,
+                           QStringLiteral("--forge-dir"), forgeDir_, QStringLiteral("--out"),
+                           dir.filePath(QStringLiteral("python")), QStringLiteral("--options"), optionsPath});
         QVERIFY(py.waitForFinished(1800000));
         QCOMPARE(py.exitCode(), 0);
 
@@ -181,7 +178,8 @@ private slots:
 
         for (const QString &category : enh::kGeneratorCategories) {
             const QString name = enh::outputFileName(category);
-            const QString diff = compareIni(dir.filePath(QStringLiteral("python/") + name), cppDir + u'/' + name);
+            const QString diff =
+                compareIni(dir.filePath(QStringLiteral("python/") + name), cppDir + u'/' + name);
             QVERIFY2(diff.isEmpty(), qPrintable(diff));
         }
     }

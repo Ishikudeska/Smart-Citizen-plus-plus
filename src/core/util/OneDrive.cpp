@@ -41,12 +41,12 @@ bool isOneDrivePath(const QString &path, const QProcessEnvironment &env)
     if (path.isEmpty())
         return false;
     const QString norm = normalized(path);
-    for (const QString &root : roots(env)) {
+    for (const auto rootList = roots(env); const QString &root : rootList) {
         const QString r = normalized(root);
         if (norm == r || norm.startsWith(r + u'\\'))
             return true;
     }
-    for (const QString &segment : norm.split(u'\\', Qt::SkipEmptyParts))
+    for (const auto segments = norm.split(u'\\', Qt::SkipEmptyParts); const QString &segment : segments)
         if (isOneDriveSegment(segment))
             return true;
     return false;

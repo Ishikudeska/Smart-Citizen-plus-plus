@@ -42,7 +42,7 @@ public:
 
     // Snapshot management.
     QString backup(const QDateTime &now = QDateTime::currentDateTime()) const;
-    QFileInfoList backups() const; // newest first
+    QFileInfoList backups() const;                 // newest first
     bool restore(const QString &backupFile) const; // snapshots the current file first
 
     // Renames user.ini to "user.ini.bak-YYYYMMDD-HHMMSS" (or deletes it when

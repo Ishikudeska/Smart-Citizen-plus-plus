@@ -98,14 +98,13 @@ const QString kDesc = s("POSTING: salvage run.\\n\\n<EM3>POTENTIAL BLUEPRINTS</E
 
 // A stray prose bullet before the header, region sub-headers inside the
 // section, and a later section's bullet.
-const QString kDescWithFalsePositives =
-    s("Handle this right and I'll give the main contractor Council Scrip."
-      "\\n\\n- Stows"
-      "\\n\\n<EM3>POTENTIAL BLUEPRINTS</EM3>"
-      "\\n<EM4>[Nyx]</EM4>\\n- Cryo-Star SL\\n- Kelvid"
-      "\\n\\n<EM4>[Pyro]</EM4>\\n- DuraJet\\n- ZapJet"
-      "\\n\\n<EM3>ITEM REWARDS</EM3>\\n- Council Scrip"
-      "\\n\\n<EM3>MISSION DETAILS</EM3>\\n<EM4>Difficulty:</EM4> 3");
+const QString kDescWithFalsePositives = s("Handle this right and I'll give the main contractor Council Scrip."
+                                          "\\n\\n- Stows"
+                                          "\\n\\n<EM3>POTENTIAL BLUEPRINTS</EM3>"
+                                          "\\n<EM4>[Nyx]</EM4>\\n- Cryo-Star SL\\n- Kelvid"
+                                          "\\n\\n<EM4>[Pyro]</EM4>\\n- DuraJet\\n- ZapJet"
+                                          "\\n\\n<EM3>ITEM REWARDS</EM3>\\n- Council Scrip"
+                                          "\\n\\n<EM3>MISSION DETAILS</EM3>\\n<EM4>Difficulty:</EM4> 3");
 
 QString krakenPath()
 {
@@ -131,13 +130,9 @@ QStringList pySorted(const QSet<QString> &set)
 
 QString itemLine(const BlueprintItem &item)
 {
-    return QStringList{item.name,
-                       pySorted(item.missions).join(QChar(0x1E)),
-                       item.type,
-                       item.cls,
-                       item.size,
-                       item.grade,
-                       item.taggedName}
+    return QStringList{
+        item.name,      pySorted(item.missions).join(QChar(0x1E)), item.type, item.cls, item.size, item.grade,
+        item.taggedName}
         .join(QChar(0x1F));
 }
 
@@ -171,7 +166,8 @@ private slots:
         QVERIFY(parseEvents(s("<2026-03-26T17:15:47.126Z> [Notice] <UpdateNotificationItem> "
                               "Notification \"Received Blueprint: Coda Pistol: \" [23], Action: Next"))
                     .isEmpty());
-        QVERIFY(parseEvents(s("<2026-03-26T17:15:41.684Z>    \"Received Blueprint: Coda Pistol: \" [23]")).isEmpty());
+        QVERIFY(parseEvents(s("<2026-03-26T17:15:41.684Z>    \"Received Blueprint: Coda Pistol: \" [23]"))
+                    .isEmpty());
         QVERIFY(parseEvents(s("<2026-06-07T04:27:45.846Z> [Notice] <ReuseChannel> Reusing channel for "
                               "'sc.external.services.blueprint_library.v1.BlueprintLibraryService'"))
                     .isEmpty());
@@ -196,8 +192,9 @@ private slots:
         QCOMPARE(res.eventsMatched, 1);
 
         // The watermark is exclusive, and the latest timestamp ignores it.
-        const QString b = writeLog(dir.filePath(s("b.log")), {logEvent("2026-03-10T00:00:00Z", s("AtWatermark")),
-                                                              logEvent("2026-03-11T00:00:00Z", s("AfterWatermark"))});
+        const QString b =
+            writeLog(dir.filePath(s("b.log")), {logEvent("2026-03-10T00:00:00Z", s("AtWatermark")),
+                                                logEvent("2026-03-11T00:00:00Z", s("AfterWatermark"))});
         QCOMPARE(scanFiles({b}, dt("2026-03-10T00:00:00Z")).names, set({"AfterWatermark"}));
         res = scanFiles({b}, dt("2026-04-01T00:00:00Z"));
         QVERIFY(res.names.isEmpty());
@@ -207,17 +204,19 @@ private slots:
     void scanDeduplicates()
     {
         QTemporaryDir dir;
-        const QString a = writeLog(dir.filePath(s("a.log")), {logEvent("2026-03-05T10:00:00Z", s("Coda Pistol"))});
-        const QString b = writeLog(dir.filePath(s("b.log")), {logEvent("2026-03-06T10:00:00Z", s("Coda Pistol"))});
+        const QString a =
+            writeLog(dir.filePath(s("a.log")), {logEvent("2026-03-05T10:00:00Z", s("Coda Pistol"))});
+        const QString b =
+            writeLog(dir.filePath(s("b.log")), {logEvent("2026-03-06T10:00:00Z", s("Coda Pistol"))});
         ScanResult res = scanFiles({a, b});
         QCOMPARE(res.names, set({"Coda Pistol"}));
         QCOMPARE(res.eventsMatched, 2);
 
-        const QString c = writeLog(
-            dir.filePath(s("c.log")),
-            {logEvent("2026-03-09T07:54:03.720Z", s("Torrez"), 5),
-             s("<2026-03-09T07:54:18.830Z> [Notice] <UpdateNotificationItem> Notification \"Received Blueprint: "
-               "Torrez: \" [5], Action: Next")});
+        const QString c = writeLog(dir.filePath(s("c.log")),
+                                   {logEvent("2026-03-09T07:54:03.720Z", s("Torrez"), 5),
+                                    s("<2026-03-09T07:54:18.830Z> [Notice] <UpdateNotificationItem> "
+                                      "Notification \"Received Blueprint: "
+                                      "Torrez: \" [5], Action: Next")});
         res = scanFiles({c});
         QCOMPARE(res.names, set({"Torrez"}));
         QCOMPARE(res.eventsMatched, 1);
@@ -244,10 +243,9 @@ private slots:
         QTemporaryDir dir;
         const QString a = writeLog(dir.filePath(s("a.log")), {logEvent("2026-03-05T10:00:00Z", s("A"))});
         QList<std::tuple<int, int, QString>> calls;
-        const ScanResult res = scanFiles({dir.filePath(s("gone.log")), a}, {},
-                                         [&](int done, int total, const QString &name) {
-                                             calls.append({done, total, name});
-                                         });
+        const ScanResult res =
+            scanFiles({dir.filePath(s("gone.log")), a}, {},
+                      [&](int done, int total, const QString &name) { calls.append({done, total, name}); });
         QCOMPARE(res.names, set({"A"}));
         QCOMPARE(calls.front(), std::make_tuple(0, 2, s("gone.log")));
         QCOMPARE(calls.back(), std::make_tuple(2, 2, QString()));
@@ -258,8 +256,9 @@ private slots:
         QTemporaryDir dir;
         QFile f(dir.filePath(s("crlf.log")));
         QVERIFY(f.open(QIODevice::WriteOnly));
-        f.write((logEvent("2026-03-05T10:00:00Z", s("One")) + s("\r\n") + logEvent("2026-03-06T10:00:00Z", s("Two")) +
-                 s("\r") + logEvent("2026-03-07T10:00:00Z", s("Three")))
+        f.write((logEvent("2026-03-05T10:00:00Z", s("One")) + s("\r\n") +
+                 logEvent("2026-03-06T10:00:00Z", s("Two")) + s("\r") +
+                 logEvent("2026-03-07T10:00:00Z", s("Three")))
                     .toUtf8());
         f.close();
         QCOMPARE(scanFiles({f.fileName()}).names, set({"One", "Two", "Three"}));
@@ -351,7 +350,8 @@ private slots:
 
     void normalizeNoneStyle()
     {
-        QCOMPARE(normalizeItemName(s("Mil-S1-A Norfield"), defaultEnclosings(), s("Norfield")), s("Norfield"));
+        QCOMPARE(normalizeItemName(s("Mil-S1-A Norfield"), defaultEnclosings(), s("Norfield")),
+                 s("Norfield"));
         QCOMPARE(normalizeItemName(s("Mil-S1-A Norfield"), kSquareAndNone), s("Norfield"));
         QCOMPARE(normalizeItemName(s("Norfield Mil-S1-A"), kSquareAndNone), s("Norfield"));
         // Off unless the None style is configured.
@@ -360,14 +360,17 @@ private slots:
         QCOMPARE(normalizeItemName(s("[Mil-S1-A] Norfield"), kSquareAndNone), s("Norfield"));
         QCOMPARE(normalizeItemName(s("Norfield [Mil-S1-A]"), kSquareAndNone), s("Norfield"));
         QCOMPARE(normalizeItemName(s("Military S2 A Norfield")), s("Military S2 A Norfield"));
-        QCOMPARE(normalizeItemName(s("10-Series Greatsword Cannon"), kSquareAndNone), s("10-Series Greatsword Cannon"));
+        QCOMPARE(normalizeItemName(s("10-Series Greatsword Cannon"), kSquareAndNone),
+                 s("10-Series Greatsword Cannon"));
     }
 
     void stockDiff()
     {
-        QCOMPARE(normalizeItemName(s("[Mil-S1-A] Norfield"), defaultEnclosings(), s("Norfield")), s("Norfield"));
-        QCOMPARE(normalizeItemName(s("[Mil-S1-A] Norfield"), defaultEnclosings(), s("Something Else Entirely")),
+        QCOMPARE(normalizeItemName(s("[Mil-S1-A] Norfield"), defaultEnclosings(), s("Norfield")),
                  s("Norfield"));
+        QCOMPARE(
+            normalizeItemName(s("[Mil-S1-A] Norfield"), defaultEnclosings(), s("Something Else Entirely")),
+            s("Norfield"));
         QCOMPARE(stripViaStockDiff(s("Mil-S1-A Norfield"), s("Norfield")), std::optional(s("Mil-S1-A")));
         QCOMPARE(stripViaStockDiff(s("Norfield Mil-S1-A"), s("Norfield")), std::optional(s("Mil-S1-A")));
         QCOMPARE(stripViaStockDiff(s("Something Unrelated"), s("Norfield")), std::nullopt);
@@ -379,8 +382,11 @@ private slots:
     {
         const auto configs = [](const char *c, const char *m, const char *w) {
             QMap<QString, tags::TagConfig> map;
-            for (const auto &[cat, enc] : {std::pair{"components", c}, {"missiles", m}, {"ship_weapons", w},
-                                           {"commodities", "round"}, {"mission_titles", "curly"}}) {
+            for (const auto &[cat, enc] : {std::pair{"components", c},
+                                           {"missiles", m},
+                                           {"ship_weapons", w},
+                                           {"commodities", "round"},
+                                           {"mission_titles", "curly"}}) {
                 tags::TagConfig cfg = tags::defaultConfig(s(cat));
                 cfg.enclosing = s(enc);
                 map.insert(s(cat), cfg);
@@ -390,7 +396,8 @@ private slots:
         QCOMPARE(enclosingsFromTagConfigs(configs("square", "square", "square")), defaultEnclosings());
         const Enclosings rounds = enclosingsFromTagConfigs(configs("round", "round", "square"));
         QCOMPARE(rounds, (Enclosings{{s("("), s(")")}, {s("["), s("]")}}));
-        QVERIFY(enclosingsFromTagConfigs(configs("round", "round", "round")).contains(defaultEnclosings().front()));
+        QVERIFY(enclosingsFromTagConfigs(configs("round", "round", "round"))
+                    .contains(defaultEnclosings().front()));
         QCOMPARE(enclosingsFromTagConfigs(configs("none", "angle", "square")),
                  (Enclosings{kNoneStyleEnclosing, {s("<"), s(">")}, {s("["), s("]")}}));
     }
@@ -402,7 +409,8 @@ private slots:
         QCOMPARE(extractBpItemNames(kDesc), set({"Antium Core", "Norfield", "Abrade Scraper Module"}));
         QVERIFY(extractBpItemNames(s("Just a plain description, no rewards.")).isEmpty());
         QVERIFY(extractBpItemNames(QString()).isEmpty());
-        QCOMPARE(extractBpItemNames(kDescWithFalsePositives), set({"Cryo-Star SL", "Kelvid", "DuraJet", "ZapJet"}));
+        QCOMPARE(extractBpItemNames(kDescWithFalsePositives),
+                 set({"Cryo-Star SL", "Kelvid", "DuraJet", "ZapJet"}));
     }
 
     void renamedHeaders()
@@ -470,30 +478,34 @@ private slots:
         const QString out = applyOwnedToValue(kDesc, set({"Antium Core"}));
         QVERIFY(out.contains(s("- Antium Core <EM4>[Owned]</EM4>")));
         QVERIFY(out.contains(s("- [Mil-S1-A] Norfield\\n")));
-        QVERIFY(applyOwnedToValue(kDesc, set({"Norfield"})).contains(s("- [Mil-S1-A] Norfield <EM4>[Owned]</EM4>")));
+        QVERIFY(applyOwnedToValue(kDesc, set({"Norfield"}))
+                    .contains(s("- [Mil-S1-A] Norfield <EM4>[Owned]</EM4>")));
         // Idempotent, and un-owning restores the original.
         QCOMPARE(applyOwnedToValue(out, set({"Antium Core"})), out);
         QCOMPARE(out.count(s("[Owned]")), 1);
         QCOMPARE(applyOwnedToValue(out, {}), kDesc);
 
-        const QString short_ = applyOwnedToValue(
-            s("POSTING: mining run.\\n\\n<EM3>POTENTIAL BLUEPRINTS</EM3>\\n- Hofstede\\n- Helix\\n- Norfield"),
-            {normalizeItemName(s("S00 Hofstede"))});
+        const QString short_ = applyOwnedToValue(s("POSTING: mining run.\\n\\n<EM3>POTENTIAL "
+                                                   "BLUEPRINTS</EM3>\\n- Hofstede\\n- Helix\\n- Norfield"),
+                                                 {normalizeItemName(s("S00 Hofstede"))});
         QVERIFY(short_.contains(s("- Hofstede <EM4>[Owned]</EM4>")));
         QCOMPARE(short_.count(s("[Owned]")), 1);
 
-        QVERIFY(!applyOwnedToValue(s("A plain line\\n- not a blueprint bullet <EM4>[Owned]</EM4>"), set({"whatever"}))
+        QVERIFY(!applyOwnedToValue(s("A plain line\\n- not a blueprint bullet <EM4>[Owned]</EM4>"),
+                                   set({"whatever"}))
                      .contains(s("[Owned]")));
     }
 
     void applyOwnedStaysInSection()
     {
-        const QString out = applyOwnedToValue(kDescWithFalsePositives, set({"Kelvid", "Council Scrip", "Stows"}));
+        const QString out =
+            applyOwnedToValue(kDescWithFalsePositives, set({"Kelvid", "Council Scrip", "Stows"}));
         QVERIFY(out.contains(s("- Kelvid <EM4>[Owned]</EM4>")));
         QVERIFY(!out.contains(s("- Council Scrip <EM4>[Owned]</EM4>")));
         QVERIFY(!out.contains(s("- Stows <EM4>[Owned]</EM4>")));
 
-        const QString value = s("<EM3>POTENTIAL BLUEPRINTS</EM3>\\n- Lynx\u00A0Legs\\n- Barbican [IND-S3-B]\\n- Norfield");
+        const QString value =
+            s("<EM3>POTENTIAL BLUEPRINTS</EM3>\\n- Lynx\u00A0Legs\\n- Barbican [IND-S3-B]\\n- Norfield");
         const QString tagged = applyOwnedToValue(value, set({"Lynx Legs", "Barbican"}));
         QCOMPARE(tagged.count(s("<EM4>[Owned]</EM4>")), 2);
         QVERIFY(!tagged.contains(s("Norfield <EM4>[Owned]")));
@@ -504,7 +516,8 @@ private slots:
 
     void resolveForeignNames()
     {
-        const QSet<QString> reporter = set({"Defiant", "Colossus", "Endurance", "Huracan", "Sedulity", "Agni"});
+        const QSet<QString> reporter =
+            set({"Defiant", "Colossus", "Endurance", "Huracan", "Sedulity", "Agni"});
         QCOMPARE(resolveAgainstCatalogue(s("Ind/0/B Defiant"), reporter), std::optional(s("Defiant")));
         QCOMPARE(resolveAgainstCatalogue(s("Ind/3/B Agni"), reporter), std::optional(s("Agni")));
         QCOMPARE(resolveAgainstCatalogue(s("Colossus"), reporter), std::optional(s("Colossus")));
@@ -516,8 +529,10 @@ private slots:
         QCOMPARE(resolveAgainstCatalogue(s("Ind/1/B MegaColossus"), set({"Colossus"})), std::nullopt);
         QCOMPARE(resolveAgainstCatalogue(s("Mil/1/B Fierell Cascade"), set({"Cascade", "Fierell Cascade"})),
                  std::optional(s("Fierell Cascade")));
-        QCOMPARE(resolveAgainstCatalogue(s("IND.1.B.Colossus"), set({"Colossus"})), std::optional(s("Colossus")));
-        QCOMPARE(resolveAgainstCatalogue(s("IND:1:B:Colossus"), set({"Colossus"})), std::optional(s("Colossus")));
+        QCOMPARE(resolveAgainstCatalogue(s("IND.1.B.Colossus"), set({"Colossus"})),
+                 std::optional(s("Colossus")));
+        QCOMPARE(resolveAgainstCatalogue(s("IND:1:B:Colossus"), set({"Colossus"})),
+                 std::optional(s("Colossus")));
         for (const char *decorated : {"Colossus", "[X] Colossus", "X/Colossus", "X-Colossus", "X_Colossus",
                                       "(X) Colossus", "{X} Colossus", "<X> Colossus"})
             QCOMPARE(resolveAgainstCatalogue(s(decorated), set({"Colossus"})), std::optional(s("Colossus")));
@@ -525,8 +540,8 @@ private slots:
 
     void repairOwned()
     {
-        OwnedRepair r = repairForeignOwnedNames(set({"Cascade", "Fierell Cascade"}),
-                                                set({"Cascade", "Fierell Cascade"}));
+        OwnedRepair r =
+            repairForeignOwnedNames(set({"Cascade", "Fierell Cascade"}), set({"Cascade", "Fierell Cascade"}));
         QCOMPARE(r.repaired, set({"Cascade", "Fierell Cascade"}));
         QVERIFY(r.renamed.isEmpty());
         // A narrower catalogue reproduces the data loss the wide one avoids.
@@ -562,7 +577,9 @@ private slots:
 
     void componentTags()
     {
-        const auto tag = [](const char *c, const char *sz, const char *g) { return ComponentTag{s(c), s(sz), s(g)}; };
+        const auto tag = [](const char *c, const char *sz, const char *g) {
+            return ComponentTag{s(c), s(sz), s(g)};
+        };
         QCOMPARE(parseComponentTag(s("[MIL-S3-B] Balandin")), tag("MIL", "S3", "B"));
         QCOMPARE(parseComponentTag(s("[ind-s1-a] Palisade")), tag("IND", "S1", "A"));
         QCOMPARE(parseComponentTag(s("Balandin")), ComponentTag{});
@@ -576,12 +593,14 @@ private slots:
         QCOMPARE(parseComponentTag(s("Palisade <IND-S1-A>"), {{s("<"), s(">")}}), tag("IND", "S1", "A"));
         const Enclosings three = {{s("["), s("]")}, {s("("), s(")")}, {s("{"), s("}")}};
         QCOMPARE(parseComponentTag(s("{IND-S1-A} Palisade"), three), tag("IND", "S1", "A"));
-        QCOMPARE(parseComponentTag(s("MIL-S3-B Balandin"), defaultEnclosings(), s("Balandin")), tag("MIL", "S3", "B"));
+        QCOMPARE(parseComponentTag(s("MIL-S3-B Balandin"), defaultEnclosings(), s("Balandin")),
+                 tag("MIL", "S3", "B"));
         QCOMPARE(parseComponentTag(s("MIL-S3-B Balandin"), kSquareAndNone), tag("MIL", "S3", "B"));
         QCOMPARE(parseComponentTag(s("250-E Laser Pointer")), ComponentTag{});
         QCOMPARE(parseComponentTag(s("C-788 Cannon")), ComponentTag{});
         QCOMPARE(parseComponentTag(s("C-788 Canon"), defaultEnclosings(), s("C-788 Cannon")), ComponentTag{});
-        QCOMPARE(parseComponentTag(s("Titan-S2 Reactor"), kSquareAndNone, s("Titan-S2 Reactor")), ComponentTag{});
+        QCOMPARE(parseComponentTag(s("Titan-S2 Reactor"), kSquareAndNone, s("Titan-S2 Reactor")),
+                 ComponentTag{});
     }
 
     void keyClassifiers()
@@ -605,8 +624,9 @@ private slots:
         QCOMPARE(stripSizePrefix(s("S3")), s("3"));
         QCOMPARE(stripSizePrefix(s("s10")), s("10"));
         QCOMPARE(stripSizePrefix(s("3")), s("3"));
-        QCOMPARE(cleanMissionTitle(s("Salvager Needed (Lrg. Special Order) <EM4>[BP]</EM4> <EM4>[150 REP]</EM4>")),
-                 s("Salvager Needed (Lrg. Special Order)"));
+        QCOMPARE(
+            cleanMissionTitle(s("Salvager Needed (Lrg. Special Order) <EM4>[BP]</EM4> <EM4>[150 REP]</EM4>")),
+            s("Salvager Needed (Lrg. Special Order)"));
     }
 
     void typeBuckets()
@@ -644,9 +664,11 @@ private slots:
         const QString missions = category::kMissions;
         const QList<StringEntry> sample = {
             entry("Adagio_Run_Levski_H_Desc_001",
-                  s("Posting body.\\n\\n<EM4>POTENTIAL BLUEPRINTS</EM4>\\n- Balandin\\n- Abrade Scraper Module"),
+                  s("Posting body.\\n\\n<EM4>POTENTIAL BLUEPRINTS</EM4>\\n- Balandin\\n- Abrade Scraper "
+                    "Module"),
                   missions),
-            entry("Adagio_Run_Levski_H_Title_001", s("Salvager Needed <EM4>[BP]</EM4> <EM4>[150 REP]</EM4>"), missions),
+            entry("Adagio_Run_Levski_H_Title_001", s("Salvager Needed <EM4>[BP]</EM4> <EM4>[150 REP]</EM4>"),
+                  missions),
             entry("item_NameQDRV_WETK_S03_Balandin", s("[MIL-S3-B] Balandin"), category::kShipItems),
         };
         const auto meta = buildBlueprintMetadata(sample);
@@ -669,7 +691,8 @@ private slots:
         QCOMPARE(multi.value(s("Balandin")).missions, set({"First Job", "Second Job"}));
 
         const auto loot = QList{entry("M_Desc_001", s("x\\n<EM4>MY LOOT</EM4>\\n- Antium Core"), missions)};
-        QVERIFY(buildBlueprintMetadata(loot, defaultEnclosings(), {}, s("MY LOOT")).contains(s("Antium Core")));
+        QVERIFY(
+            buildBlueprintMetadata(loot, defaultEnclosings(), {}, s("MY LOOT")).contains(s("Antium Core")));
         QVERIFY(!buildBlueprintMetadata(loot).contains(s("Antium Core")));
 
         const auto orphan = buildBlueprintMetadata(
@@ -679,7 +702,8 @@ private slots:
         // Only mission descriptions are scanned (#354).
         const auto commodity = buildBlueprintMetadata(
             {entry("items_commodities_iron_desc",
-                   s("Iron Ore.\\n<EM3>POTENTIAL BLUEPRINTS</EM3>\\n- Power Plants: 10 items"), category::kCommodities)});
+                   s("Iron Ore.\\n<EM3>POTENTIAL BLUEPRINTS</EM3>\\n- Power Plants: 10 items"),
+                   category::kCommodities)});
         QVERIFY(!commodity.contains(s("Power Plants: 10 items")));
     }
 
@@ -687,10 +711,11 @@ private slots:
     {
         const QString missions = category::kMissions;
         const auto meta = buildBlueprintMetadata({
-            entry("M_Desc_001",
-                  s("x\\n<EM4>POTENTIAL BLUEPRINTS</EM4>\\n- P4-AR Rifle\\n- RSI Torso Armor\\n- Mystery Widget"
-                    "\\n- S0 Helix"),
-                  missions),
+            entry(
+                "M_Desc_001",
+                s("x\\n<EM4>POTENTIAL BLUEPRINTS</EM4>\\n- P4-AR Rifle\\n- RSI Torso Armor\\n- Mystery Widget"
+                  "\\n- S0 Helix"),
+                missions),
             entry("item_Name_rifle_behr_p4ar", s("P4-AR Rifle"), category::kGear),
             entry("item_Name_armor_rsi_torso", s("RSI Torso Armor"), category::kGear),
             entry("item_NameMining_Head_S00_Helix_SCItem", s("S0 Helix"), category::kShipItems),
@@ -714,14 +739,17 @@ private slots:
         QCOMPARE(meta.value(s("FR-66")).taggedName, s("FR-66"));
         QCOMPARE(buildBlueprintMetadata({}), meta);
 
-        const auto facets = [](const BlueprintItem &i) { return QStringList{i.type, i.cls, i.size, i.grade}; };
+        const auto facets = [](const BlueprintItem &i) {
+            return QStringList{i.type, i.cls, i.size, i.grade};
+        };
         const QStringList powerPlant = {s("Power Plant"), s("Military"), s("1"), s("A")};
         auto loaded = buildBlueprintMetadata(
             {entry("item_NamePOWR_XNTH_S01_QuadraCell", s("[MIL-S1-A] QuadraCell"), category::kShipItems)});
         QCOMPARE(facets(loaded.value(s("QuadraCell"))), powerPlant);
         QCOMPARE(loaded.value(s("QuadraCell")).taggedName, s("[MIL-S1-A] QuadraCell"));
         loaded = buildBlueprintMetadata(
-            {entry("item_NamePOWR_XNTH_S01_QuadraCell", s("(MIL-S1-A) QuadraCell"), category::kShipItems)}, kRound);
+            {entry("item_NamePOWR_XNTH_S01_QuadraCell", s("(MIL-S1-A) QuadraCell"), category::kShipItems)},
+            kRound);
         QCOMPARE(facets(loaded.value(s("QuadraCell"))), powerPlant);
         loaded = buildBlueprintMetadata(
             {entry("item_NamePOWR_XNTH_S01_QuadraCell", s("MIL-S1-A QuadraCell"), category::kShipItems)},
@@ -731,7 +759,8 @@ private slots:
 
         const auto real = buildBlueprintMetadata(
             {entry("M_Title_001", s("Real Mission"), category::kMissions),
-             entry("M_Desc_001", s("x\\n<EM4>POTENTIAL BLUEPRINTS</EM4>\\n- QuadraCell"), category::kMissions)});
+             entry("M_Desc_001", s("x\\n<EM4>POTENTIAL BLUEPRINTS</EM4>\\n- QuadraCell"),
+                   category::kMissions)});
         QCOMPARE(real.value(s("QuadraCell")).missions, set({"Real Mission"}));
     }
 
@@ -742,8 +771,9 @@ private slots:
         const auto desc = [](const char *bullets) {
             return s("x\\n<EM4>POTENTIAL BLUEPRINTS</EM4>") + s(bullets);
         };
-        auto meta = buildBlueprintMetadata({entry("M_Desc_001", desc("\\n- RN-7s"), missions),
-                                            entry("item_fuelnozzle_MISC_Standard_Name", s("[FN] RN-7s"), ship)});
+        auto meta =
+            buildBlueprintMetadata({entry("M_Desc_001", desc("\\n- RN-7s"), missions),
+                                    entry("item_fuelnozzle_MISC_Standard_Name", s("[FN] RN-7s"), ship)});
         QCOMPARE(meta.value(s("RN-7s")).taggedName, s("[FN] RN-7s"));
         meta = buildBlueprintMetadata(
             {entry("M_Desc_001", desc("\\n- Lancet MH1 Mining Laser"), missions),
@@ -751,8 +781,9 @@ private slots:
         QCOMPARE(meta.value(s("Lancet MH1 Mining Laser")).taggedName, s("[ML-S1] Lancet MH1 Mining Laser"));
 
         // CIG's de-slugified key in place of the name.
-        meta = buildBlueprintMetadata({entry("M_Desc_001", desc("\\n- Nozzle Fuelgiver Grin Nozzleveryfast"), missions),
-                                       entry("Nozzle_FuelGiver_GRIN_NozzleVeryFast_Name", s("Lindstrom"), ship)});
+        meta = buildBlueprintMetadata(
+            {entry("M_Desc_001", desc("\\n- Nozzle Fuelgiver Grin Nozzleveryfast"), missions),
+             entry("Nozzle_FuelGiver_GRIN_NozzleVeryFast_Name", s("Lindstrom"), ship)});
         QVERIFY(meta.contains(s("Lindstrom")));
         QVERIFY(!meta.contains(s("Nozzle Fuelgiver Grin Nozzleveryfast")));
 
@@ -765,14 +796,15 @@ private slots:
         QVERIFY(!meta.contains(s("Helix")) && !meta.contains(s("Klein")));
 
         // A raw blueprint filename in place of the name.
-        meta = buildBlueprintMetadata({entry("M_Desc_001",
-                                             desc("\\n- bp_craft_nozzle_fuelgiver_grin_nozzlefast (Fuel Nozzle)"
-                                                  "\\n- bp_craft_nozzle_fuelgiver_grin_nozzleverysecure (Fuel Nozzle)"
-                                                  "\\n- bp_craft_nozzle_fuelgiver_misc_nozzlestandard (Fuel Nozzle)"),
-                                             missions),
-                                       entry("item_fuelnozzle_GRIN_Fast_Name", s("Norfield"), ship),
-                                       entry("item_fuelnozzle_GRIN_Safe_Name", s("Harkin"), ship),
-                                       entry("item_fuelnozzle_MISC_Standard_Name", s("RN-7s"), ship)});
+        meta = buildBlueprintMetadata(
+            {entry("M_Desc_001",
+                   desc("\\n- bp_craft_nozzle_fuelgiver_grin_nozzlefast (Fuel Nozzle)"
+                        "\\n- bp_craft_nozzle_fuelgiver_grin_nozzleverysecure (Fuel Nozzle)"
+                        "\\n- bp_craft_nozzle_fuelgiver_misc_nozzlestandard (Fuel Nozzle)"),
+                   missions),
+             entry("item_fuelnozzle_GRIN_Fast_Name", s("Norfield"), ship),
+             entry("item_fuelnozzle_GRIN_Safe_Name", s("Harkin"), ship),
+             entry("item_fuelnozzle_MISC_Standard_Name", s("RN-7s"), ship)});
         QVERIFY(meta.contains(s("Norfield")) && meta.contains(s("Harkin")) && meta.contains(s("RN-7s")));
         QVERIFY(!meta.contains(s("bp_craft_nozzle_fuelgiver_grin_nozzlefast")));
 
@@ -785,7 +817,8 @@ private slots:
     void exportJson()
     {
         QMap<QString, BlueprintItem> meta;
-        meta.insert(s("Norfield"), BlueprintItem{s("Norfield"), {}, s("Fuel Nozzle"), {}, {}, {}, s("[FN] Norfield")});
+        meta.insert(s("Norfield"),
+                    BlueprintItem{s("Norfield"), {}, s("Fuel Nozzle"), {}, {}, {}, s("[FN] Norfield")});
         const QString json = exportOwnedBlueprintsJson(set({"zeta", "Alpha", "beta", "Norfield"}), meta);
         const QJsonObject payload = QJsonDocument::fromJson(json.toUtf8()).object();
         QCOMPARE(payload.value(s("version")).toInt(), 1);
@@ -811,38 +844,53 @@ private slots:
             f.write(bytes);
             return f.fileName();
         };
-        const auto names = [](const std::expected<QSet<QString>, QString> &r) { return r.value_or(QSet<QString>{}); };
+        const auto names = [](const std::expected<QSet<QString>, QString> &r) {
+            return r.value_or(QSet<QString>{});
+        };
 
-        QCOMPARE(names(parseImportNames(write("own.json", exportOwnedBlueprintsJson(set({"Norfield", "Harkin"}), {}).toUtf8()))),
+        QCOMPARE(names(parseImportNames(
+                     write("own.json", exportOwnedBlueprintsJson(set({"Norfield", "Harkin"}), {}).toUtf8()))),
                  set({"Norfield", "Harkin"}));
-        QCOMPARE(names(parseImportNames(write("scmdb.json", R"({"version":1,"blueprints":[{"name":"Frost-Star SL","tag":"x","url":"y"}]})"))),
+        QCOMPARE(names(parseImportNames(
+                     write("scmdb.json",
+                           R"({"version":1,"blueprints":[{"name":"Frost-Star SL","tag":"x","url":"y"}]})"))),
                  set({"Frost-Star SL"}));
-        QCOMPARE(names(parseImportNames(write("tag.json", R"({"blueprints":[{"name":"[MIL-S1-A] Norfield"}]})"))),
+        QCOMPARE(
+            names(parseImportNames(write("tag.json", R"({"blueprints":[{"name":"[MIL-S1-A] Norfield"}]})"))),
+            set({"Norfield"}));
+        QCOMPARE(names(parseImportNames(
+                     write("round.json", R"({"blueprints":[{"name":"(MIL-S1-A) Norfield"}]})"), kRound)),
                  set({"Norfield"}));
-        QCOMPARE(names(parseImportNames(write("round.json", R"({"blueprints":[{"name":"(MIL-S1-A) Norfield"}]})"), kRound)),
-                 set({"Norfield"}));
-        QCOMPARE(names(parseImportNames(write("skip.json", R"({"blueprints":[{"name":""},{"x":1},"str",{"name":"Norfield"}]})"))),
+        QCOMPARE(names(parseImportNames(write(
+                     "skip.json", R"({"blueprints":[{"name":""},{"x":1},"str",{"name":"Norfield"}]})"))),
                  set({"Norfield"}));
         QVERIFY(!parseImportNames(write("bad.json", "{not valid json")).has_value());
         QVERIFY(!parseImportNames(write("none.json", R"({"foo":"bar"})")).has_value());
         QVERIFY(!parseImportNames(write("notlist.json", R"({"blueprints":"not a list"})")).has_value());
 
-        QCOMPARE(names(parseImportNames(write("own.csv", exportOwnedBlueprintsCsv(set({"Norfield", "Harkin"}), {}).toUtf8()))),
+        QCOMPARE(names(parseImportNames(
+                     write("own.csv", exportOwnedBlueprintsCsv(set({"Norfield", "Harkin"}), {}).toUtf8()))),
                  set({"Norfield", "Harkin"}));
-        QCOMPARE(names(parseImportNames(write("extra.csv", "name,type,extra\nNorfield,Fuel Nozzle,whatever\n"))),
-                 set({"Norfield"}));
-        QCOMPARE(names(parseImportNames(write("bom.csv", "\xEF\xBB\xBFname,type\r\nNorfield,Fuel Nozzle\r\n"))),
-                 set({"Norfield"}));
-        QCOMPARE(names(parseImportNames(write("quoted.csv", "type,name\r\n\"a,b\",\"Arclight \"\"Night\"\" Pistol\"\r\n\r\nx\n"))),
+        QCOMPARE(
+            names(parseImportNames(write("extra.csv", "name,type,extra\nNorfield,Fuel Nozzle,whatever\n"))),
+            set({"Norfield"}));
+        QCOMPARE(
+            names(parseImportNames(write("bom.csv", "\xEF\xBB\xBFname,type\r\nNorfield,Fuel Nozzle\r\n"))),
+            set({"Norfield"}));
+        QCOMPARE(names(parseImportNames(write(
+                     "quoted.csv", "type,name\r\n\"a,b\",\"Arclight \"\"Night\"\" Pistol\"\r\n\r\nx\n"))),
                  set({"Arclight \"Night\" Pistol"}));
-        QCOMPARE(parseImportNames(write("noname.csv", "type\nFuel Nozzle\n")).error(), s("CSV file has no \"name\" column"));
-        QVERIFY(!parseImportNames(write("latin.csv", "name,type\r\nNorf\xFField,Fuel Nozzle\r\n")).has_value());
+        QCOMPARE(parseImportNames(write("noname.csv", "type\nFuel Nozzle\n")).error(),
+                 s("CSV file has no \"name\" column"));
+        QVERIFY(
+            !parseImportNames(write("latin.csv", "name,type\r\nNorf\xFField,Fuel Nozzle\r\n")).has_value());
         QCOMPARE(parseImportNames(write("plain.txt", "Norfield")).error(), s("Unsupported file type: .txt"));
     }
 
     void matchImports()
     {
-        ImportMatch m = matchImportNames(set({"Norfield", "Harkin", "Unknown Thing"}), set({"Norfield", "Harkin", "RN-7s"}));
+        ImportMatch m = matchImportNames(set({"Norfield", "Harkin", "Unknown Thing"}),
+                                         set({"Norfield", "Harkin", "RN-7s"}));
         QCOMPARE(m.matched, set({"Norfield", "Harkin"}));
         QCOMPARE(m.unmatched, set({"Unknown Thing"}));
         QCOMPARE(matchImportNames(set({"Norfield"}), {}).unmatched, set({"Norfield"}));
@@ -891,7 +939,8 @@ private slots:
         const QDateTime when = dt("2026-03-26T17:15:41.684Z");
         st.setBlueprintLogWatermark(when);
         QCOMPARE(st.blueprintLogWatermark(), when);
-        QCOMPARE(st.value(s("blueprint_log_watermark/LIVE")).toString(), s("2026-03-26T17:15:41.684000+00:00"));
+        QCOMPARE(st.value(s("blueprint_log_watermark/LIVE")).toString(),
+                 s("2026-03-26T17:15:41.684000+00:00"));
         st.setBlueprintLogWatermark(dt("2026-04-01T00:00:00Z"), s("HOTFIX"));
         QCOMPARE(st.value(s("blueprint_log_watermark/HOTFIX")).toString(), s("2026-04-01T00:00:00+00:00"));
         QCOMPARE(st.blueprintLogWatermark(s("HOTFIX")), dt("2026-04-01T00:00:00Z"));
@@ -928,8 +977,9 @@ private slots:
         }
         QCOMPARE(entries.size(), expected.value(s("entries")).toInteger());
 
-        static const QRegularExpression foreign(QStringLiteral(R"(^[A-Za-z]{2,5}/\d{1,2}/[A-Za-z]%1+)").arg(py::kReSpace),
-                                                QRegularExpression::UseUnicodePropertiesOption);
+        static const QRegularExpression foreign(
+            QStringLiteral(R"(^[A-Za-z]{2,5}/\d{1,2}/[A-Za-z]%1+)").arg(py::kReSpace),
+            QRegularExpression::UseUnicodePropertiesOption);
         QHash<QString, QString> stock;
         for (const auto &[key, value] : ini)
             if (key.toLower().startsWith(u"item_name") && foreign.match(value).hasMatch())

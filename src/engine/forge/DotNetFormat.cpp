@@ -12,7 +12,8 @@ namespace {
 
 // Lays out shortest round-trip digits the way .NET's FormatGeneral does.
 // `scientific` is std::to_chars output such as "1.093429e+09" or "5e-01".
-void layoutGeneral(std::string &out, const char *scientific, std::size_t length, bool negative, int minPrecision)
+void layoutGeneral(std::string &out, const char *scientific, std::size_t length, bool negative,
+                   int minPrecision)
 {
     char digits[32];
     std::size_t digitCount = 0;
@@ -69,8 +70,7 @@ void layoutGeneral(std::string &out, const char *scientific, std::size_t length,
     }
 }
 
-template <class T>
-void appendFloating(std::string &out, T value, int minPrecision)
+template <class T> void appendFloating(std::string &out, T value, int minPrecision)
 {
     if (std::isnan(value)) {
         out += "NaN";

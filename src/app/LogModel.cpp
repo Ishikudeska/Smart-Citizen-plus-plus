@@ -1,7 +1,6 @@
 #include "LogModel.h"
 
 #include "AppController.h"
-
 #include "core/log/Log.h"
 
 #include <QCoreApplication>
@@ -16,11 +15,16 @@ constexpr qsizetype kMaxLines = 2000;
 int levelForType(int type)
 {
     switch (type) {
-    case QtDebugMsg: return 10;
-    case QtInfoMsg: return 20;
-    case QtWarningMsg: return 30;
-    case QtCriticalMsg: return 40;
-    case QtFatalMsg: return 50;
+    case QtDebugMsg:
+        return 10;
+    case QtInfoMsg:
+        return 20;
+    case QtWarningMsg:
+        return 30;
+    case QtCriticalMsg:
+        return 40;
+    case QtFatalMsg:
+        return 50;
     }
     return 20;
 }
@@ -30,19 +34,23 @@ int levelForType(int type)
 LogModel::LogModel(QObject *parent) : QAbstractListModel(parent)
 {
     auto &hub = core::log::LogHub::instance();
-    for (const QString &line : hub.recentLines())
+    for (const auto recent = hub.recentLines(); const QString &line : recent)
         all_.push_back({line, levelOf(line)});
     while (all_.size() > kMaxLines)
         all_.removeFirst();
     rebuild();
-    connect(&hub, &core::log::LogHub::lineLogged, this,
-            [this](const QString &line, int type) { append(line, levelForType(type)); }, Qt::QueuedConnection);
+    connect(
+        &hub, &core::log::LogHub::lineLogged, this,
+        [this](const QString &line, int type) { append(line, levelForType(type)); }, Qt::QueuedConnection);
 }
 
 int LogModel::levelOf(const QString &line)
 {
-    static const std::pair<const char *, int> names[] = {
-        {" - DEBUG - ", 10}, {" - INFO - ", 20}, {" - WARNING - ", 30}, {" - ERROR - ", 40}, {" - CRITICAL - ", 50}};
+    static const std::pair<const char *, int> names[] = {{" - DEBUG - ", 10},
+                                                         {" - INFO - ", 20},
+                                                         {" - WARNING - ", 30},
+                                                         {" - ERROR - ", 40},
+                                                         {" - CRITICAL - ", 50}};
     for (const auto &[name, level] : names)
         if (line.contains(QLatin1String(name)))
             return level;
@@ -61,10 +69,12 @@ QVariant LogModel::data(const QModelIndex &index, int role) const
     const Line &l = visible_[index.row()];
     switch (role) {
     case Qt::DisplayRole:
-    case TextRole: return l.text;
-    case LevelRole: return l.level;
+    case TextRole:
+        return l.text;
+    case LevelRole:
+        return l.level;
     case ColorRole:
-        return l.level >= 40 ? QStringLiteral("#f44336")
+        return l.level >= 40   ? QStringLiteral("#f44336")
                : l.level >= 30 ? QStringLiteral("#ff9800")
                : l.level <= 10 ? QStringLiteral("#888888")
                                : QString();
@@ -109,7 +119,7 @@ void LogModel::rebuild()
 {
     beginResetModel();
     visible_.clear();
-    for (const Line &l : all_)
+    for (const Line &l : std::as_const(all_))
         if (l.level >= minLevel_)
             visible_.push_back(l);
     endResetModel();
@@ -143,7 +153,8 @@ bool LogModel::exportTo(const QUrl &target)
 {
     QFile f(target.isLocalFile() ? target.toLocalFile() : target.toString());
     if (!f.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
-        AppController::instance()->prompts()->error(core::i18n::tr("log.export_failed_title"), f.errorString());
+        AppController::instance()->prompts()->error(core::i18n::tr("log.export_failed_title"),
+                                                    f.errorString());
         return false;
     }
     f.write(allText().toUtf8());

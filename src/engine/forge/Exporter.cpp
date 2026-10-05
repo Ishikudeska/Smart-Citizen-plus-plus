@@ -24,7 +24,8 @@ std::filesystem::path recordOutputPath(const std::filesystem::path &outRoot, std
 {
     std::string utf8;
     xml::appendLatin1AsUtf8(utf8, recordPath);
-    std::filesystem::path relative(std::u8string(reinterpret_cast<const char8_t *>(utf8.data()), utf8.size()));
+    std::filesystem::path relative(
+        std::u8string(reinterpret_cast<const char8_t *>(utf8.data()), utf8.size()));
     return outRoot / relative.make_preferred();
 }
 

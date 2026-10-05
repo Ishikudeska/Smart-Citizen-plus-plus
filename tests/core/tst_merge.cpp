@@ -133,14 +133,16 @@ private slots:
         syncKeyVariants(m, {QStringLiteral("item_Name_SHLD_BEHR_S01_7SA")});
         QCOMPARE(v(m, "item_NameSHLD_BEHR_S01_7sa"), QStringLiteral("My Custom Name"));
         syncKeyVariants(untouched);
-        QCOMPARE(v(untouched, "item_Name_SHLD_BEHR_S01_7SA"), QStringLiteral("[SHLD-S1-B] BEHR Shield Original"));
+        QCOMPARE(v(untouched, "item_Name_SHLD_BEHR_S01_7SA"),
+                 QStringLiteral("[SHLD-S1-B] BEHR Shield Original"));
     }
 
     void longestOfSeveralUserEdits()
     {
         IniMap m = ini({{"item_Name_SHLD_BEHR_S01_7SA", "Short Edit"},
                         {"item_NameSHLD_BEHR_S01_7sa", "A Longer Deliberate Edit"}});
-        syncKeyVariants(m, {QStringLiteral("item_Name_SHLD_BEHR_S01_7SA"), QStringLiteral("item_NameSHLD_BEHR_S01_7sa")});
+        syncKeyVariants(
+            m, {QStringLiteral("item_Name_SHLD_BEHR_S01_7SA"), QStringLiteral("item_NameSHLD_BEHR_S01_7sa")});
         QCOMPARE(v(m, "item_Name_SHLD_BEHR_S01_7SA"), QStringLiteral("A Longer Deliberate Edit"));
     }
 
@@ -162,11 +164,13 @@ private slots:
         QTest::newRow("crusader") << "Stanton2" << "Crusader" << "Stanton_2" << "Stanton (Star)";
         QTest::newRow("comm array") << "CommArray_Deactivate" << "Deactivate" << "comm_Array_Deactivate"
                                     << "Disconnect Uplink";
-        QTest::newRow("thrusters") << "port_NameThrusterMavML" << "Thruster Mid Left" << "port_NameThrusterMavML_"
+        QTest::newRow("thrusters") << "port_NameThrusterMavML" << "Thruster Mid Left"
+                                   << "port_NameThrusterMavML_"
                                    << "Thruster Mid Lower";
         QTest::newRow("hardpoints") << "itemPort_hardpoint_power_plant_02" << "Power Plant"
                                     << "itemPort_hardpoint_powerplant_02" << "Power Plant - 02";
-        QTest::newRow("kiosk") << "kiosk_ShopTerminal" << "Shop Terminal" << "kiosk_Shop_Terminal" << "Shop_Terminal";
+        QTest::newRow("kiosk") << "kiosk_ShopTerminal" << "Shop Terminal" << "kiosk_Shop_Terminal"
+                               << "Shop_Terminal";
     }
 
     void scopeGuards()
@@ -194,7 +198,8 @@ private slots:
     void canonicalKeys()
     {
         // Expected values computed with the original Python _get_canonical_key.
-        QCOMPARE(canonicalItemKey(QStringLiteral("item_Name_QDRV_RSI_S02_Hemera")), QStringLiteral("itemname_qdrvrsis02hemera"));
+        QCOMPARE(canonicalItemKey(QStringLiteral("item_Name_QDRV_RSI_S02_Hemera")),
+                 QStringLiteral("itemname_qdrvrsis02hemera"));
         QCOMPARE(canonicalItemKey(QStringLiteral("item_nameQDRV_RSI_S02_Hemera_SCItem")),
                  QStringLiteral("itemname_qdrvrsis02hemera"));
         // "gmisl" is replaced after "misl", which has already split it.
@@ -211,9 +216,9 @@ private slots:
         sources[QStringLiteral("global")] = ini({{"key1", "base_val"}, {"key2", "val2"}});
         sources[QStringLiteral("contracts")] = ini({{"key1", "override_val"}, {"key3", "val3"}});
         const IniMap user = ini({{"key1", "user_val"}});
-        const IniMap r = mergeSourcesByHierarchy(sources, {QStringLiteral("global"), QStringLiteral("contracts"),
-                                                           QStringLiteral("missing")},
-                                                 &user);
+        const IniMap r = mergeSourcesByHierarchy(
+            sources, {QStringLiteral("global"), QStringLiteral("contracts"), QStringLiteral("missing")},
+            &user);
         QCOMPARE(v(r, "key1"), QStringLiteral("user_val"));
         QCOMPARE(v(r, "key2"), QStringLiteral("val2"));
         QCOMPARE(v(r, "key3"), QStringLiteral("val3"));
@@ -256,8 +261,8 @@ private slots:
                                              {"item_NameSHLD_Aspirum", "Aspirum"},
                                              {"ui_Button", "OK"},
                                              {"Journal_Entry", "Text"}});
-        loaded.sources[kSourceEnhancements] = ini({{"item_NameSHLD_Aspirum", "[SHLD] Aspirum"},
-                                                   {"discovered_key", "From XML"}});
+        loaded.sources[kSourceEnhancements] =
+            ini({{"item_NameSHLD_Aspirum", "[SHLD] Aspirum"}, {"discovered_key", "From XML"}});
         loaded.sources[kSourceUser] = ini({{"ui_Button", "Okay"}, {"user_only", " spaced"}});
         loaded.hierarchy = {kSourceGlobal, kSourceEnhancements, kSourceUser};
         loaded.enhancementCategories.insert(QStringLiteral("discovered_key"), category::kGear);
@@ -298,8 +303,10 @@ private slots:
     void loadsSourcesFromDisk()
     {
         QTemporaryDir dir;
-        writeFile(dir.filePath(QStringLiteral("base.ini")), "\xEF\xBB\xBF" "a=1\r\nitem_NameSHLD_X=Shield\r\n");
-        writeFile(dir.filePath(QStringLiteral("components_desc_enhancements.ini")), "item_NameSHLD_X=[S] Shield\r\n");
+        writeFile(dir.filePath(QStringLiteral("base.ini")), "\xEF\xBB\xBF"
+                                                            "a=1\r\nitem_NameSHLD_X=Shield\r\n");
+        writeFile(dir.filePath(QStringLiteral("components_desc_enhancements.ini")),
+                  "item_NameSHLD_X=[S] Shield\r\n");
         writeFile(dir.filePath(QStringLiteral("ships_desc_enhancements.ini")), "vehicle_DescX=Stats\r\n");
         writeFile(dir.filePath(QStringLiteral("user.ini")), "a= keep space\r\n");
 
@@ -325,8 +332,10 @@ private slots:
     void enhancementCatalog()
     {
         QCOMPARE(enhancements::files().size(), std::size_t(9));
-        QCOMPARE(enhancements::categoryLabelForFile(QStringLiteral("missile_enhancements")), category::kShipItems);
-        QCOMPARE(enhancements::fileNameFor(QStringLiteral("journal")), QStringLiteral("journal_enhancements.ini"));
+        QCOMPARE(enhancements::categoryLabelForFile(QStringLiteral("missile_enhancements")),
+                 category::kShipItems);
+        QCOMPARE(enhancements::fileNameFor(QStringLiteral("journal")),
+                 QStringLiteral("journal_enhancements.ini"));
         QVERIFY(enhancements::categoryLabelForFile(QStringLiteral("nope")).isEmpty());
     }
 };

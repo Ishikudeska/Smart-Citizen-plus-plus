@@ -27,8 +27,7 @@ constexpr std::uint32_t rotr(std::uint32_t x, int n)
 
 Sha256::Sha256()
     : state_{0x6a09e667, 0xbb67ae85, 0x3c6ef372, 0xa54ff53a, 0x510e527f, 0x9b05688c, 0x1f83d9ab, 0x5be0cd19}
-{
-}
+{}
 
 void Sha256::compress(const std::uint8_t *block)
 {

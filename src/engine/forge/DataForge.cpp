@@ -46,8 +46,8 @@ inline std::uint32_t u32(const std::uint8_t *p)
            (std::uint32_t(p[3]) << 24);
 }
 
-std::optional<std::string_view> cString(std::span<const std::uint8_t> data, std::uint64_t tableOffset,
-                                        std::uint64_t tableLength, std::uint64_t offset)
+std::optional<std::string_view> cStringAt(std::span<const std::uint8_t> data, std::uint64_t tableOffset,
+                                          std::uint64_t tableLength, std::uint64_t offset)
 {
     if (offset > tableLength)
         return std::nullopt;
@@ -71,30 +71,49 @@ std::string toUtf8(std::string_view latin1)
 std::string dataTypeName(std::uint16_t type)
 {
     switch (static_cast<DataType>(type)) {
-    case DataType::Boolean: return "varBoolean";
-    case DataType::Int8: return "varInt8";
-    case DataType::Int16: return "varInt16";
-    case DataType::Int32: return "varInt32";
-    case DataType::Int64: return "varInt64";
-    case DataType::UInt8: return "varUInt8";
-    case DataType::UInt16: return "varUInt16";
-    case DataType::UInt32: return "varUInt32";
-    case DataType::UInt64: return "varUInt64";
-    case DataType::String: return "varString";
-    case DataType::Single: return "varSingle";
-    case DataType::Double: return "varDouble";
-    case DataType::Locale: return "varLocale";
-    case DataType::Guid: return "varGuid";
-    case DataType::Enum: return "varEnum";
-    case DataType::Class: return "varClass";
-    case DataType::StrongPointer: return "varStrongPointer";
-    case DataType::WeakPointer: return "varWeakPointer";
-    case DataType::Reference: return "varReference";
+    case DataType::Boolean:
+        return "varBoolean";
+    case DataType::Int8:
+        return "varInt8";
+    case DataType::Int16:
+        return "varInt16";
+    case DataType::Int32:
+        return "varInt32";
+    case DataType::Int64:
+        return "varInt64";
+    case DataType::UInt8:
+        return "varUInt8";
+    case DataType::UInt16:
+        return "varUInt16";
+    case DataType::UInt32:
+        return "varUInt32";
+    case DataType::UInt64:
+        return "varUInt64";
+    case DataType::String:
+        return "varString";
+    case DataType::Single:
+        return "varSingle";
+    case DataType::Double:
+        return "varDouble";
+    case DataType::Locale:
+        return "varLocale";
+    case DataType::Guid:
+        return "varGuid";
+    case DataType::Enum:
+        return "varEnum";
+    case DataType::Class:
+        return "varClass";
+    case DataType::StrongPointer:
+        return "varStrongPointer";
+    case DataType::WeakPointer:
+        return "varWeakPointer";
+    case DataType::Reference:
+        return "varReference";
     }
     return std::to_string(type);
 }
 
-std::size_t GuidHash::operator()(const GuidBytes &g) const noexcept
+std::size_t GuidHash::operator()(GuidBytes g) const noexcept
 {
     std::uint64_t a = 0, b = 0;
     std::memcpy(&a, g.data(), 8);
@@ -113,10 +132,11 @@ Result<DataForge> DataForge::load(std::vector<std::uint8_t> bytes)
         return fail(Errc::Format, "not a DataForge file (too small)");
     df.version_ = static_cast<std::int32_t>(u32(d + 4));
     if (size < kLegacySizeLimit && df.version_ < 6)
-        return fail(Errc::Unsupported, "legacy DataForge files are not supported (version " +
-                                           std::to_string(df.version_) + ")");
+        return fail(Errc::Unsupported,
+                    "legacy DataForge files are not supported (version " + std::to_string(df.version_) + ")");
     if (df.version_ < 5)
-        return fail(Errc::Unsupported, "DataForge version " + std::to_string(df.version_) + " is not supported");
+        return fail(Errc::Unsupported,
+                    "DataForge version " + std::to_string(df.version_) + " is not supported");
 
     // Header: u16, u16, i32 version, 4 x u16, then 24 i32 counts.
     std::int64_t counts[24];
@@ -126,8 +146,30 @@ Result<DataForge> DataForge::load(std::vector<std::uint8_t> bytes)
             return fail(Errc::Format, "DataForge header has a negative count");
     }
     enum {
-        cStruct, cProperty, cEnum, cMapping, cRecord, cBool, cI8, cI16, cI32, cI64, cU8, cU16, cU32, cU64,
-        cSingle, cDouble, cGuid, cString, cLocale, cEnumValue, cStrong, cWeak, cReference, cEnumOption
+        cStruct,
+        cProperty,
+        cEnum,
+        cMapping,
+        cRecord,
+        cBool,
+        cI8,
+        cI16,
+        cI32,
+        cI64,
+        cU8,
+        cU16,
+        cU32,
+        cU64,
+        cSingle,
+        cDouble,
+        cGuid,
+        cString,
+        cLocale,
+        cEnumValue,
+        cStrong,
+        cWeak,
+        cReference,
+        cEnumOption
     };
     df.textLength_ = u32(d + 112);
     df.blobLength_ = u32(d + 116);
@@ -145,9 +187,9 @@ Result<DataForge> DataForge::load(std::vector<std::uint8_t> bytes)
     pos += std::uint64_t(counts[cRecord]) * recordSize;
 
     // Pools are stored in a different order from the header's counts.
-    const int poolCountIndex[] = {cI8,     cI16,   cI32,   cI64,       cU8,    cU16,   cU32,
-                                  cU64,    cBool,  cSingle, cDouble,   cGuid,  cString, cLocale,
-                                  cEnumValue, cStrong, cWeak, cReference, cEnumOption};
+    const int poolCountIndex[] = {cI8,        cI16,    cI32,    cI64,       cU8,        cU16,    cU32,
+                                  cU64,       cBool,   cSingle, cDouble,    cGuid,      cString, cLocale,
+                                  cEnumValue, cStrong, cWeak,   cReference, cEnumOption};
     for (int p = 0; p < static_cast<int>(Pool::Count); ++p) {
         df.poolOffsets_[p] = pos;
         df.poolCounts_[p] = std::uint64_t(counts[poolCountIndex[p]]);
@@ -230,15 +272,18 @@ Result<DataForge> DataForge::load(std::vector<std::uint8_t> bytes)
     df.structProperties_.resize(df.structs_.size());
     for (std::size_t i = 0; i < df.structs_.size(); ++i) {
         std::vector<std::uint32_t> chain;
-        for (std::uint32_t s = static_cast<std::uint32_t>(i); s != 0xFFFFFFFFu; s = df.structs_[s].parentIndex) {
+        for (std::uint32_t s = static_cast<std::uint32_t>(i); s != 0xFFFFFFFFu;
+             s = df.structs_[s].parentIndex) {
             if (s >= df.structs_.size() || chain.size() > df.structs_.size())
-                return fail(Errc::Format, "DataForge struct hierarchy is broken at struct " + std::to_string(i));
+                return fail(Errc::Format,
+                            "DataForge struct hierarchy is broken at struct " + std::to_string(i));
             chain.push_back(s);
         }
         auto &props = df.structProperties_[i];
         for (auto it = chain.rbegin(); it != chain.rend(); ++it) {
             const StructDef &s = df.structs_[*it];
-            for (std::uint32_t p = s.firstProperty; p < std::uint32_t(s.firstProperty) + s.propertyCount; ++p) {
+            for (std::uint32_t p = s.firstProperty; p < std::uint32_t(s.firstProperty) + s.propertyCount;
+                 ++p) {
                 if (p >= df.properties_.size())
                     return fail(Errc::Format, "DataForge struct " + df.structNames_[*it] +
                                                   " references a missing property");
@@ -270,14 +315,14 @@ Result<DataForge> DataForge::load(std::vector<std::uint8_t> bytes)
 
 std::optional<std::string_view> DataForge::text(std::uint64_t offset) const
 {
-    return cString(data_, textOffset_, textLength_, offset);
+    return cStringAt(data_, textOffset_, textLength_, offset);
 }
 
 std::optional<std::string_view> DataForge::blob(std::uint64_t offset) const
 {
     if (version_ < 6)
         return text(offset);
-    return cString(data_, blobOffset_, blobLength_, offset);
+    return cStringAt(data_, blobOffset_, blobLength_, offset);
 }
 
 std::string_view DataForge::recordName(std::uint32_t index) const
@@ -318,7 +363,7 @@ std::optional<std::uint32_t> DataForge::recordByPath(std::string_view path) cons
     return std::nullopt;
 }
 
-std::optional<std::uint32_t> DataForge::recordByGuid(const GuidBytes &id) const
+std::optional<std::uint32_t> DataForge::recordByGuid(GuidBytes id) const
 {
     if (auto it = byGuid_.find(id); it != byGuid_.end())
         return it->second;

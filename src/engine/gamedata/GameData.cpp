@@ -71,7 +71,8 @@ std::vector<std::string> split(std::string_view s, char sep, bool removeEmpty)
     std::size_t start = 0;
     while (true) {
         const std::size_t at = s.find(sep, start);
-        const std::string_view part = s.substr(start, at == std::string_view::npos ? std::string_view::npos : at - start);
+        const std::string_view part =
+            s.substr(start, at == std::string_view::npos ? std::string_view::npos : at - start);
         if (!removeEmpty || !part.empty())
             parts.emplace_back(part);
         if (at == std::string_view::npos)
@@ -125,8 +126,7 @@ bool isElement(const XmlTree &t, NodeId n, std::string_view name)
 
 // XmlElement.GetElementsByTagName(name): descendants, document order.
 // visit(NodeId) -> bool: false stops.
-template <class Visit>
-void forDescendants(const XmlTree &t, NodeId n, std::string_view name, Visit &&visit)
+template <class Visit> void forDescendants(const XmlTree &t, NodeId n, std::string_view name, Visit &&visit)
 {
     NodeId cur = t.firstChild(n);
     std::vector<NodeId> parents{n};
@@ -249,7 +249,10 @@ std::optional<std::string> attachLocKey(const XmlTree &t, NodeId attach)
 struct Damage
 {
     double phys = 0, energy = 0, dist = 0, therm = 0, bio = 0, stun = 0;
-    bool allZero() const { return phys == 0 && energy == 0 && dist == 0 && therm == 0 && bio == 0 && stun == 0; }
+    bool allZero() const
+    {
+        return phys == 0 && energy == 0 && dist == 0 && therm == 0 && bio == 0 && stun == 0;
+    }
 };
 
 struct Resistance
@@ -259,8 +262,8 @@ struct Resistance
 
 Damage damageFrom(const XmlTree &t, NodeId n)
 {
-    return {attrDouble(t, n, "DamagePhysical"),   attrDouble(t, n, "DamageEnergy"),
-            attrDouble(t, n, "DamageDistortion"), attrDouble(t, n, "DamageThermal"),
+    return {attrDouble(t, n, "DamagePhysical"),    attrDouble(t, n, "DamageEnergy"),
+            attrDouble(t, n, "DamageDistortion"),  attrDouble(t, n, "DamageThermal"),
             attrDouble(t, n, "DamageBiochemical"), attrDouble(t, n, "DamageStun")};
 }
 
@@ -469,8 +472,6 @@ std::string resolveName(const std::optional<std::string> &locKey, const Loc &loc
 
 // ── the passes ────────────────────────────────────────────────────────────
 
-constexpr std::string_view kRecords = "libs/foundry/records/";
-
 class Extraction
 {
 public:
@@ -482,8 +483,7 @@ public:
 
     // Every record whose path starts with `prefix` (ignoring case), in
     // PathToRecordMap order.
-    template <class Visit>
-    void forEach(std::string_view prefix, Visit &&visit)
+    template <class Visit> void forEach(std::string_view prefix, Visit &&visit)
     {
         Record rec;
         for (const auto &[path, index] : paths_) {
@@ -523,20 +523,24 @@ public:
                  std::vector<Weapon> &missiles)
     {
         constexpr std::string_view gunPrefix = "libs/foundry/records/entities/scitem/ships/weapons/";
-        constexpr std::string_view missilePrefix = "libs/foundry/records/entities/scitem/ships/weapons/missiles/";
+        constexpr std::string_view missilePrefix =
+            "libs/foundry/records/entities/scitem/ships/weapons/missiles/";
         Record rec;
         for (const auto &[path, index] : paths_) {
             const bool isMissile = startsWithIgnoreCase(path, missilePrefix);
             const bool isGun = !isMissile && startsWithIgnoreCase(path, gunPrefix);
             if (!isGun && !isMissile)
                 continue;
-            const std::string_view rest = std::string_view(path).substr(isMissile ? missilePrefix.size() : gunPrefix.size());
+            const std::string_view rest =
+                std::string_view(path).substr(isMissile ? missilePrefix.size() : gunPrefix.size());
             if (rest.find('/') != std::string_view::npos) {
                 if (isMissile)
                     continue;
                 bool allowed = false;
-                for (const std::string_view sub : {std::string_view("rocket_pods/"), std::string_view("emp/")})
-                    if (startsWithIgnoreCase(rest, sub) && rest.substr(sub.size()).find('/') == std::string_view::npos) {
+                for (const std::string_view sub :
+                     {std::string_view("rocket_pods/"), std::string_view("emp/")})
+                    if (startsWithIgnoreCase(rest, sub) &&
+                        rest.substr(sub.size()).find('/') == std::string_view::npos) {
                         allowed = true;
                         break;
                     }
@@ -558,57 +562,64 @@ public:
     std::vector<Armor> armors()
     {
         std::vector<Armor> result;
-        forEach("libs/foundry/records/entities/scitem/ships/armor/", [&](std::string_view rest, const Record &r) {
-            if (rest.find('/') != std::string_view::npos)
-                return;
-            const XmlTree &t = r.tree;
-            const std::string entityId = entityIdFromRoot(t, r.root);
-            const auto guid = attr(t, r.root, "__ref");
-            const NodeId armor = findFirst(t, r.root, "SCItemVehicleArmorParams");
-            if (armor == kNone)
-                return;
-            const NodeId deflectionWrap = findFirst(t, armor, "armorDeflection");
-            const NodeId deflectionValue = deflectionWrap != kNone ? findFirst(t, deflectionWrap, "deflectionValue") : kNone;
-            if (deflectionValue == kNone)
-                return;
-            const NodeId multiplierWrap = findFirst(t, armor, "damageMultiplier");
-            const NodeId multiplierInfo = multiplierWrap != kNone ? findFirst(t, multiplierWrap, "DamageInfo") : kNone;
+        forEach(
+            "libs/foundry/records/entities/scitem/ships/armor/", [&](std::string_view rest, const Record &r) {
+                if (rest.find('/') != std::string_view::npos)
+                    return;
+                const XmlTree &t = r.tree;
+                const std::string entityId = entityIdFromRoot(t, r.root);
+                const auto guid = attr(t, r.root, "__ref");
+                const NodeId armor = findFirst(t, r.root, "SCItemVehicleArmorParams");
+                if (armor == kNone)
+                    return;
+                const NodeId deflectionWrap = findFirst(t, armor, "armorDeflection");
+                const NodeId deflectionValue =
+                    deflectionWrap != kNone ? findFirst(t, deflectionWrap, "deflectionValue") : kNone;
+                if (deflectionValue == kNone)
+                    return;
+                const NodeId multiplierWrap = findFirst(t, armor, "damageMultiplier");
+                const NodeId multiplierInfo =
+                    multiplierWrap != kNone ? findFirst(t, multiplierWrap, "DamageInfo") : kNone;
 
-            Resistance res;
-            if (const NodeId dr = findFirst(t, r.root, "DamageResistance"); dr != kNone) {
-                const auto read = [&](std::string_view tag) {
-                    const NodeId c = child(t, dr, tag);
-                    return c == kNone ? 1.0 : attrDouble(t, c, "Multiplier", 1.0);
-                };
-                res = {read("PhysicalResistance"),  read("EnergyResistance"),      read("DistortionResistance"),
-                       read("ThermalResistance"),   read("BiochemicalResistance"), read("StunResistance")};
-            }
+                Resistance res;
+                if (const NodeId dr = findFirst(t, r.root, "DamageResistance"); dr != kNone) {
+                    const auto read = [&](std::string_view tag) {
+                        const NodeId c = child(t, dr, tag);
+                        return c == kNone ? 1.0 : attrDouble(t, c, "Multiplier", 1.0);
+                    };
+                    res = {read("PhysicalResistance"),    read("EnergyResistance"),
+                           read("DistortionResistance"),  read("ThermalResistance"),
+                           read("BiochemicalResistance"), read("StunResistance")};
+                }
 
-            const NodeId attach = findFirst(t, r.root, "AttachDef");
-            const std::string fallback = prettifyEntityId(entityId, "ARMR_");
-            std::string name = resolveName(attach != kNone ? attachLocKey(t, attach) : std::nullopt, loc_, fallback, entityId);
-            if (endsWith(name, " Ship Armor"))
-                name = std::string(dotnet::trimEnd(std::string_view(name).substr(0, name.size() - 11)));
-            else if (endsWith(name, " Armor"))
-                name = std::string(dotnet::trimEnd(std::string_view(name).substr(0, name.size() - 6)));
-            if (name.empty())
-                name = fallback;
+                const NodeId attach = findFirst(t, r.root, "AttachDef");
+                const std::string fallback = prettifyEntityId(entityId, "ARMR_");
+                std::string name = resolveName(attach != kNone ? attachLocKey(t, attach) : std::nullopt, loc_,
+                                               fallback, entityId);
+                if (endsWith(name, " Ship Armor"))
+                    name = std::string(dotnet::trimEnd(std::string_view(name).substr(0, name.size() - 11)));
+                else if (endsWith(name, " Armor"))
+                    name = std::string(dotnet::trimEnd(std::string_view(name).substr(0, name.size() - 6)));
+                if (name.empty())
+                    name = fallback;
 
-            std::optional<double> hullHp;
-            if (const NodeId health = findFirst(t, r.root, "SHealthComponentParams"); health != kNone)
-                if (const double h = attrDouble(t, health, "Health", -1); h > 0)
-                    hullHp = h;
+                std::optional<double> hullHp;
+                if (const NodeId health = findFirst(t, r.root, "SHealthComponentParams"); health != kNone)
+                    if (const double h = attrDouble(t, health, "Health", -1); h > 0)
+                        hullHp = h;
 
-            result.push_back({entityId, name, damageFrom(t, deflectionValue),
-                              multiplierInfo != kNone ? damageFrom(t, multiplierInfo) : Damage{}, res, hullHp, guid});
-        });
+                result.push_back({entityId, name, damageFrom(t, deflectionValue),
+                                  multiplierInfo != kNone ? damageFrom(t, multiplierInfo) : Damage{}, res,
+                                  hullHp, guid});
+            });
         return result;
     }
 
     std::vector<Ifcs> ifcs()
     {
         std::vector<Ifcs> result;
-        forEach("libs/foundry/records/entities/scitem/ships/controller/", [&](std::string_view rest, const Record &r) {
+        forEach("libs/foundry/records/entities/scitem/ships/controller/", [&](std::string_view rest,
+                                                                              const Record &r) {
             if (rest.find('/') != std::string_view::npos)
                 return;
             const XmlTree &t = r.tree;
@@ -646,23 +657,24 @@ public:
     std::vector<Thruster> thrusters()
     {
         std::vector<Thruster> result;
-        forEach("libs/foundry/records/entities/scitem/ships/thrusters/", [&](std::string_view rest, const Record &r) {
-            if (rest.find('/') != std::string_view::npos)
-                return;
-            const XmlTree &t = r.tree;
-            const NodeId params = findFirst(t, r.root, "SCItemThrusterParams");
-            if (params == kNone)
-                return;
-            Thruster rec;
-            rec.id = entityIdFromRoot(t, r.root);
-            rec.guid = attr(t, r.root, "__ref");
-            rec.thrustCapacity = attrDouble(t, params, "thrustCapacity");
-            rec.type = attr(t, params, "thrusterType").value_or("");
-            rec.onlyVtol = attrDouble(t, params, "onlyActiveInVTOL") > 0.5;
-            if (const NodeId attach = findFirst(t, r.root, "AttachDef"); attach != kNone)
-                rec.mass = attrDouble(t, attach, "Mass");
-            result.push_back(std::move(rec));
-        });
+        forEach("libs/foundry/records/entities/scitem/ships/thrusters/",
+                [&](std::string_view rest, const Record &r) {
+                    if (rest.find('/') != std::string_view::npos)
+                        return;
+                    const XmlTree &t = r.tree;
+                    const NodeId params = findFirst(t, r.root, "SCItemThrusterParams");
+                    if (params == kNone)
+                        return;
+                    Thruster rec;
+                    rec.id = entityIdFromRoot(t, r.root);
+                    rec.guid = attr(t, r.root, "__ref");
+                    rec.thrustCapacity = attrDouble(t, params, "thrustCapacity");
+                    rec.type = attr(t, params, "thrusterType").value_or("");
+                    rec.onlyVtol = attrDouble(t, params, "onlyActiveInVTOL") > 0.5;
+                    if (const NodeId attach = findFirst(t, r.root, "AttachDef"); attach != kNone)
+                        rec.mass = attrDouble(t, attach, "Mass");
+                    result.push_back(std::move(rec));
+                });
         return result;
     }
 
@@ -670,7 +682,8 @@ public:
     {
         static const std::regex manufacturerPrefix(R"(^[A-Z]+_(?:S\d+_)?([A-Z]+)_)");
         std::vector<Rack> result;
-        forEach("libs/foundry/records/entities/scitem/ships/missile_racks/", [&](std::string_view, const Record &r) {
+        forEach("libs/foundry/records/entities/scitem/ships/missile_racks/", [&](std::string_view,
+                                                                                 const Record &r) {
             const XmlTree &t = r.tree;
             const std::string entityId = entityIdFromRoot(t, r.root);
             const auto guid = attr(t, r.root, "__ref");
@@ -728,7 +741,8 @@ public:
     std::vector<Vehicle> vehicles(const Indexes &ix);
 
 private:
-    std::optional<Weapon> parseGun(const Record &r, const std::unordered_map<std::string, AmmoEntry> &ammoMap);
+    std::optional<Weapon> parseGun(const Record &r,
+                                   const std::unordered_map<std::string, AmmoEntry> &ammoMap);
     std::optional<Weapon> parseMissile(const Record &r);
 
     const RecordSource &source_;
@@ -748,7 +762,8 @@ std::optional<std::int32_t> readPelletCount(const XmlTree &t, NodeId fireAct)
     return n > 1 ? std::optional(n) : std::nullopt;
 }
 
-std::optional<Weapon> Extraction::parseGun(const Record &r, const std::unordered_map<std::string, AmmoEntry> &ammoMap)
+std::optional<Weapon> Extraction::parseGun(const Record &r,
+                                           const std::unordered_map<std::string, AmmoEntry> &ammoMap)
 {
     const XmlTree &t = r.tree;
     Weapon w;
@@ -769,7 +784,8 @@ std::optional<Weapon> Extraction::parseGun(const Record &r, const std::unordered
 
     const NodeId attach = findFirst(t, r.root, "AttachDef");
     w.size = attrInt(t, attach, "Size", 0);
-    w.name = resolveName(attach != kNone ? attachLocKey(t, attach) : std::nullopt, loc_, prettifyEntityId(w.id, ""), w.id);
+    w.name = resolveName(attach != kNone ? attachLocKey(t, attach) : std::nullopt, loc_,
+                         prettifyEntityId(w.id, ""), w.id);
 
     std::optional<double> fireRate, heatPerShot;
     std::optional<std::int32_t> pellets;
@@ -800,7 +816,7 @@ std::optional<Weapon> Extraction::parseGun(const Record &r, const std::unordered
     if (overheat && heatCapacity && *heatCapacity > 0 && heatPerShot && *heatPerShot > 0) {
         const double f = std::floor(*heatCapacity / *heatPerShot);
         // (Int32) of a double: saturating on .NET 9+, and nothing real gets near it.
-        shots = f >= 2147483647.0 ? std::numeric_limits<std::int32_t>::max()
+        shots = f >= 2147483647.0    ? std::numeric_limits<std::int32_t>::max()
                 : f <= -2147483648.0 ? std::numeric_limits<std::int32_t>::min()
                                      : static_cast<std::int32_t>(f);
         if (fireRate && *fireRate > 0)
@@ -862,7 +878,8 @@ std::optional<Weapon> Extraction::parseMissile(const Record &r)
 
     const NodeId attach = findFirst(t, r.root, "AttachDef");
     w.size = attrInt(t, attach, "Size", 0);
-    w.name = resolveName(attach != kNone ? attachLocKey(t, attach) : std::nullopt, loc_, prettifyEntityId(w.id, ""), w.id);
+    w.name = resolveName(attach != kNone ? attachLocKey(t, attach) : std::nullopt, loc_,
+                         prettifyEntityId(w.id, ""), w.id);
 
     std::optional<double> lockTime, lockMin, lockMax;
     if (const NodeId targeting = findFirst(t, params, "targetingParams"); targeting != kNone) {
@@ -1009,7 +1026,8 @@ std::string formatSlotLabel(const std::vector<std::string> &chain)
     std::vector<std::string> cleaned;
     for (const std::string &port : chain) {
         std::string s = port;
-        for (const std::string_view prefix : {"hardpoint_weapon_gun_", "hardpoint_weapon_", "hardpoint_turret_", "hardpoint_"})
+        for (const std::string_view prefix :
+             {"hardpoint_weapon_gun_", "hardpoint_weapon_", "hardpoint_turret_", "hardpoint_"})
             if (startsWith(s, prefix)) {
                 s = s.substr(prefix.size());
                 break;
@@ -1085,7 +1103,8 @@ void aggregatePhysics(Vehicle &v, const XmlTree &t, NodeId root, const Ifcs *ifc
 
     if (const NodeId vcp = findFirst(t, root, "VehicleComponentParams"); vcp != kNone)
         if (const NodeId mbb = findFirst(t, vcp, "maxBoundingBoxSize"); mbb != kNone)
-            v.crossSection = CrossSection{attrDouble(t, mbb, "x"), attrDouble(t, mbb, "y"), attrDouble(t, mbb, "z")};
+            v.crossSection =
+                CrossSection{attrDouble(t, mbb, "x"), attrDouble(t, mbb, "y"), attrDouble(t, mbb, "z")};
 
     double structuralMass = 0;
     if (const NodeId parts = findFirst(t, root, "Parts"); parts != kNone)
@@ -1102,7 +1121,11 @@ void aggregatePhysics(Vehicle &v, const XmlTree &t, NodeId root, const Ifcs *ifc
             v.boostSpeed = ifcs->boostSpeedForward;
         if (ifcs->maxSpeed > 0)
             v.navSpeed = ifcs->maxSpeed;
-        v.agility = Agility{ifcs->angX, ifcs->angY, ifcs->angZ, ifcs->angX * ifcs->multX, ifcs->angY * ifcs->multY,
+        v.agility = Agility{ifcs->angX,
+                            ifcs->angY,
+                            ifcs->angZ,
+                            ifcs->angX * ifcs->multX,
+                            ifcs->angY * ifcs->multY,
                             ifcs->angZ * ifcs->multZ};
     }
 
@@ -1132,8 +1155,8 @@ void aggregatePhysics(Vehicle &v, const XmlTree &t, NodeId root, const Ifcs *ifc
     if (v.massTotal && *v.massTotal > 0) {
         const double total = *v.massTotal;
         const double boost = ifcs ? ifcs->linForward : 1.0;
-        v.acceleration = Acceleration{buckets.main / total,          buckets.retro / total,
-                                      buckets.vtol / total,          buckets.maneuvering / total,
+        v.acceleration = Acceleration{buckets.main / total,           buckets.retro / total,
+                                      buckets.vtol / total,           buckets.maneuvering / total,
                                       (buckets.main / total) * boost, (buckets.maneuvering / total) * boost};
     }
 
@@ -1209,7 +1232,8 @@ std::vector<Vehicle> Extraction::vehicles(const Indexes &ix)
 
         const NodeId attach = findFirst(t, root, "AttachDef");
         const std::string fallback = prettifyEntityId(entityId, "");
-        std::string name = resolveName(attach != kNone ? attachLocKey(t, attach) : std::nullopt, loc_, fallback, entityId);
+        std::string name =
+            resolveName(attach != kNone ? attachLocKey(t, attach) : std::nullopt, loc_, fallback, entityId);
         const std::vector<std::string> words = split(name, ' ', true);
         if (words.size() > 1 && !fallback.empty() && !startsWith(fallback, words[0]))
             name = join(words, " ", 1);
@@ -1282,7 +1306,8 @@ std::optional<double> asDouble(const json::Value &v)
 // JsonSerializer.Deserialize<T> of a physics shape: missing members stay 0,
 // a non-number member makes the whole value null.
 template <class T, std::size_t N>
-std::optional<T> deserialize(const json::Value &v, const std::array<std::pair<const char *, double T::*>, N> &members)
+std::optional<T> deserialize(const json::Value &v,
+                             const std::array<std::pair<const char *, double T::*>, N> &members)
 {
     if (v.type != json::Value::Type::Object)
         return std::nullopt;
@@ -1316,7 +1341,8 @@ int applyOverlay(const std::string &path, std::vector<Vehicle> &vehicles, const 
     std::vector<std::uint8_t> bytes(static_cast<std::size_t>(file->size()));
     if (!file->readAt(0, bytes))
         return 0;
-    const auto doc = json::parse(std::string_view(reinterpret_cast<const char *>(bytes.data()), bytes.size()));
+    const auto doc =
+        json::parse(std::string_view(reinterpret_cast<const char *>(bytes.data()), bytes.size()));
     if (!doc)
         return 0;
     const json::Value *live = doc->find("vehicles");
@@ -1327,19 +1353,27 @@ int applyOverlay(const std::string &path, std::vector<Vehicle> &vehicles, const 
         if (const json::Value *id = v.find("id"); id && id->type == json::Value::Type::String)
             byId[id->string] = &v;
 
-    static constexpr std::array<std::pair<const char *, double Agility::*>, 6> agility{{
-        {"pitch", &Agility::pitch}, {"yaw", &Agility::yaw}, {"roll", &Agility::roll},
-        {"pitch_boosted", &Agility::pitchBoosted}, {"yaw_boosted", &Agility::yawBoosted},
-        {"roll_boosted", &Agility::rollBoosted}}};
-    static constexpr std::array<std::pair<const char *, double Acceleration::*>, 6> acceleration{{
-        {"main", &Acceleration::main}, {"retro", &Acceleration::retro}, {"vtol", &Acceleration::vtol},
-        {"maneuver", &Acceleration::maneuver}, {"main_boosted", &Acceleration::mainBoosted},
-        {"maneuver_boosted", &Acceleration::maneuverBoosted}}};
-    static constexpr std::array<std::pair<const char *, double Thrust::*>, 4> thrust{{
-        {"main", &Thrust::main}, {"retro", &Thrust::retro}, {"vtol", &Thrust::vtol},
-        {"maneuvering", &Thrust::maneuvering}}};
-    static constexpr std::array<std::pair<const char *, double CrossSection::*>, 3> cross{{
-        {"x", &CrossSection::x}, {"y", &CrossSection::y}, {"z", &CrossSection::z}}};
+    static constexpr std::array<std::pair<const char *, double Agility::*>, 6> agility{
+        {{"pitch", &Agility::pitch},
+         {"yaw", &Agility::yaw},
+         {"roll", &Agility::roll},
+         {"pitch_boosted", &Agility::pitchBoosted},
+         {"yaw_boosted", &Agility::yawBoosted},
+         {"roll_boosted", &Agility::rollBoosted}}};
+    static constexpr std::array<std::pair<const char *, double Acceleration::*>, 6> acceleration{
+        {{"main", &Acceleration::main},
+         {"retro", &Acceleration::retro},
+         {"vtol", &Acceleration::vtol},
+         {"maneuver", &Acceleration::maneuver},
+         {"main_boosted", &Acceleration::mainBoosted},
+         {"maneuver_boosted", &Acceleration::maneuverBoosted}}};
+    static constexpr std::array<std::pair<const char *, double Thrust::*>, 4> thrust{
+        {{"main", &Thrust::main},
+         {"retro", &Thrust::retro},
+         {"vtol", &Thrust::vtol},
+         {"maneuvering", &Thrust::maneuvering}}};
+    static constexpr std::array<std::pair<const char *, double CrossSection::*>, 3> cross{
+        {{"x", &CrossSection::x}, {"y", &CrossSection::y}, {"z", &CrossSection::z}}};
 
     int updated = 0, fills = 0;
     for (Vehicle &v : vehicles) {
@@ -1370,14 +1404,18 @@ int applyOverlay(const std::string &path, std::vector<Vehicle> &vehicles, const 
         fill("mass_total", v.massTotal, asDouble);
         fill("hull_hp", v.hullHp, asDouble);
         fill("agility", v.agility, [](const json::Value &x) { return deserialize<Agility>(x, agility); });
-        fill("acceleration", v.acceleration, [](const json::Value &x) { return deserialize<Acceleration>(x, acceleration); });
-        fill("thrust_capacity", v.thrustCapacity, [](const json::Value &x) { return deserialize<Thrust>(x, thrust); });
-        fill("cross_section", v.crossSection, [](const json::Value &x) { return deserialize<CrossSection>(x, cross); });
+        fill("acceleration", v.acceleration,
+             [](const json::Value &x) { return deserialize<Acceleration>(x, acceleration); });
+        fill("thrust_capacity", v.thrustCapacity,
+             [](const json::Value &x) { return deserialize<Thrust>(x, thrust); });
+        fill("cross_section", v.crossSection,
+             [](const json::Value &x) { return deserialize<CrossSection>(x, cross); });
         if (touched)
             ++updated;
     }
     if (fills > 0)
-        say("WARN: overlay backfilled " + std::to_string(fills) + " field(s) across " + std::to_string(updated) +
+        say("WARN: overlay backfilled " + std::to_string(fills) + " field(s) across " +
+            std::to_string(updated) +
             " vehicle(s). Extraction couldn't resolve these \xE2\x80\x94 investigate per-ship coverage.");
     return updated;
 }
@@ -1612,7 +1650,8 @@ Loc loadLocalization(const std::string &path, const LogSink &log)
 
 } // namespace
 
-Result<std::string> buildGameDataJson(const forge::DataForge &forge, const Options &options, const LogSink &log)
+Result<std::string> buildGameDataJson(const forge::DataForge &forge, const Options &options,
+                                      const LogSink &log)
 {
     RecordSource source;
     source.dcbVersion = forge.version();
@@ -1622,7 +1661,9 @@ Result<std::string> buildGameDataJson(const forge::DataForge &forge, const Optio
         indexes.push_back(index);
     }
     auto builder = std::make_shared<forge::RecordBuilder>(forge);
-    source.build = [builder, indexes](std::size_t i, XmlTree &tree) { return builder->build(indexes[i], tree); };
+    source.build = [builder, indexes](std::size_t i, XmlTree &tree) {
+        return builder->build(indexes[i], tree);
+    };
     return buildGameDataJson(source, options, log);
 }
 
@@ -1720,9 +1761,10 @@ Result<std::string> buildGameDataJson(const RecordSource &records, const Options
                 }
             }
         const int resolved = byClass + byGuid;
-        say("Missile-rack ids: " + std::to_string(resolved) + "/" + std::to_string(rackSlots) + " resolved (" +
-            std::to_string(byClass) + " by class, " + std::to_string(byGuid) + " by guid; captured " +
-            std::to_string(captured) + ", dropped " + std::to_string(captured - resolved) + " unresolved)");
+        say("Missile-rack ids: " + std::to_string(resolved) + "/" + std::to_string(rackSlots) +
+            " resolved (" + std::to_string(byClass) + " by class, " + std::to_string(byGuid) +
+            " by guid; captured " + std::to_string(captured) + ", dropped " +
+            std::to_string(captured - resolved) + " unresolved)");
     }
 
     if (!options.overlayPath.empty()) {
@@ -1737,10 +1779,12 @@ Result<std::string> buildGameDataJson(const RecordSource &records, const Options
         return dotnet::compareCulture(a.name, b.name) < 0;
     });
     std::vector<Armor> ships = armors;
-    std::stable_sort(ships.begin(), ships.end(),
-                     [](const Armor &a, const Armor &b) { return dotnet::compareCulture(a.name, b.name) < 0; });
-    std::stable_sort(vehicles.begin(), vehicles.end(),
-                     [](const Vehicle &a, const Vehicle &b) { return dotnet::compareCulture(a.name, b.name) < 0; });
+    std::stable_sort(ships.begin(), ships.end(), [](const Armor &a, const Armor &b) {
+        return dotnet::compareCulture(a.name, b.name) < 0;
+    });
+    std::stable_sort(vehicles.begin(), vehicles.end(), [](const Vehicle &a, const Vehicle &b) {
+        return dotnet::compareCulture(a.name, b.name) < 0;
+    });
 
     json::Writer w;
     w.beginObject();

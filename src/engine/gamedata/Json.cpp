@@ -29,13 +29,27 @@ void appendEscaped(std::string &out, std::string_view s)
         const auto b = static_cast<unsigned char>(s[i]);
         if (b < 0x80) {
             switch (b) {
-            case '"': out += "\\\""; break;
-            case '\\': out += "\\\\"; break;
-            case '\b': out += "\\b"; break;
-            case '\f': out += "\\f"; break;
-            case '\n': out += "\\n"; break;
-            case '\r': out += "\\r"; break;
-            case '\t': out += "\\t"; break;
+            case '"':
+                out += "\\\"";
+                break;
+            case '\\':
+                out += "\\\\";
+                break;
+            case '\b':
+                out += "\\b";
+                break;
+            case '\f':
+                out += "\\f";
+                break;
+            case '\n':
+                out += "\\n";
+                break;
+            case '\r':
+                out += "\\r";
+                break;
+            case '\t':
+                out += "\\t";
+                break;
             default:
                 if (b < 0x20 || b == 0x7F)
                     appendHexEscape(out, b);
@@ -89,7 +103,8 @@ public:
 private:
     void skipWhite()
     {
-        while (pos_ < s_.size() && (s_[pos_] == ' ' || s_[pos_] == '\t' || s_[pos_] == '\n' || s_[pos_] == '\r'))
+        while (pos_ < s_.size() &&
+               (s_[pos_] == ' ' || s_[pos_] == '\t' || s_[pos_] == '\n' || s_[pos_] == '\r'))
             ++pos_;
     }
 
@@ -156,14 +171,30 @@ private:
             if (pos_ >= s_.size())
                 return false;
             switch (s_[pos_++]) {
-            case '"': out += '"'; break;
-            case '\\': out += '\\'; break;
-            case '/': out += '/'; break;
-            case 'b': out += '\b'; break;
-            case 'f': out += '\f'; break;
-            case 'n': out += '\n'; break;
-            case 'r': out += '\r'; break;
-            case 't': out += '\t'; break;
+            case '"':
+                out += '"';
+                break;
+            case '\\':
+                out += '\\';
+                break;
+            case '/':
+                out += '/';
+                break;
+            case 'b':
+                out += '\b';
+                break;
+            case 'f':
+                out += '\f';
+                break;
+            case 'n':
+                out += '\n';
+                break;
+            case 'r':
+                out += '\r';
+                break;
+            case 't':
+                out += '\t';
+                break;
             case 'u': {
                 unsigned unit = 0;
                 if (!hex4(unit))
@@ -181,7 +212,8 @@ private:
                 appendUtf8(out, cp);
                 break;
             }
-            default: return false;
+            default:
+                return false;
             }
         }
         return false;
@@ -205,13 +237,13 @@ private:
             }
             while (true) {
                 skipWhite();
-                std::pair<std::string, Value> member;
-                if (!parseString(member.first))
+                Member member;
+                if (!parseString(member.name))
                     return false;
                 skipWhite();
                 if (pos_ >= s_.size() || s_[pos_++] != ':')
                     return false;
-                if (!parseValue(member.second, depth + 1))
+                if (!parseValue(member.value, depth + 1))
                     return false;
                 v.object.push_back(std::move(member));
                 skipWhite();
@@ -385,8 +417,8 @@ void Writer::null()
 const Value *Value::find(std::string_view name) const
 {
     for (auto it = object.rbegin(); it != object.rend(); ++it)
-        if (it->first == name)
-            return &it->second;
+        if (it->name == name)
+            return &it->value;
     return nullptr;
 }
 

@@ -109,7 +109,8 @@ private slots:
         writeLang(root, "english", kEnglish);
         writeLang(root, "french", R"js({"toolbar": {"apply_btn": "Appliquer au jeu"}})js");
         writeLang(root, "german", "{not json");
-        QCOMPARE(Catalog::load(root.path(), s("french")).lookup(s("toolbar.apply_btn")), s("Appliquer au jeu"));
+        QCOMPARE(Catalog::load(root.path(), s("french")).lookup(s("toolbar.apply_btn")),
+                 s("Appliquer au jeu"));
         QCOMPARE(Catalog::load(root.path(), s("german")).lookup(s("toolbar.apply_btn")), s("Apply to Game"));
         QCOMPARE(Catalog::load(root.path(), s("klingon")).lookup(s("toolbar.apply_btn")), s("Apply to Game"));
         QCOMPARE(Catalog::load(root.path(), s("klingon")).language(), s("klingon"));
@@ -118,7 +119,8 @@ private slots:
     void formatting()
     {
         const QString t = s("Exported to {path} ({size} bytes)");
-        QCOMPARE(format(t, {{s("path"), s("C:/out.zip")}, {s("size"), 42}}), s("Exported to C:/out.zip (42 bytes)"));
+        QCOMPARE(format(t, {{s("path"), s("C:/out.zip")}, {s("size"), 42}}),
+                 s("Exported to C:/out.zip (42 bytes)"));
         QCOMPARE(format(t, {{s("wrong_kwarg"), 1}}), t);
         QCOMPARE(format(s("Copied: {key}"), {{s("key"), s("item_Name_Foo")}}), s("Copied: item_Name_Foo"));
         QCOMPARE(format(s("{count:,} items"), {{s("count"), 1234567}}), s("1,234,567 items"));
@@ -132,7 +134,8 @@ private slots:
     void translatorServesQCoreApplication()
     {
         JsonTranslator translator;
-        translator.setCatalog(std::make_shared<const Catalog>(Catalog::fromTrees(kDefaultLanguage, json(kEnglish))));
+        translator.setCatalog(
+            std::make_shared<const Catalog>(Catalog::fromTrees(kDefaultLanguage, json(kEnglish))));
         QVERIFY(QCoreApplication::installTranslator(&translator));
         QCOMPARE(core::i18n::tr("toolbar.apply_btn"), s("Apply to Game"));
         QCOMPARE(core::i18n::tr("toolbar.nope"), s("toolbar.nope"));

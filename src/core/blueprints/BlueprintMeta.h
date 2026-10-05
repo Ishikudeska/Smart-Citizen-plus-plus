@@ -26,7 +26,7 @@ struct BlueprintItem
     QSet<QString> missions;
     QString type;
     QString cls;
-    QString size;  // bare number ("3")
+    QString size; // bare number ("3")
     QString grade;
     QString taggedName; // the item's own value, tag and all; `name` when unresolved
 
@@ -57,14 +57,15 @@ struct ComponentTag
 ComponentTag parseComponentTag(const QString &value, const Enclosings &enclosings = defaultEnclosings(),
                                const QString &stock = {});
 
-QString sizeFromKey(const QString &key);             // "..._S01_..." -> "S1"
-QString componentTypeFromKey(const QString &key);    // "Quantum Drive", ...
-QString blueprintTypeFromKey(const QString &key);    // component type, Ammo, FPS Weapon, Armor, Ship Weapon
-QString cleanMissionTitle(const QString &value);     // first line, reward tags removed
+QString sizeFromKey(const QString &key);          // "..._S01_..." -> "S1"
+QString componentTypeFromKey(const QString &key); // "Quantum Drive", ...
+QString blueprintTypeFromKey(const QString &key); // component type, Ammo, FPS Weapon, Armor, Ship Weapon
+QString cleanMissionTitle(const QString &value);  // first line, reward tags removed
 
 // Every item/vehicle name in `entries`, normalized: the catalogue that
 // foreign-name recovery (#372) anchors on.
-QSet<QString> knownItemNames(const QList<StringEntry> &entries, const Enclosings &enclosings = defaultEnclosings(),
+QSet<QString> knownItemNames(const QList<StringEntry> &entries,
+                             const Enclosings &enclosings = defaultEnclosings(),
                              const QHash<QString, QString> &defaultValues = {});
 
 // name -> item for every name a loaded mission lists as a blueprint reward,

@@ -63,7 +63,7 @@ public:
 
     // Copies a pugixml element and its subtree into this tree (elements,
     // attributes and CDATA/text content) and returns the new node, detached.
-    NodeId copyFrom(const pugi::xml_node &node);
+    NodeId copyFrom(pugi::xml_node node);
 
 private:
     struct Str

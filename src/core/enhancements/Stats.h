@@ -19,9 +19,18 @@
 // makes the scan skip that record.
 namespace core::enh {
 
-struct PyError : std::runtime_error
+// Raised only through raise(): copying it is private, so it cannot be
+// sliced, yet the throw (which needs that copy constructor) is allowed from
+// inside the class. Handlers catch it by reference.
+class PyError final : public std::runtime_error
 {
-    using std::runtime_error::runtime_error;
+public:
+    [[noreturn]] static void raise(const char *message) { throw PyError(message); }
+    PyError &operator=(const PyError &) = delete;
+
+private:
+    explicit PyError(const char *message) : std::runtime_error(message) {}
+    PyError(const PyError &) = default;
 };
 
 // float(text), raising like Python on anything else.
@@ -55,7 +64,8 @@ QString enhancementsSalvageTool(Node root);
 // magazine entity class -> (ammoParamsRecord, maxAmmoCount).
 using MagazineLookup = QHash<QString, std::pair<QString, QString>>;
 // `magazines` is non-null on the FPS path only.
-QString enhancementsWeapon(Node root, const RecordLookup &ammo, const Loc *loc, const MagazineLookup *magazines);
+QString enhancementsWeapon(Node root, const RecordLookup &ammo, const Loc *loc,
+                           const MagazineLookup *magazines);
 
 std::pair<QString, QString> loadoutSummary(Node root);
 QString armorStatsBlock(Node armorRoot);

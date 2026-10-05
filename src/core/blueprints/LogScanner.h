@@ -41,7 +41,7 @@ QStringList findLogFiles(const QString &channelDir, const QDateTime &since = {})
 
 struct ScanResult
 {
-    QSet<QString> names;      // raw names of events after the epoch and strictly after `since`
+    QSet<QString> names;       // raw names of events after the epoch and strictly after `since`
     QDateTime latestTimestamp; // newest event at/after the epoch, ignoring `since`; invalid when none
     int eventsMatched = 0;
     int filesScanned = 0;
@@ -51,8 +51,10 @@ struct ScanResult
 using ScanProgress = std::function<void(int, int, const QString &)>;
 
 // Reads the files line by line; an unreadable file is skipped, not fatal.
-ScanResult scanFiles(const QStringList &paths, const QDateTime &since = {}, const ScanProgress &progress = {});
-ScanResult scanChannel(const QString &channelDir, const QDateTime &since = {}, const ScanProgress &progress = {});
+ScanResult scanFiles(const QStringList &paths, const QDateTime &since = {},
+                     const ScanProgress &progress = {});
+ScanResult scanChannel(const QString &channelDir, const QDateTime &since = {},
+                       const ScanProgress &progress = {});
 
 // LIVE and HOTFIX share one account's progression, so a scan of either
 // also covers the other when it is installed and `includeLinked` is on.

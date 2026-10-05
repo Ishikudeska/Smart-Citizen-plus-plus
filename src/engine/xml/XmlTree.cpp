@@ -104,7 +104,7 @@ std::optional<std::string_view> XmlTree::attribute(NodeId node, std::string_view
     return view(attrs_[a].value);
 }
 
-XmlTree::NodeId XmlTree::copyFrom(const pugi::xml_node &node)
+XmlTree::NodeId XmlTree::copyFrom(pugi::xml_node node)
 {
     const NodeId element = createElement(node.name());
     for (const pugi::xml_attribute &a : node.attributes())

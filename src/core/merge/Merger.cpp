@@ -11,11 +11,13 @@ namespace core {
 namespace {
 
 // Order matters: the replacements run in this sequence, as in the Python.
-constexpr std::array kComponentCodes = {u"shld", u"powr", u"cool", u"qdrv", u"jump", u"misl", u"gmisl", u"bomb"};
+constexpr std::array kComponentCodes = {u"shld", u"powr", u"cool",  u"qdrv",
+                                        u"jump", u"misl", u"gmisl", u"bomb"};
 
 bool isItemKey(const QString &key)
 {
-    return key.startsWith(u"item_name", Qt::CaseInsensitive) || key.startsWith(u"item_desc", Qt::CaseInsensitive);
+    return key.startsWith(u"item_name", Qt::CaseInsensitive) ||
+           key.startsWith(u"item_desc", Qt::CaseInsensitive);
 }
 
 } // namespace
@@ -23,7 +25,7 @@ bool isItemKey(const QString &key)
 QString canonicalItemKey(const QString &key)
 {
     QString k = key;
-    if (k.size() >= 7 && k.right(7).compare(u"_scitem", Qt::CaseInsensitive) == 0)
+    if (k.endsWith(u"_scitem", Qt::CaseInsensitive))
         k.chop(7);
     k = k.toLower();
     k.remove(u'_');
@@ -50,15 +52,17 @@ void syncKeyVariants(IniMap &merged, const QSet<QString> &userEditedKeys)
         if (!isItemKey(key))
             continue;
         const QString canonical = canonicalItemKey(key);
-        auto it = groupIndex.constFind(canonical);
-        if (it == groupIndex.cend()) {
-            it = groupIndex.insert(canonical, groups.size());
+        qsizetype group = groups.size();
+        if (const auto it = groupIndex.constFind(canonical); it != groupIndex.cend()) {
+            group = *it;
+        } else {
+            groupIndex.insert(canonical, group);
             groups.append(QList<QString>());
         }
-        groups[*it].append(key);
+        groups[group].append(key);
     }
 
-    for (const QList<QString> &variants : groups) {
+    for (const QList<QString> &variants : std::as_const(groups)) {
         if (variants.size() < 2)
             continue;
         QList<QString> candidates;
@@ -71,7 +75,7 @@ void syncKeyVariants(IniMap &merged, const QSet<QString> &userEditedKeys)
         // Python's max(): the first of the longest.
         const QString *best = nullptr;
         qsizetype bestLength = -1;
-        for (const QString &c : candidates) {
+        for (const QString &c : std::as_const(candidates)) {
             const QString *value = merged.find(c);
             const qsizetype length = py::len(*value);
             if (length > bestLength) {
@@ -85,7 +89,8 @@ void syncKeyVariants(IniMap &merged, const QSet<QString> &userEditedKeys)
     }
 }
 
-IniMap mergeSourcesByHierarchy(const SourceMap &sources, const QStringList &hierarchy, const IniMap *userOverrides)
+IniMap mergeSourcesByHierarchy(const SourceMap &sources, const QStringList &hierarchy,
+                               const IniMap *userOverrides)
 {
     IniMap result;
     for (const QString &name : hierarchy) {

@@ -23,7 +23,8 @@ namespace {
 QStringList patchFiles(const QString &patchRoot)
 {
     QStringList files;
-    for (QDirIterator it(patchRoot, {QStringLiteral("*.patch.json")}, QDir::Files, QDirIterator::Subdirectories);
+    for (QDirIterator it(patchRoot, {QStringLiteral("*.patch.json")}, QDir::Files,
+                         QDirIterator::Subdirectories);
          it.hasNext();)
         files << it.next();
     std::sort(files.begin(), files.end());
@@ -40,7 +41,8 @@ std::optional<QJsonObject> readJson(const QString &path, QString *error)
     QJsonParseError parseError;
     const QJsonDocument doc = QJsonDocument::fromJson(file.readAll(), &parseError);
     if (!doc.isObject()) {
-        *error = QStringLiteral("%1 is not valid JSON: %2").arg(QFileInfo(path).fileName(), parseError.errorString());
+        *error = QStringLiteral("%1 is not valid JSON: %2")
+                     .arg(QFileInfo(path).fileName(), parseError.errorString());
         return std::nullopt;
     }
     return doc.object();
@@ -119,7 +121,7 @@ QString PatchReport::summary() const
 PatchReport applyPatches(const QString &patchRoot, const QString &recordsRoot)
 {
     PatchReport report;
-    for (const QString &patchFile : patchFiles(patchRoot)) {
+    for (const auto files = patchFiles(patchRoot); const QString &patchFile : files) {
         ++report.patchesSeen;
         const QString name = QFileInfo(patchFile).fileName();
         QString error;
@@ -191,12 +193,13 @@ PatchReport applyPatches(const QString &patchRoot, const QString &recordsRoot)
 QList<LocstringWorkaround> loadLocstringWorkarounds(const QString &patchRoot)
 {
     QList<LocstringWorkaround> out;
-    for (const QString &patchFile : patchFiles(patchRoot)) {
+    for (const auto files = patchFiles(patchRoot); const QString &patchFile : files) {
         QString error;
         const auto patch = readJson(patchFile, &error);
         if (!patch)
             continue;
-        for (const QJsonValue &v : patch->value(QStringLiteral("locstring_workarounds")).toArray()) {
+        for (const auto workarounds = patch->value(QStringLiteral("locstring_workarounds")).toArray();
+             const QJsonValue &v : workarounds) {
             const QJsonObject o = v.toObject();
             LocstringWorkaround w;
             w.target = o.value(QStringLiteral("target")).toString();

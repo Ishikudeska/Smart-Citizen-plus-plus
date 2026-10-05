@@ -20,7 +20,8 @@ struct Node
     std::vector<std::pair<std::string, std::string>> attributes;
 };
 
-std::vector<std::uint8_t> buildCryXml(const std::vector<Node> &nodes, bool bigEndian, const std::string &magic = "CryXmlB")
+std::vector<std::uint8_t> buildCryXml(const std::vector<Node> &nodes, bool bigEndian,
+                                      const std::string &magic = "CryXmlB")
 {
     std::string strings(1, '\0'); // offset 0 = empty string
     std::map<std::string, std::int32_t> offsets{{"", 0}};
