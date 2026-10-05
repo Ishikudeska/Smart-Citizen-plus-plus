@@ -113,6 +113,11 @@ add_library(sccore STATIC
     pipeline/Patcher.cpp
     pipeline/Extraction.h
     pipeline/Extraction.cpp
+
+    missions/Places.h
+    missions/Places.cpp
+    missions/Catalog.h
+    missions/Catalog.cpp
 )
 
 target_include_directories(sccore PUBLIC

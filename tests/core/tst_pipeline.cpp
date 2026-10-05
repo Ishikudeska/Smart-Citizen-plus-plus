@@ -5,6 +5,7 @@
 #include "../engine/P4kBuilder.h"
 #include "core/pipeline/Extraction.h"
 #include "core/pipeline/Patcher.h"
+#include "engine/forge/DotNetFormat.h"
 
 #include <QDir>
 #include <QDirIterator>
@@ -154,6 +155,50 @@ private slots:
         // A stamp without content is not fresh.
         QVERIFY(QDir(cache + QStringLiteral("/raw")).removeRecursively());
         QVERIFY(!dataForgeCacheIsFresh(p4k, cache));
+    }
+
+    // Tags share the tag database's file, so the table is how they reach the
+    // cache: one line per tag, with the parent its children list implies.
+    void writesTagTable()
+    {
+        DcbBuilder b;
+        const auto tag = b.addStruct("Tag");
+        b.addProperty(tag, "tagName", DataType::String);
+        b.addProperty(tag, "children", DataType::Reference, testing::Conversion::ComplexArray);
+        const auto other = b.addStruct("TagDatabase");
+        b.addProperty(other, "name", DataType::String);
+        const auto children = b.addPool(engine::forge::Pool::Reference, {Inst().ref(testing::makeGuid(2))});
+        b.addInstance(tag, Inst().u32(b.text("Stanton")).array(1, children));
+        b.addInstance(tag, Inst().u32(b.text("Stanton2")).array(0, 0));
+        b.addInstance(other, Inst().u32(b.text("db")));
+        const std::string file = "libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml";
+        b.addRecord("TagDatabase.TagDatabase", file, other, 0, testing::makeGuid(9));
+        b.addRecord("Tag.Stanton", file, tag, 0, testing::makeGuid(1));
+        b.addRecord("Tag.Stanton2", file, tag, 1, testing::makeGuid(2));
+        auto forge = engine::forge::DataForge::load(b.build());
+        QVERIFY(forge);
+
+        QTemporaryDir dir;
+        const QString path = dir.filePath(QStringLiteral("raw/tags.tsv"));
+        const auto written = writeTagTable(*forge, path);
+        QVERIFY(written);
+        QCOMPARE(*written, std::size_t(2));
+        const std::string stanton = engine::forge::formatGuid(testing::makeGuid(1).data());
+        const std::string stanton2 = engine::forge::formatGuid(testing::makeGuid(2).data());
+        QCOMPARE(readAll(path), QByteArray::fromStdString(stanton + "\tStanton\t\n" + stanton2 +
+                                                          "\tStanton2\t" + stanton + "\n"));
+    }
+
+    void dataForgeCacheHasTagTable()
+    {
+        QTemporaryDir dir;
+        const QString p4k = buildP4k(dir);
+        auto archive = open(p4k);
+        const QString cache = dir.filePath(QStringLiteral("cache"));
+        QVERIFY(extractDataForge(*archive, cache, dir.filePath(QStringLiteral("no-patches"))));
+        QCOMPARE(dataForgeTagTablePath(cache), cache + QStringLiteral("/raw/tags.tsv"));
+        QVERIFY(QFileInfo::exists(dataForgeTagTablePath(cache))); // empty here: the fixture has no tags
+        QVERIFY(dataForgeKeepSubpaths().contains(QStringLiteral("missiondata/pu_locations")));
     }
 
     void exportsGameData()

@@ -3,9 +3,12 @@
 #include "core/EnginePaths.h"
 #include "engine/Try.h"
 #include "engine/forge/DataForge.h"
+#include "engine/forge/DotNetFormat.h"
 #include "engine/forge/Exporter.h"
+#include "engine/forge/RecordBuilder.h"
 #include "engine/gamedata/GameData.h"
 #include "engine/io/FileSystem.h"
+#include "engine/xml/XmlTree.h"
 
 #include <QDateTime>
 #include <QDir>
@@ -13,6 +16,10 @@
 #include <QFile>
 #include <QFileInfo>
 #include <QSaveFile>
+
+#include <string>
+#include <unordered_map>
+#include <vector>
 
 namespace core {
 
@@ -63,6 +70,11 @@ const QStringList &dataForgeKeepSubpaths()
         QStringLiteral("ammoparams/fps"),
         QStringLiteral("reputation/rewards/missionrewards_reputation"),
         QStringLiteral("reputation/standings"),
+        // The mission catalog: the places missions send you, contractor
+        // names and type names.
+        QStringLiteral("missiondata/pu_locations"),
+        QStringLiteral("missiondata/pu_organizations"),
+        QStringLiteral("missiontype"),
     };
     return subpaths;
 }
@@ -108,6 +120,54 @@ QString P4kStamp::key() const
 QString dataForgeRecordsDir(const QString &cacheDir)
 {
     return QDir(cacheDir).filePath(QStringLiteral("raw/libs/foundry/records"));
+}
+
+QString dataForgeTagTablePath(const QString &cacheDir)
+{
+    return QDir(cacheDir).filePath(QStringLiteral("raw/tags.tsv"));
+}
+
+engine::Result<std::size_t> writeTagTable(const engine::forge::DataForge &forge, const QString &path)
+{
+    using engine::xml::XmlTree;
+    struct Tag
+    {
+        std::string guid, name;
+        std::vector<std::string> children;
+    };
+    std::vector<Tag> tags;
+    engine::forge::RecordBuilder builder(forge);
+    XmlTree tree;
+    for (std::uint32_t i = 0; i < forge.records().size(); ++i) {
+        const engine::forge::RecordDef &record = forge.records()[i];
+        if (forge.structName(record.structIndex) != "Tag")
+            continue;
+        const XmlTree::NodeId root = builder.build(i, tree);
+        if (root == XmlTree::kNone)
+            continue;
+        Tag tag{engine::forge::formatGuid(record.id.data()),
+                std::string(tree.attribute(root, "tagName").value_or("")),
+                {}};
+        for (XmlTree::NodeId c = tree.firstChild(root); c != XmlTree::kNone; c = tree.nextSibling(c))
+            if (tree.name(c) == "children")
+                for (XmlTree::NodeId r = tree.firstChild(c); r != XmlTree::kNone; r = tree.nextSibling(r))
+                    if (const auto value = tree.attribute(r, "value"))
+                        tag.children.emplace_back(*value);
+        tags.push_back(std::move(tag));
+    }
+    std::unordered_map<std::string, std::string> parents;
+    for (const Tag &tag : tags)
+        for (const std::string &child : tag.children)
+            parents.emplace(child, tag.guid);
+    std::string out;
+    for (const Tag &tag : tags) {
+        const auto parent = parents.find(tag.guid);
+        out += tag.guid + '\t' + tag.name + '\t' +
+               (parent == parents.end() ? std::string() : parent->second) + '\n';
+    }
+    SC_TRY(engine::io::createDirectories(fsPath(QFileInfo(path).absolutePath())));
+    SC_TRY(engine::io::writeFile(fsPath(path), std::string_view(out)));
+    return tags.size();
 }
 
 engine::Result<void> extractBaseIni(const engine::p4k::Archive &archive, const QString &baseIniPath)
@@ -181,6 +241,10 @@ engine::Result<DataForgeExtraction> extractDataForge(const engine::p4k::Archive 
     if (!stats->failures.empty()) {
         engine::io::removeAll(fsPath(staging));
         return fail(Errc::Io, "could not write the DataForge cache: " + stats->failures.front());
+    }
+    if (auto tags = writeTagTable(*forge, QDir(staging).filePath(QStringLiteral("tags.tsv"))); !tags) {
+        engine::io::removeAll(fsPath(staging));
+        return std::unexpected(tags.error());
     }
 
     // Swap the new tree in; the old one is kept until the swap succeeds.

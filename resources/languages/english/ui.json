@@ -97,6 +97,10 @@
     "legal_load_failed": {
       "ht": "Unable to load legal information.",
       "at": ""
+    },
+    "missions": {
+      "ht": "Missions",
+      "at": ""
     }
   },
   "toolbar": {
@@ -3210,6 +3214,188 @@
     },
     "update_check_disabled": {
       "ht": "This build has no update source configured. Check the project's releases page for new versions.",
+      "at": ""
+    }
+  },
+  "missions": {
+    "title": {
+      "ht": "Missions",
+      "at": ""
+    },
+    "desc": {
+      "ht": "Every mission and contract in the game files, with what it says, who offers it, what it pays and the places it can send you. The game picks the exact place, and works out some payouts, when it offers a mission.",
+      "at": ""
+    },
+    "search_placeholder": {
+      "ht": "Search titles, contractors, descriptions and places...",
+      "at": ""
+    },
+    "facet_any": {
+      "ht": "Any",
+      "at": ""
+    },
+    "category_label": {
+      "ht": "Type:",
+      "at": ""
+    },
+    "system_label": {
+      "ht": "System:",
+      "at": ""
+    },
+    "payout_label": {
+      "ht": "Payout:",
+      "at": ""
+    },
+    "payout_fixed_filter": {
+      "ht": "Fixed amount",
+      "at": ""
+    },
+    "payout_calculated_filter": {
+      "ht": "Set by the game",
+      "at": ""
+    },
+    "sort_label": {
+      "ht": "Sort:",
+      "at": ""
+    },
+    "sort_title": {
+      "ht": "Title",
+      "at": ""
+    },
+    "sort_payout_high": {
+      "ht": "Highest payout",
+      "at": ""
+    },
+    "sort_payout_low": {
+      "ht": "Lowest payout",
+      "at": ""
+    },
+    "count": {
+      "ht": "{shown} of {total} missions",
+      "at": ""
+    },
+    "loading": {
+      "ht": "Loading missions",
+      "at": ""
+    },
+    "no_data": {
+      "ht": "The mission list is read from the extracted game data, which isn't here yet.",
+      "at": ""
+    },
+    "not_loaded": {
+      "ht": "The mission list wasn't loaded.",
+      "at": ""
+    },
+    "load_btn": {
+      "ht": "Load Missions",
+      "at": ""
+    },
+    "no_places": {
+      "ht": "Your game data was extracted before mission locations were added. Extract it again to see where missions can send you.",
+      "at": ""
+    },
+    "extract_btn": {
+      "ht": "Extract Game Data",
+      "at": ""
+    },
+    "no_matches": {
+      "ht": "No missions match these filters.",
+      "at": ""
+    },
+    "select_hint": {
+      "ht": "Select a mission to see its details.",
+      "at": ""
+    },
+    "giver_label": {
+      "ht": "Contractor",
+      "at": ""
+    },
+    "type_label": {
+      "ht": "Type",
+      "at": ""
+    },
+    "systems_label": {
+      "ht": "Systems",
+      "at": ""
+    },
+    "buy_in_label": {
+      "ht": "Buy-in",
+      "at": ""
+    },
+    "difficulty_label": {
+      "ht": "Difficulty",
+      "at": ""
+    },
+    "payout_amount": {
+      "ht": "{amount} {currency}",
+      "at": ""
+    },
+    "payout_range": {
+      "ht": "{min} - {max} {currency}",
+      "at": ""
+    },
+    "payout_up_to": {
+      "ht": "Up to {max} {currency}",
+      "at": ""
+    },
+    "payout_calculated": {
+      "ht": "Set by the game",
+      "at": ""
+    },
+    "payout_calculated_note": {
+      "ht": "The game works this payout out when it offers the contract, from its difficulty and route. The amount isn't in the game files.",
+      "at": ""
+    },
+    "payout_none": {
+      "ht": "None",
+      "at": ""
+    },
+    "description_label": {
+      "ht": "Description",
+      "at": ""
+    },
+    "variants_note": {
+      "ht": "The game picks one of {count} versions of this text.",
+      "at": ""
+    },
+    "locations_label": {
+      "ht": "Possible locations",
+      "at": ""
+    },
+    "locations_note": {
+      "ht": "Every place this mission's location search can match. The game picks one when it offers the mission, and may narrow the choice by where you are.",
+      "at": ""
+    },
+    "no_locations": {
+      "ht": "No locations in the game files.",
+      "at": ""
+    },
+    "slot_heading": {
+      "ht": "{label} ({count})",
+      "at": ""
+    },
+    "slot_runtime": {
+      "ht": "No fixed place: the game picks one tagged {tags} when it offers the mission.",
+      "at": ""
+    },
+    "slot_more": {
+      "ht": "...and {count} more",
+      "at": ""
+    },
+    "source_contract": {
+      "ht": "Contract",
+      "at": ""
+    },
+    "source_broker": {
+      "ht": "Mission",
+      "at": ""
+    },
+    "record_label": {
+      "ht": "Game record: {record}",
+      "at": ""
+    },
+    "payout_field": {
+      "ht": "Payout",
       "at": ""
     }
   }

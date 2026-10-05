@@ -50,6 +50,12 @@ sc_add_test(tst_core_tags
 )
 target_compile_definitions(tst_core_tags PRIVATE SC_SOURCE_DIR="${PROJECT_SOURCE_DIR}")
 
+sc_add_test(tst_core_missions
+    SOURCES tst_missions.cpp
+    LIBS sccore
+    LABELS unit core
+)
+
 # The Kraken parity case reads Smart Citizen's own test fixture.
 sc_add_test(tst_core_blueprints
     SOURCES tst_blueprints.cpp
