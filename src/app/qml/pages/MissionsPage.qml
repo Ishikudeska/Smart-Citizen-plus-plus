@@ -70,6 +70,29 @@ Item {
         topPadding: 6
     }
 
+    // A titled, selectable list; hidden when empty.
+    component RewardList: ColumnLayout {
+        id: rewardList
+        property string title
+        property var lines: []
+        visible: lines.length > 0
+        Layout.fillWidth: true
+        spacing: 2
+        Label { text: rewardList.title; color: Theme.text; font.bold: true }
+        TextEdit {
+            Layout.fillWidth: true
+            readOnly: true
+            selectByMouse: true
+            wrapMode: Text.WordWrap
+            textFormat: Text.PlainText
+            color: Theme.text
+            selectionColor: Theme.highlight
+            selectedTextColor: Theme.highlightedText
+            font.pixelSize: Theme.fontSize
+            text: rewardList.lines.map(line => "•  " + line).join("\n")
+        }
+    }
+
     ColumnLayout {
         anchors.fill: parent
         anchors.margins: Theme.spacing
@@ -149,6 +172,11 @@ Item {
                     onActivated: index => missions.sort = values[index]
                 }
             }
+            AppCheckBox {
+                text: qsTr("missions.blueprints_only")
+                checked: missions.blueprintsOnly
+                onToggled: missions.blueprintsOnly = checked
+            }
         }
         Label {
             visible: missions.status === "ready"
@@ -216,6 +244,23 @@ Item {
                                     elide: Text.ElideRight
                                 }
                             }
+                            // Rewards blueprints.
+                            Rectangle {
+                                visible: row.modelData.blueprints
+                                implicitWidth: badge.implicitWidth + 8
+                                implicitHeight: badge.implicitHeight + 2
+                                radius: 3
+                                color: "transparent"
+                                border.color: Theme.em4
+                                Text {
+                                    id: badge
+                                    anchors.centerIn: parent
+                                    text: qsTr("missions.bp_badge")
+                                    color: row.isSelected ? Theme.highlightedText : Theme.em4
+                                    font.pixelSize: Theme.smallFont
+                                    font.bold: true
+                                }
+                            }
                             Text {
                                 text: row.modelData.payout
                                 color: row.ink
@@ -280,6 +325,7 @@ Item {
                         Field { label: qsTr("missions.payout_field"); value: page.info.payout ?? "" }
                         Field { label: qsTr("missions.buy_in_label"); value: page.info.buyIn ?? "" }
                         Field { label: qsTr("missions.difficulty_label"); value: page.info.difficulty ?? "" }
+                        Field { label: qsTr("missions.requires_label"); value: page.info.requiredRank ?? "" }
                         Label {
                             Layout.fillWidth: true
                             visible: text !== ""
@@ -287,6 +333,22 @@ Item {
                             color: Theme.placeholder
                             font.pixelSize: Theme.smallFont
                             wrapMode: Text.WordWrap
+                        }
+
+                        Heading {
+                            visible: (page.info.repSuccess ?? []).length + (page.info.repFailure ?? []).length
+                                     + (page.info.blueprints ?? []).length > 0
+                            text: qsTr("missions.rewards_label")
+                        }
+                        RewardList { title: qsTr("missions.rep_success"); lines: page.info.repSuccess ?? [] }
+                        RewardList { title: qsTr("missions.rep_failure"); lines: page.info.repFailure ?? [] }
+                        Repeater {
+                            model: page.info.blueprints ?? []
+                            delegate: RewardList {
+                                required property var modelData
+                                title: modelData.heading
+                                lines: modelData.items
+                            }
                         }
 
                         Heading { text: qsTr("missions.description_label") }

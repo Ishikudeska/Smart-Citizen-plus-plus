@@ -1,6 +1,7 @@
 #include "core/missions/Catalog.h"
 
 #include "core/enhancements/Common.h"
+#include "core/enhancements/Lookups.h"
 #include "core/enhancements/Missions.h"
 #include "core/enhancements/RecordStore.h"
 
@@ -8,6 +9,7 @@
 #include <QSet>
 
 #include <algorithm>
+#include <cstring>
 
 namespace core::missions {
 
@@ -103,6 +105,9 @@ private:
     int variants(const QString &text, const Tokens &t) const;
     QString typeName(const QString &ref) const;
     QString relative(const QString &file) const;
+    void addReputation(Mission &m, Node amount, bool success);
+    void addBlueprints(Mission &m, Node contract);
+    QString rankName(const QString &standing) const;
     void finish(Mission &m, const Tokens &t, const QString &nameHints);
 
     const enh::RecordStore &store_;
@@ -116,6 +121,11 @@ private:
     QHash<QString, XmlDoc> templates_;           // contract template __ref -> record
     QHash<QString, Organization> organizations_; // MissionOrganization __ref ->
     QStringList organizationOrder_;              // their refs, by name
+    QHash<QString, qint64> reputation_;          // reputation reward __ref -> amount
+    QHash<QString, QString> factions_;           // FactionReputation __ref -> name
+    QHash<QString, QString> scopes_;             // SReputationScopeParams __ref -> track name
+    enh::Standings standings_;
+    enh::BlueprintPools pools_;
     Catalog catalog_;
 };
 
@@ -167,6 +177,111 @@ Builder::Builder(const CatalogSources &sources, const enh::RecordStore &store)
              const QString &file : files)
             if (XmlDoc doc = XmlDoc::load(file))
                 templates_.insert(qs(getOr(doc.root(), "__ref")), std::move(doc));
+
+    // Reputation: amounts by reward, and the names of factions, tracks and ranks.
+    reputation_ = enh::buildReputationLookup(store);
+    standings_ = enh::buildStandings(store, sources.loc ? *sources.loc : noLoc_);
+    const auto names = [&](const char *dir, std::string_view type, const char *nameAttr,
+                           const char *fallbackAttr, QHash<QString, QString> &into) {
+        if (!store.dirExists(QLatin1StringView(dir)))
+            return;
+        for (const auto files = store.rglob(QLatin1StringView(dir)); const QString &file : files) {
+            const XmlDoc doc = XmlDoc::load(file);
+            if (!doc || getOr(doc.root(), "__type") != type)
+                continue;
+            QString name = loc_(qs(getOr(doc.root(), nameAttr)));
+            if (name.isEmpty())
+                name = enh::humanizeKey(qs(getOr(doc.root(), fallbackAttr)));
+            into.insert(qs(getOr(doc.root(), "__ref")), name);
+        }
+    };
+    names("factions/factionreputation", "FactionReputation", "displayName", "__ref", factions_);
+    for (auto it = factions_.begin(); it != factions_.end(); ++it)
+        if (it.value() == enh::humanizeKey(it.key())) // no display name: no use showing a GUID
+            it.value().clear();
+    names("reputation/scopes", "SReputationScopeParams", "displayName", "scopeName", scopes_);
+
+    // Blueprint pools, with each blueprint's item named from the item record
+    // its file name matches ("bp_craft_<item>"). The generator reads all
+    // ~24k item records for those names; the blueprints need ~1.6k of them.
+    QHash<QString, QString> itemFiles; // lower-cased file stem -> path
+    if (store.dirExists(QStringLiteral("entities/scitem")))
+        for (const auto files = store.rglob(QStringLiteral("entities/scitem")); const QString &file : files)
+            itemFiles.insert(enh::fileStem(file).toLower(), file);
+    QHash<QString, QString> itemNames; // lower-cased item stem -> display name
+    if (store.dirExists(QStringLiteral("crafting/blueprints/crafting")))
+        for (const auto files = store.rglob(QStringLiteral("crafting/blueprints/crafting"));
+             const QString &file : files) {
+            QString stem = enh::fileStem(file);
+            for (const char *prefix : {"bp_craft_", "bp_rewards_", "bp_"})
+                if (stem.startsWith(QLatin1StringView(prefix))) {
+                    stem = stem.sliced(qsizetype(std::strlen(prefix)));
+                    break;
+                }
+            stem = stem.toLower();
+            const QString item = itemFiles.value(stem);
+            if (item.isEmpty() || itemNames.contains(stem))
+                continue;
+            const XmlDoc doc = XmlDoc::load(item);
+            QString name;
+            enh::forEachElement(doc.root(), [&](Node el) {
+                const std::string_view key = getOr(el, "Name");
+                if (!key.starts_with('@'))
+                    return true;
+                name = loc_(qs(key));
+                return false;
+            });
+            if (!name.isEmpty())
+                itemNames.insert(stem, name);
+        }
+    pools_ = enh::buildBlueprintPoolLookup(store, {}, itemNames, {}, QString(), {});
+}
+
+void Builder::addReputation(Mission &m, Node amount, bool success)
+{
+    const auto it = reputation_.constFind(qs(getOr(amount, "reward")));
+    if (it == reputation_.cend() || *it == 0)
+        return;
+    const ReputationReward reward{factions_.value(qs(getOr(amount, "factionReputation"))),
+                                  scopes_.value(qs(getOr(amount, "reputationScope"))), *it, success};
+    if (std::find(m.reputation.begin(), m.reputation.end(), reward) == m.reputation.end())
+        m.reputation.push_back(reward);
+}
+
+// A contract's blueprint pools, merged where they share a rank and chance.
+void Builder::addBlueprints(Mission &m, Node contract)
+{
+    for (const Node reward : enh::iter(contract, "BlueprintRewards")) {
+        const QString pool = qs(getOr(reward, "blueprintPool"));
+        const QStringList items = pools_.items.value(pool);
+        if (items.isEmpty())
+            continue;
+        const QString label = enh::poolRankLabel(pools_.names.value(pool));
+        const std::optional<double> chance = enh::toFloat(getOr(reward, "chance", "1"));
+        BlueprintReward entry{label, chance ? std::clamp(*chance, 0.0, 1.0) : 1.0, items};
+        const auto same =
+            std::find_if(m.blueprints.begin(), m.blueprints.end(), [&entry](const BlueprintReward &b) {
+                return b.label == entry.label && b.chance == entry.chance;
+            });
+        if (same == m.blueprints.end()) {
+            m.blueprints.push_back(std::move(entry));
+            continue;
+        }
+        for (const QString &item : items)
+            if (!same->items.contains(item))
+                same->items << item;
+        same->items.sort(Qt::CaseInsensitive);
+    }
+}
+
+// "Rank (Track)" for a standing, "" when unknown.
+QString Builder::rankName(const QString &standing) const
+{
+    const QString rank = standings_.ranks.value(standing);
+    if (rank.isEmpty())
+        return {};
+    const QString track = standings_.tracks.value(standing);
+    return track.isEmpty() ? rank : QStringLiteral("%1 (%2)").arg(rank, track);
 }
 
 int Builder::placeSet(const LocationSearch &search)
@@ -428,6 +543,17 @@ void Builder::addBrokerEntry(const QString &file)
     }
     m.payout.buyIn = toAmount(getOr(root, "missionBuyInAmount"));
     m.difficulty = enh::extractDifficulty(root);
+    // The first outcome's reputation is for success; the others (failure,
+    // abandoning) are mostly losses.
+    const std::vector<Node> outcomes =
+        findAll(root, ".//missionResultReputationRewards/SReputationAmountListParams");
+    for (std::size_t i = 0; i < outcomes.size(); ++i)
+        for (const Node amount : findAll(outcomes[i], ".//SReputationAmountParams"))
+            addReputation(m, amount, i == 0);
+    if (const Node required =
+            find(find(root, ".//reputationRequirements"), ".//SReputationMissionGiverRequirementParams");
+        required && getOr(required, "comparison") == "GreaterThanOrEqualTo")
+        m.requiredRank = rankName(qs(getOr(required, "standing")));
     finish(m, t, m.id);
 }
 
@@ -511,6 +637,25 @@ void Builder::addContractGenerator(const QString &file)
                 }
                 m.payout.buyIn = toAmount(getOr(find(contract, "contractResults"), "contractBuyInAmount"));
                 m.difficulty = enh::extractDifficulty(contract);
+                // Reputation flagged for the first outcome is for success.
+                for (const Node legacy : findAll(contract, ".//ContractResult_LegacyReputation")) {
+                    const Node amount = find(legacy, "contractResultReputationAmounts");
+                    if (!amount)
+                        continue;
+                    const std::vector<Node> flags = findAll(legacy, "missionResults/Bool");
+                    const auto flagged = [&flags](std::size_t from) {
+                        return std::any_of(flags.begin() + qsizetype(std::min(from, flags.size())),
+                                           flags.end(), [](Node b) { return getOr(b, "value") == "1"; });
+                    };
+                    const bool onSuccess = !flags.empty() && getOr(flags.front(), "value") == "1";
+                    if (onSuccess || flagged(1))
+                        addReputation(m, amount, onSuccess);
+                    else if (const auto it = reputation_.constFind(qs(getOr(amount, "reward")));
+                             it != reputation_.cend()) // no outcome flagged: by its sign
+                        addReputation(m, amount, *it > 0);
+                }
+                m.requiredRank = rankName(qs(getOr(contract, "minStanding")));
+                addBlueprints(m, contract);
                 finish(m, t, m.id + u'_' + handlerName);
             }
         }
@@ -589,11 +734,17 @@ std::vector<int> filterMissions(const Catalog &catalog, const Filter &filter)
         if ((filter.payout == Filter::PayoutKind::Fixed && m.payout.kind != Payout::Kind::Fixed) ||
             (filter.payout == Filter::PayoutKind::Calculated && m.payout.kind != Payout::Kind::Calculated))
             continue;
+        if (filter.blueprintsOnly && m.blueprints.empty())
+            continue;
         if (!needle.isEmpty()) {
-            const bool inText = m.title.contains(needle, Qt::CaseInsensitive) ||
-                                m.giver.contains(needle, Qt::CaseInsensitive) ||
-                                m.category.contains(needle, Qt::CaseInsensitive) ||
-                                m.description.contains(needle, Qt::CaseInsensitive);
+            const auto has = [&needle](const QString &s) { return s.contains(needle, Qt::CaseInsensitive); };
+            const bool inText = has(m.title) || has(m.giver) || has(m.category) || has(m.description) ||
+                                std::any_of(m.blueprints.cbegin(), m.blueprints.cend(),
+                                            [&has](const BlueprintReward &b) {
+                                                return std::any_of(b.items.cbegin(), b.items.cend(), has);
+                                            }) ||
+                                std::any_of(m.reputation.cbegin(), m.reputation.cend(),
+                                            [&has](const ReputationReward &r) { return has(r.faction); });
             const bool inPlaces =
                 std::any_of(m.locations.cbegin(), m.locations.cend(), [&setHit](const LocationSlot &s) {
                     return s.placeSet >= 0 && setHit[std::size_t(s.placeSet)] != 0;

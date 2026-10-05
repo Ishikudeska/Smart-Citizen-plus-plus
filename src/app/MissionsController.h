@@ -37,6 +37,7 @@ class MissionsController : public QObject
     Q_PROPERTY(QString payout READ payout WRITE setPayout NOTIFY filtersChanged)
     // "title", "payout_high" or "payout_low".
     Q_PROPERTY(QString sort READ sort WRITE setSort NOTIFY filtersChanged)
+    Q_PROPERTY(bool blueprintsOnly READ blueprintsOnly WRITE setBlueprintsOnly NOTIFY filtersChanged)
 
 public:
     explicit MissionsController(QObject *parent = nullptr);
@@ -59,6 +60,8 @@ public:
     void setPayout(const QString &v);
     QString sort() const;
     void setSort(const QString &v);
+    bool blueprintsOnly() const { return filter_.blueprintsOnly; }
+    void setBlueprintsOnly(bool v);
 
     // One mission's details for the side panel (`mission` is a row's index).
     Q_INVOKABLE QVariantMap details(int mission) const;

@@ -65,6 +65,11 @@ loc_bravo=Bravo Outpost
 Loc_Charlie=Charlie Outpost
 loc_nope=< / NOT AVAILABLE / >
 mt_delivery=Delivery
+faction_covalex=Covalex Shipping
+scope_courier=Courier
+RepStanding_Courier_Rank2=Jr. Runner
+RepScope_Courier_Name=Courier
+item_test_rifle=Test Rifle
 )x";
 
 QByteArray place(const char *name, const char *tags, const char *strings, const char *extra = "",
@@ -137,11 +142,45 @@ void writeCache(const QString &root)
         r + s("missiontype/missiontype.delivery.xml"),
         R"(<MissionType.Delivery __type="MissionType" __ref="type-delivery" LocalisedTypeName="@mt_delivery" />)");
 
+    // Reputation: amounts, a faction, a track and a rank.
+    writeFile(r + s("reputation/rewards/missionrewards_reputation/gain.xml"),
+              R"(<SReputationRewardAmount.Gain __ref="rep-gain" reputationAmount="150" />)");
+    writeFile(r + s("reputation/rewards/missionrewards_reputation/loss.xml"),
+              R"(<SReputationRewardAmount.Loss __ref="rep-loss" reputationAmount="-100" />)");
+    writeFile(
+        r + s("factions/factionreputation/covalex.xml"),
+        R"(<FactionReputation.Covalex __type="FactionReputation" __ref="faction-covalex" displayName="@faction_covalex" />)");
+    writeFile(
+        r + s("reputation/scopes/courier.xml"),
+        R"(<SReputationScopeParams.Courier __type="SReputationScopeParams" __ref="scope-courier" scopeName="Courier" displayName="@scope_courier" />)");
+    writeFile(
+        r + s("reputation/standings/courier_rank2.xml"),
+        R"(<SReputationStandingParams.Rank2 __ref="standing-2" displayName="@RepStanding_Courier_Rank2" />)");
+
+    // A blueprint pool: its item named from the item record its file matches.
+    writeFile(
+        r + s("crafting/blueprints/crafting/bp_craft_test_rifle.xml"),
+        R"(<CraftingBlueprintRecord.R __ref="bp-rifle"><process><CraftingProcess_Creation entityClass="ent-rifle" /></process></CraftingBlueprintRecord.R>)");
+    writeFile(
+        r + s("crafting/blueprintrewards/bp_rewards_rank2to4.xml"),
+        R"(<BlueprintPoolRecord.P __ref="pool-1"><blueprintRewards><BlueprintReward blueprintRecord="bp-rifle" /></blueprintRewards></BlueprintPoolRecord.P>)");
+    writeFile(
+        r + s("entities/scitem/weapons/test_rifle.xml"),
+        R"(<EntityClassDefinition.test_rifle __ref="ent-rifle"><Components><SAttachableComponentParams><AttachDef><Localization Name="@item_test_rifle" /></AttachDef></SAttachableComponentParams></Components></EntityClassDefinition.test_rifle>)");
+
     writeFile(
         r + s("missionbroker/pu_missions/delivery/a.xml"),
         QByteArray(
             R"(<MissionBrokerEntry.A __type="MissionBrokerEntry" notForRelease="0" title="@m_title" description="@m_desc" missionGiver="@m_giver" type="type-delivery" missionBuyInAmount="250">
   <missionReward reward="5000" max="0" plusBonuses="0" currencyType="UEC" />
+  <missionResultReputationRewards>
+    <SReputationAmountListParams><reputationAmounts><SReputationAmountParams factionReputation="faction-covalex" reputationScope="scope-courier" reward="rep-gain" /></reputationAmounts></SReputationAmountListParams>
+    <SReputationAmountListParams><reputationAmounts><SReputationAmountParams factionReputation="faction-covalex" reputationScope="scope-courier" reward="rep-loss" /></reputationAmounts></SReputationAmountListParams>
+    <SReputationAmountListParams><reputationAmounts><SReputationAmountParams factionReputation="faction-covalex" reputationScope="scope-courier" reward="rep-loss" /></reputationAmounts></SReputationAmountListParams>
+  </missionResultReputationRewards>
+  <reputationRequirements><SReputationMissionRequirementsParams><expression>
+    <SReputationMissionGiverRequirementParams factionReputation="faction-covalex" reputationScope="scope-courier" comparison="GreaterThanOrEqualTo" standing="standing-2" />
+  </expression></SReputationMissionRequirementsParams></reputationRequirements>
   <MissionProperty missionVariableName="Mission_Title" extendedTextToken="Title"><value><MissionPropertyValue_StringHash><options>
     <MissionPropertyValueOption_StringHash textId="@m_title_1" /><MissionPropertyValueOption_StringHash textId="@m_title_2" /><MissionPropertyValueOption_StringHash textId="@missing" />
   </options></MissionPropertyValue_StringHash></value></MissionProperty>
@@ -179,12 +218,19 @@ void writeCache(const QString &root)
   <generators><ContractGeneratorHandler_List notForRelease="0" debugName="Handler">
     <contractParams><stringParamOverrides><ContractStringParam param="Contractor" value="@ct_contractor" /></stringParamOverrides></contractParams>
     <contracts>
-      <Contract debugName="One" notForRelease="0" template="tmpl-1">
+      <Contract debugName="One" notForRelease="0" template="tmpl-1" minStanding="standing-2">
         <paramOverrides><propertyOverrides>
           <MissionProperty missionVariableName="PickupLocation"><value>)") +
                   locationValue(ref("outpost"), "", ref("hydrogen")) + R"(</value></MissionProperty>
         </propertyOverrides></paramOverrides>
-        <contractResults contractBuyInAmount="0"><contractResults><ContractResult_CalculatedReward /></contractResults>
+        <contractResults contractBuyInAmount="0"><contractResults><ContractResult_CalculatedReward />
+            <ContractResult_LegacyReputation><missionResults><Bool value="1" /><Bool value="0" /><Bool value="0" /></missionResults>
+              <contractResultReputationAmounts factionReputation="faction-covalex" reputationScope="scope-courier" reward="rep-gain" /></ContractResult_LegacyReputation>
+            <ContractResult_LegacyReputation><missionResults><Bool value="0" /><Bool value="0" /><Bool value="1" /></missionResults>
+              <contractResultReputationAmounts factionReputation="faction-covalex" reputationScope="scope-courier" reward="rep-loss" /></ContractResult_LegacyReputation>
+            <ContractResult_BlueprintReward><BlueprintRewards chance="0.4" blueprintPool="pool-1" /></ContractResult_BlueprintReward>
+            <ContractResult_BlueprintReward><BlueprintRewards chance="0.4" blueprintPool="no-such-pool" /></ContractResult_BlueprintReward>
+          </contractResults>
           <difficulty><ContractDifficulty mechanicalSkill="Some_risk_3" /></difficulty></contractResults>
       </Contract>
       <Contract debugName="Hidden" notForRelease="1" template="tmpl-1" />
@@ -301,6 +347,12 @@ private slots:
         QCOMPARE(m->locations[1].token, s("Location"));
         // A search for Stanton finds a place on Stanton 1; Charlie is on Pyro.
         QCOMPARE(placeNames(catalog_, m->locations[1]), QStringList{s("Bravo Outpost")});
+        // The first outcome is success; failing and abandoning lose the same, listed once.
+        QCOMPARE(m->reputation.size(), std::size_t(2));
+        QCOMPARE(m->reputation[0], (ReputationReward{s("Covalex Shipping"), s("Courier"), 150, true}));
+        QCOMPARE(m->reputation[1], (ReputationReward{s("Covalex Shipping"), s("Courier"), -100, false}));
+        QCOMPARE(m->requiredRank, s("Jr. Runner (Courier)"));
+        QVERIFY(m->blueprints.empty());
     }
 
     void negativeTagsAndFolderCategory()
@@ -329,6 +381,16 @@ private slots:
         QCOMPARE(m->payout.kind, Payout::Kind::Calculated);
         QCOMPARE(m->difficulty, s("Combat 3/7"));
         QCOMPARE(m->systems, QStringList{s("Pyro")});
+        // Reputation by its outcome flags; the rank from minStanding.
+        QCOMPARE(m->reputation.size(), std::size_t(2));
+        QCOMPARE(m->reputation[0], (ReputationReward{s("Covalex Shipping"), s("Courier"), 150, true}));
+        QCOMPARE(m->reputation[1], (ReputationReward{s("Covalex Shipping"), s("Courier"), -100, false}));
+        QCOMPARE(m->requiredRank, s("Jr. Runner (Courier)"));
+        // The pool's item is named from its item record; an unknown pool is skipped.
+        QCOMPARE(m->blueprints.size(), std::size_t(1));
+        QCOMPARE(m->blueprints[0].label, s("Rank 2–4"));
+        QCOMPARE(m->blueprints[0].chance, 0.4);
+        QCOMPARE(m->blueprints[0].items, QStringList{s("Test Rifle")});
     }
 
     void contractWithFixedRewardAndOrganizations()
@@ -366,6 +428,15 @@ private slots:
         f = {};
         f.payout = Filter::PayoutKind::Calculated;
         QCOMPARE(titles(catalog_, filterMissions(catalog_, f)), QStringList{s("Template title")});
+        f = {};
+        f.blueprintsOnly = true;
+        QCOMPARE(titles(catalog_, filterMissions(catalog_, f)), QStringList{s("Template title")});
+        f = {};
+        f.search = s("test rifle"); // a blueprint
+        QCOMPARE(titles(catalog_, filterMissions(catalog_, f)), QStringList{s("Template title")});
+        f.search = s("covalex shipping"); // a reputation faction
+        QCOMPARE(titles(catalog_, filterMissions(catalog_, f)),
+                 (QStringList{s("Deliver to Covalex Station Gundo"), s("Template title")}));
 
         f = {};
         f.sort = Filter::Sort::PayoutHigh;

@@ -17,7 +17,7 @@ namespace core {
 // The DataForge subtrees (under libs/foundry/records/) the enhancements
 // generator and the mission catalog read. Only these go into the cache.
 // Smart Citizen's DATAFORGE_KEEP_SUBPATHS, plus the mission locations,
-// organizations and types.
+// organizations and types, and the reputation factions and scopes.
 const QStringList &dataForgeKeepSubpaths();
 
 // Identity of a Data.p4k for freshness checks. Size is what decides: the RSI

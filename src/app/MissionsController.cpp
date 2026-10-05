@@ -173,7 +173,8 @@ void MissionsController::refilter()
                                  {QStringLiteral("giver"), m.giver},
                                  {QStringLiteral("category"), m.category},
                                  {QStringLiteral("systems"), m.systems.join(QStringLiteral(", "))},
-                                 {QStringLiteral("payout"), payoutText(m.payout)}};
+                                 {QStringLiteral("payout"), payoutText(m.payout)},
+                                 {QStringLiteral("blueprints"), !m.blueprints.empty()}};
         }
     }
     emit rowsChanged();
@@ -256,6 +257,15 @@ void MissionsController::setSort(const QString &v)
     refilter();
 }
 
+void MissionsController::setBlueprintsOnly(bool v)
+{
+    if (filter_.blueprintsOnly == v)
+        return;
+    filter_.blueprintsOnly = v;
+    emit filtersChanged();
+    refilter();
+}
+
 QString MissionsController::payoutText(const Payout &payout) const
 {
     const QLocale locale;
@@ -305,9 +315,37 @@ QVariantMap MissionsController::details(int mission) const
             {QStringLiteral("more"), static_cast<int>(set.size()) - static_cast<int>(places.size())},
             {QStringLiteral("tags"), slot.searchTags.join(QStringLiteral(", "))}};
     }
+    // "+1,000  Covalex · Courier", success and the rest apart.
+    const QLocale locale;
+    QStringList repSuccess, repFailure;
+    for (const ReputationReward &r : m.reputation) {
+        const QString amount = (r.amount > 0 ? QStringLiteral("+") : QString()) + locale.toString(r.amount);
+        QStringList who;
+        for (const QString &part : {r.faction, r.scope})
+            if (!part.isEmpty())
+                who << part;
+        (r.success ? repSuccess : repFailure)
+            << amount + QStringLiteral("  ") + who.join(QStringLiteral(" · "));
+    }
+    QVariantList blueprints;
+    for (const BlueprintReward &b : m.blueprints) {
+        const QString chance =
+            b.chance >= 1.0 ? text("missions.chance_guaranteed")
+                            : text("missions.chance", {{QStringLiteral("percent"), qRound(b.chance * 100)}});
+        blueprints << QVariantMap{
+            {QStringLiteral("heading"),
+             b.label.isEmpty() ? text("missions.blueprint_pool", {{QStringLiteral("chance"), chance}})
+                               : text("missions.blueprint_pool_label", {{QStringLiteral("label"), b.label},
+                                                                        {QStringLiteral("chance"), chance}})},
+            {QStringLiteral("items"), b.items}};
+    }
     const int versions = std::max(m.titleVariants, m.descriptionVariants);
     const QString currency = currencyName(m.payout.currency);
     return {
+        {QStringLiteral("requiredRank"), m.requiredRank},
+        {QStringLiteral("repSuccess"), repSuccess},
+        {QStringLiteral("repFailure"), repFailure},
+        {QStringLiteral("blueprints"), blueprints},
         {QStringLiteral("title"), m.title},
         {QStringLiteral("giver"), m.giver},
         {QStringLiteral("category"), m.category},

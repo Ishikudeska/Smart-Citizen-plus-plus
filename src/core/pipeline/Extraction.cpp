@@ -70,11 +70,13 @@ const QStringList &dataForgeKeepSubpaths()
         QStringLiteral("ammoparams/fps"),
         QStringLiteral("reputation/rewards/missionrewards_reputation"),
         QStringLiteral("reputation/standings"),
-        // The mission catalog: the places missions send you, contractor
-        // names and type names.
+        // The mission catalog: the places missions send you, contractor,
+        // type, faction and reputation track names.
         QStringLiteral("missiondata/pu_locations"),
         QStringLiteral("missiondata/pu_organizations"),
         QStringLiteral("missiontype"),
+        QStringLiteral("factions/factionreputation"),
+        QStringLiteral("reputation/scopes"),
     };
     return subpaths;
 }

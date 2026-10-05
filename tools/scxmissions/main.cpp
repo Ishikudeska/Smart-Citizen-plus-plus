@@ -12,6 +12,7 @@
 #include <QFile>
 #include <QTextStream>
 
+#include <algorithm>
 #include <cstdio>
 #include <map>
 
@@ -78,6 +79,7 @@ int dump(const QString &cache, const QString &baseIni, const QString &out)
 
     std::map<QString, int> byKind, byCategory;
     int withPlaces = 0, broadOnly = 0, noSlots = 0, unmatched = 0, tokensLeft = 0, noSystem = 0;
+    int withRep = 0, repNoFaction = 0, withBlueprints = 0, withRank = 0;
     for (const Mission &m : catalog.missions) {
         const char *kind = m.payout.kind == Payout::Kind::Fixed        ? "fixed"
                            : m.payout.kind == Payout::Kind::Calculated ? "calculated"
@@ -98,7 +100,14 @@ int dump(const QString &cache, const QString &baseIni, const QString &out)
         broadOnly += any && !narrow;
         tokensLeft += m.description.contains(u'[') || m.title.contains(u'[');
         noSystem += m.systems.isEmpty();
+        withRep += !m.reputation.empty();
+        repNoFaction += std::any_of(m.reputation.begin(), m.reputation.end(),
+                                    [](const ReputationReward &r) { return r.faction.isEmpty(); });
+        withBlueprints += !m.blueprints.empty();
+        withRank += !m.requiredRank.isEmpty();
     }
+    std::fprintf(stderr, "reputation %d (no faction name %d), blueprints %d, required rank %d\n", withRep,
+                 repNoFaction, withBlueprints, withRank);
     std::fprintf(stderr,
                  "with places %d, only broad (>25) %d, no slots %d, unmatched slots %d, "
                  "unfilled tokens %d, no system %d\n",
@@ -119,7 +128,7 @@ int dump(const QString &cache, const QString &baseIni, const QString &out)
     }
     QTextStream ts(&file);
     ts << "id\tsource\tcategory\ttitle\tgiver\tpayout\tbuy-"
-          "in\tsystems\tdifficulty\tlocations\tdescription\tfile\n";
+          "in\tsystems\tdifficulty\trank\treputation\tblueprints\tlocations\tdescription\tfile\n";
     for (const Mission &m : catalog.missions) {
         QStringList slotTexts;
         for (const LocationSlot &s : m.locations) {
@@ -134,9 +143,18 @@ int dump(const QString &cache, const QString &baseIni, const QString &out)
                              .arg(set.empty() ? QStringLiteral(" tags:") + s.searchTags.join(u',')
                                               : QString());
         }
+        QStringList rep, bps;
+        for (const ReputationReward &r : m.reputation)
+            rep << QStringLiteral("%1%2 %3/%4")
+                       .arg(r.success ? "" : "fail:")
+                       .arg(r.amount)
+                       .arg(r.faction, r.scope);
+        for (const BlueprintReward &b : m.blueprints)
+            bps << QStringLiteral("%1@%2=%3").arg(b.label).arg(b.chance).arg(b.items.join(u'|'));
         ts << m.id << '\t' << (m.contract ? "contract" : "broker") << '\t' << m.category << '\t'
            << oneLine(m.title) << '\t' << oneLine(m.giver) << '\t' << payoutText(m.payout) << '\t'
-           << m.payout.buyIn << '\t' << m.systems.join(u',') << '\t' << m.difficulty << '\t'
+           << m.payout.buyIn << '\t' << m.systems.join(u',') << '\t' << m.difficulty << '\t' << m.requiredRank
+           << '\t' << rep.join(QStringLiteral("; ")) << '\t' << bps.join(QStringLiteral("; ")) << '\t'
            << slotTexts.join(QStringLiteral("; ")) << '\t' << oneLine(m.description) << '\t' << m.file
            << '\n';
     }

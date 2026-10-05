@@ -3223,11 +3223,11 @@
       "at": ""
     },
     "desc": {
-      "ht": "Every mission and contract in the game files, with what it says, who offers it, what it pays and the places it can send you. The game picks the exact place, and works out some payouts, when it offers a mission.",
+      "ht": "Every mission and contract in the game files, with what it says, who offers it, what it pays in aUEC, reputation and blueprints, and the places it can send you. The game picks the exact place, and works out some payouts, when it offers a mission.",
       "at": ""
     },
     "search_placeholder": {
-      "ht": "Search titles, contractors, descriptions and places...",
+      "ht": "Search titles, contractors, descriptions, places, blueprints and factions...",
       "at": ""
     },
     "facet_any": {
@@ -3396,6 +3396,46 @@
     },
     "payout_field": {
       "ht": "Payout",
+      "at": ""
+    },
+    "blueprints_only": {
+      "ht": "Blueprint rewards only",
+      "at": ""
+    },
+    "bp_badge": {
+      "ht": "BP",
+      "at": ""
+    },
+    "requires_label": {
+      "ht": "Requires",
+      "at": ""
+    },
+    "rewards_label": {
+      "ht": "Rewards",
+      "at": ""
+    },
+    "rep_success": {
+      "ht": "Reputation on success",
+      "at": ""
+    },
+    "rep_failure": {
+      "ht": "Reputation if it fails or is abandoned",
+      "at": ""
+    },
+    "blueprint_pool": {
+      "ht": "Blueprints ({chance})",
+      "at": ""
+    },
+    "blueprint_pool_label": {
+      "ht": "{label} blueprints ({chance})",
+      "at": ""
+    },
+    "chance": {
+      "ht": "{percent}% chance of one",
+      "at": ""
+    },
+    "chance_guaranteed": {
+      "ht": "one guaranteed",
       "at": ""
     }
   }
