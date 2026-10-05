@@ -85,6 +85,11 @@ target_link_libraries(scapp PRIVATE
     Qt6::QuickControls2
 )
 sc_set_warnings(scapp)
+sc_precompile(scapp <QQmlEngine> <QVariantList> <QVariantMap> <QtQml/qqmlregistration.h>)
+
+# QML compiles to bytecode only, not to C++ as well: each page's C++ took as
+# long to build as the largest source files, for no difference this UI shows.
+set_target_properties(scapp PROPERTIES QT_QMLCACHEGEN_ARGUMENTS "--only-bytecode")
 
 # ── install / deploy ──────────────────────────────────────────────────────
 # `cmake --install <build> --prefix <dir>` produces a runnable folder: the

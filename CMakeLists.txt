@@ -20,6 +20,7 @@ set(QT_QML_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 
 include(cmake/Dependencies.cmake)
 include(cmake/Warnings.cmake)
+include(cmake/BuildSpeed.cmake)
 
 add_subdirectory(src/engine)
 add_subdirectory(src/core)

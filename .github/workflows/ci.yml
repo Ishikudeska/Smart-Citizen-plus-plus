@@ -19,8 +19,16 @@ jobs:
       - name: Check C++ formatting
         run: git ls-files -z '*.cpp' '*.h' | xargs -0 pipx run --spec clang-format==22.1.8 clang-format --dry-run -Werror
 
-  build-and-test:
+  # Debug build, QML lint and tests. Runs beside the release job.
+  debug:
     runs-on: windows-latest
+    env:
+      # Compile through ccache, which keeps objects between runs. Precompiled
+      # headers are cached only when ccache may overlook their macros and times.
+      CMAKE_C_COMPILER_LAUNCHER: ccache
+      CMAKE_CXX_COMPILER_LAUNCHER: ccache
+      CCACHE_BASEDIR: ${{ github.workspace }}
+      CCACHE_SLOPPINESS: pch_defines,time_macros,include_file_mtime,include_file_ctime
     steps:
       - uses: actions/checkout@v7
 
@@ -39,6 +47,17 @@ jobs:
           # Qt uses from 6.11, so use a master commit with that support until 3.4.0.
           aqtsource: 'git+https://github.com/miurahr/aqtinstall.git@076e1659807d0b362a3ed684d54c2e9c775eb9c7'
 
+      - name: Set up ccache
+        uses: hendrikmuhs/ccache-action@v1.2
+        with:
+          key: debug
+          max-size: 1G
+
+      # The runner's LLVM provides lld, which links Debug builds in seconds
+      # (CMake checks that it works before using it).
+      - name: Put lld on PATH
+        run: echo "C:\Program Files\LLVM\bin" >> $env:GITHUB_PATH
+
       # The code builds warning-free; keep it that way.
       - name: Configure
         run: cmake --preset mingw-debug -DSC_WARNINGS_AS_ERRORS=ON
@@ -52,7 +71,35 @@ jobs:
       - name: Test
         run: ctest --preset mingw-debug -LE parity
 
-      # The optimized build is what ships, and -O2 enables warnings -O0 does not.
+  # The optimized build is what ships, and -O2 enables warnings -O0 does not.
+  release:
+    runs-on: windows-latest
+    env:
+      CMAKE_C_COMPILER_LAUNCHER: ccache
+      CMAKE_CXX_COMPILER_LAUNCHER: ccache
+      CCACHE_BASEDIR: ${{ github.workspace }}
+      CCACHE_SLOPPINESS: pch_defines,time_macros,include_file_mtime,include_file_ctime
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Install Qt 6.12 + MinGW 13.1 + Ninja
+        uses: jurplel/install-qt-action@v4
+        with:
+          version: '6.12.0'
+          host: 'windows'
+          target: 'desktop'
+          arch: 'win64_mingw'
+          dir: 'C:\'
+          tools: 'tools_mingw1310 tools_ninja'
+          cache: true
+          aqtsource: 'git+https://github.com/miurahr/aqtinstall.git@076e1659807d0b362a3ed684d54c2e9c775eb9c7'
+
+      - name: Set up ccache
+        uses: hendrikmuhs/ccache-action@v1.2
+        with:
+          key: release
+          max-size: 1G
+
       - name: Build release
         run: |
           cmake --preset mingw-release -DSC_WARNINGS_AS_ERRORS=ON

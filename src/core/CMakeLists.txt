@@ -129,3 +129,4 @@ if(WIN32)
     target_link_libraries(sccore PRIVATE dbghelp) # minidumps
 endif()
 sc_set_warnings(sccore)
+sc_precompile(sccore <QJsonArray> <QJsonDocument> <QJsonObject> <pugixml.hpp>)
