@@ -47,6 +47,7 @@ ApplicationWindow {
         { id: "enhancements", title: qsTr("tabs.enhancements") },
         { id: "blueprints", title: qsTr("tabs.blueprint_tracker") },
         { id: "missions", title: qsTr("tabs.missions") },
+        { id: "loadout", title: qsTr("tabs.loadout") },
         { id: "explorer", title: qsTr("scx.tab_explorer") },
         { id: "log", title: qsTr("tabs.log") },
         { id: "about", title: qsTr("tabs.about") },
@@ -217,6 +218,7 @@ ApplicationWindow {
         EnhancementsPage {}
         BlueprintsPage {}
         MissionsPage { active: window.page === "missions" }
+        LoadoutPage { active: window.page === "loadout" }
         ExplorerPage { active: window.page === "explorer"; revealPath: window.explorerPath }
         LogPage {}
         DocsPage { document: "ABOUT" }

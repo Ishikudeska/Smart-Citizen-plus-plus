@@ -30,6 +30,7 @@ qt_add_qml_module(scapp
         ConfigController.h ConfigController.cpp
         DocsController.h DocsController.cpp
         LogModel.h LogModel.cpp
+        LoadoutController.h LoadoutController.cpp
         MissionsController.h MissionsController.cpp
         EnhancementsController.h EnhancementsController.cpp
         ExplorerController.h ExplorerController.cpp
@@ -57,6 +58,7 @@ qt_add_qml_module(scapp
         qml/pages/LogPage.qml
         qml/pages/BlueprintsPage.qml
         qml/pages/MissionsPage.qml
+        qml/pages/LoadoutPage.qml
         qml/pages/ExplorerPage.qml
         qml/pages/SimplePage.qml
         qml/pages/DocsPage.qml

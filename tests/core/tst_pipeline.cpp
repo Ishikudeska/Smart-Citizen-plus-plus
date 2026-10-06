@@ -199,6 +199,37 @@ private slots:
         QCOMPARE(dataForgeTagTablePath(cache), cache + QStringLiteral("/raw/tags.tsv"));
         QVERIFY(QFileInfo::exists(dataForgeTagTablePath(cache))); // empty here: the fixture has no tags
         QVERIFY(dataForgeKeepSubpaths().contains(QStringLiteral("missiondata/pu_locations")));
+        QCOMPARE(dataForgeVehiclesDir(cache), cache + QStringLiteral("/raw/vehicles"));
+        QVERIFY(QFileInfo(dataForgeVehiclesDir(cache)).isDir()); // empty: the fixture has no vehicles
+        QVERIFY(dataForgeKeepSubpaths().contains(QStringLiteral("scitemmanufacturer")));
+    }
+
+    void writesVehicleDefinitions()
+    {
+        testing::P4kBuilder builder;
+        const std::string xml = "Data/Scripts/Entities/Vehicles/Implementations/Xml/";
+        builder.add({xml + "AEGS_Test.xml", testing::bytesOf("<Vehicle name=\"AEGS_Test\" />"), 100, false});
+        builder.add(
+            {xml + "Modifications/AEGS_Test_Variant.xml", testing::bytesOf("<Modifications />"), 100, false});
+        builder.add({xml + "readme.txt", testing::bytesOf("not a vehicle"), 100, false});
+        builder.add({"Data/Scripts/Entities/Other/Thing.xml", testing::bytesOf("<Thing />"), 100, false});
+        const auto bytes = builder.build();
+        QTemporaryDir dir;
+        const QString path = dir.filePath(QStringLiteral("Data.p4k"));
+        writeFile(path, QByteArray(reinterpret_cast<const char *>(bytes.data()),
+                                   static_cast<qsizetype>(bytes.size())));
+        const auto archive = open(path);
+        QVERIFY(archive);
+        const QString out = dir.filePath(QStringLiteral("vehicles"));
+        const auto written = writeVehicleDefinitions(*archive, out);
+        QVERIFY(written);
+        QCOMPARE(*written, std::size_t(2));
+        // Names lower-cased, so ship records' lower-case paths find them.
+        QCOMPARE(readAll(out + QStringLiteral("/aegs_test.xml")),
+                 QByteArray("<Vehicle name=\"AEGS_Test\" />"));
+        QCOMPARE(readAll(out + QStringLiteral("/modifications/aegs_test_variant.xml")),
+                 QByteArray("<Modifications />"));
+        QVERIFY(!QFileInfo::exists(out + QStringLiteral("/readme.txt")));
     }
 
     void exportsGameData()

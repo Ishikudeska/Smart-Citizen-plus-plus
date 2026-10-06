@@ -10,7 +10,7 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 option(SC_BUILD_TESTS "Build the test suite" ON)
-option(SC_BUILD_TOOLS "Build developer tools (scxtool, scxgen, scxmissions)" ON)
+option(SC_BUILD_TOOLS "Build developer tools (scxtool, scxgen, scxmissions, scxloadout)" ON)
 
 find_package(Qt6 6.8 REQUIRED COMPONENTS
     Core Gui Network Concurrent Qml Quick QuickControls2 Test QuickTest)
@@ -30,6 +30,7 @@ if(SC_BUILD_TOOLS)
     add_subdirectory(tools/scxtool)
     add_subdirectory(tools/scxgen)
     add_subdirectory(tools/scxmissions)
+    add_subdirectory(tools/scxloadout)
 endif()
 
 if(SC_BUILD_TESTS)

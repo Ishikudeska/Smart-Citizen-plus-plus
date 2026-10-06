@@ -101,6 +101,10 @@
     "missions": {
       "ht": "Missions",
       "at": ""
+    },
+    "loadout": {
+      "ht": "Loadout",
+      "at": ""
     }
   },
   "toolbar": {
@@ -3436,6 +3440,580 @@
     },
     "chance_guaranteed": {
       "ht": "one guaranteed",
+      "at": ""
+    }
+  },
+  "loadout": {
+    "title": {
+      "ht": "Ship Loadout",
+      "at": ""
+    },
+    "desc": {
+      "ht": "Every ship's stock loadout from your game data, what it adds up to, and what fits each slot.",
+      "at": ""
+    },
+    "no_data": {
+      "ht": "The game data hasn't been extracted yet. Extract it to see the ships.",
+      "at": ""
+    },
+    "not_loaded": {
+      "ht": "The ship list didn't load.",
+      "at": ""
+    },
+    "no_vehicles": {
+      "ht": "This game data was extracted before ship loadouts were added. Extract it again to read the ships' hardpoints.",
+      "at": ""
+    },
+    "load_btn": {
+      "ht": "Load ships",
+      "at": ""
+    },
+    "extract_btn": {
+      "ht": "Extract game data",
+      "at": ""
+    },
+    "loading": {
+      "ht": "Loading ships…",
+      "at": ""
+    },
+    "search_placeholder": {
+      "ht": "Find a ship…",
+      "at": ""
+    },
+    "reset_btn": {
+      "ht": "Reset to stock",
+      "at": ""
+    },
+    "reset_tip": {
+      "ht": "Put back the ship's stock loadout",
+      "at": ""
+    },
+    "modified": {
+      "ht": "MODIFIED",
+      "at": ""
+    },
+    "no_saved": {
+      "ht": "No saved loadouts",
+      "at": ""
+    },
+    "load_saved_btn": {
+      "ht": "Load",
+      "at": ""
+    },
+    "delete_saved_btn": {
+      "ht": "Delete",
+      "at": ""
+    },
+    "save_placeholder": {
+      "ht": "Loadout name",
+      "at": ""
+    },
+    "save_btn": {
+      "ht": "Save",
+      "at": ""
+    },
+    "ground": {
+      "ht": "Ground vehicle",
+      "at": ""
+    },
+    "crew": {
+      "ht": "{n} crew",
+      "at": ""
+    },
+    "dimensions": {
+      "ht": "Length × width × height",
+      "at": ""
+    },
+    "hull_mass": {
+      "ht": "Hull mass",
+      "at": ""
+    },
+    "loaded_mass": {
+      "ht": "Mass with items",
+      "at": ""
+    },
+    "hull_hp": {
+      "ht": "Hull HP",
+      "at": ""
+    },
+    "vital_hp": {
+      "ht": "Vital hull HP ({count} sections)",
+      "at": ""
+    },
+    "damage": {
+      "ht": "Damage",
+      "at": ""
+    },
+    "alpha": {
+      "ht": "Alpha",
+      "at": ""
+    },
+    "sustained_dps": {
+      "ht": "Sustained DPS",
+      "at": ""
+    },
+    "burst_dps": {
+      "ht": "Burst DPS",
+      "at": ""
+    },
+    "group_line": {
+      "ht": "{group} ({guns} guns): alpha · sustained · burst",
+      "at": ""
+    },
+    "group_pilot": {
+      "ht": "Pilot",
+      "at": ""
+    },
+    "group_manned": {
+      "ht": "Crewed turrets",
+      "at": ""
+    },
+    "group_remote": {
+      "ht": "Remote turrets",
+      "at": ""
+    },
+    "group_pds": {
+      "ht": "Point defense",
+      "at": ""
+    },
+    "missiles": {
+      "ht": "Missiles",
+      "at": ""
+    },
+    "bombs": {
+      "ht": "Bombs",
+      "at": ""
+    },
+    "burst_by_type": {
+      "ht": "Burst DPS by type",
+      "at": ""
+    },
+    "defense": {
+      "ht": "Defense",
+      "at": ""
+    },
+    "shield_hp": {
+      "ht": "Shield HP",
+      "at": ""
+    },
+    "shield_regen": {
+      "ht": "Regen HP/s",
+      "at": ""
+    },
+    "armor_hp": {
+      "ht": "Armor HP",
+      "at": ""
+    },
+    "type_physical": {
+      "ht": "Phys",
+      "at": ""
+    },
+    "type_energy": {
+      "ht": "Energy",
+      "at": ""
+    },
+    "type_distortion": {
+      "ht": "Distort",
+      "at": ""
+    },
+    "shield_resistance": {
+      "ht": "Shield resistance",
+      "at": ""
+    },
+    "shield_absorption": {
+      "ht": "Shield absorption",
+      "at": ""
+    },
+    "armor_deflection": {
+      "ht": "Armor deflection",
+      "at": ""
+    },
+    "armor_reduction": {
+      "ht": "Armor damage reduction",
+      "at": ""
+    },
+    "signatures": {
+      "ht": "Armor signature",
+      "at": ""
+    },
+    "countermeasures": {
+      "ht": "Countermeasures",
+      "at": ""
+    },
+    "countermeasures_value": {
+      "ht": "{decoys} decoys · {noise} noise",
+      "at": ""
+    },
+    "power": {
+      "ht": "Power",
+      "at": ""
+    },
+    "scm": {
+      "ht": "SCM",
+      "at": ""
+    },
+    "nav": {
+      "ht": "NAV",
+      "at": ""
+    },
+    "auto_power": {
+      "ht": "Auto",
+      "at": ""
+    },
+    "auto_power_tip": {
+      "ht": "Split the power the way the game does by default",
+      "at": ""
+    },
+    "pips_used": {
+      "ht": "Pips used",
+      "at": ""
+    },
+    "coolant": {
+      "ht": "Cooling",
+      "at": ""
+    },
+    "weapon_power": {
+      "ht": "Weapon power",
+      "at": ""
+    },
+    "signature_estimate": {
+      "ht": "Signature (estimate)",
+      "at": ""
+    },
+    "power_note": {
+      "ht": "Each component's power range and output are the game's. How the totals combine (cooling, signatures) is this app's estimate.",
+      "at": ""
+    },
+    "power_weapons": {
+      "ht": "Weapons",
+      "at": ""
+    },
+    "power_flight": {
+      "ht": "Engines",
+      "at": ""
+    },
+    "power_shield": {
+      "ht": "Shield",
+      "at": ""
+    },
+    "power_quantum": {
+      "ht": "Quantum drive",
+      "at": ""
+    },
+    "power_radar": {
+      "ht": "Radar",
+      "at": ""
+    },
+    "power_lifesupport": {
+      "ht": "Life support",
+      "at": ""
+    },
+    "power_cooler": {
+      "ht": "Cooler",
+      "at": ""
+    },
+    "power_utility": {
+      "ht": "Utility",
+      "at": ""
+    },
+    "flight": {
+      "ht": "Flight",
+      "at": ""
+    },
+    "scm_speed": {
+      "ht": "SCM speed",
+      "at": ""
+    },
+    "boost_speed": {
+      "ht": "Boost forward / back",
+      "at": ""
+    },
+    "max_speed": {
+      "ht": "Max speed",
+      "at": ""
+    },
+    "pitch": {
+      "ht": "Pitch °/s (boosted)",
+      "at": ""
+    },
+    "yaw": {
+      "ht": "Yaw °/s (boosted)",
+      "at": ""
+    },
+    "roll": {
+      "ht": "Roll °/s (boosted)",
+      "at": ""
+    },
+    "boost_tank_label": {
+      "ht": "Boost",
+      "at": ""
+    },
+    "boost_tank": {
+      "ht": "full in {time}, after {delay}",
+      "at": ""
+    },
+    "main_thrust": {
+      "ht": "Main thrust",
+      "at": ""
+    },
+    "retro_thrust": {
+      "ht": "Retro thrust",
+      "at": ""
+    },
+    "maneuver_thrust": {
+      "ht": "Maneuvering thrust",
+      "at": ""
+    },
+    "acceleration": {
+      "ht": "Forward acceleration",
+      "at": ""
+    },
+    "hydrogen": {
+      "ht": "Hydrogen fuel",
+      "at": ""
+    },
+    "quantum_fuel": {
+      "ht": "Quantum fuel",
+      "at": ""
+    },
+    "quantum": {
+      "ht": "Quantum Drive",
+      "at": ""
+    },
+    "qt_speed": {
+      "ht": "Speed",
+      "at": ""
+    },
+    "qt_spline": {
+      "ht": "Spline jump speed",
+      "at": ""
+    },
+    "qt_spool": {
+      "ht": "Spool",
+      "at": ""
+    },
+    "qt_cooldown": {
+      "ht": "Cooldown",
+      "at": ""
+    },
+    "qt_accel": {
+      "ht": "Acceleration, stage 1 / 2",
+      "at": ""
+    },
+    "qt_fuel": {
+      "ht": "Fuel use",
+      "at": ""
+    },
+    "qt_range": {
+      "ht": "Range on a full tank",
+      "at": ""
+    },
+    "simulations": {
+      "ht": "Simulations",
+      "at": ""
+    },
+    "travel_label": {
+      "ht": "Quantum travel over",
+      "at": ""
+    },
+    "versus_label": {
+      "ht": "Versus",
+      "at": ""
+    },
+    "versus_pick": {
+      "ht": "Pick a ship (stock loadout)",
+      "at": ""
+    },
+    "versus_shields": {
+      "ht": "Its shields drop in",
+      "at": ""
+    },
+    "versus_kill": {
+      "ht": "Its vital hull is gone in",
+      "at": ""
+    },
+    "versus_deflected": {
+      "ht": "Guns its armor deflects",
+      "at": ""
+    },
+    "simulation_note": {
+      "ht": "Estimates: sustained fire that always hits, with shield absorption and resistance and armor deflection and reduction applied, and no shield regeneration. Quantum travel time includes spool.",
+      "at": ""
+    },
+    "section_armament": {
+      "ht": "Armament",
+      "at": ""
+    },
+    "section_ordnance": {
+      "ht": "Ordnance",
+      "at": ""
+    },
+    "section_utility": {
+      "ht": "Utility",
+      "at": ""
+    },
+    "section_shields": {
+      "ht": "Shields",
+      "at": ""
+    },
+    "section_power": {
+      "ht": "Power Plants",
+      "at": ""
+    },
+    "section_coolers": {
+      "ht": "Coolers",
+      "at": ""
+    },
+    "section_quantum": {
+      "ht": "Quantum Drive",
+      "at": ""
+    },
+    "section_lifesupport": {
+      "ht": "Life Support",
+      "at": ""
+    },
+    "section_radar": {
+      "ht": "Radar",
+      "at": ""
+    },
+    "section_countermeasures": {
+      "ht": "Countermeasures",
+      "at": ""
+    },
+    "section_modules": {
+      "ht": "Modules",
+      "at": ""
+    },
+    "section_paint": {
+      "ht": "Paint",
+      "at": ""
+    },
+    "empty_slot": {
+      "ht": "Empty",
+      "at": ""
+    },
+    "change_btn": {
+      "ht": "Change",
+      "at": ""
+    },
+    "picker_title": {
+      "ht": "Fit {slot}",
+      "at": ""
+    },
+    "picker_search": {
+      "ht": "Filter by name, maker or class…",
+      "at": ""
+    },
+    "picker_none": {
+      "ht": "Nothing else fits this slot.",
+      "at": ""
+    },
+    "stat_alpha": {
+      "ht": "Alpha",
+      "at": ""
+    },
+    "stat_rate": {
+      "ht": "Rate",
+      "at": ""
+    },
+    "stat_burst": {
+      "ht": "Burst DPS",
+      "at": ""
+    },
+    "stat_sustained": {
+      "ht": "Sustained DPS",
+      "at": ""
+    },
+    "stat_capacitor": {
+      "ht": "Capacitor",
+      "at": ""
+    },
+    "stat_ammo": {
+      "ht": "Ammo",
+      "at": ""
+    },
+    "stat_speed": {
+      "ht": "Speed",
+      "at": ""
+    },
+    "stat_range": {
+      "ht": "Range",
+      "at": ""
+    },
+    "stat_penetration": {
+      "ht": "Penetration",
+      "at": ""
+    },
+    "stat_overheat": {
+      "ht": "Overheats after / recovers in",
+      "at": ""
+    },
+    "stat_damage": {
+      "ht": "Damage",
+      "at": ""
+    },
+    "stat_tracking": {
+      "ht": "Tracking",
+      "at": ""
+    },
+    "stat_lock": {
+      "ht": "Lock",
+      "at": ""
+    },
+    "stat_lock_range": {
+      "ht": "Lock range",
+      "at": ""
+    },
+    "stat_shield_hp": {
+      "ht": "HP",
+      "at": ""
+    },
+    "stat_regen": {
+      "ht": "Regen",
+      "at": ""
+    },
+    "stat_delays": {
+      "ht": "Delay damaged / down",
+      "at": ""
+    },
+    "stat_power_output": {
+      "ht": "Power output",
+      "at": ""
+    },
+    "stat_coolant": {
+      "ht": "Cooling",
+      "at": ""
+    },
+    "stat_spool": {
+      "ht": "Spool",
+      "at": ""
+    },
+    "stat_cooldown": {
+      "ht": "Cooldown",
+      "at": ""
+    },
+    "stat_qfuel": {
+      "ht": "Fuel",
+      "at": ""
+    },
+    "stat_noise": {
+      "ht": "Noise",
+      "at": ""
+    },
+    "stat_decoys": {
+      "ht": "Decoys",
+      "at": ""
+    },
+    "stat_power": {
+      "ht": "Power",
+      "at": ""
+    },
+    "stat_em": {
+      "ht": "EM",
+      "at": ""
+    },
+    "stat_ir": {
+      "ht": "IR",
       "at": ""
     }
   }

@@ -56,6 +56,12 @@ sc_add_test(tst_core_missions
     LABELS unit core
 )
 
+sc_add_test(tst_core_loadout
+    SOURCES tst_loadout.cpp
+    LIBS sccore
+    LABELS unit core
+)
+
 # The Kraken parity case reads Smart Citizen's own test fixture.
 sc_add_test(tst_core_blueprints
     SOURCES tst_blueprints.cpp

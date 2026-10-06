@@ -118,6 +118,12 @@ add_library(sccore STATIC
     missions/Places.cpp
     missions/Catalog.h
     missions/Catalog.cpp
+    loadout/Catalog.h
+    loadout/Catalog.cpp
+    loadout/Loadout.h
+    loadout/Loadout.cpp
+    loadout/Performance.h
+    loadout/Performance.cpp
 )
 
 target_include_directories(sccore PUBLIC
