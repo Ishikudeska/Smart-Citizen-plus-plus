@@ -24,6 +24,14 @@ concurrency:
 jobs:
   package:
     runs-on: windows-latest
+    env:
+      # Compile through ccache: objects carry over between runs, and the
+      # portable build reuses most of the installed build's (same relative
+      # paths under CCACHE_BASEDIR, only the portable flag differs).
+      CMAKE_C_COMPILER_LAUNCHER: ccache
+      CMAKE_CXX_COMPILER_LAUNCHER: ccache
+      CCACHE_BASEDIR: ${{ github.workspace }}
+      CCACHE_SLOPPINESS: pch_defines,time_macros,include_file_mtime,include_file_ctime
     steps:
       - uses: actions/checkout@v7
 
@@ -40,6 +48,12 @@ jobs:
           # aqtinstall 3.3.0 (latest on PyPI) predates the per-compiler repo layout
           # Qt uses from 6.11, so use a master commit with that support until 3.4.0.
           aqtsource: "git+https://github.com/miurahr/aqtinstall.git@076e1659807d0b362a3ed684d54c2e9c775eb9c7"
+
+      - name: Set up ccache
+        uses: hendrikmuhs/ccache-action@v1.2
+        with:
+          key: package
+          max-size: 1G
 
       - name: Install Inno Setup
         run: choco install innosetup --no-progress -y

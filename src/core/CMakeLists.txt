@@ -113,6 +113,17 @@ add_library(sccore STATIC
     pipeline/Patcher.cpp
     pipeline/Extraction.h
     pipeline/Extraction.cpp
+
+    missions/Places.h
+    missions/Places.cpp
+    missions/Catalog.h
+    missions/Catalog.cpp
+    loadout/Catalog.h
+    loadout/Catalog.cpp
+    loadout/Loadout.h
+    loadout/Loadout.cpp
+    loadout/Performance.h
+    loadout/Performance.cpp
 )
 
 target_include_directories(sccore PUBLIC
@@ -124,3 +135,4 @@ if(WIN32)
     target_link_libraries(sccore PRIVATE dbghelp) # minidumps
 endif()
 sc_set_warnings(sccore)
+sc_precompile(sccore <QJsonArray> <QJsonDocument> <QJsonObject> <pugixml.hpp>)

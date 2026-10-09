@@ -4,6 +4,7 @@
 #include "engine/Parallel.h"
 #include "engine/cryxml/CryXml.h"
 #include "engine/forge/DataForge.h"
+#include "engine/forge/DotNetFormat.h"
 #include "engine/forge/Exporter.h"
 #include "engine/forge/RecordBuilder.h"
 #include "engine/gamedata/GameData.h"
@@ -11,6 +12,7 @@
 #include "engine/io/RandomAccessFile.h"
 #include "engine/p4k/Archive.h"
 #include "engine/p4k/Extractor.h"
+#include "engine/xml/DotNetXmlWriter.h"
 
 #include <pugixml.hpp>
 
@@ -50,6 +52,7 @@ int usage()
                "  scxtool cryxml-check <archive> [every-nth=1]\n"
                "  scxtool forge <archive|dcb> <out-dir> [subpath...]\n"
                "  scxtool forge-compare <archive|dcb> <unforge-root> [subpath...]\n"
+               "  scxtool record <archive|dcb> <guid|name-substring> [max=5]\n"
                "\n"
                "subpaths are under libs/foundry/records/; forge-compare defaults to\n"
                "Smart Citizen's 14 cached subtrees.\n",
@@ -620,6 +623,38 @@ int cmdForgeCompare(int argc, char **argv)
     return mismatches.empty() && noRecord.empty() && notWritten.empty() && missing.empty() ? 0 : 1;
 }
 
+// Prints records as XML, found by GUID or by a substring of their name or
+// path. Reaches records that share a file with another, which `forge` never
+// writes (tags, for one).
+int cmdRecord(const char *source, std::string_view query, std::size_t max)
+{
+    const auto df = loadForge(source);
+    if (!df)
+        return 1;
+    forge::RecordBuilder builder(*df);
+    xml::XmlTree tree;
+    std::string out;
+    std::size_t shown = 0, matched = 0;
+    for (std::uint32_t i = 0; i < df->records().size(); ++i) {
+        const bool hit = forge::formatGuid(df->records()[i].id.data()) == query ||
+                         containsIgnoreCase(df->recordName(i), query) ||
+                         containsIgnoreCase(df->recordFileName(i), query);
+        if (!hit)
+            continue;
+        ++matched;
+        if (shown == max)
+            continue;
+        ++shown;
+        out.clear();
+        if (const auto root = builder.build(i, tree); root != xml::XmlTree::kNone)
+            xml::writeDotNet(tree, root, out);
+        std::printf("<!-- %.*s (%.*s) -->\n%s\n", int(df->recordName(i).size()), df->recordName(i).data(),
+                    int(df->recordFileName(i).size()), df->recordFileName(i).data(), out.c_str());
+    }
+    std::fprintf(stderr, "%zu matching records, %zu shown\n", matched, shown);
+    return matched ? 0 : 1;
+}
+
 // sc.gamedata's CLI: game_data.json from the archive's (or a) Game2.dcb.
 int cmdGameData(int argc, char **argv)
 {
@@ -689,5 +724,7 @@ int main(int argc, char **argv)
         return cmdForgeCompare(argc, argv);
     if (cmd == "gamedata")
         return cmdGameData(argc, argv);
+    if (cmd == "record" && argc >= 4)
+        return cmdRecord(argv[2], argv[3], argc > 4 ? std::stoul(argv[4]) : 5);
     return usage();
 }

@@ -2,10 +2,14 @@
 
 #include "core/EnginePaths.h"
 #include "engine/Try.h"
+#include "engine/cryxml/CryXml.h"
 #include "engine/forge/DataForge.h"
+#include "engine/forge/DotNetFormat.h"
 #include "engine/forge/Exporter.h"
+#include "engine/forge/RecordBuilder.h"
 #include "engine/gamedata/GameData.h"
 #include "engine/io/FileSystem.h"
+#include "engine/xml/XmlTree.h"
 
 #include <QDateTime>
 #include <QDir>
@@ -13,6 +17,11 @@
 #include <QFile>
 #include <QFileInfo>
 #include <QSaveFile>
+#include <QThread>
+
+#include <string>
+#include <unordered_map>
+#include <vector>
 
 namespace core {
 
@@ -28,6 +37,18 @@ std::optional<std::size_t> findEntry(const engine::p4k::Archive &archive,
         if (match(archive.name(i)))
             return i;
     return std::nullopt;
+}
+
+// Renames a folder, retrying for a few seconds: a virus scanner or the
+// search indexer briefly holds files that were just written.
+bool renameDir(const QString &from, const QString &to)
+{
+    for (int attempt = 0; attempt < 30; ++attempt) {
+        if (QDir().rename(from, to))
+            return true;
+        QThread::msleep(100);
+    }
+    return false;
 }
 
 bool iendsWith(std::string_view s, std::string_view suffix)
@@ -63,6 +84,17 @@ const QStringList &dataForgeKeepSubpaths()
         QStringLiteral("ammoparams/fps"),
         QStringLiteral("reputation/rewards/missionrewards_reputation"),
         QStringLiteral("reputation/standings"),
+        // The mission catalog: the places missions send you, contractor,
+        // type, faction and reputation track names.
+        QStringLiteral("missiondata/pu_locations"),
+        QStringLiteral("missiondata/pu_organizations"),
+        QStringLiteral("missiontype"),
+        QStringLiteral("factions/factionreputation"),
+        QStringLiteral("reputation/scopes"),
+        // The ship loadouts: ground vehicles beside the spaceships, and the
+        // manufacturers ships and items name.
+        QStringLiteral("entities/groundvehicles"),
+        QStringLiteral("scitemmanufacturer"),
     };
     return subpaths;
 }
@@ -108,6 +140,92 @@ QString P4kStamp::key() const
 QString dataForgeRecordsDir(const QString &cacheDir)
 {
     return QDir(cacheDir).filePath(QStringLiteral("raw/libs/foundry/records"));
+}
+
+QString dataForgeTagTablePath(const QString &cacheDir)
+{
+    return QDir(cacheDir).filePath(QStringLiteral("raw/tags.tsv"));
+}
+
+QString dataForgeVehiclesDir(const QString &cacheDir)
+{
+    return QDir(cacheDir).filePath(QStringLiteral("raw/vehicles"));
+}
+
+engine::Result<std::size_t> writeVehicleDefinitions(const engine::p4k::Archive &archive, const QString &dir)
+{
+    constexpr std::string_view prefix = "data/scripts/entities/vehicles/implementations/xml/";
+    SC_TRY(engine::io::createDirectories(fsPath(dir)));
+    std::size_t written = 0;
+    for (std::size_t i = 0; i < archive.entryCount(); ++i) {
+        const std::string_view name = archive.name(i);
+        if (name.size() <= prefix.size() || !iendsWith(name, ".xml"))
+            continue;
+        std::string lower(name);
+        for (char &c : lower)
+            if (c >= 'A' && c <= 'Z')
+                c = static_cast<char>(c + 32);
+        if (!std::string_view(lower).starts_with(prefix))
+            continue;
+        auto bytes = archive.read(i);
+        if (!bytes)
+            return std::unexpected(bytes.error());
+        const QString path = QDir(dir).filePath(QString::fromUtf8(lower.substr(prefix.size())));
+        SC_TRY(engine::io::createDirectories(fsPath(QFileInfo(path).absolutePath())));
+        if (engine::cryxml::isCryXml(*bytes)) {
+            auto text = engine::cryxml::toXml(*bytes);
+            if (!text)
+                return std::unexpected(text.error());
+            SC_TRY(engine::io::writeFile(fsPath(path), std::string_view(*text)));
+        } else {
+            SC_TRY(engine::io::writeFile(fsPath(path), *bytes));
+        }
+        ++written;
+    }
+    return written;
+}
+
+engine::Result<std::size_t> writeTagTable(const engine::forge::DataForge &forge, const QString &path)
+{
+    using engine::xml::XmlTree;
+    struct Tag
+    {
+        std::string guid, name;
+        std::vector<std::string> children;
+    };
+    std::vector<Tag> tags;
+    engine::forge::RecordBuilder builder(forge);
+    XmlTree tree;
+    for (std::uint32_t i = 0; i < forge.records().size(); ++i) {
+        const engine::forge::RecordDef &record = forge.records()[i];
+        if (forge.structName(record.structIndex) != "Tag")
+            continue;
+        const XmlTree::NodeId root = builder.build(i, tree);
+        if (root == XmlTree::kNone)
+            continue;
+        Tag tag{engine::forge::formatGuid(record.id.data()),
+                std::string(tree.attribute(root, "tagName").value_or("")),
+                {}};
+        for (XmlTree::NodeId c = tree.firstChild(root); c != XmlTree::kNone; c = tree.nextSibling(c))
+            if (tree.name(c) == "children")
+                for (XmlTree::NodeId r = tree.firstChild(c); r != XmlTree::kNone; r = tree.nextSibling(r))
+                    if (const auto value = tree.attribute(r, "value"))
+                        tag.children.emplace_back(*value);
+        tags.push_back(std::move(tag));
+    }
+    std::unordered_map<std::string, std::string> parents;
+    for (const Tag &tag : tags)
+        for (const std::string &child : tag.children)
+            parents.emplace(child, tag.guid);
+    std::string out;
+    for (const Tag &tag : tags) {
+        const auto parent = parents.find(tag.guid);
+        out += tag.guid + '\t' + tag.name + '\t' +
+               (parent == parents.end() ? std::string() : parent->second) + '\n';
+    }
+    SC_TRY(engine::io::createDirectories(fsPath(QFileInfo(path).absolutePath())));
+    SC_TRY(engine::io::writeFile(fsPath(path), std::string_view(out)));
+    return tags.size();
 }
 
 engine::Result<void> extractBaseIni(const engine::p4k::Archive &archive, const QString &baseIniPath)
@@ -182,16 +300,26 @@ engine::Result<DataForgeExtraction> extractDataForge(const engine::p4k::Archive 
         engine::io::removeAll(fsPath(staging));
         return fail(Errc::Io, "could not write the DataForge cache: " + stats->failures.front());
     }
+    if (auto tags = writeTagTable(*forge, QDir(staging).filePath(QStringLiteral("tags.tsv"))); !tags) {
+        engine::io::removeAll(fsPath(staging));
+        return std::unexpected(tags.error());
+    }
+    report(QStringLiteral("Converting vehicle definitions"), 0, 1);
+    if (auto vehicles = writeVehicleDefinitions(archive, QDir(staging).filePath(QStringLiteral("vehicles")));
+        !vehicles) {
+        engine::io::removeAll(fsPath(staging));
+        return std::unexpected(vehicles.error());
+    }
 
     // Swap the new tree in; the old one is kept until the swap succeeds.
     report(QStringLiteral("Replacing the DataForge cache"), 0, 1);
     SC_TRY(engine::io::removeAll(fsPath(previous)));
-    if (QFileInfo::exists(raw) && !QDir().rename(raw, previous)) {
+    if (QFileInfo::exists(raw) && !renameDir(raw, previous)) {
         engine::io::removeAll(fsPath(staging));
         return fail(Errc::Io, "cannot replace " + raw.toStdString() + " (is a file in it open?)");
     }
-    if (!QDir().rename(staging, raw)) {
-        QDir().rename(previous, raw);
+    if (!renameDir(staging, raw)) {
+        renameDir(previous, raw);
         return fail(Errc::Io, "cannot move the new DataForge cache into " + raw.toStdString());
     }
     engine::io::removeAll(fsPath(previous));

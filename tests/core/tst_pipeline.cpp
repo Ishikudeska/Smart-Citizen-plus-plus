@@ -5,6 +5,7 @@
 #include "../engine/P4kBuilder.h"
 #include "core/pipeline/Extraction.h"
 #include "core/pipeline/Patcher.h"
+#include "engine/forge/DotNetFormat.h"
 
 #include <QDir>
 #include <QDirIterator>
@@ -154,6 +155,81 @@ private slots:
         // A stamp without content is not fresh.
         QVERIFY(QDir(cache + QStringLiteral("/raw")).removeRecursively());
         QVERIFY(!dataForgeCacheIsFresh(p4k, cache));
+    }
+
+    // Tags share the tag database's file, so the table is how they reach the
+    // cache: one line per tag, with the parent its children list implies.
+    void writesTagTable()
+    {
+        DcbBuilder b;
+        const auto tag = b.addStruct("Tag");
+        b.addProperty(tag, "tagName", DataType::String);
+        b.addProperty(tag, "children", DataType::Reference, testing::Conversion::ComplexArray);
+        const auto other = b.addStruct("TagDatabase");
+        b.addProperty(other, "name", DataType::String);
+        const auto children = b.addPool(engine::forge::Pool::Reference, {Inst().ref(testing::makeGuid(2))});
+        b.addInstance(tag, Inst().u32(b.text("Stanton")).array(1, children));
+        b.addInstance(tag, Inst().u32(b.text("Stanton2")).array(0, 0));
+        b.addInstance(other, Inst().u32(b.text("db")));
+        const std::string file = "libs/foundry/records/tagdatabase/tagdatabase.tagdatabase.xml";
+        b.addRecord("TagDatabase.TagDatabase", file, other, 0, testing::makeGuid(9));
+        b.addRecord("Tag.Stanton", file, tag, 0, testing::makeGuid(1));
+        b.addRecord("Tag.Stanton2", file, tag, 1, testing::makeGuid(2));
+        auto forge = engine::forge::DataForge::load(b.build());
+        QVERIFY(forge);
+
+        QTemporaryDir dir;
+        const QString path = dir.filePath(QStringLiteral("raw/tags.tsv"));
+        const auto written = writeTagTable(*forge, path);
+        QVERIFY(written);
+        QCOMPARE(*written, std::size_t(2));
+        const std::string stanton = engine::forge::formatGuid(testing::makeGuid(1).data());
+        const std::string stanton2 = engine::forge::formatGuid(testing::makeGuid(2).data());
+        QCOMPARE(readAll(path), QByteArray::fromStdString(stanton + "\tStanton\t\n" + stanton2 +
+                                                          "\tStanton2\t" + stanton + "\n"));
+    }
+
+    void dataForgeCacheHasTagTable()
+    {
+        QTemporaryDir dir;
+        const QString p4k = buildP4k(dir);
+        auto archive = open(p4k);
+        const QString cache = dir.filePath(QStringLiteral("cache"));
+        QVERIFY(extractDataForge(*archive, cache, dir.filePath(QStringLiteral("no-patches"))));
+        QCOMPARE(dataForgeTagTablePath(cache), cache + QStringLiteral("/raw/tags.tsv"));
+        QVERIFY(QFileInfo::exists(dataForgeTagTablePath(cache))); // empty here: the fixture has no tags
+        QVERIFY(dataForgeKeepSubpaths().contains(QStringLiteral("missiondata/pu_locations")));
+        QCOMPARE(dataForgeVehiclesDir(cache), cache + QStringLiteral("/raw/vehicles"));
+        QVERIFY(QFileInfo(dataForgeVehiclesDir(cache)).isDir()); // empty: the fixture has no vehicles
+        QVERIFY(dataForgeKeepSubpaths().contains(QStringLiteral("scitemmanufacturer")));
+    }
+
+    void writesVehicleDefinitions()
+    {
+        testing::P4kBuilder builder;
+        const std::string xml = "Data/Scripts/Entities/Vehicles/Implementations/Xml/";
+        builder.add({xml + "AEGS_Test.xml", testing::bytesOf("<Vehicle name=\"AEGS_Test\" />"), 100, false});
+        builder.add(
+            {xml + "Modifications/AEGS_Test_Variant.xml", testing::bytesOf("<Modifications />"), 100, false});
+        builder.add({xml + "readme.txt", testing::bytesOf("not a vehicle"), 100, false});
+        builder.add({"Data/Scripts/Entities/Other/Thing.xml", testing::bytesOf("<Thing />"), 100, false});
+        const auto bytes = builder.build();
+        QTemporaryDir dir;
+        const QString path = dir.filePath(QStringLiteral("Data.p4k"));
+        writeFile(path, QByteArray(reinterpret_cast<const char *>(bytes.data()),
+                                   static_cast<qsizetype>(bytes.size())));
+        const auto archive = open(path);
+        QVERIFY(archive);
+        const QString out = dir.filePath(QStringLiteral("vehicles"));
+        const auto written = writeVehicleDefinitions(*archive, out);
+        QVERIFY(written);
+        QCOMPARE(*written, std::size_t(2));
+        // Names lower-cased, so ship records' lower-case paths find them.
+        QCOMPARE(readAll(out + QStringLiteral("/aegs_test.xml")),
+                 QByteArray("<Vehicle name=\"AEGS_Test\" />"));
+        QCOMPARE(readAll(out + QStringLiteral("/modifications/aegs_test_variant.xml")),
+                 QByteArray("<Modifications />"));
+        QVERIFY(!QFileInfo::exists(out + QStringLiteral("/readme.txt")));
     }
 
     void exportsGameData()

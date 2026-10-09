@@ -30,6 +30,8 @@ qt_add_qml_module(scapp
         ConfigController.h ConfigController.cpp
         DocsController.h DocsController.cpp
         LogModel.h LogModel.cpp
+        LoadoutController.h LoadoutController.cpp
+        MissionsController.h MissionsController.cpp
         EnhancementsController.h EnhancementsController.cpp
         ExplorerController.h ExplorerController.cpp
         P4kTreeModel.h P4kTreeModel.cpp
@@ -55,6 +57,8 @@ qt_add_qml_module(scapp
         qml/pages/EnhancementsPage.qml
         qml/pages/LogPage.qml
         qml/pages/BlueprintsPage.qml
+        qml/pages/MissionsPage.qml
+        qml/pages/LoadoutPage.qml
         qml/pages/ExplorerPage.qml
         qml/pages/SimplePage.qml
         qml/pages/DocsPage.qml
@@ -83,6 +87,11 @@ target_link_libraries(scapp PRIVATE
     Qt6::QuickControls2
 )
 sc_set_warnings(scapp)
+sc_precompile(scapp <QQmlEngine> <QVariantList> <QVariantMap> <QtQml/qqmlregistration.h>)
+
+# QML compiles to bytecode only, not to C++ as well: each page's C++ took as
+# long to build as the largest source files, for no difference this UI shows.
+set_target_properties(scapp PROPERTIES QT_QMLCACHEGEN_ARGUMENTS "--only-bytecode")
 
 # ── install / deploy ──────────────────────────────────────────────────────
 # `cmake --install <build> --prefix <dir>` produces a runnable folder: the

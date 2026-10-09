@@ -2,6 +2,7 @@
 
 #include "core/pipeline/Patcher.h"
 #include "engine/Error.h"
+#include "engine/forge/DataForge.h"
 #include "engine/p4k/Archive.h"
 
 #include <QString>
@@ -14,8 +15,10 @@
 namespace core {
 
 // The DataForge subtrees (under libs/foundry/records/) the enhancements
-// generator reads. Only these go into the cache. Smart Citizen's
-// DATAFORGE_KEEP_SUBPATHS.
+// generator, the mission catalog and the ship loadouts read. Only these go
+// into the cache. Smart Citizen's DATAFORGE_KEEP_SUBPATHS, plus the mission
+// locations, organizations and types, the reputation factions and scopes,
+// the ground vehicles and the manufacturers.
 const QStringList &dataForgeKeepSubpaths();
 
 // Identity of a Data.p4k for freshness checks. Size is what decides: the RSI
@@ -46,15 +49,29 @@ struct DataForgeExtraction
 };
 
 // Rebuilds <cacheDir>/raw/libs/foundry/records from the archive's DataForge
-// database: exports the keep subtrees to a staging folder, swaps it in,
-// applies the patches from `patchRoot`, then stamps the cache. A failure or
-// cancel leaves the previous cache in place.
+// database: exports the keep subtrees, the tag table and the vehicle
+// definitions to a staging folder, swaps it in, applies the patches from
+// `patchRoot`, then stamps the cache.
+// A failure or cancel leaves the previous cache in place.
 engine::Result<DataForgeExtraction> extractDataForge(const engine::p4k::Archive &archive,
                                                      const QString &cacheDir, const QString &patchRoot,
                                                      const StepProgress &progress = {},
                                                      const std::atomic<bool> *cancel = nullptr);
 
 QString dataForgeRecordsDir(const QString &cacheDir);
+// <cacheDir>/raw/tags.tsv: one "guid<TAB>name<TAB>parent guid" line per tag.
+// Tags share the tag database's file, so the record export never writes
+// them; caches from before the mission catalog have no table.
+QString dataForgeTagTablePath(const QString &cacheDir);
+// Writes that table for every Tag record in `forge`; returns the tag count.
+engine::Result<std::size_t> writeTagTable(const engine::forge::DataForge &forge, const QString &path);
+// <cacheDir>/raw/vehicles: the vehicle implementation XMLs (hardpoints, hull
+// parts, variants) as text, file names lower-cased, from
+// Data/Scripts/Entities/Vehicles/Implementations/Xml. Caches from before the
+// ship loadouts have none.
+QString dataForgeVehiclesDir(const QString &cacheDir);
+// Writes them to `dir`; returns the file count.
+engine::Result<std::size_t> writeVehicleDefinitions(const engine::p4k::Archive &archive, const QString &dir);
 
 // True when the file/cache was produced from this exact Data.p4k.
 bool baseIniIsFresh(const QString &p4kPath, const QString &baseIniPath);
